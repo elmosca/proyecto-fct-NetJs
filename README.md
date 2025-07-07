@@ -132,6 +132,33 @@ flutter test
 
 4. Crear Pull Request
 
+## Convenciones de Commits
+
+Para mantener un historial de cambios limpio y legible, todos los commits deben seguir las siguientes reglas:
+
+- **Idioma**: Todos los mensajes de commit deben estar escritos en **castellano**.
+- **Formato**: Se debe seguir el estándar de [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
+
+El formato general es:
+```
+<tipo>(<ámbito opcional>): <descripción>
+```
+
+**Tipos de commit permitidos:**
+- `feat`: Una nueva funcionalidad (feature).
+- `fix`: Una corrección de un error (bug fix).
+- `docs`: Cambios en la documentación.
+- `style`: Cambios que no afectan el significado del código (espacios, formato, etc.).
+- `refactor`: Una refactorización de código que no arregla un bug ni añade una funcionalidad.
+- `test`: Añadir o corregir tests.
+- `chore`: Cambios en el proceso de build, dependencias o herramientas auxiliares.
+
+**Ejemplo:**
+```bash
+git commit -m "feat(auth): implementar inicio de sesión con Google"
+git commit -m "fix(api): corregir error en la paginación de usuarios"
+```
+
 ## Licencia
 
 Este proyecto está bajo la Licencia MIT. Ver el archivo [LICENSE](./LICENSE) para más detalles. 
