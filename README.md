@@ -179,4 +179,5 @@ git commit -m "fix(api): corregir error en la paginación de usuarios"
 
 ## Licencia
 
-Este proyecto está bajo la Licencia MIT. Ver el archivo [LICENSE](./LICENSE) para más detalles. 
+Este proyecto está bajo la Licencia [Creative Commons Attribution-NonCommercial 4.0 International](https://creativecommons.org/licenses/by-nc/4.0/). 
+Ver el archivo [LICENSE](./LICENSE) para más detalles. 
