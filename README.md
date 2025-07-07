@@ -112,25 +112,43 @@ flutter build apk
 flutter test
 ```
 
-## Contribución
+## Estrategia de Ramas y Contribución (Git Flow Simplificado)
 
-1. Crear una rama para la nueva característica:
-   ```bash
-   git checkout -b feature/nueva-caracteristica
-   ```
+Este proyecto utiliza una estrategia de ramas simplificada basada en Git Flow para mantener el código organizado y estable.
 
-2. Realizar cambios y hacer commit:
-   ```bash
-   git add .
-   git commit -m "feat: añade nueva característica"
-   ```
+### Ramas Principales
 
-3. Subir cambios:
-   ```bash
-   git push origin feature/nueva-caracteristica
-   ```
+-   `main`: Contiene el código de producción. Es una rama estable y solo se actualiza con versiones probadas desde `develop`. No se debe trabajar directamente en ella.
+-   `develop`: Es la rama principal de integración. Todo el nuevo desarrollo se concentra aquí antes de pasar a producción.
 
-4. Crear Pull Request
+### Flujo de Trabajo para Contribuir
+
+1.  **Asegúrate de estar en la rama `develop` y tener la última versión:**
+    ```bash
+    git checkout develop
+    # git pull origin develop  (Cuando el repositorio remoto esté configurado)
+    ```
+
+2.  **Crea una rama para la nueva funcionalidad (feature):**
+    El nombre debe ser descriptivo, en minúsculas y separado por guiones.
+    ```bash
+    # Ejemplo: git checkout -b feature/login-con-google
+    git checkout -b feature/nombre-de-la-funcionalidad
+    ```
+
+3.  **Realiza tus cambios y haz commits:**
+    Sigue las [convenciones de commits](#convenciones-de-commits) definidas.
+    ```bash
+    git add .
+    git commit -m "feat(auth): implementar nueva funcionalidad"
+    ```
+
+4.  **Sube tus cambios a tu rama remota:**
+    ```bash
+    # git push origin feature/nombre-de-la-funcionalidad
+    ```
+
+5.  **Crea una Pull Request (PR)** en la plataforma remota (GitHub, GitLab, etc.) desde tu rama `feature` hacia la rama `develop`. Esto permitirá revisar el código antes de integrarlo.
 
 ## Convenciones de Commits
 
