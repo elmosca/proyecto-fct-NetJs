@@ -1,0 +1,93 @@
+# ===================================================================
+# General: Archivos de Sistema Operativo, IDEs y editores
+# ===================================================================
+.DS_Store
+*.log
+*.tmp
+*.temp
+.cache/
+
+# JetBrains (IntelliJ, WebStorm, etc.)
+.idea/
+*.iml
+
+# Visual Studio Code
+.vscode/
+.cursor/
+
+# ===================================================================
+# Backend: Node.js / NestJS
+# ===================================================================
+# Dependencias
+node_modules/
+
+# Archivos de compilación de TypeScript
+dist/
+
+# Archivos de entorno - NUNCA SUBIR SECRETOS A GIT
+.env
+.env.*
+!.env.example
+
+# Logs de gestores de paquetes
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Reportes de tests y cobertura
+coverage/
+.nyc_output/
+
+# ===================================================================
+# Frontend: Flutter / Dart
+# ===================================================================
+# Archivos autogenerados por Dart y Flutter
+.dart_tool/
+.packages
+.pub/
+.pub-cache/
+
+# Archivos de compilación
+build/
+
+# Archivos generados por paquetes (build_runner, freezed, etc.)
+*.g.dart
+*.freezed.dart
+*.injectable.dart
+*.config.dart
+
+# Artefactos de compilación específicos de la plataforma
+
+# iOS
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/App.framework
+ios/Flutter/Flutter.framework
+ios/Flutter/ephemeral/
+ios/Flutter/flutter_assets/
+ios/Runner/GeneratedPluginRegistrant.h
+ios/Runner/GeneratedPluginRegistrant.m
+Flutter/ephemeral/
+
+# Android
+android/.gradle/
+android/app/build/
+android/app/debug/
+android/app/profile/
+android/app/release/
+android/key.properties
+
+# Linux
+linux/flutter/ephemeral/
+
+# macOS
+macos/Flutter/ephemeral/
+
+# Windows
+windows/flutter/ephemeral/
+
+# ===================================================================
+# Docker
+# ===================================================================
+.docker/
+docker-compose.override.yml
