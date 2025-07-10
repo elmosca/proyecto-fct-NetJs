@@ -99,8 +99,7 @@
 
 ## 📋 Próximos Pasos Inmediatos
 
-1.  **Sistema de Kanban**: Implementar la lógica para el tablero Kanban de tareas.
-2.  **Sistema de Notificaciones**: Implementar notificaciones en tiempo real (WebSocket).
+1.  **Sistema de Notificaciones**: Implementar notificaciones en tiempo real (WebSocket).
 
 ## 📅 Estimación de Tiempos
 *(La estimación se reajustará tras completar los próximos pasos)*
