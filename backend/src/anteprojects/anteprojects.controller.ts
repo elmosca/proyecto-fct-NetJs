@@ -20,6 +20,7 @@ import { ScheduleDefenseDto } from './dto/schedule-defense.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { User } from '../users/entities/user.entity';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { UploadThrottle, SensitiveThrottle } from '../common/decorators/throttle.decorator';
 
 @Controller('anteprojects')
 @UseGuards(JwtAuthGuard)
@@ -65,6 +66,7 @@ export class AnteprojectsController {
   }
 
   @Post(':id/submit')
+  @SensitiveThrottle()
   submit(
     @Param('id', ParseIntPipe) id: number,
     @Request() req: { user: User },
@@ -81,6 +83,7 @@ export class AnteprojectsController {
   }
 
   @Post(':id/approve')
+  @SensitiveThrottle()
   approve(
     @Param('id', ParseIntPipe) id: number,
     @Request() req: { user: User },
@@ -89,6 +92,7 @@ export class AnteprojectsController {
   }
 
   @Post(':id/reject')
+  @SensitiveThrottle()
   reject(
     @Param('id', ParseIntPipe) id: number,
     @Body() rejectAnteprojectDto: RejectAnteprojectDto,
@@ -120,6 +124,7 @@ export class AnteprojectsController {
 
   @Post(':id/files')
   @UseInterceptors(FileInterceptor('file'))
+  @UploadThrottle()
   uploadFile(
     @Param('id', ParseIntPipe) id: number,
     @UploadedFile() file: Express.Multer.File,

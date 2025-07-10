@@ -9,6 +9,7 @@ import {
 import { AuthService } from './auth.service';
 import { UsersService } from '../users/users.service';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
+import { AuthThrottle } from '../common/decorators/throttle.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -19,6 +20,7 @@ export class AuthController {
 
   @Post('login')
   @HttpCode(HttpStatus.OK)
+  @AuthThrottle()
   async login(@Body() loginDto: { email: string; password: string }) {
     const user = await this.authService.validateUser(
       loginDto.email,
@@ -32,6 +34,7 @@ export class AuthController {
 
   @Post('register')
   @HttpCode(HttpStatus.CREATED)
+  @AuthThrottle()
   async register(@Body() createUserDto: CreateUserDto) {
     const existingUser = await this.usersService.findByEmail(
       createUserDto.email,

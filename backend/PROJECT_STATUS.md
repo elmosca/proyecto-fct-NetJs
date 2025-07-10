@@ -69,6 +69,18 @@
 - [x] Logging de eventos de autenticación y operaciones de negocio.
 - [x] Sistema de limpieza automática de logs antiguos.
 
+### Sistema de Rate Limiting
+- [x] Configuración global de rate limiting con `@nestjs/throttler`.
+- [x] Decoradores personalizados para diferentes tipos de endpoints (`@AuthThrottle`, `@UploadThrottle`, `@SensitiveThrottle`).
+- [x] Límites específicos por contexto (autenticación: 5/min, uploads: 3/min, operaciones sensibles: 10/min).
+- [x] Headers informativos en respuestas (`X-RateLimit-Policy`, `X-RateLimit-Applied`).
+- [x] Interceptor para añadir headers y logging de actividad.
+- [x] Identificación inteligente por usuario autenticado o IP.
+- [x] Mensajes de error personalizados en español.
+- [x] Logging automático de advertencias y errores de rate limiting.
+- [x] Tests unitarios y E2E para validar funcionamiento.
+- [x] Documentación completa del sistema (`rate-limiting.md`).
+
 ## 🚧 En Progreso
 
 - **Lógica de Negocio y Endpoints (CRUDs)**:
@@ -87,7 +99,7 @@
 
 ### Seguridad Avanzada
 - [x] Implementar manejo de errores global y logging de errores.
-- [ ] Implementar `rate limiting` para proteger la API.
+- [x] Implementar `rate limiting` para proteger la API.
 - [ ] Configurar HTTPS para producción.
 - [ ] Configurar CORS de forma granular (se habilitará al comenzar el desarrollo del frontend).
 
