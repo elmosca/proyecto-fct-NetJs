@@ -58,6 +58,17 @@
 - [x] Implementar sistema de Kanban para tareas.
 - [x] Sistema de notificaciones en tiempo real (WebSocket).
 
+### Sistema de Manejo de Errores y Logging
+- [x] Creación de excepciones personalizadas de negocio (`BusinessException`, `EntityNotFoundException`, etc.).
+- [x] Implementación de filtro global de excepciones (`GlobalExceptionFilter`).
+- [x] Servicio de logging avanzado (`AppLoggerService`) con diferentes niveles y persistencia en archivos.
+- [x] Interceptor de logging para requests/responses HTTP (`LoggingInterceptor`).
+- [x] DTOs estandarizados para respuestas de error (`ErrorResponseDto`, `ValidationErrorDto`).
+- [x] Integración global en `CommonModule` con providers automáticos.
+- [x] Manejo específico de errores de base de datos (PostgreSQL).
+- [x] Logging de eventos de autenticación y operaciones de negocio.
+- [x] Sistema de limpieza automática de logs antiguos.
+
 ## 🚧 En Progreso
 
 - **Lógica de Negocio y Endpoints (CRUDs)**:
@@ -75,7 +86,7 @@
 ## 📝 Pendiente
 
 ### Seguridad Avanzada
-- [ ] Implementar manejo de errores global y logging de errores.
+- [x] Implementar manejo de errores global y logging de errores.
 - [ ] Implementar `rate limiting` para proteger la API.
 - [ ] Configurar HTTPS para producción.
 - [ ] Configurar CORS de forma granular (se habilitará al comenzar el desarrollo del frontend).

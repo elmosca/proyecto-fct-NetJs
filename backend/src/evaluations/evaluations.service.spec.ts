@@ -36,7 +36,7 @@ const mockStudentUser: User = {
   createdAt: new Date(),
   updatedAt: new Date(),
 };
-const mockAnteproject: Anteproject = {
+const mockAnteproject = {
   id: 1,
   title: 'Test Anteproject',
   description: 'Desc',
@@ -44,8 +44,6 @@ const mockAnteproject: Anteproject = {
   tutorId: mockTutorUser.id,
   students: [mockStudentUser],
   tutor: mockTutorUser,
-  createdAt: new Date(),
-  updatedAt: new Date(),
   academicYear: '2024',
   projectType: AnteprojectTypeEnum.EXECUTION,
   expectedResults: [],
@@ -53,7 +51,7 @@ const mockAnteproject: Anteproject = {
   institution: 'Test Institute',
   modality: 'Test Modality',
   location: 'Test Location',
-};
+} as Anteproject;
 const mockCriteria: AnteprojectEvaluationCriteria = {
   id: 1,
   name: 'Viability',
