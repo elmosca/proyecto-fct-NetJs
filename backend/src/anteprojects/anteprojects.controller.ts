@@ -9,6 +9,8 @@ import {
   ParseIntPipe,
   UseGuards,
   Request,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
 import { AnteprojectsService } from './anteprojects.service';
 import { CreateAnteprojectDto } from './dto/create-anteproject.dto';
@@ -17,6 +19,7 @@ import { RejectAnteprojectDto } from './dto/reject-anteproject.dto';
 import { ScheduleDefenseDto } from './dto/schedule-defense.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { User } from '../users/entities/user.entity';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('anteprojects')
 @UseGuards(JwtAuthGuard)
@@ -110,5 +113,15 @@ export class AnteprojectsController {
     @Request() req: { user: User },
   ) {
     return this.anteprojectsService.completeDefense(id, req.user);
+  }
+
+  @Post(':id/files')
+  @UseInterceptors(FileInterceptor('file'))
+  uploadFile(
+    @Param('id', ParseIntPipe) id: number,
+    @UploadedFile() file: Express.Multer.File,
+    @Request() req: { user: User },
+  ) {
+    return this.anteprojectsService.uploadAnteprojectFile(id, file, req.user);
   }
 } 

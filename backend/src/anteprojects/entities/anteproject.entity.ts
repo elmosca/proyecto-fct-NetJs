@@ -12,9 +12,9 @@ import {
   JoinTable,
 } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
+import { File } from '../../files/entities/file.entity';
 // import { AnteprojectObjective } from './anteproject-objective.entity';
 // import { AnteprojectEvaluation } from './anteproject-evaluation.entity';
-// import { File } from 'src/files/entities/file.entity';
 
 /**
  * Enumeración para el tipo de proyecto.
@@ -102,15 +102,6 @@ export class Anteproject {
   @Column({ type: 'text', nullable: true })
   tutorComments?: string;
 
-  @Column({ type: 'varchar', length: 500, nullable: true })
-  pdfFilePath?: string;
-
-  @CreateDateColumn({ type: 'timestamp' })
-  createdAt: Date;
-
-  @UpdateDateColumn({ type: 'timestamp' })
-  updatedAt: Date;
-
   @DeleteDateColumn({ type: 'timestamp', nullable: true })
   deletedAt?: Date;
 
@@ -130,6 +121,9 @@ export class Anteproject {
     inverseJoinColumn: { name: 'studentId', referencedColumnName: 'id' },
   })
   students: User[];
+
+  @OneToMany(() => File, (file) => file.anteproject)
+  files: File[];
 
   // @OneToMany(() => AnteprojectObjective, (objective) => objective.anteproject)
   // objectives: AnteprojectObjective[];

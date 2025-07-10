@@ -9,21 +9,28 @@ import {
   ParseIntPipe,
   UseGuards,
   Request,
+  HttpCode,
 } from '@nestjs/common';
 import { TasksService } from './tasks.service';
-import { CreateTaskDto } from './dto/create-task.dto';
-import { UpdateTaskDto } from './dto/update-task.dto';
+import { CreateTaskDto, UpdateTaskDto, MoveTaskDto, AssignUserDto } from './dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { User } from '../users/entities/user.entity';
 import { RolesGuard } from '../roles/roles.guard';
 import { Roles } from '../roles/roles.decorator';
 import { RoleEnum } from '../roles/roles.enum';
-import { AssignUserDto } from './dto/assign-user.dto';
 
 @Controller('tasks')
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class TasksController {
   constructor(private readonly tasksService: TasksService) {}
+
+  @Get('project/:projectId/kanban')
+  getKanbanData(
+    @Param('projectId', ParseIntPipe) projectId: number,
+    @Request() req: { user: User },
+  ) {
+    return this.tasksService.getKanbanData(projectId, req.user);
+  }
 
   @Get('project/:projectId')
   findAllByProject(
@@ -56,6 +63,16 @@ export class TasksController {
     @Request() req: { user: User },
   ) {
     return this.tasksService.removeAssignee(taskId, userId, req.user);
+  }
+
+  @Patch(':id/move')
+  @HttpCode(204)
+  moveTask(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() moveTaskDto: MoveTaskDto,
+    @Request() req: { user: User },
+  ) {
+    return this.tasksService.moveTask(id, moveTaskDto, req.user);
   }
 
   @Post()

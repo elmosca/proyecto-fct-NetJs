@@ -23,6 +23,7 @@ services:
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
+      - uploads_data:/usr/src/app/storage/uploads
 
   postgres:
     image: postgres:13
@@ -38,4 +39,5 @@ services:
       - postgres_data:/var/lib/postgresql/data
 
 volumes:
-  postgres_data: 
+  postgres_data:
+  uploads_data: 

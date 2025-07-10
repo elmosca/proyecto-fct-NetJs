@@ -51,6 +51,12 @@
 ### Testing Base
 - [x] Corrección de la configuración de tests E2E con Supertest.
 
+### Funcionalidades Clave
+- [x] Implementar el sistema de subida de archivos para la entidad `File` y asociarlo a los Anteproyectos de forma polimórfica y con relación directa.
+
+### Funcionalidades Específicas
+- [x] Implementar sistema de Kanban para tareas.
+
 ## 🚧 En Progreso
 
 - **Lógica de Negocio y Endpoints (CRUDs)**:
@@ -68,10 +74,8 @@
 ### Lógica de Negocio y Endpoints
 - [x] Desarrollar los endpoints para gestionar las relaciones (ej: añadir un estudiante a un proyecto, asignar una tarea).
 - [x] Implementar el sistema de evaluación para los Anteproyectos.
-- [ ] Implementar el sistema de subida de archivos para la entidad `File` y asociarlo a los Anteproyectos.
 
 ### Funcionalidades Específicas
-- [ ] Implementar sistema de Kanban para tareas.
 - [ ] Sistema de notificaciones en tiempo real (WebSocket).
 
 ### Seguridad Avanzada
@@ -84,6 +88,9 @@
 - [ ] Documentación de API con Swagger/OpenAPI.
 - [ ] Completar la documentación técnica del proyecto (`TECHNICAL_DOCUMENTATION.md`).
 
+### Mejoras Potenciales y Consideraciones Futuras
+- [ ] **Integración con Google Drive**: Investigar y desarrollar la capacidad de vincular archivos directamente desde Google Drive en lugar de (o además de) subirlos localmente. Esto aprovecharía el ecosistema de Google Workspace ya utilizado por alumnos y tutores, facilitando la colaboración y reduciendo los costes de almacenamiento del servidor.
+
 ### Optimización y Despliegue
 - [ ] Implementar caché (Redis/memcached).
 - [ ] Optimizar consultas a base de datos.
@@ -92,14 +99,14 @@
 
 ## 📋 Próximos Pasos Inmediatos
 
-1.  **Sistema de Archivos**: Implementar la subida de ficheros y asociarla a las entidades correspondientes.
-2.  **Sistema de Kanban**: Implementar la lógica para el tablero Kanban de tareas.
+1.  **Sistema de Kanban**: Implementar la lógica para el tablero Kanban de tareas.
+2.  **Sistema de Notificaciones**: Implementar notificaciones en tiempo real (WebSocket).
 
 ## 📅 Estimación de Tiempos
 *(La estimación se reajustará tras completar los próximos pasos)*
 
 ## 🔄 Actualizaciones
 
-- **Última actualización**: 2024-07-09
+- **Última actualización**: 2024-07-10
 - **Estado actual**: CRUDs, ciclos de vida y sistema de evaluación implementados y probados.
 - **Próxima revisión**: [Fecha] 

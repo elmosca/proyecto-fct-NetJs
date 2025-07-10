@@ -38,6 +38,9 @@ yarn-error.log*
 coverage/
 .nyc_output/
 
+# Directorio de subidas
+/storage/
+
 # ===================================================================
 # Frontend: Flutter / Dart
 # ===================================================================
@@ -91,3 +94,8 @@ windows/flutter/ephemeral/
 # ===================================================================
 .docker/
 docker-compose.override.yml
+
+# Archivos específicos de backend que no deben subirse
+backend/dist/
+backend/node_modules/
+backend/storage/

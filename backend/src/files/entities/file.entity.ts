@@ -8,6 +8,7 @@ import {
   Index,
 } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
+import { Anteproject } from '../../anteprojects/entities/anteproject.entity';
 
 /**
  * Enumeración para los tipos de entidades a las que se puede adjuntar un archivo.
@@ -59,4 +60,9 @@ export class File {
   @ManyToOne(() => User)
   @JoinColumn({ name: 'uploadedById' })
   uploadedBy: User;
+
+  @ManyToOne(() => Anteproject, (anteproject) => anteproject.files, {
+    nullable: true,
+  })
+  anteproject: Anteproject;
 } 

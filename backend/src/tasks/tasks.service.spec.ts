@@ -9,6 +9,7 @@ import { RoleEnum } from '../roles/roles.enum';
 import { ForbiddenException, NotFoundException } from '@nestjs/common';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
+import { MoveTaskDto } from './dto';
 
 // Mocks
 const mockAdminUser: User = { id: 1, role: RoleEnum.ADMIN, email: 'admin@test.com', fullName: 'Admin', passwordHash: '', status: UserStatus.ACTIVE, createdAt: new Date(), updatedAt: new Date() };
@@ -32,13 +33,30 @@ const mockTask: Task = {
   updatedAt: new Date(),
 };
 
+const mockTasksList: Task[] = [
+  { ...mockTask, id: 1, status: TaskStatusEnum.PENDING, kanbanPosition: 0 },
+  { ...mockTask, id: 2, status: TaskStatusEnum.IN_PROGRESS, kanbanPosition: 0 },
+  { ...mockTask, id: 3, status: TaskStatusEnum.PENDING, kanbanPosition: 1 },
+  { ...mockTask, id: 4, status: TaskStatusEnum.COMPLETED, kanbanPosition: 0 },
+];
+
+
 describe('TasksService', () => {
   let service: TasksService;
   let taskRepository: Repository<Task>;
   let projectRepository: Repository<Project>;
   let userRepository: Repository<User>;
 
-  const mockTaskRepository = { save: jest.fn(), create: jest.fn(), find: jest.fn(), findOne: jest.fn(), softDelete: jest.fn() };
+  const mockTaskRepository = { 
+    save: jest.fn(), 
+    create: jest.fn(), 
+    find: jest.fn(), 
+    findOne: jest.fn(), 
+    softDelete: jest.fn(),
+    manager: {
+      transaction: jest.fn(),
+    },
+  };
   const mockProjectRepository = { findOne: jest.fn() };
   const mockUserRepository = { find: jest.fn() };
 
@@ -247,10 +265,96 @@ describe('TasksService', () => {
         const studentNotAssigned: User = { id: 99, role: RoleEnum.STUDENT, email: 'student99@test.com', fullName: 'Student 99', passwordHash: '', status: UserStatus.ACTIVE, createdAt: new Date(), updatedAt: new Date() };
         mockTaskRepository.findOne.mockResolvedValue(mockTask);
         mockProjectRepository.findOne.mockResolvedValue(mockProject);
-
+        
         const result = await service.removeAssignee(mockTask.id, studentNotAssigned.id, mockTutorUser);
-        expect(result.assignees.length).toBe(mockTask.assignees.length);
+
+        expect(result).toEqual(mockTask);
         expect(taskRepository.save).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('Kanban Functionality', () => {
+    describe('getKanbanData', () => {
+      it('should return tasks grouped by status for a project', async () => {
+        mockProjectRepository.findOne.mockResolvedValue(mockProject);
+        mockTaskRepository.find.mockResolvedValue(mockTasksList);
+        
+        const result = await service.getKanbanData(mockProject.id, mockTutorUser);
+        
+        expect(result[TaskStatusEnum.PENDING]).toHaveLength(2);
+        expect(result[TaskStatusEnum.IN_PROGRESS]).toHaveLength(1);
+        expect(result[TaskStatusEnum.COMPLETED]).toHaveLength(1);
+        expect(result[TaskStatusEnum.UNDER_REVIEW]).toBeDefined();
+        expect(result[TaskStatusEnum.UNDER_REVIEW]).toHaveLength(0);
+        expect(result[TaskStatusEnum.PENDING][0].kanbanPosition).toBe(0);
+        expect(result[TaskStatusEnum.PENDING][1].kanbanPosition).toBe(1);
+      });
+
+      it('should throw ForbiddenException if user cannot access project', async () => {
+        const otherTutor = { ...mockTutorUser, id: 99 };
+        mockProjectRepository.findOne.mockResolvedValue(mockProject);
+        await expect(service.getKanbanData(mockProject.id, otherTutor)).rejects.toThrow(ForbiddenException);
+      });
+    });
+
+    describe('moveTask', () => {
+        const moveDto: MoveTaskDto = { newStatus: TaskStatusEnum.IN_PROGRESS, newPosition: 0 };
+        const mockQueryBuilder = {
+          update: jest.fn().mockReturnThis(),
+          set: jest.fn().mockReturnThis(),
+          where: jest.fn().mockReturnThis(),
+          andWhere: jest.fn().mockReturnThis(),
+          execute: jest.fn().mockResolvedValue(undefined),
+        };
+        const mockEntityManager = {
+          findOne: jest.fn(),
+          update: jest.fn(),
+          createQueryBuilder: () => mockQueryBuilder,
+        };
+
+        beforeEach(() => {
+            mockTaskRepository.manager.transaction.mockImplementation(async (cb) => cb(mockEntityManager));
+            jest.spyOn(mockEntityManager, 'createQueryBuilder').mockReturnValue(mockQueryBuilder as any);
+        });
+
+        it('should move a task to a different column', async () => {
+            const taskToMove = { ...mockTask, status: TaskStatusEnum.PENDING, kanbanPosition: 0 };
+            mockEntityManager.findOne.mockResolvedValue(taskToMove);
+            mockProjectRepository.findOne.mockResolvedValue(mockProject);
+
+            await service.moveTask(taskToMove.id, moveDto, mockTutorUser);
+            
+            expect(mockEntityManager.createQueryBuilder).toHaveBeenCalledTimes(3);
+            // 1. Decrement in old column
+            expect(mockQueryBuilder.where).toHaveBeenCalledWith(expect.stringContaining('"status" = :status'), expect.objectContaining({ status: TaskStatusEnum.PENDING }));
+            // 2. Increment in new column
+            expect(mockQueryBuilder.where).toHaveBeenCalledWith(expect.stringContaining('"status" = :status'), expect.objectContaining({ status: TaskStatusEnum.IN_PROGRESS }));
+            // 3. Final update
+            expect(mockEntityManager.update).toHaveBeenCalledWith(Task, taskToMove.id, {
+                status: moveDto.newStatus,
+                kanbanPosition: moveDto.newPosition,
+            });
+        });
+
+        it('should move a task within the same column', async () => {
+            const taskToMove = { ...mockTask, status: TaskStatusEnum.PENDING, kanbanPosition: 0 };
+            const sameColumnMoveDto: MoveTaskDto = { newStatus: TaskStatusEnum.PENDING, newPosition: 1 };
+            mockEntityManager.findOne.mockResolvedValue(taskToMove);
+            mockProjectRepository.findOne.mockResolvedValue(mockProject);
+
+            await service.moveTask(taskToMove.id, sameColumnMoveDto, mockTutorUser);
+            
+            expect(mockEntityManager.createQueryBuilder).toHaveBeenCalledTimes(2); // One for the move, one for the final update
+            expect(mockEntityManager.update).toHaveBeenCalledWith(Task, taskToMove.id, {
+                status: sameColumnMoveDto.newStatus,
+                kanbanPosition: sameColumnMoveDto.newPosition,
+            });
+        });
+
+        it('should throw NotFoundException if task does not exist', async () => {
+            mockEntityManager.findOne.mockResolvedValue(null);
+            await expect(service.moveTask(999, moveDto, mockTutorUser)).rejects.toThrow(NotFoundException);
+        });
     });
   });
 }); 

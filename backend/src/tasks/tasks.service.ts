@@ -1,12 +1,11 @@
 import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { In, Repository } from 'typeorm';
-import { Task } from './entities/task.entity';
+import { Task, TaskStatusEnum } from './entities/task.entity';
 import { User } from '../users/entities/user.entity';
 import { Project } from '../projects/entities/project.entity';
 import { RoleEnum } from '../roles/roles.enum';
-import { CreateTaskDto } from './dto/create-task.dto';
-import { UpdateTaskDto } from './dto/update-task.dto';
+import { CreateTaskDto, UpdateTaskDto, MoveTaskDto } from './dto';
 
 @Injectable()
 export class TasksService {
@@ -33,6 +32,36 @@ export class TasksService {
       throw new ForbiddenException('You do not have permission to access this project.');
     }
     return project;
+  }
+
+  async getKanbanData(projectId: number, currentUser: User): Promise<Record<TaskStatusEnum, Task[]>> {
+    await this.checkProjectAccess(projectId, currentUser);
+    const tasks = await this.tasksRepository.find({
+      where: { projectId },
+      order: { kanbanPosition: 'ASC' },
+      relations: ['assignees', 'createdBy'],
+    });
+
+    const kanbanData = tasks.reduce(
+      (acc, task) => {
+        const status = task.status;
+        if (!acc[status]) {
+          acc[status] = [];
+        }
+        acc[status].push(task);
+        return acc;
+      },
+      {} as Record<TaskStatusEnum, Task[]>,
+    );
+
+    // Asegurar que todos los estados están presentes, incluso si están vacíos
+    for (const status of Object.values(TaskStatusEnum)) {
+      if (!kanbanData[status]) {
+        kanbanData[status] = [];
+      }
+    }
+
+    return kanbanData;
   }
 
   async findAllByProject(projectId: number, currentUser: User): Promise<Task[]> {
@@ -162,6 +191,88 @@ export class TasksService {
 
     task.assignees.push(userToAssign);
     return this.tasksRepository.save(task);
+  }
+
+  async moveTask(taskId: number, moveTaskDto: MoveTaskDto, currentUser: User): Promise<void> {
+    const { newStatus, newPosition } = moveTaskDto;
+
+    await this.tasksRepository.manager.transaction(async (entityManager) => {
+      const task = await entityManager.findOne(Task, { where: { id: taskId } });
+      if (!task) {
+        throw new NotFoundException(`Task with ID ${taskId} not found`);
+      }
+
+      await this.checkProjectAccess(task.projectId, currentUser);
+
+      const oldStatus = task.status;
+      const oldPosition = task.kanbanPosition;
+
+      if (oldStatus === newStatus && oldPosition === newPosition) {
+        return; // No change needed
+      }
+
+      // --- Mover dentro de la misma columna ---
+      if (oldStatus === newStatus) {
+        if (oldPosition < newPosition) {
+          // Mover hacia abajo
+          await entityManager
+            .createQueryBuilder()
+            .update(Task)
+            .set({ kanbanPosition: () => '"kanbanPosition" - 1' })
+            .where('"projectId" = :projectId AND "status" = :status AND "kanbanPosition" > :oldPosition AND "kanbanPosition" <= :newPosition', {
+              projectId: task.projectId,
+              status: oldStatus,
+              oldPosition,
+              newPosition,
+            })
+            .execute();
+        } else {
+          // Mover hacia arriba
+          await entityManager
+            .createQueryBuilder()
+            .update(Task)
+            .set({ kanbanPosition: () => '"kanbanPosition" + 1' })
+            .where('"projectId" = :projectId AND "status" = :status AND "kanbanPosition" >= :newPosition AND "kanbanPosition" < :oldPosition', {
+              projectId: task.projectId,
+              status: oldStatus,
+              newPosition,
+              oldPosition,
+            })
+            .execute();
+        }
+      } else {
+        // --- Mover a una columna diferente ---
+        // 1. Decrementar posiciones en la columna antigua
+        await entityManager
+          .createQueryBuilder()
+          .update(Task)
+          .set({ kanbanPosition: () => '"kanbanPosition" - 1' })
+          .where('"projectId" = :projectId AND "status" = :status AND "kanbanPosition" > :oldPosition', {
+            projectId: task.projectId,
+            status: oldStatus,
+            oldPosition,
+          })
+          .execute();
+
+        // 2. Incrementar posiciones en la nueva columna para hacer espacio
+        await entityManager
+          .createQueryBuilder()
+          .update(Task)
+          .set({ kanbanPosition: () => '"kanbanPosition" + 1' })
+          .where('"projectId" = :projectId AND "status" = :status AND "kanbanPosition" >= :newPosition', {
+            projectId: task.projectId,
+            status: newStatus,
+            newPosition,
+          })
+          .execute();
+      }
+
+      // 3. Actualizar la tarea movida
+      await entityManager.update(Task, taskId, {
+        status: newStatus,
+        kanbanPosition: newPosition,
+      });
+    });
   }
 
   async removeAssignee(taskId: number, userId: number, currentUser: User): Promise<Task> {

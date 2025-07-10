@@ -67,7 +67,6 @@ CREATE TABLE anteprojects (
     evaluation_date DATE NULL, -- Fecha específica de evaluación
     
     tutor_comments TEXT NULL,
-    pdf_file_path VARCHAR(500) NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     
@@ -395,8 +394,12 @@ CREATE TABLE files (
     -- Relaciones polimórficas
     attachable_type ENUM('task', 'comment', 'anteproject') NOT NULL,
     attachable_id INT NOT NULL,
+
+    -- Relación directa con anteproyectos
+    anteproject_id INT NULL,
     
     FOREIGN KEY (uploaded_by) REFERENCES users(id) ON DELETE RESTRICT,
+    FOREIGN KEY (anteproject_id) REFERENCES anteprojects(id) ON DELETE SET NULL,
     INDEX idx_attachable (attachable_type, attachable_id)
 );
 ```
