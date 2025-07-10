@@ -11,4 +11,4 @@ import { FilesModule } from '../files/files.module';
   controllers: [AnteprojectsController],
   providers: [AnteprojectsService],
 })
-export class AnteprojectsModule {} 
+export class AnteprojectsModule {}

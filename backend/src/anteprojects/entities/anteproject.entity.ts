@@ -59,7 +59,11 @@ export class Anteproject {
   @Column({ type: 'varchar', length: 20 })
   academicYear: string;
 
-  @Column({ type: 'varchar', length: 255, default: 'CIFP Carlos III de Cartagena' })
+  @Column({
+    type: 'varchar',
+    length: 255,
+    default: 'CIFP Carlos III de Cartagena',
+  })
   institution: string;
 
   @Column({ type: 'varchar', length: 100, default: 'modalidad distancia' })
@@ -130,7 +134,7 @@ export class Anteproject {
 
   // @OneToMany(() => AnteprojectEvaluation, (evaluation) => evaluation.anteproject)
   // evaluations: AnteprojectEvaluation[];
-  
+
   // @OneToMany(() => File, (file) => file.attachableId) // Relación polimórfica
   // files: File[];
-} 
+}

@@ -8,10 +8,10 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
   @IsEnum(UserStatus)
   status?: UserStatus;
 
-  // Se añade explícitamente para la lógica del servicio, 
+  // Se añade explícitamente para la lógica del servicio,
   // aunque no esté en la entidad.
   password?: string;
 
   // Se añade para que el servicio pueda asignarlo internamente.
   passwordHash?: string;
-} 
+}

@@ -48,4 +48,4 @@ export class AnteprojectEvaluation {
   @ManyToOne(() => User)
   @JoinColumn({ name: 'evaluatedById' })
   evaluatedBy: User;
-} 
+}

@@ -57,7 +57,10 @@ export class AnteprojectsController {
   }
 
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number, @Request() req: { user: User }) {
+  remove(
+    @Param('id', ParseIntPipe) id: number,
+    @Request() req: { user: User },
+  ) {
     return this.anteprojectsService.remove(id, req.user);
   }
 
@@ -124,4 +127,4 @@ export class AnteprojectsController {
   ) {
     return this.anteprojectsService.uploadAnteprojectFile(id, file, req.user);
   }
-} 
+}

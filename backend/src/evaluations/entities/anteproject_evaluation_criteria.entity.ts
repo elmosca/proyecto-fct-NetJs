@@ -27,4 +27,4 @@ export class AnteprojectEvaluationCriteria {
 
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
-} 
+}

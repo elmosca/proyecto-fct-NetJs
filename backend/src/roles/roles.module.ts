@@ -5,4 +5,4 @@ import { RolesGuard } from './roles.guard';
   providers: [RolesGuard],
   exports: [RolesGuard],
 })
-export class RolesModule {} 
+export class RolesModule {}

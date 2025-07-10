@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ForbiddenException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Comment } from './entities/comment.entity';
@@ -33,8 +37,14 @@ export class CommentsService {
     return comment;
   }
 
-  async create(createCommentDto: CreateCommentDto, currentUser: User): Promise<Comment> {
-    const task = await this.tasksService.findOne(createCommentDto.taskId, currentUser);
+  async create(
+    createCommentDto: CreateCommentDto,
+    currentUser: User,
+  ): Promise<Comment> {
+    const task = await this.tasksService.findOne(
+      createCommentDto.taskId,
+      currentUser,
+    );
     const newComment = this.commentsRepository.create({
       ...createCommentDto,
       authorId: currentUser.id,
@@ -43,7 +53,11 @@ export class CommentsService {
     return this.commentsRepository.save(newComment);
   }
 
-  async update(id: number, updateCommentDto: UpdateCommentDto, currentUser: User): Promise<Comment> {
+  async update(
+    id: number,
+    updateCommentDto: UpdateCommentDto,
+    currentUser: User,
+  ): Promise<Comment> {
     const comment = await this.findOne(id, currentUser); // Checks task access
     if (comment.authorId !== currentUser.id) {
       throw new ForbiddenException('You can only update your own comments.');
@@ -53,9 +67,9 @@ export class CommentsService {
   }
 
   async remove(id: number, currentUser: User): Promise<void> {
-    const comment = await this.commentsRepository.findOne({ 
-        where: { id }, 
-        relations: ['task', 'task.project', 'task.project.tutor'] 
+    const comment = await this.commentsRepository.findOne({
+      where: { id },
+      relations: ['task', 'task.project', 'task.project.tutor'],
     });
     if (!comment) {
       throw new NotFoundException(`Comment with ID ${id} not found`);
@@ -67,9 +81,11 @@ export class CommentsService {
     const isAdmin = currentUser.role === RoleEnum.ADMIN;
 
     if (!isAuthor && !isTutor && !isAdmin) {
-      throw new ForbiddenException('You do not have permission to delete this comment.');
+      throw new ForbiddenException(
+        'You do not have permission to delete this comment.',
+      );
     }
 
     await this.commentsRepository.softDelete(id);
   }
-} 
+}

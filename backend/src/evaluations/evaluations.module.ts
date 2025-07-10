@@ -17,4 +17,4 @@ import { AnteprojectsModule } from '../anteprojects/anteprojects.module';
   controllers: [EvaluationsController],
   providers: [EvaluationsService],
 })
-export class EvaluationsModule {} 
+export class EvaluationsModule {}

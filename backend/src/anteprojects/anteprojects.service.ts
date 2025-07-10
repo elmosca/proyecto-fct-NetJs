@@ -33,7 +33,7 @@ export class AnteprojectsService {
     return {
       isUserAdmin: currentUser.role === RoleEnum.ADMIN,
       isUserTutor: anteproject.tutor.id === currentUser.id,
-      isUserStudent: anteproject.students.some(s => s.id === currentUser.id),
+      isUserStudent: anteproject.students.some((s) => s.id === currentUser.id),
     };
   }
 
@@ -91,7 +91,12 @@ export class AnteprojectsService {
     if (currentUser.role === RoleEnum.TUTOR) {
       qb.where('anteproject.tutorId = :tutorId', { tutorId: currentUser.id });
     } else if (currentUser.role === RoleEnum.STUDENT) {
-      qb.innerJoin('anteproject.students', 'student_rel', 'student_rel.id = :studentId', { studentId: currentUser.id });
+      qb.innerJoin(
+        'anteproject.students',
+        'student_rel',
+        'student_rel.id = :studentId',
+        { studentId: currentUser.id },
+      );
     }
     // Admin ve todo
 
@@ -133,10 +138,7 @@ export class AnteprojectsService {
       currentUser,
     );
 
-    if (
-      anteproject.status !== AnteprojectStatusEnum.DRAFT &&
-      !isUserAdmin
-    ) {
+    if (anteproject.status !== AnteprojectStatusEnum.DRAFT && !isUserAdmin) {
       throw new ForbiddenException(
         'This anteproject cannot be updated because it is not in draft status.',
       );
@@ -183,10 +185,7 @@ export class AnteprojectsService {
     const anteproject = await this.findOne(id, currentUser);
     const { isUserAdmin } = this.checkUserRoles(anteproject, currentUser);
 
-    if (
-      anteproject.status !== AnteprojectStatusEnum.DRAFT &&
-      !isUserAdmin
-    ) {
+    if (anteproject.status !== AnteprojectStatusEnum.DRAFT && !isUserAdmin) {
       throw new ForbiddenException(
         'This anteproject cannot be deleted because it is not in draft status.',
       );

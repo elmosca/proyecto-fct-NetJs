@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ForbiddenException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { In, Repository } from 'typeorm';
 import { Task, TaskStatusEnum } from './entities/task.entity';
@@ -6,6 +10,7 @@ import { User } from '../users/entities/user.entity';
 import { Project } from '../projects/entities/project.entity';
 import { RoleEnum } from '../roles/roles.enum';
 import { CreateTaskDto, UpdateTaskDto, MoveTaskDto } from './dto';
+import { NotificationsService } from '../notifications/notifications.service';
 
 @Injectable()
 export class TasksService {
@@ -13,9 +18,13 @@ export class TasksService {
     @InjectRepository(Task) private tasksRepository: Repository<Task>,
     @InjectRepository(Project) private projectsRepository: Repository<Project>,
     @InjectRepository(User) private usersRepository: Repository<User>,
+    private readonly notificationsService: NotificationsService,
   ) {}
 
-  private async checkProjectAccess(projectId: number, user: User): Promise<Project> {
+  private async checkProjectAccess(
+    projectId: number,
+    user: User,
+  ): Promise<Project> {
     const project = await this.projectsRepository.findOne({
       where: { id: projectId },
       relations: ['tutor', 'students'],
@@ -26,15 +35,20 @@ export class TasksService {
 
     const isUserAdmin = user.role === RoleEnum.ADMIN;
     const isUserTutor = project.tutor.id === user.id;
-    const isUserStudent = project.students.some(s => s.id === user.id);
+    const isUserStudent = project.students.some((s) => s.id === user.id);
 
     if (!isUserAdmin && !isUserTutor && !isUserStudent) {
-      throw new ForbiddenException('You do not have permission to access this project.');
+      throw new ForbiddenException(
+        'You do not have permission to access this project.',
+      );
     }
     return project;
   }
 
-  async getKanbanData(projectId: number, currentUser: User): Promise<Record<TaskStatusEnum, Task[]>> {
+  async getKanbanData(
+    projectId: number,
+    currentUser: User,
+  ): Promise<Record<TaskStatusEnum, Task[]>> {
     await this.checkProjectAccess(projectId, currentUser);
     const tasks = await this.tasksRepository.find({
       where: { projectId },
@@ -64,7 +78,10 @@ export class TasksService {
     return kanbanData;
   }
 
-  async findAllByProject(projectId: number, currentUser: User): Promise<Task[]> {
+  async findAllByProject(
+    projectId: number,
+    currentUser: User,
+  ): Promise<Task[]> {
     await this.checkProjectAccess(projectId, currentUser);
     return this.tasksRepository.find({
       where: { projectId },
@@ -73,7 +90,10 @@ export class TasksService {
   }
 
   async findOne(id: number, currentUser: User): Promise<Task> {
-    const task = await this.tasksRepository.findOne({ where: { id }, relations: ['project'] });
+    const task = await this.tasksRepository.findOne({
+      where: { id },
+      relations: ['project'],
+    });
     if (!task) {
       throw new NotFoundException(`Task with ID ${id} not found`);
     }
@@ -82,26 +102,37 @@ export class TasksService {
   }
 
   async create(createTaskDto: CreateTaskDto, currentUser: User): Promise<Task> {
-    const project = await this.checkProjectAccess(createTaskDto.projectId, currentUser);
+    const project = await this.checkProjectAccess(
+      createTaskDto.projectId,
+      currentUser,
+    );
 
     const isAdmin = currentUser.role === RoleEnum.ADMIN;
     const isTutor = currentUser.id === project.tutor.id;
 
     if (!isAdmin && !isTutor) {
-      throw new ForbiddenException('Only admins and the project tutor can create tasks.');
+      throw new ForbiddenException(
+        'Only admins and the project tutor can create tasks.',
+      );
     }
 
     const { assigneeIds, ...taskData } = createTaskDto;
     let assignees: User[] = [];
     if (assigneeIds && assigneeIds.length > 0) {
-        const projectStudentIds = project.students.map(s => s.id);
-        const allAssigneesInProject = assigneeIds.every(id => projectStudentIds.includes(id));
-      
-        if (!allAssigneesInProject) {
-            throw new ForbiddenException('You can only assign tasks to students who are part of the project.');
-        }
+      const projectStudentIds = project.students.map((s) => s.id);
+      const allAssigneesInProject = assigneeIds.every((id) =>
+        projectStudentIds.includes(id),
+      );
 
-      assignees = await this.usersRepository.find({ where: { id: In(assigneeIds) }});
+      if (!allAssigneesInProject) {
+        throw new ForbiddenException(
+          'You can only assign tasks to students who are part of the project.',
+        );
+      }
+
+      assignees = await this.usersRepository.find({
+        where: { id: In(assigneeIds) },
+      });
     }
 
     const newTask = this.tasksRepository.create({
@@ -114,40 +145,56 @@ export class TasksService {
     return this.tasksRepository.save(newTask);
   }
 
-  async update(id: number, updateTaskDto: UpdateTaskDto, currentUser: User): Promise<Task> {
+  async update(
+    id: number,
+    updateTaskDto: UpdateTaskDto,
+    currentUser: User,
+  ): Promise<Task> {
     const task = await this.findOne(id, currentUser);
     const project = await this.checkProjectAccess(task.projectId, currentUser);
 
     const isAdmin = currentUser.role === RoleEnum.ADMIN;
     const isTutor = currentUser.id === project.tutor.id;
     const isCreator = currentUser.id === task.createdById;
-    const isAssignee = task.assignees.some(a => a.id === currentUser.id);
+    const isAssignee = task.assignees.some((a) => a.id === currentUser.id);
 
     // General update permission
     if (!isAdmin && !isTutor && !isCreator) {
-        // Allow assignees to update only status
-        if (isAssignee) {
-            const allowedUpdates: (keyof UpdateTaskDto)[] = ['status'];
-            const requestedUpdates = Object.keys(updateTaskDto);
-            const isUpdateAllowed = requestedUpdates.every(key => allowedUpdates.includes(key as any));
-            if (!isUpdateAllowed || requestedUpdates.length === 0) {
-                 throw new ForbiddenException('As an assignee, you can only update the task status.');
-            }
-        } else {
-            throw new ForbiddenException('You do not have permission to update this task.');
+      // Allow assignees to update only status
+      if (isAssignee) {
+        const allowedUpdates: (keyof UpdateTaskDto)[] = ['status'];
+        const requestedUpdates = Object.keys(updateTaskDto);
+        const isUpdateAllowed = requestedUpdates.every((key) =>
+          allowedUpdates.includes(key as any),
+        );
+        if (!isUpdateAllowed || requestedUpdates.length === 0) {
+          throw new ForbiddenException(
+            'As an assignee, you can only update the task status.',
+          );
         }
+      } else {
+        throw new ForbiddenException(
+          'You do not have permission to update this task.',
+        );
+      }
     }
-    
+
     // Validate and update assignees if provided
     if (updateTaskDto.assigneeIds) {
-        const projectStudentIds = project.students.map(s => s.id);
-        const allAssigneesInProject = updateTaskDto.assigneeIds.every(id => projectStudentIds.includes(id));
-        if (!allAssigneesInProject) {
-            throw new ForbiddenException('You can only assign tasks to students who are part of the project.');
-        }
-        task.assignees = await this.usersRepository.find({ where: { id: In(updateTaskDto.assigneeIds) }});
+      const projectStudentIds = project.students.map((s) => s.id);
+      const allAssigneesInProject = updateTaskDto.assigneeIds.every((id) =>
+        projectStudentIds.includes(id),
+      );
+      if (!allAssigneesInProject) {
+        throw new ForbiddenException(
+          'You can only assign tasks to students who are part of the project.',
+        );
+      }
+      task.assignees = await this.usersRepository.find({
+        where: { id: In(updateTaskDto.assigneeIds) },
+      });
     }
-    
+
     const { assigneeIds, ...otherUpdates } = updateTaskDto;
     Object.assign(task, otherUpdates);
     return this.tasksRepository.save(task);
@@ -162,13 +209,19 @@ export class TasksService {
     const isCreator = currentUser.id === task.createdById;
 
     if (!isAdmin && !isTutor && !isCreator) {
-        throw new ForbiddenException('You do not have permission to delete this task.');
+      throw new ForbiddenException(
+        'You do not have permission to delete this task.',
+      );
     }
-    
+
     await this.tasksRepository.softDelete(id);
   }
 
-  async assignUser(taskId: number, userId: number, currentUser: User): Promise<Task> {
+  async assignUser(
+    taskId: number,
+    userId: number,
+    currentUser: User,
+  ): Promise<Task> {
     const task = await this.findOne(taskId, currentUser);
     const project = await this.checkProjectAccess(task.projectId, currentUser);
 
@@ -176,24 +229,43 @@ export class TasksService {
     const isTutor = currentUser.id === project.tutor.id;
 
     if (!isAdmin && !isTutor) {
-      throw new ForbiddenException('Only admins and the project tutor can assign tasks.');
+      throw new ForbiddenException(
+        'Only admins and the project tutor can assign tasks.',
+      );
     }
 
-    const userToAssign = project.students.find(s => s.id === userId);
+    const userToAssign = project.students.find((s) => s.id === userId);
     if (!userToAssign) {
-      throw new NotFoundException(`Student with ID ${userId} is not part of this project.`);
+      throw new NotFoundException(
+        `Student with ID ${userId} is not part of this project.`,
+      );
     }
 
-    const isAlreadyAssigned = task.assignees.some(a => a.id === userId);
+    const isAlreadyAssigned = task.assignees.some((a) => a.id === userId);
     if (isAlreadyAssigned) {
       return task; // Idempotent: user already assigned
     }
 
     task.assignees.push(userToAssign);
-    return this.tasksRepository.save(task);
+    const savedTask = await this.tasksRepository.save(task);
+
+    // Enviar notificación
+    await this.notificationsService.createAndEmitNotification(
+      userToAssign,
+      'task_assigned',
+      'Nueva tarea asignada',
+      `Se te ha asignado la tarea "${savedTask.title}" en el proyecto "${project.title}".`,
+      `/projects/${project.id}/tasks/${savedTask.id}`,
+    );
+
+    return savedTask;
   }
 
-  async moveTask(taskId: number, moveTaskDto: MoveTaskDto, currentUser: User): Promise<void> {
+  async moveTask(
+    taskId: number,
+    moveTaskDto: MoveTaskDto,
+    currentUser: User,
+  ): Promise<void> {
     const { newStatus, newPosition } = moveTaskDto;
 
     await this.tasksRepository.manager.transaction(async (entityManager) => {
@@ -219,12 +291,15 @@ export class TasksService {
             .createQueryBuilder()
             .update(Task)
             .set({ kanbanPosition: () => '"kanbanPosition" - 1' })
-            .where('"projectId" = :projectId AND "status" = :status AND "kanbanPosition" > :oldPosition AND "kanbanPosition" <= :newPosition', {
-              projectId: task.projectId,
-              status: oldStatus,
-              oldPosition,
-              newPosition,
-            })
+            .where(
+              '"projectId" = :projectId AND "status" = :status AND "kanbanPosition" > :oldPosition AND "kanbanPosition" <= :newPosition',
+              {
+                projectId: task.projectId,
+                status: oldStatus,
+                oldPosition,
+                newPosition,
+              },
+            )
             .execute();
         } else {
           // Mover hacia arriba
@@ -232,12 +307,15 @@ export class TasksService {
             .createQueryBuilder()
             .update(Task)
             .set({ kanbanPosition: () => '"kanbanPosition" + 1' })
-            .where('"projectId" = :projectId AND "status" = :status AND "kanbanPosition" >= :newPosition AND "kanbanPosition" < :oldPosition', {
-              projectId: task.projectId,
-              status: oldStatus,
-              newPosition,
-              oldPosition,
-            })
+            .where(
+              '"projectId" = :projectId AND "status" = :status AND "kanbanPosition" >= :newPosition AND "kanbanPosition" < :oldPosition',
+              {
+                projectId: task.projectId,
+                status: oldStatus,
+                newPosition,
+                oldPosition,
+              },
+            )
             .execute();
         }
       } else {
@@ -247,11 +325,14 @@ export class TasksService {
           .createQueryBuilder()
           .update(Task)
           .set({ kanbanPosition: () => '"kanbanPosition" - 1' })
-          .where('"projectId" = :projectId AND "status" = :status AND "kanbanPosition" > :oldPosition', {
-            projectId: task.projectId,
-            status: oldStatus,
-            oldPosition,
-          })
+          .where(
+            '"projectId" = :projectId AND "status" = :status AND "kanbanPosition" > :oldPosition',
+            {
+              projectId: task.projectId,
+              status: oldStatus,
+              oldPosition,
+            },
+          )
           .execute();
 
         // 2. Incrementar posiciones en la nueva columna para hacer espacio
@@ -259,11 +340,14 @@ export class TasksService {
           .createQueryBuilder()
           .update(Task)
           .set({ kanbanPosition: () => '"kanbanPosition" + 1' })
-          .where('"projectId" = :projectId AND "status" = :status AND "kanbanPosition" >= :newPosition', {
-            projectId: task.projectId,
-            status: newStatus,
-            newPosition,
-          })
+          .where(
+            '"projectId" = :projectId AND "status" = :status AND "kanbanPosition" >= :newPosition',
+            {
+              projectId: task.projectId,
+              status: newStatus,
+              newPosition,
+            },
+          )
           .execute();
       }
 
@@ -275,7 +359,11 @@ export class TasksService {
     });
   }
 
-  async removeAssignee(taskId: number, userId: number, currentUser: User): Promise<Task> {
+  async removeAssignee(
+    taskId: number,
+    userId: number,
+    currentUser: User,
+  ): Promise<Task> {
     const task = await this.findOne(taskId, currentUser);
     const project = await this.checkProjectAccess(task.projectId, currentUser);
 
@@ -283,10 +371,12 @@ export class TasksService {
     const isTutor = currentUser.id === project.tutor.id;
 
     if (!isAdmin && !isTutor) {
-      throw new ForbiddenException('Only admins and the project tutor can unassign tasks.');
+      throw new ForbiddenException(
+        'Only admins and the project tutor can unassign tasks.',
+      );
     }
-    
-    const assigneeIndex = task.assignees.findIndex(a => a.id === userId);
+
+    const assigneeIndex = task.assignees.findIndex((a) => a.id === userId);
     if (assigneeIndex === -1) {
       return task; // Idempotent: user not assigned
     }
@@ -294,4 +384,4 @@ export class TasksService {
     task.assignees.splice(assigneeIndex, 1);
     return this.tasksRepository.save(task);
   }
-} 
+}

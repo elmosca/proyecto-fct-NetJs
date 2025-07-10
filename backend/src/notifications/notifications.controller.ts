@@ -6,4 +6,4 @@ export class NotificationsController {
   constructor(private readonly notificationsService: NotificationsService) {}
 
   // Endpoints de la API se implementarán aquí.
-} 
+}

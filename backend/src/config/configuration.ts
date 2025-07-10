@@ -11,4 +11,4 @@ export default () => ({
     secret: process.env.JWT_SECRET || 'your-super-secret-key',
     expiresIn: process.env.JWT_EXPIRATION || '1h',
   },
-}); 
+});

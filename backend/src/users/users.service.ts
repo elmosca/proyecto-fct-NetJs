@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ForbiddenException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
@@ -14,10 +18,19 @@ export class UsersService {
     private readonly usersRepository: Repository<User>,
   ) {}
 
-  async create(createUserDto: CreateUserDto, currentUser?: User): Promise<User> {
+  async create(
+    createUserDto: CreateUserDto,
+    currentUser?: User,
+  ): Promise<User> {
     if (currentUser && currentUser.role !== RoleEnum.ADMIN) {
-      if (createUserDto.role && (createUserDto.role === RoleEnum.TUTOR || createUserDto.role === RoleEnum.ADMIN)) {
-        throw new ForbiddenException('You do not have permission to create users with this role.');
+      if (
+        createUserDto.role &&
+        (createUserDto.role === RoleEnum.TUTOR ||
+          createUserDto.role === RoleEnum.ADMIN)
+      ) {
+        throw new ForbiddenException(
+          'You do not have permission to create users with this role.',
+        );
       }
     }
 
@@ -56,7 +69,11 @@ export class UsersService {
     return this.usersRepository.find({ where: { role } });
   }
 
-  async update(id: number, updateUserDto: UpdateUserDto, currentUser: User): Promise<User> {
+  async update(
+    id: number,
+    updateUserDto: UpdateUserDto,
+    currentUser: User,
+  ): Promise<User> {
     const userToUpdate = await this.findOne(id); // Reuses findOne to ensure user exists
 
     const isUpdatingOwnProfile = currentUser.id === userToUpdate.id;
@@ -64,7 +81,9 @@ export class UsersService {
 
     // A user can update their own profile, or an admin can update any profile.
     if (!isUpdatingOwnProfile && !isAdmin) {
-      throw new ForbiddenException('You do not have permission to update this user.');
+      throw new ForbiddenException(
+        'You do not have permission to update this user.',
+      );
     }
 
     // If a user is updating their own profile, they cannot change their role.
@@ -73,12 +92,22 @@ export class UsersService {
     }
 
     // If the updater is not an admin, they cannot promote a user to tutor or admin.
-    if (!isAdmin && updateUserDto.role && (updateUserDto.role === RoleEnum.TUTOR || updateUserDto.role === RoleEnum.ADMIN)) {
-      throw new ForbiddenException('You do not have permission to set this role.');
+    if (
+      !isAdmin &&
+      updateUserDto.role &&
+      (updateUserDto.role === RoleEnum.TUTOR ||
+        updateUserDto.role === RoleEnum.ADMIN)
+    ) {
+      throw new ForbiddenException(
+        'You do not have permission to set this role.',
+      );
     }
 
     if (updateUserDto.password) {
-      updateUserDto.passwordHash = await bcrypt.hash(updateUserDto.password, 10);
+      updateUserDto.passwordHash = await bcrypt.hash(
+        updateUserDto.password,
+        10,
+      );
       delete updateUserDto.password;
     }
 
@@ -91,15 +120,17 @@ export class UsersService {
     const userToDelete = await this.findOne(id); // Reuses findOne to ensure user exists
 
     const isAdmin = currentUser.role === RoleEnum.ADMIN;
-    
+
     // An admin cannot delete themselves
     if (isAdmin && currentUser.id === userToDelete.id) {
-        throw new ForbiddenException('Admins cannot delete their own account.');
+      throw new ForbiddenException('Admins cannot delete their own account.');
     }
 
     // Only admins can delete users
     if (!isAdmin) {
-      throw new ForbiddenException('You do not have permission to delete users.');
+      throw new ForbiddenException(
+        'You do not have permission to delete users.',
+      );
     }
 
     const result = await this.usersRepository.softDelete(userToDelete.id);
@@ -108,4 +139,4 @@ export class UsersService {
       throw new NotFoundException(`User with ID ${userToDelete.id} not found`);
     }
   }
-} 
+}

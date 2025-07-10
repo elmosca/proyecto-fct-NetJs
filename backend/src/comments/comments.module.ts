@@ -12,4 +12,4 @@ import { Task } from '../tasks/entities/task.entity';
   providers: [CommentsService],
   exports: [CommentsService],
 })
-export class CommentsModule {} 
+export class CommentsModule {}

@@ -13,4 +13,4 @@ const runSeed = async () => {
   await app.close();
 };
 
-void runSeed(); 
+void runSeed();

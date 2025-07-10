@@ -1,4 +1,11 @@
-import { Controller, Post, Body, UnauthorizedException, HttpCode, HttpStatus } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  UnauthorizedException,
+  HttpCode,
+  HttpStatus,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { UsersService } from '../users/users.service';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
@@ -26,13 +33,15 @@ export class AuthController {
   @Post('register')
   @HttpCode(HttpStatus.CREATED)
   async register(@Body() createUserDto: CreateUserDto) {
-    const existingUser = await this.usersService.findByEmail(createUserDto.email);
+    const existingUser = await this.usersService.findByEmail(
+      createUserDto.email,
+    );
     if (existingUser) {
       throw new UnauthorizedException('Email is already registered');
     }
 
     const registeredUser = await this.authService.register(createUserDto);
-    
+
     // Iniciar sesión automáticamente después del registro
     const user = await this.authService.validateUser(
       createUserDto.email,
@@ -46,4 +55,4 @@ export class AuthController {
 
     return this.authService.login(user);
   }
-} 
+}

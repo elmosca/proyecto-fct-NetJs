@@ -6,4 +6,4 @@ export class FilesController {
   constructor(private readonly filesService: FilesService) {}
 
   // Endpoints de la API se implementarán aquí.
-} 
+}

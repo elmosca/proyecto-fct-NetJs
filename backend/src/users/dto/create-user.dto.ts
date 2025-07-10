@@ -38,4 +38,4 @@ export class CreateUserDto {
   @IsOptional()
   @IsString()
   biography?: string;
-} 
+}

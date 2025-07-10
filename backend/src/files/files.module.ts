@@ -20,9 +20,8 @@ import { FilesService } from './files.service';
         systemSettingsService: SystemSettingsService,
         configService: ConfigService,
       ) => {
-        const allowedFileTypes = await systemSettingsService.getValue(
-          'allowed_file_types',
-        );
+        const allowedFileTypes =
+          await systemSettingsService.getValue('allowed_file_types');
 
         const maxFileSize =
           (await systemSettingsService.getValue('max_file_size_mb')) || 50;
@@ -69,4 +68,4 @@ import { FilesService } from './files.service';
   providers: [FilesService],
   exports: [FilesService],
 })
-export class FilesModule {} 
+export class FilesModule {}

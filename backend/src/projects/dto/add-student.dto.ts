@@ -4,4 +4,4 @@ export class AddStudentDto {
   @IsInt()
   @IsNotEmpty()
   studentId: number;
-} 
+}

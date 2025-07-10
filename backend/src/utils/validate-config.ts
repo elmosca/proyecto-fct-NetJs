@@ -6,11 +6,9 @@ export default function validateConfig<T extends object>(
   config: Record<string, unknown>,
   validatorClass: ClassConstructor<T>,
 ): T {
-  const validatedConfig = plainToClass(
-    validatorClass,
-    config,
-    { enableImplicitConversion: true },
-  );
+  const validatedConfig = plainToClass(validatorClass, config, {
+    enableImplicitConversion: true,
+  });
 
   const errors = validateSync(validatedConfig, {
     skipMissingProperties: false,
@@ -21,4 +19,4 @@ export default function validateConfig<T extends object>(
   }
 
   return validatedConfig;
-} 
+}

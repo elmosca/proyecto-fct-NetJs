@@ -14,4 +14,4 @@ export class MoveTaskDto {
   @Min(0)
   @IsNotEmpty()
   newPosition: number;
-} 
+}

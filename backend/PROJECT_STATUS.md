@@ -56,6 +56,7 @@
 
 ### Funcionalidades Específicas
 - [x] Implementar sistema de Kanban para tareas.
+- [x] Sistema de notificaciones en tiempo real (WebSocket).
 
 ## 🚧 En Progreso
 
@@ -66,17 +67,12 @@
   - [x] Módulo `Comments`: Lógica de servicio y permisos implementada. Tests unitarios añadidos.
   - [x] Módulo `Anteprojects`: CRUD básico implementado con permisos. Tests unitarios añadidos.
   - [x] Módulo `Anteprojects`: Implementado el ciclo de vida completo (submit, review, approve, reject, schedule defense, complete). Tests unitarios añadidos.
+  - [x] Desarrollar los endpoints para gestionar las relaciones (ej: añadir un estudiante a un proyecto, asignar una tarea).
+  - [x] Implementar el sistema de evaluación para los Anteproyectos.
 - **Configuración**:
   - [ ] Configurar CORS de forma granular para el entorno de producción.
 
 ## 📝 Pendiente
-
-### Lógica de Negocio y Endpoints
-- [x] Desarrollar los endpoints para gestionar las relaciones (ej: añadir un estudiante a un proyecto, asignar una tarea).
-- [x] Implementar el sistema de evaluación para los Anteproyectos.
-
-### Funcionalidades Específicas
-- [ ] Sistema de notificaciones en tiempo real (WebSocket).
 
 ### Seguridad Avanzada
 - [ ] Implementar manejo de errores global y logging de errores.
@@ -106,6 +102,7 @@
 
 ## 🔄 Actualizaciones
 
+- **Inicio del proyecto**: 2024-07-01
 - **Última actualización**: 2024-07-10
 - **Estado actual**: CRUDs, ciclos de vida y sistema de evaluación implementados y probados.
-- **Próxima revisión**: [Fecha] 
+- **Próxima revisión**: 2024-07-17 

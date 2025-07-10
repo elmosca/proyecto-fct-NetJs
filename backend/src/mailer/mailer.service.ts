@@ -15,36 +15,25 @@ export class MailerService {
   }
 
   async sendWelcomeEmail(to: string, name: string) {
-    await this.sendMail(
-      to,
-      'Bienvenido a Proyecto FCT',
-      'welcome',
-      {
-        name,
-      },
-    );
+    await this.sendMail(to, 'Bienvenido a Proyecto FCT', 'welcome', {
+      name,
+    });
   }
 
   async sendPasswordResetEmail(to: string, resetToken: string) {
-    await this.sendMail(
-      to,
-      'Recuperación de contraseña',
-      'password-reset',
-      {
-        resetToken,
-      },
-    );
+    await this.sendMail(to, 'Recuperación de contraseña', 'password-reset', {
+      resetToken,
+    });
   }
 
-  async sendProjectInvitationEmail(to: string, projectName: string, inviterName: string) {
-    await this.sendMail(
-      to,
-      'Invitación a proyecto',
-      'project-invitation',
-      {
-        projectName,
-        inviterName,
-      },
-    );
+  async sendProjectInvitationEmail(
+    to: string,
+    projectName: string,
+    inviterName: string,
+  ) {
+    await this.sendMail(to, 'Invitación a proyecto', 'project-invitation', {
+      projectName,
+      inviterName,
+    });
   }
-} 
+}

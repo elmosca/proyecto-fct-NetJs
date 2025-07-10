@@ -17,8 +17,10 @@ export class AuthGoogleController {
   @UseGuards(AuthGuard('google'))
   async googleAuthCallback(@Req() req, @Res() res: Response) {
     const result = await this.authGoogleService.validateOAuthLogin(req.user);
-    
+
     // Redirigir al frontend con el token
-    res.redirect(`${process.env.FRONTEND_URL}/auth/callback?token=${result.access_token}`);
+    res.redirect(
+      `${process.env.FRONTEND_URL}/auth/callback?token=${result.access_token}`,
+    );
   }
-} 
+}

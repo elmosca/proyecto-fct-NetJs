@@ -32,4 +32,4 @@ export class UserSeedService {
       await this.repository.save(newUser);
     }
   }
-} 
+}

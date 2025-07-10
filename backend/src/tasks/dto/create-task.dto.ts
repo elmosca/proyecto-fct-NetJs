@@ -62,4 +62,4 @@ export class CreateTaskDto {
   @IsString({ each: true })
   @IsOptional()
   tags?: string[];
-} 
+}

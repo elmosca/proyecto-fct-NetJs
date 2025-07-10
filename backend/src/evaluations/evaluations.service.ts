@@ -36,7 +36,9 @@ export class EvaluationsService {
       currentUser.role !== RoleEnum.ADMIN &&
       currentUser.role !== RoleEnum.TUTOR
     ) {
-      throw new ForbiddenException('You are not allowed to evaluate anteprojects.');
+      throw new ForbiddenException(
+        'You are not allowed to evaluate anteprojects.',
+      );
     }
 
     // 2. Validate all criteria IDs exist
@@ -45,7 +47,9 @@ export class EvaluationsService {
       where: { id: In(criteriaIds) },
     });
     if (existingCriteria.length !== criteriaIds.length) {
-      throw new NotFoundException('One or more evaluation criteria were not found.');
+      throw new NotFoundException(
+        'One or more evaluation criteria were not found.',
+      );
     }
 
     // 3. Create or update evaluations
@@ -79,4 +83,4 @@ export class EvaluationsService {
       },
     });
   }
-} 
+}

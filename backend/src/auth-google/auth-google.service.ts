@@ -11,7 +11,9 @@ export class AuthGoogleService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async validateOAuthLogin(profile: any): Promise<{ access_token: string; user: any }> {
+  async validateOAuthLogin(
+    profile: any,
+  ): Promise<{ access_token: string; user: any }> {
     try {
       let user = await this.usersService.findByEmail(profile.email);
 
@@ -45,4 +47,4 @@ export class AuthGoogleService {
       throw new Error('Error en la autenticación con Google');
     }
   }
-} 
+}

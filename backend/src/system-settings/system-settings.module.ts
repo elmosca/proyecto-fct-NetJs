@@ -10,4 +10,4 @@ import { SystemSettingsService } from './system-settings.service';
   providers: [SystemSettingsService],
   exports: [SystemSettingsService],
 })
-export class SystemSettingsModule {} 
+export class SystemSettingsModule {}

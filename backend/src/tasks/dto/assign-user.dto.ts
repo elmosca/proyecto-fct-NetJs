@@ -4,4 +4,4 @@ export class AssignUserDto {
   @IsInt()
   @IsNotEmpty()
   userId: number;
-} 
+}

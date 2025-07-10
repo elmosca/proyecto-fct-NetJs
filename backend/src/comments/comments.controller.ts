@@ -30,7 +30,10 @@ export class CommentsController {
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number, @Request() req: { user: User }) {
+  findOne(
+    @Param('id', ParseIntPipe) id: number,
+    @Request() req: { user: User },
+  ) {
     return this.commentsService.findOne(id, req.user);
   }
 
@@ -52,7 +55,10 @@ export class CommentsController {
   }
 
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number, @Request() req: { user: User }) {
+  remove(
+    @Param('id', ParseIntPipe) id: number,
+    @Request() req: { user: User },
+  ) {
     return this.commentsService.remove(id, req.user);
   }
-} 
+}

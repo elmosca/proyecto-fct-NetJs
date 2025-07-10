@@ -58,7 +58,10 @@ export class UsersController {
   }
 
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number, @Request() req: { user: User }) {
+  remove(
+    @Param('id', ParseIntPipe) id: number,
+    @Request() req: { user: User },
+  ) {
     return this.usersService.remove(id, req.user);
   }
-} 
+}

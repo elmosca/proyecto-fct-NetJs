@@ -48,4 +48,4 @@ export class ActivityLog {
   @ManyToOne(() => User)
   @JoinColumn({ name: 'userId' })
   user: User;
-} 
+}

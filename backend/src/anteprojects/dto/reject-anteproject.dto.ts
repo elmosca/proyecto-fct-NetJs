@@ -4,4 +4,4 @@ export class RejectAnteprojectDto {
   @IsString()
   @IsNotEmpty()
   tutorComments: string;
-} 
+}

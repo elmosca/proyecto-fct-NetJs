@@ -43,4 +43,4 @@ export class SystemSettingsService {
         return setting.settingValue;
     }
   }
-} 
+}

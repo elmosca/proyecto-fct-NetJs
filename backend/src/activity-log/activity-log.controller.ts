@@ -6,4 +6,4 @@ export class ActivityLogController {
   constructor(private readonly activityLogService: ActivityLogService) {}
 
   // Endpoints de la API se implementarán aquí.
-} 
+}

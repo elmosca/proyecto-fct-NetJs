@@ -53,4 +53,4 @@ export class SystemSetting {
   @ManyToOne(() => User)
   @JoinColumn({ name: 'updatedById' })
   updatedBy: User;
-} 
+}

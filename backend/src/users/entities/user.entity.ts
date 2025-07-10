@@ -91,4 +91,4 @@ export class User {
 
   // @OneToMany(() => ActivityLog, (log) => log.user)
   // activityLogs: ActivityLog[];
-} 
+}

@@ -8,4 +8,4 @@ import { AnteprojectEvaluationCriteriaSeedService } from './anteproject-evaluati
   providers: [AnteprojectEvaluationCriteriaSeedService],
   exports: [AnteprojectEvaluationCriteriaSeedService],
 })
-export class AnteprojectEvaluationCriteriaSeedModule {} 
+export class AnteprojectEvaluationCriteriaSeedModule {}

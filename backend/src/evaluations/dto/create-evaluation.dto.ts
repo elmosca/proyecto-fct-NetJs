@@ -35,4 +35,4 @@ export class CreateEvaluationDto {
   @ValidateNested({ each: true })
   @Type(() => EvaluationCriterionDto)
   evaluations: EvaluationCriterionDto[];
-} 
+}

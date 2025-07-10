@@ -39,6 +39,9 @@ export class EvaluationsController {
     @Param('anteprojectId', ParseIntPipe) anteprojectId: number,
     @Request() req: { user: User },
   ) {
-    return this.evaluationsService.findAllByAnteproject(anteprojectId, req.user);
+    return this.evaluationsService.findAllByAnteproject(
+      anteprojectId,
+      req.user,
+    );
   }
-} 
+}

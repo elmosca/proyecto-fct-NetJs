@@ -6,4 +6,4 @@ export class SystemSettingsController {
   constructor(private readonly systemSettingsService: SystemSettingsService) {}
 
   // Endpoints de la API se implementarán aquí.
-} 
+}

@@ -65,4 +65,4 @@ export class File {
     nullable: true,
   })
   anteproject: Anteproject;
-} 
+}

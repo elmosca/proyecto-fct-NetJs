@@ -46,4 +46,4 @@ export class Comment {
   @ManyToOne(() => User)
   @JoinColumn({ name: 'authorId' })
   author: User;
-} 
+}

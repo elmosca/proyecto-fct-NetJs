@@ -1,4 +1,8 @@
-import { Injectable, UnauthorizedException, ForbiddenException } from '@nestjs/common';
+import {
+  Injectable,
+  UnauthorizedException,
+  ForbiddenException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
 import * as bcrypt from 'bcrypt';
@@ -16,7 +20,11 @@ export class AuthService {
 
   async validateUser(email: string, password: string): Promise<any> {
     const user = await this.usersService.findByEmail(email);
-    if (user && user.passwordHash && (await bcrypt.compare(password, user.passwordHash))) {
+    if (
+      user &&
+      user.passwordHash &&
+      (await bcrypt.compare(password, user.passwordHash))
+    ) {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { passwordHash, ...result } = user;
       return result;
@@ -52,19 +60,24 @@ export class AuthService {
 
   async register(createUserDto: CreateUserDto) {
     // Verificar si el usuario intenta registrarse como tutor o admin
-    if (createUserDto.role === RoleEnum.TUTOR || createUserDto.role === RoleEnum.ADMIN) {
-      throw new ForbiddenException('Cannot create tutor or admin account via registration');
+    if (
+      createUserDto.role === RoleEnum.TUTOR ||
+      createUserDto.role === RoleEnum.ADMIN
+    ) {
+      throw new ForbiddenException(
+        'Cannot create tutor or admin account via registration',
+      );
     }
-    
+
     // Si no se especifica rol, se asigna STUDENT por defecto
     if (!createUserDto.role) {
       createUserDto.role = RoleEnum.STUDENT;
     }
-    
+
     const user = await this.usersService.create(createUserDto);
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { passwordHash, ...result } = user;
     return result;
   }
-} 
+}

@@ -31,7 +31,10 @@ export class ProjectsController {
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number, @Request() req: { user: User }) {
+  findOne(
+    @Param('id', ParseIntPipe) id: number,
+    @Request() req: { user: User },
+  ) {
     return this.projectsService.findOne(id, req.user);
   }
 
@@ -77,7 +80,10 @@ export class ProjectsController {
   }
 
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number, @Request() req: { user: User }) {
+  remove(
+    @Param('id', ParseIntPipe) id: number,
+    @Request() req: { user: User },
+  ) {
     return this.projectsService.remove(id, req.user);
   }
-} 
+}

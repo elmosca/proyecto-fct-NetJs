@@ -12,7 +12,12 @@ import {
   HttpCode,
 } from '@nestjs/common';
 import { TasksService } from './tasks.service';
-import { CreateTaskDto, UpdateTaskDto, MoveTaskDto, AssignUserDto } from './dto';
+import {
+  CreateTaskDto,
+  UpdateTaskDto,
+  MoveTaskDto,
+  AssignUserDto,
+} from './dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { User } from '../users/entities/user.entity';
 import { RolesGuard } from '../roles/roles.guard';
@@ -41,7 +46,10 @@ export class TasksController {
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number, @Request() req: { user: User }) {
+  findOne(
+    @Param('id', ParseIntPipe) id: number,
+    @Request() req: { user: User },
+  ) {
     return this.tasksService.findOne(id, req.user);
   }
 
@@ -90,7 +98,10 @@ export class TasksController {
   }
 
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number, @Request() req: { user: User }) {
+  remove(
+    @Param('id', ParseIntPipe) id: number,
+    @Request() req: { user: User },
+  ) {
     return this.tasksService.remove(id, req.user);
   }
-} 
+}

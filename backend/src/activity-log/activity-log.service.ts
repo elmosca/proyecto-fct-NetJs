@@ -11,4 +11,4 @@ export class ActivityLogService {
   ) {}
 
   // Métodos del servicio se implementarán aquí.
-} 
+}

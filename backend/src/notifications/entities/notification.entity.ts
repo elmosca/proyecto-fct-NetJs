@@ -44,4 +44,4 @@ export class Notification {
   @ManyToOne(() => User)
   @JoinColumn({ name: 'userId' })
   user: User;
-} 
+}

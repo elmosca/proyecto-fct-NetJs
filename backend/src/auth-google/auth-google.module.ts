@@ -7,13 +7,9 @@ import { AuthGoogleController } from './auth-google.controller';
 import { GoogleStrategy } from './google.strategy';
 
 @Module({
-  imports: [
-    PassportModule,
-    ConfigModule,
-    UsersModule,
-  ],
+  imports: [PassportModule, ConfigModule, UsersModule],
   controllers: [AuthGoogleController],
   providers: [AuthGoogleService, GoogleStrategy],
   exports: [AuthGoogleService],
 })
-export class AuthGoogleModule {} 
+export class AuthGoogleModule {}

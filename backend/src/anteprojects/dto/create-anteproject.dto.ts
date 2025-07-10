@@ -54,4 +54,4 @@ export class CreateAnteprojectDto {
   @ValidateNested({ each: true })
   @Type(() => TimelineDto)
   timeline?: TimelineDto[];
-} 
+}

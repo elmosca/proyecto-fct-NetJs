@@ -16,4 +16,4 @@ import { UserSeedModule } from './user/user-seed.module';
     UserSeedModule,
   ],
 })
-export class SeedModule {} 
+export class SeedModule {}

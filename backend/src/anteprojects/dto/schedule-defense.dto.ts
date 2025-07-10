@@ -17,4 +17,4 @@ export class ScheduleDefenseDto {
   @IsString()
   @IsNotEmpty()
   defenseLocation: string;
-} 
+}
