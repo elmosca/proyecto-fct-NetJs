@@ -1,0 +1,40 @@
+Licencia Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
+
+Esta obra está bajo una Licencia Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International.
+
+Resumen de la Licencia:
+----------------------
+
+Esta es una licencia de derechos de autor que permite a otros:
+- Compartir: copiar y redistribuir el material en cualquier medio o formato
+- Adaptar: remezclar, transformar y construir sobre el material
+
+Bajo los siguientes términos:
+- Atribución: Debes dar crédito apropiado, proporcionar un enlace a la licencia, e indicar si se realizaron cambios.
+- No Comercial: No puedes usar el material para fines comerciales.
+- Compartir Igual: Si remezclas, transformas o construyes sobre el material, debes distribuir tus contribuciones bajo la misma licencia.
+
+Información Completa:
+-------------------
+Para ver una copia completa de esta licencia, visita:
+http://creativecommons.org/licenses/by-nc-sa/4.0/
+
+Atribución Requerida:
+-------------------
+Al usar este proyecto, debes incluir la siguiente atribución:
+
+```
+Proyecto TFG - [Tu Nombre]
+Licenciado bajo Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
+https://creativecommons.org/licenses/by-nc-sa/4.0/
+```
+
+Notas Importantes:
+----------------
+1. Esta licencia es para uso no comercial.
+2. Cualquier modificación debe ser compartida bajo la misma licencia.
+3. Debes dar crédito al autor original.
+4. Esta licencia no afecta tus derechos de uso justo o excepciones de derechos de autor.
+
+Para más información sobre la licencia, visita:
+https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode 

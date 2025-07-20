@@ -1,0 +1,229 @@
+{
+    // ========================================
+    // SNIPPETS BASADOS EN REGLAS FLUTTER.MDC
+    // ========================================
+    "Flutter StatelessWidget con Clean Architecture": {
+        "prefix": "flsw",
+        "body": [
+            "/// ${1:Descripción del widget}",
+            "class ${2:WidgetName} extends StatelessWidget {",
+            "  const ${2:WidgetName}({super.key});",
+            "",
+            "  @override",
+            "  Widget build(BuildContext context) {",
+            "    return ${3:Container}();",
+            "  }",
+            "}"
+        ],
+        "description": "Crea un StatelessWidget siguiendo las convenciones establecidas"
+    },
+    "Flutter StatefulWidget con Clean Architecture": {
+        "prefix": "flstw",
+        "body": [
+            "/// ${1:Descripción del widget}",
+            "class ${2:WidgetName} extends StatefulWidget {",
+            "  const ${2:WidgetName}({super.key});",
+            "",
+            "  @override",
+            "  State<${2:WidgetName}> createState() => _${2:WidgetName}State();",
+            "}",
+            "",
+            "class _${2:WidgetName}State extends State<${2:WidgetName}> {",
+            "  @override",
+            "  Widget build(BuildContext context) {",
+            "    return ${3:Container}();",
+            "  }",
+            "}"
+        ],
+        "description": "Crea un StatefulWidget siguiendo las convenciones establecidas"
+    },
+    "Repository Pattern": {
+        "prefix": "flrepo",
+        "body": [
+            "/// Repository para ${1:Entity}",
+            "abstract class ${2:Entity}Repository {",
+            "  Future<List<${3:EntityModel}>> getAll();",
+            "  Future<${3:EntityModel}?> getById(String id);",
+            "  Future<${3:EntityModel}> create(${4:CreateEntityDto} dto);",
+            "  Future<${3:EntityModel}> update(String id, ${5:UpdateEntityDto} dto);",
+            "  Future<void> delete(String id);",
+            "}"
+        ],
+        "description": "Crea un repository siguiendo Clean Architecture"
+    },
+    "Repository Implementation": {
+        "prefix": "flrepoimpl",
+        "body": [
+            "/// Implementación del repository para ${1:Entity}",
+            "class ${2:Entity}RepositoryImpl implements ${2:Entity}Repository {",
+            "  const ${2:Entity}RepositoryImpl({",
+            "    required this.${3:dataSource},",
+            "  });",
+            "",
+            "  final ${4:DataSource} ${3:dataSource};",
+            "",
+            "  @override",
+            "  Future<List<${5:EntityModel}>> getAll() async {",
+            "    try {",
+            "      return await ${3:dataSource}.getAll();",
+            "    } catch (e) {",
+            "      throw RepositoryException('Error al obtener ${1:Entity}s: $e');",
+            "    }",
+            "  }",
+            "",
+            "  @override",
+            "  Future<${5:EntityModel}?> getById(String id) async {",
+            "    try {",
+            "      return await ${3:dataSource}.getById(id);",
+            "    } catch (e) {",
+            "      throw RepositoryException('Error al obtener ${1:Entity}: $e');",
+            "    }",
+            "  }",
+            "",
+            "  // TODO: Implementar resto de métodos",
+            "}"
+        ],
+        "description": "Implementación de repository con manejo de errores"
+    },
+    "Service Class": {
+        "prefix": "flservice",
+        "body": [
+            "/// Servicio para ${1:Domain}",
+            "@injectable",
+            "class ${2:Domain}Service {",
+            "  const ${2:Domain}Service({",
+            "    required this.${3:repository},",
+            "  });",
+            "",
+            "  final ${4:Repository} ${3:repository};",
+            "",
+            "  Future<Result<List<${5:Model}>>> getAll() async {",
+            "    try {",
+            "      final List<${5:Model}> items = await ${3:repository}.getAll();",
+            "      return Result.success(items);",
+            "    } catch (e) {",
+            "      return Result.failure(ServiceException('Error en ${2:Domain}Service: $e'));",
+            "    }",
+            "  }",
+            "}"
+        ],
+        "description": "Crea un servicio siguiendo las convenciones"
+    },
+    "Controller con Riverpod": {
+        "prefix": "flcontroller",
+        "body": [
+            "/// Controller para ${1:Feature}",
+            "@riverpod",
+            "class ${2:Feature}Controller extends _$${2:Feature}Controller {",
+            "  @override",
+            "  ${3:FeatureState} build() {",
+            "    return const ${3:FeatureState}.initial();",
+            "  }",
+            "",
+            "  Future<void> ${4:actionName}() async {",
+            "    state = const ${3:FeatureState}.loading();",
+            "    try {",
+            "      final result = await ref.read(${5:serviceProvider}).${4:actionName}();",
+            "      result.when(",
+            "        success: (data) => state = ${3:FeatureState}.loaded(data),",
+            "        failure: (error) => state = ${3:FeatureState}.error(error.message),",
+            "      );",
+            "    } catch (e) {",
+            "      state = ${3:FeatureState}.error('Error inesperado: $e');",
+            "    }",
+            "  }",
+            "}"
+        ],
+        "description": "Controller con Riverpod y manejo de estados"
+    },
+    "Test Arrange-Act-Assert": {
+        "prefix": "fltest",
+        "body": [
+            "testWidgets('${1:should_do_something_when_condition}', (WidgetTester tester) async {",
+            "  // Arrange",
+            "  const ${2:InputType} input${3:Name} = ${4:inputValue};",
+            "  const ${5:ExpectedType} expected${6:Name} = ${7:expectedValue};",
+            "",
+            "  // Act",
+            "  ${8:// Ejecutar la acción}",
+            "  final ${9:ActualType} actual${10:Name} = ${11:actualValue};",
+            "",
+            "  // Assert",
+            "  expect(actual${10:Name}, equals(expected${6:Name}));",
+            "});"
+        ],
+        "description": "Test con patrón Arrange-Act-Assert"
+    },
+    "Given-When-Then Test": {
+        "prefix": "flgwt",
+        "body": [
+            "group('${1:Feature}', () {",
+            "  testWidgets('${2:should_result_when_action}', (WidgetTester tester) async {",
+            "    // Given",
+            "    ${3:// Configuración inicial}",
+            "",
+            "    // When",
+            "    ${4:// Acción a ejecutar}",
+            "",
+            "    // Then",
+            "    ${5:// Verificaciones}",
+            "  });",
+            "});"
+        ],
+        "description": "Test con patrón Given-When-Then"
+    },
+    "Freezed Data Class": {
+        "prefix": "flfreezed",
+        "body": [
+            "import 'package:freezed_annotation/freezed_annotation.dart';",
+            "",
+            "part '${1:filename}.freezed.dart';",
+            "part '${1:filename}.g.dart';",
+            "",
+            "/// ${2:Descripción de la clase}",
+            "@freezed",
+            "class ${3:ClassName} with _$${3:ClassName} {",
+            "  const factory ${3:ClassName}({",
+            "    required ${4:String} ${5:property},",
+            "  }) = _${3:ClassName};",
+            "",
+            "  factory ${3:ClassName}.fromJson(Map<String, dynamic> json) =>",
+            "      _$${3:ClassName}FromJson(json);",
+            "}"
+        ],
+        "description": "Clase de datos con Freezed"
+    },
+    "GetIt Registration": {
+        "prefix": "flgetit",
+        "body": [
+            "/// Registro de dependencias para ${1:Module}",
+            "void register${2:Module}Dependencies(GetIt getIt) {",
+            "  // Repositories",
+            "  getIt.registerLazySingleton<${3:Repository}>(",
+            "    () => ${4:RepositoryImpl}(${5:dependencies}),",
+            "  );",
+            "",
+            "  // Services",
+            "  getIt.registerLazySingleton<${6:Service}>(",
+            "    () => ${7:ServiceImpl}(repository: getIt<${3:Repository}>()),",
+            "  );",
+            "",
+            "  // Use Cases",
+            "  getIt.registerFactory<${8:UseCase}>(",
+            "    () => ${9:UseCaseImpl}(service: getIt<${6:Service}>()),",
+            "  );",
+            "}"
+        ],
+        "description": "Registro de dependencias con GetIt"
+    },
+    "Early Return Pattern": {
+        "prefix": "flearlyreturn",
+        "body": [
+            "if (${1:condition}) {",
+            "  return ${2:earlyValue};",
+            "}",
+            "${3:// Lógica principal}"
+        ],
+        "description": "Patrón early return para evitar anidación"
+    }
+}

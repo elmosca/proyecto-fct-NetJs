@@ -1,22 +1,62 @@
 # Sistema de Gestión de Proyectos FCT
 
-Sistema completo para la gestión de proyectos de FCT, desarrollado con NestJS (backend) y Flutter (frontend).
+![CI/CD Pipeline](https://github.com/tu-usuario/proyecto-fct/workflows/CI/CD%20Pipeline/badge.svg)
+![Flutter](https://img.shields.io/badge/Flutter-3.16.0-blue)
+![NestJS](https://img.shields.io/badge/NestJS-10.0-red)
+![License](https://img.shields.io/badge/license-MIT-green)
 
-## Estructura del Proyecto
+Sistema completo para la gestión de proyectos de FCT, desarrollado con NestJS (backend) y Flutter (frontend) siguiendo principios de Clean Architecture.
+
+## 🚀 Inicio Rápido
+
+### Configuración Automática
+```bash
+# Linux/macOS
+./setup.sh
+
+# Windows (PowerShell)
+.\setup.ps1
+```
+
+### Configuración Manual
+Ver [CONTRIBUTING.md](CONTRIBUTING.md) para instrucciones detalladas.
+
+## 📁 Estructura del Proyecto
 
 ```
 proyecto-fct/
-├── backend/                   # Backend en NestJS
-│   ├── src/                  # Código fuente del backend
-│   ├── test/                 # Pruebas del backend
-│   └── docs/                 # Documentación técnica
-├── frontend/                 # Frontend en Flutter
-│   ├── lib/                  # Código fuente de Flutter
-│   └── test/                 # Pruebas de Flutter
-└── docs/                     # Documentación general del proyecto
+├── .github/                  # Configuración de GitHub (CI/CD, templates)
+├── .vscode/                  # Configuración de VS Code optimizada
+├── backend/                  # Backend en NestJS
+│   ├── src/                 # Código fuente del backend
+│   ├── test/                # Pruebas del backend
+│   └── docs/                # Documentación técnica
+├── frontend/                # Frontend en Flutter
+│   ├── lib/                 # Código fuente de Flutter
+│   └── test/                # Pruebas de Flutter
+└── docs/                    # Documentación general del proyecto
 ```
 
-## Requisitos Previos
+## 🛠️ Stack Tecnológico
+
+### Backend
+- **Framework**: NestJS + TypeScript
+- **Base de datos**: PostgreSQL
+- **ORM**: TypeORM
+- **Autenticación**: JWT + Google OAuth
+- **Documentación**: Swagger/OpenAPI
+- **Testing**: Jest + Supertest
+
+### Frontend
+- **Framework**: Flutter + Dart
+- **Arquitectura**: Clean Architecture
+- **Estado**: Riverpod
+- **Navegación**: AutoRoute  
+- **DI**: GetIt
+- **Generación de código**: build_runner + freezed
+- **Testing**: flutter_test + mockito
+
+## 🏗️ Requisitos Previos
 
 ### Backend
 - Node.js 18+
@@ -24,7 +64,7 @@ proyecto-fct/
 - Docker y Docker Compose
 
 ### Frontend
-- Flutter 3.0+
+- Flutter 3.16+
 - Android Studio / VS Code
 - Android SDK / iOS SDK
 
@@ -177,7 +217,57 @@ git commit -m "feat(auth): implementar inicio de sesión con Google"
 git commit -m "fix(api): corregir error en la paginación de usuarios"
 ```
 
-## Licencia
+## 🤝 Contribuir
+
+¡Las contribuciones son bienvenidas! Por favor lee nuestra [Guía de Contribución](CONTRIBUTING.md) para conocer:
+
+- 📋 Cómo reportar bugs
+- ✨ Cómo sugerir nuevas funcionalidades  
+- 💻 Cómo configurar el entorno de desarrollo
+- 🔄 Proceso de Pull Requests
+- 📝 Convenciones de código y commits
+
+### Flujo Rápido para Contribuir
+
+1. **Fork el repositorio** en GitHub
+2. **Crea una rama** desde `develop`:
+   ```bash
+   git checkout -b feature/mi-nueva-funcionalidad
+   ```
+3. **Realiza tus cambios** siguiendo las convenciones
+4. **Ejecuta los tests** localmente
+5. **Crea un Pull Request** hacia `develop`
+
+## 📄 Documentación Adicional
+
+- 📖 [Guía de Contribución](CONTRIBUTING.md) - Cómo contribuir al proyecto
+- 🔒 [Política de Seguridad](SECURITY.md) - Reportar vulnerabilidades
+- 🤖 [Copilot Instructions](.github/copilot-instructions.md) - Guía para IA
+- ⚙️ [Configuración VS Code](.vscode/README.md) - Setup del editor
+
+## 🔗 Enlaces Útiles
+
+- [Documentación de Flutter](https://flutter.dev/docs)
+- [Documentación de NestJS](https://docs.nestjs.com/)
+- [Clean Architecture en Flutter](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
+- [Conventional Commits](https://www.conventionalcommits.org/)
+
+## 📊 Estado del Proyecto
+
+- ✅ Backend API con autenticación
+- ✅ Frontend Flutter con navegación
+- ✅ CI/CD Pipeline configurado
+- 🔄 Integración con base de datos
+- 🔄 Testing automatizado
+- 📋 Documentación en progreso
+
+## 📧 Contacto
+
+Para preguntas sobre el proyecto:
+- 📧 Email: [tu-email@domain.com]
+- 📱 Issues: [GitHub Issues](https://github.com/tu-usuario/proyecto-fct/issues)
+
+## 📜 Licencia
 
 Este proyecto está bajo la Licencia [Creative Commons Attribution-NonCommercial 4.0 International](https://creativecommons.org/licenses/by-nc/4.0/). 
 Ver el archivo [LICENSE](./LICENSE) para más detalles. 

@@ -12,7 +12,7 @@
 *.iml
 
 # Visual Studio Code
-.vscode/
+# .vscode/  # Comentado para incluir configuraciones del proyecto
 .cursor/
 
 # ===================================================================
@@ -37,6 +37,9 @@ yarn-error.log*
 # Reportes de tests y cobertura
 coverage/
 .nyc_output/
+
+# Directorio de subidas
+/storage/
 
 # ===================================================================
 # Frontend: Flutter / Dart
@@ -91,3 +94,8 @@ windows/flutter/ephemeral/
 # ===================================================================
 .docker/
 docker-compose.override.yml
+
+# Archivos específicos de backend que no deben subirse
+backend/dist/
+backend/node_modules/
+backend/storage/

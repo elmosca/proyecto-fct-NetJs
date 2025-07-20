@@ -1,0 +1,68 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Flutter: Debug",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main.dart",
+            "cwd": "${workspaceFolder}/frontend",
+            "args": [
+                "--flavor",
+                "development"
+            ]
+        },
+        {
+            "name": "Flutter: Profile Mode",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main.dart",
+            "cwd": "${workspaceFolder}/frontend",
+            "args": [
+                "--profile"
+            ]
+        },
+        {
+            "name": "Flutter: Release Mode",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main.dart",
+            "cwd": "${workspaceFolder}/frontend",
+            "args": [
+                "--release"
+            ]
+        },
+        {
+            "name": "Flutter: Tests",
+            "request": "launch",
+            "type": "dart",
+            "program": "test/",
+            "cwd": "${workspaceFolder}/frontend"
+        },
+        {
+            "name": "Backend: NestJS Debug",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceFolder}/backend/src/main.ts",
+            "cwd": "${workspaceFolder}/backend",
+            "runtimeArgs": [
+                "-r",
+                "ts-node/register"
+            ],
+            "env": {
+                "NODE_ENV": "development"
+            },
+            "console": "integratedTerminal",
+            "restart": true
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Full Stack Debug",
+            "configurations": [
+                "Backend: NestJS Debug",
+                "Flutter: Debug"
+            ]
+        }
+    ]
+}

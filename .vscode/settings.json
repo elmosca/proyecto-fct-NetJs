@@ -1,0 +1,88 @@
+{
+    // ========================================
+    // Configuración para proyectos Dart/Flutter
+    // Basado en las reglas de flutter.mdc
+    // ========================================
+    // Configuración Java existente
+    "java.configuration.updateBuildConfiguration": "interactive",
+    // ========================================
+    // EDITOR GENERAL
+    // ========================================
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll": "explicit",
+        "source.organizeImports": "explicit"
+    },
+    "editor.rulers": [
+        80,
+        120
+    ],
+    "editor.wordWrap": "bounded",
+    "editor.wordWrapColumn": 120,
+    "editor.insertSpaces": true,
+    "editor.detectIndentation": false,
+    // ========================================
+    // DART/FLUTTER ESPECÍFICO
+    // ========================================
+    "dart.lineLength": 80,
+    "dart.enableSdkFormatter": true,
+    "dart.insertArgumentPlaceholders": false,
+    "dart.enableCompletionCommitCharacters": false,
+    "dart.previewFlutterUiGuides": true,
+    "dart.previewFlutterUiGuidesCustomTracking": true,
+    "dart.flutterOutline": true,
+    "dart.closingLabels": true,
+    "dart.showTodos": true,
+    "dart.analysisServerFolding": true,
+    "dart.showMainCodeLens": false,
+    "dart.showTestCodeLens": true,
+    "dart.renameFilesWithClasses": "always",
+    // ========================================
+    // NOMENCLATURA Y CONVENCIONES
+    // ========================================
+    // Se aplican a través de analysis_options.yaml
+    // ========================================
+    // ARCHIVOS Y EXPLORADOR
+    // ========================================
+    "files.associations": {
+        "*.dart": "dart"
+    },
+    "explorer.fileNesting.enabled": true,
+    "explorer.fileNesting.patterns": {
+        "pubspec.yaml": "pubspec.lock",
+        "*.dart": "${capture}.g.dart, ${capture}.freezed.dart, ${capture}.mocks.dart"
+    },
+    // ========================================
+    // AUTOCOMPLETADO Y SNIPPETS
+    // ========================================
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
+    "editor.snippetSuggestions": "top",
+    "editor.suggestSelection": "first",
+    "editor.tabCompletion": "onlySnippets",
+    // ========================================
+    // CONFIGURACIÓN ESPECÍFICA DART
+    // ========================================
+    "[dart]": {
+        "editor.formatOnSave": true,
+        "editor.formatOnType": true,
+        "editor.selectionHighlight": false,
+        "editor.suggest.snippetsPreventQuickSuggestions": false,
+        "editor.suggestSelection": "first",
+        "editor.tabCompletion": "onlySnippets",
+        "editor.wordBasedSuggestions": "off",
+        "editor.insertSpaces": true,
+        "editor.tabSize": 2,
+        "editor.detectIndentation": false
+    },
+    // ========================================
+    // TESTING
+    // ========================================
+    "dart.runTestsInShell": false,
+    "dart.debugExternalLibraries": false,
+    "dart.debugSdkLibraries": false,
+    // ========================================
+    // GIT
+    // ========================================
+    "git.ignoreLimitWarning": true
+}
