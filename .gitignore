@@ -12,7 +12,7 @@
 *.iml
 
 # Visual Studio Code
-.vscode/
+# .vscode/  # Comentado para incluir configuraciones del proyecto
 .cursor/
 
 # ===================================================================
