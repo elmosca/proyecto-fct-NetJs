@@ -1,0 +1,29 @@
+{
+    "recommendations": [
+        // Extensiones esenciales para Dart/Flutter
+        "dart-code.dart-code",
+        "dart-code.flutter",
+        // Extensiones útiles para desarrollo
+        "ms-vscode.vscode-json",
+        "bradlc.vscode-tailwindcss",
+        "usernamehw.errorlens",
+        "streetsidesoftware.code-spell-checker",
+        "ms-vscode.hexeditor",
+        // Git y control de versiones
+        "mhutchie.git-graph",
+        "eamodio.gitlens",
+        // Testing y depuración
+        "hbenl.vscode-test-explorer",
+        // Productividad
+        "formulahendry.auto-rename-tag",
+        "ms-vscode.vscode-typescript-next",
+        "esbenp.prettier-vscode",
+        // Backend (NestJS/Node.js)
+        "ms-vscode.vscode-typescript-next",
+        "bradlc.vscode-tailwindcss"
+    ],
+    "unwantedRecommendations": [
+        "ms-vscode.vscode-typescript",
+        "hookyqr.beautify"
+    ]
+}

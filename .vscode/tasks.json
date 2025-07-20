@@ -1,0 +1,176 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Flutter: Análisis completo",
+            "type": "shell",
+            "command": "flutter",
+            "args": [
+                "analyze",
+                "--no-fatal-infos"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Flutter: Formatear código",
+            "type": "shell",
+            "command": "dart",
+            "args": [
+                "format",
+                "lib/",
+                "test/"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "Flutter: Limpiar proyecto",
+            "type": "shell",
+            "command": "flutter",
+            "args": [
+                "clean"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "Flutter: Obtener dependencias",
+            "type": "shell",
+            "command": "flutter",
+            "args": [
+                "pub",
+                "get"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "Flutter: Ejecutar tests",
+            "type": "shell",
+            "command": "flutter",
+            "args": [
+                "test"
+            ],
+            "group": "test",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Flutter: Tests con cobertura",
+            "type": "shell",
+            "command": "flutter",
+            "args": [
+                "test",
+                "--coverage"
+            ],
+            "group": "test",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "Flutter: Generar código (build_runner)",
+            "type": "shell",
+            "command": "flutter",
+            "args": [
+                "packages",
+                "pub",
+                "run",
+                "build_runner",
+                "build",
+                "--delete-conflicting-outputs"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "Flutter: Watch build_runner",
+            "type": "shell",
+            "command": "flutter",
+            "args": [
+                "packages",
+                "pub",
+                "run",
+                "build_runner",
+                "watch",
+                "--delete-conflicting-outputs"
+            ],
+            "group": "build",
+            "isBackground": true,
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "dedicated"
+            }
+        },
+        {
+            "label": "Dart: Fix código automáticamente",
+            "type": "shell",
+            "command": "dart",
+            "args": [
+                "fix",
+                "--apply"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "Flujo completo: Clean + Get + Generate + Analyze",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "Flutter: Limpiar proyecto",
+                "Flutter: Obtener dependencias",
+                "Flutter: Generar código (build_runner)",
+                "Flutter: Análisis completo"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            }
+        }
+    ]
+}
