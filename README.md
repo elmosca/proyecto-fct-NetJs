@@ -1,6 +1,6 @@
 # Sistema de Gestión de Proyectos FCT
 
-![CI/CD Pipeline](https://github.com/tu-usuario/proyecto-fct/workflows/CI/CD%20Pipeline/badge.svg)
+![CI/CD Pipeline](https://github.com/elmosca/proyecto-fct-NetJs/workflows/CI/CD%20Pipeline/badge.svg)
 ![Flutter](https://img.shields.io/badge/Flutter-3.16.0-blue)
 ![NestJS](https://img.shields.io/badge/NestJS-10.0-red)
 ![License](https://img.shields.io/badge/license-MIT-green)
@@ -264,8 +264,8 @@ git commit -m "fix(api): corregir error en la paginación de usuarios"
 ## 📧 Contacto
 
 Para preguntas sobre el proyecto:
-- 📧 Email: [tu-email@domain.com]
-- 📱 Issues: [GitHub Issues](https://github.com/tu-usuario/proyecto-fct/issues)
+- 📧 Email: [jualas@gmail.com]
+- 📱 Issues: [GitHub Issues](https://github.com/elmosca/proyecto-fct-NetJs/issues)
 
 ## 📜 Licencia
 
