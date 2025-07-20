@@ -10,5 +10,6 @@ import { FilesModule } from '../files/files.module';
   imports: [TypeOrmModule.forFeature([Anteproject, User]), FilesModule],
   controllers: [AnteprojectsController],
   providers: [AnteprojectsService],
+  exports: [AnteprojectsService],
 })
 export class AnteprojectsModule {}

@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { dataSourceOptions } from '../../data-source';
 import { AnteprojectEvaluationCriteriaSeedModule } from './anteproject-evaluation-criteria/anteproject-evaluation-criteria-seed.module';
 import { UserSeedModule } from './user/user-seed.module';
+import { SystemSettingsSeedModule } from './system-settings/system-settings-seed.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { UserSeedModule } from './user/user-seed.module';
     TypeOrmModule.forRoot(dataSourceOptions),
     AnteprojectEvaluationCriteriaSeedModule,
     UserSeedModule,
+    SystemSettingsSeedModule,
   ],
 })
 export class SeedModule {}

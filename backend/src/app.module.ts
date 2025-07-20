@@ -32,6 +32,7 @@ import { SystemSettingsModule } from './system-settings/system-settings.module';
         password: configService.get('DB_PASSWORD', 'postgres'),
         database: configService.get('DB_DATABASE', 'nestjs'),
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
+        autoLoadEntities: true,
         synchronize: configService.get('NODE_ENV') !== 'production',
       }),
       inject: [ConfigService],
