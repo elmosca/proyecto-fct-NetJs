@@ -94,6 +94,134 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+
+### Docker
+#### Dockerfile optimizado (multi-stage build)
+```dockerfile
+# Multi-stage build para optimizar el tamaño del contenedor
+FROM node:18-alpine AS builder
+
+WORKDIR /usr/src/app
+
+# Copiar archivos de dependencias
+COPY package*.json ./
+
+# Instalar todas las dependencias (incluyendo dev dependencies para el build)
+RUN npm ci
+
+# Copiar el código fuente
+COPY . .
+
+# Construir la aplicación
+RUN npm run build
+
+# Stage de producción
+FROM node:18-alpine AS production
+
+WORKDIR /usr/src/app
+
+# Crear usuario no root
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S nestjs -u 1001
+
+# Copiar archivos de dependencias
+COPY package*.json ./
+
+# Instalar solo dependencias de producción
+RUN npm ci --only=production && npm cache clean --force
+
+# Copiar la aplicación construida desde el stage anterior
+COPY --from=builder /usr/src/app/dist ./dist
+COPY --from=builder /usr/src/app/storage ./storage
+
+# Cambiar ownership de los archivos al usuario no root
+RUN chown -R nestjs:nodejs /usr/src/app
+
+# Cambiar al usuario no root
+USER nestjs
+
+# Exponer el puerto
+EXPOSE 3000
+
+# Healthcheck
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+    CMD wget --no-verbose --tries=1 --spider http://localhost:3000/api/health || exit 1
+
+# Comando para iniciar la aplicación
+CMD ["npm", "run", "start:prod"]
+```
+
+#### docker-compose.yml ejemplo
+```yaml
+version: '3.8'
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    ports:
+      - "3000:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      DB_DATABASE: project_management
+      JWT_SECRET: your-secret-key
+      JWT_EXPIRATION: 1d
+      NODE_ENV: production
+      PORT: 3000
+    env_file:
+      - .env
+    volumes:
+      - uploads_data:/usr/src/app/storage/uploads
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - app-network
+
+  postgres:
+    image: postgres:13-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: project_management
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --lc-collate=C --lc-ctype=C"
+    env_file:
+      - .env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-scripts:/docker-entrypoint-initdb.d
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d project_management"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app-network
+
+volumes:
+  postgres_data:
+    driver: local
+  uploads_data:
+    driver: local
+
+networks:
+  app-network:
+    driver: bridge
+```
 volumes:
   postgres_data:
 ```
@@ -199,6 +327,27 @@ npm run migration:run
 # Iniciar servidor
 npm run start:dev
 ```
+
+### Desarrollo Local y Producción con Docker
+```bash
+# Instalar dependencias
+npm install
+
+# Configurar variables de entorno
+cp .env.example .env
+
+# Construir y levantar el stack completo
+docker compose build --no-cache
+docker compose up -d
+
+# Ejecutar migraciones (opcional)
+docker compose exec api npm run migration:run
+```
+
+#### Notas de seguridad y buenas prácticas
+- El contenedor corre como usuario no root (`nestjs`).
+- Healthcheck verifica el endpoint `/api/health` para asegurar disponibilidad.
+- Solo se copian los artefactos necesarios (`dist`, `storage`).
 
 ### Producción
 ```bash
