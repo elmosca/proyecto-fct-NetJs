@@ -21,7 +21,82 @@ Sistema completo para la gestión de proyectos de FCT, desarrollado con NestJS (
 ### Configuración Manual
 Ver [CONTRIBUTING.md](CONTRIBUTING.md) para instrucciones detalladas.
 
-## 📁 Estructura del Proyecto
+## � Backend API - Proyecto FCT (Production Ready)
+
+## 📋 Descripción
+
+**Backend API NestJS** optimizado para producción con arquitectura Clean Architecture, Docker multi-stage builds y configuración de seguridad robusta.
+
+### ✨ Características de Producción
+
+- 🔒 **Seguridad**: Usuario no privilegiado, multi-stage builds
+- 🐳 **Docker Optimizado**: Healthchecks robustos, imágenes ligeras
+- 🔧 **Crypto Polyfill**: Compatibilidad completa con Alpine Linux
+- 📊 **Monitoreo**: Logs estructurados, métricas de salud
+- 🗃️ **Base de Datos**: PostgreSQL con scripts de inicialización
+
+## 🚀 Despliegue Rápido
+
+### Prerrequisitos
+- Docker & Docker Compose
+- Variables de entorno configuradas
+
+### Opción 1: Desarrollo Local
+```bash
+git clone https://github.com/elmosca/proyecto-fct-NetJs.git -b production-backend
+cd proyecto-fct-NetJs/backend
+cp .env.example .env
+# Editar .env con tus configuraciones
+docker compose up -d
+```
+
+### Opción 2: Producción
+```bash
+# Clonar rama de producción
+git clone https://github.com/elmosca/proyecto-fct-NetJs.git -b production-backend
+
+# Variables de entorno para producción
+export NODE_ENV=production
+export DATABASE_URL="postgresql://user:pass@your-db-host:5432/tfg_production"
+export JWT_SECRET="your-ultra-secure-jwt-secret"
+export CORS_ORIGIN="https://tu-app.com,https://www.tu-app.com"
+
+# Build y deploy
+cd proyecto-fct-NetJs/backend
+docker build -t tfg-backend-api:latest .
+docker run -d \
+  --name tfg-api \
+  -p 3000:3000 \
+  -e NODE_ENV=production \
+  -e DATABASE_URL=$DATABASE_URL \
+  -e JWT_SECRET=$JWT_SECRET \
+  -e CORS_ORIGIN=$CORS_ORIGIN \
+  --restart unless-stopped \
+  tfg-backend-api:latest
+```
+
+## 🏗️ Arquitectura
+
+```
+backend/
+├── src/
+│   ├── auth/              # Autenticación y autorización
+│   ├── users/             # Gestión de usuarios
+│   ├── projects/          # Gestión de proyectos TFG
+│   ├── anteprojects/      # Anteproyectos
+│   ├── evaluations/       # Sistema de evaluaciones
+│   ├── files/             # Gestión de archivos
+│   ├── notifications/     # Sistema de notificaciones
+│   ├── common/            # Utilidades compartidas
+│   ├── polyfill.js        # Crypto polyfill para Alpine
+│   └── main.ts            # Punto de entrada
+├── init-scripts/          # Scripts inicialización DB
+├── docs/                  # Documentación técnica
+├── Dockerfile             # Multi-stage optimizado
+└── docker-compose.yml     # Orquestación de servicios
+```
+
+## 🔧 Configuración
 
 ```
 proyecto-fct/
