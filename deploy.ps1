@@ -158,7 +158,8 @@ function Build-Images {
     
     if ($LASTEXITCODE -eq 0) {
         Write-Success "Imágenes construidas exitosamente"
-    } else {
+    }
+    else {
         Write-Error "Error al construir imágenes"
         exit 1
     }
@@ -178,7 +179,8 @@ function Start-Services {
         Start-Sleep -Seconds 10
         
         Test-Health
-    } else {
+    }
+    else {
         Write-Error "Error al iniciar servicios"
         exit 1
     }
@@ -192,7 +194,8 @@ function Stop-Services {
     
     if ($LASTEXITCODE -eq 0) {
         Write-Success "Servicios detenidos"
-    } else {
+    }
+    else {
         Write-Error "Error al detener servicios"
         exit 1
     }
@@ -252,7 +255,8 @@ function Test-Health {
         $connection = Test-NetConnection -ComputerName localhost -Port $apiPort -WarningAction SilentlyContinue
         if ($connection.TcpTestSucceeded) {
             Write-Success "Puerto $apiPort está abierto"
-        } else {
+        }
+        else {
             Write-Error "Puerto $apiPort no está disponible"
             return $false
         }
@@ -293,7 +297,8 @@ function New-Backup {
         Compress-Archive -Path $backupFile -DestinationPath "$backupFile.zip" -Force
         Remove-Item $backupFile
         Write-Success "Backup comprimido: $backupFile.zip"
-    } else {
+    }
+    else {
         Write-Error "Error al crear backup"
         return $false
     }
