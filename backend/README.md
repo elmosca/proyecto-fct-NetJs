@@ -47,23 +47,46 @@ El backend implementa un sistema jerárquico de roles (`RoleEnum`):
 - CORS configurado para desarrollo local.
 - Uso de JWT para autenticación en el frontend.
 
-## Ejecución del Proyecto
-### Desarrollo
+## 🚀 Configuración y Ejecución
+
+### ⚡ Configuración Rápida (Recomendado)
+```bash
+cd backend
+./scripts/setup-env.sh          # Configuración guiada de variables
+node scripts/verify-env.js      # Verificar configuración
+```
+
+### 🔧 Configuración Manual
+```bash
+cd backend
+cp .env.example .env            # Crear archivo de variables
+nano .env                       # Editar variables críticas
+```
+
+📖 **Documentación de configuración:**
+- [Configuración Rápida](README_ENV.md) - Guía paso a paso
+- [Documentación Completa](docs/ENVIRONMENT_SETUP.md) - Variables detalladas
+
+### 🏃‍♂️ Ejecución del Proyecto
+
+#### Desarrollo
 ```bash
 cd backend
 npm install
 npm run start:dev
 ```
 
-### Producción (Docker)
+#### Producción (Docker)
 ```bash
 cd backend
 docker-compose up --build
 ```
 
-## Más información
-- Consulta la documentación técnica en `backend/docs/TECHNICAL_DOCUMENTATION.md` para:
-  - Variables de entorno necesarias
+## 📚 Documentación
+
+- **Configuración:** [README_ENV.md](README_ENV.md) - Configuración rápida de variables
+- **Variables de Entorno:** [docs/ENVIRONMENT_SETUP.md](docs/ENVIRONMENT_SETUP.md) - Documentación completa
+- **Técnica:** [docs/TECHNICAL_DOCUMENTATION.md](docs/TECHNICAL_DOCUMENTATION.md) - Detalles técnicos
   - Listado de endpoints
   - Detalles de integración y arquitectura
   - Ejemplos de uso avanzados
