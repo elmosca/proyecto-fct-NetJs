@@ -5,9 +5,11 @@
 </p>
 
 ## Descripción
+
 Backend API REST para la gestión de proyectos, usuarios y tareas, pensado para integrarse con una app Flutter. Basado en NestJS, PostgreSQL y TypeORM, con autenticación JWT y Google, sistema de roles y notificaciones por email.
 
 ## Estructura del Proyecto
+
 ```
 backend/
 ├── src/
@@ -27,29 +29,49 @@ backend/
 ```
 
 ## Sistema de Roles
+
 El backend implementa un sistema jerárquico de roles (`RoleEnum`):
+
 - **ALUMNO**: Acceso básico, gestión de sus datos y visualización de proyectos asignados.
 - **TUTOR**: Supervisión de proyectos, gestión de alumnos y colaboradores.
 - **COLABORADOR**: Participación en proyectos asignados.
 - **ADMINISTRADOR**: Acceso completo, gestión de usuarios y roles.
 
 ## Autenticación
+
 - **JWT**: Login y registro tradicionales con email y contraseña.
 - **Google OAuth**: Login con cuenta de Google (requiere configuración previa).
 - **Protección de rutas**: Guards y decoradores para autorización por rol.
 
 ## Sistema de Emails
+
 - Envío de emails de bienvenida, recuperación de contraseña e invitaciones a proyectos.
 - Plantillas personalizables en `src/mailer/templates/`.
 
 ## Integración con Flutter
+
 - API pensada para ser consumida por apps móviles/web.
 - CORS configurado para desarrollo local.
 - Uso de JWT para autenticación en el frontend.
 
 ## 🚀 Configuración y Ejecución
 
+### 📋 Requisitos Previos
+
+- **Node.js**: Versión 20.11.0 o superior (recomendado: 20.19.4)
+- **npm**: Versión 10.8.2 o superior
+- **PostgreSQL**: Versión 13 o superior
+
+#### Instalación de Node.js (si no lo tienes):
+
+```bash
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt-get install nodejs -y
+node --version  # Debe mostrar v20.x.x
+```
+
 ### ⚡ Configuración Rápida (Recomendado)
+
 ```bash
 cd backend
 ./scripts/setup-env.sh          # Configuración guiada de variables
@@ -57,6 +79,7 @@ node scripts/verify-env.js      # Verificar configuración
 ```
 
 ### 🔧 Configuración Manual
+
 ```bash
 cd backend
 cp .env.example .env            # Crear archivo de variables
@@ -64,19 +87,23 @@ nano .env                       # Editar variables críticas
 ```
 
 📖 **Documentación de configuración:**
+
 - [Configuración Rápida](README_ENV.md) - Guía paso a paso
 - [Documentación Completa](docs/ENVIRONMENT_SETUP.md) - Variables detalladas
+- [Changelog](CHANGELOG.md) - Historial de cambios
 
 ### 🏃‍♂️ Ejecución del Proyecto
 
 #### Desarrollo
+
 ```bash
 cd backend
-npm install
-npm run start:dev
+npm install                     # Instalar dependencias
+npm run start:dev              # Ejecutar en modo desarrollo
 ```
 
 #### Producción (Docker)
+
 ```bash
 cd backend
 docker-compose up --build
