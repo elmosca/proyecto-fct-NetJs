@@ -1,5 +1,5 @@
 # Multi-stage build para optimizar el tamaño del contenedor
-FROM node:18-alpine AS builder
+FROM node:20-alpine AS builder
 
 WORKDIR /usr/src/app
 
@@ -16,7 +16,7 @@ COPY . .
 RUN npm run build
 
 # Stage de producción
-FROM node:18-alpine AS production
+FROM node:20-alpine AS production
 
 WORKDIR /usr/src/app
 
@@ -33,7 +33,6 @@ RUN npm ci --only=production && npm cache clean --force && \
 
 # Copiar la aplicación construida desde el stage anterior
 COPY --from=builder /usr/src/app/dist ./dist
-COPY --from=builder /usr/src/app/storage ./storage
 
 # Cambiar ownership de los archivos al usuario no root
 RUN chown -R nestjs:nodejs /usr/src/app

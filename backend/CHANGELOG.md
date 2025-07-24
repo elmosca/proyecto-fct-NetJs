@@ -8,6 +8,7 @@
 - **Archivo .env.example**: Plantilla completa de variables de entorno
 - **Script de verificación**: `scripts/verify-env.js` para validar configuración
 - **Documentación de configuración**: Guías paso a paso para setup
+- **Valores por defecto del sistema**: Configuración automática de `allowed_file_types` y `max_file_size_mb`
 
 ### 🔧 Cambiado
 
