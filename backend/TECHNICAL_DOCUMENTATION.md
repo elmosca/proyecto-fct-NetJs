@@ -1,6 +1,7 @@
 # Documentación Técnica del Proyecto
 
 ## 📋 Índice
+
 1. [Arquitectura del Sistema](#arquitectura-del-sistema)
 2. [Decisiones Técnicas](#decisiones-técnicas)
 3. [Configuración del Entorno](#configuración-del-entorno)
@@ -15,37 +16,47 @@
 ## 🏗️ Arquitectura del Sistema
 
 ### Tecnologías Principales
+
 - **Backend**: NestJS (Node.js)
 - **Base de Datos**: PostgreSQL
 - **ORM**: TypeORM
-- **Autenticación**: JWT
+- **Autenticación**: JWT + Google OAuth
+- **Rate Limiting**: @nestjs/throttler
+- **Gestión de Archivos**: Multer + sistema polimórfico
 - **Contenedorización**: Docker
 
 ### Estructura de Directorios
+
 ```
 backend/
 ├── src/
-│   ├── auth/           # Módulo de autenticación
-│   ├── users/          # Módulo de usuarios
+│   ├── auth/           # Módulo de autenticación (JWT + Google OAuth)
+│   ├── users/          # Módulo de usuarios y roles
 │   ├── projects/       # Módulo de proyectos
 │   ├── tasks/          # Módulo de tareas
 │   ├── comments/       # Módulo de comentarios
-│   └── common/         # Utilidades comunes
-├── test/              # Tests
-└── config/            # Configuraciones
+│   ├── anteprojects/   # Módulo de anteproyectos y evaluaciones
+│   ├── files/          # Módulo de gestión de archivos
+│   ├── notifications/  # Módulo de notificaciones
+│   └── common/         # Utilidades comunes (rate limiting, logging)
+├── test/              # Tests unitarios y E2E
+├── docs/              # Documentación técnica
+└── init-scripts/      # Scripts de inicialización de BD
 ```
 
 ## 🔧 Decisiones Técnicas
 
 ### 1. Elección de NestJS
+
 - **Razón**: Framework robusto con soporte para TypeScript
-- **Beneficios**: 
+- **Beneficios**:
   - Arquitectura modular
   - Inyección de dependencias
   - Soporte para decoradores
   - Documentación extensa
 
 ### 2. Base de Datos PostgreSQL
+
 - **Razón**: Base de datos relacional robusta
 - **Características**:
   - Soporte para JSON
@@ -53,6 +64,7 @@ backend/
   - Escalabilidad
 
 ### 3. TypeORM
+
 - **Razón**: ORM maduro con soporte para TypeScript
 - **Ventajas**:
   - Migraciones automáticas
@@ -62,6 +74,7 @@ backend/
 ## ⚙️ Configuración del Entorno
 
 ### Variables de Entorno
+
 ```env
 # Database
 DB_HOST=localhost
@@ -74,13 +87,22 @@ DB_DATABASE=project_management
 JWT_SECRET=your-secret-key
 JWT_EXPIRATION=1d
 
+# Google OAuth
+GOOGLE_CLIENT_ID=your-google-client-id
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+
+# Rate Limiting
+RATE_LIMIT_TTL=60
+RATE_LIMIT_MAX=100
+
 # Server
 PORT=3000
 NODE_ENV=development
 ```
 
 ### Docker
-```yaml
+
+````yaml
 version: '3.8'
 services:
   postgres:
@@ -149,9 +171,10 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
 
 # Comando para iniciar la aplicación
 CMD ["npm", "run", "start:prod"]
-```
+````
 
 #### docker-compose.yml ejemplo
+
 ```yaml
 version: '3.8'
 services:
@@ -161,7 +184,7 @@ services:
       dockerfile: Dockerfile
       target: production
     ports:
-      - "3000:3000"
+      - '3000:3000'
     depends_on:
       postgres:
         condition: service_healthy
@@ -181,7 +204,15 @@ services:
       - uploads_data:/usr/src/app/storage/uploads
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/api/health"]
+      test:
+        [
+          'CMD',
+          'wget',
+          '--no-verbose',
+          '--tries=1',
+          '--spider',
+          'http://localhost:3000/api/health',
+        ]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -192,12 +223,12 @@ services:
   postgres:
     image: postgres:13-alpine
     ports:
-      - "5432:5432"
+      - '5432:5432'
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: project_management
-      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --lc-collate=C --lc-ctype=C"
+      POSTGRES_INITDB_ARGS: '--encoding=UTF8 --lc-collate=C --lc-ctype=C'
     env_file:
       - .env
     volumes:
@@ -205,7 +236,7 @@ services:
       - ./init-scripts:/docker-entrypoint-initdb.d
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d project_management"]
+      test: ['CMD-SHELL', 'pg_isready -U postgres -d project_management']
       interval: 10s
       timeout: 5s
       retries: 5
@@ -222,9 +253,11 @@ networks:
   app-network:
     driver: bridge
 ```
+
 volumes:
-  postgres_data:
-```
+postgres_data:
+
+````
 
 ## 📊 Estructura de la Base de Datos
 
@@ -252,9 +285,10 @@ export class User {
   @Column({ default: true })
   activo: boolean;
 }
-```
+````
 
 #### Proyecto (Project)
+
 ```typescript
 @Entity()
 export class Project {
@@ -270,7 +304,7 @@ export class Project {
   @Column({
     type: 'enum',
     enum: ProjectStatus,
-    default: ProjectStatus.PLANIFICACION
+    default: ProjectStatus.PLANIFICACION,
   })
   estado: ProjectStatus;
 }
@@ -279,6 +313,7 @@ export class Project {
 ## 🔐 Autenticación y Seguridad
 
 ### Flujo de Autenticación
+
 1. Usuario envía credenciales
 2. Servidor valida credenciales
 3. Genera JWT token
@@ -286,6 +321,7 @@ export class Project {
 5. Token se envía en headers
 
 ### Middleware de Seguridad
+
 - CORS configurado
 - Rate limiting
 - Validación de datos
@@ -294,6 +330,7 @@ export class Project {
 ## 📈 Consideraciones de Rendimiento
 
 ### Optimizaciones
+
 1. **Caché**:
    - Redis para datos frecuentes
    - Caché de consultas
@@ -311,6 +348,7 @@ export class Project {
 ## 🚀 Procedimientos de Despliegue
 
 ### Desarrollo Local
+
 ```bash
 # Instalar dependencias
 npm install
@@ -329,6 +367,7 @@ npm run start:dev
 ```
 
 ### Desarrollo Local y Producción con Docker
+
 ```bash
 # Instalar dependencias
 npm install
@@ -345,11 +384,13 @@ docker compose exec api npm run migration:run
 ```
 
 #### Notas de seguridad y buenas prácticas
+
 - El contenedor corre como usuario no root (`nestjs`).
 - Healthcheck verifica el endpoint `/api/health` para asegurar disponibilidad.
 - Solo se copian los artefactos necesarios (`dist`, `storage`).
 
 ### Producción
+
 ```bash
 # Construir aplicación
 npm run build
@@ -380,12 +421,14 @@ npm run start:prod
 ## 📝 Registro de Cambios
 
 ### [Fecha] - Versión 1.0.0
+
 - Implementación inicial
 - Estructura base del proyecto
 - Entidades principales
 - Autenticación básica
 
 ### [Fecha] - Próxima Versión
+
 - Sistema de Kanban
 - Características tipo Notion
-- Notificaciones en tiempo real 
+- Notificaciones en tiempo real

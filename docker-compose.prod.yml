@@ -128,18 +128,18 @@ services:
           memory: 128M
           cpus: "0.125"
 
-  # Nginx Load Balancer (opcional para múltiples instancias)
+  # Nginx Load Balancer (configurado para VPS con SSL automático)
   nginx:
     image: nginx:alpine
     container_name: tfg-nginx-prod
     restart: unless-stopped
     ports:
-      - "${NGINX_PORT:-80}:80"
-      - "${NGINX_SSL_PORT:-443}:443"
+      - "127.0.0.1:80:80"    # Solo localhost para Cloudflare
+      - "127.0.0.1:443:443"  # Solo localhost para Cloudflare
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./nginx/ssl:/etc/nginx/ssl:ro
-      - ./nginx/logs:/var/log/nginx
+      - /etc/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+      - /var/log/nginx:/var/log/nginx
     depends_on:
       - api
     networks:

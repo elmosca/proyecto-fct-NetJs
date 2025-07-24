@@ -25,15 +25,63 @@ sudo apt-get install nodejs -y
 node --version  # Debe mostrar v20.x.x
 ```
 
-### Configuración Automática
+## 🎯 Opciones de Despliegue
+
+### **1. 🏠 Desarrollo Local (Básico)**
 
 ```bash
-# Linux/macOS
 ./setup.sh
-
-# Windows (PowerShell)
-.\setup.ps1
 ```
+
+- **Uso**: Desarrollo y pruebas locales
+- **Acceso**: Solo desde tu máquina
+- **Coste**: Cero
+- **Complejidad**: Mínima
+
+### **2. 🎓 Centro Educativo (Recomendado para presentación)**
+
+```bash
+./deploy-centro-educativo.sh
+```
+
+- **Uso**: Presentación, centro educativo, red local
+- **Acceso**: Cualquier dispositivo en la red local
+- **Coste**: Cero
+- **Complejidad**: Baja
+- **URL**: `http://[IP-SERVIDOR]/api`
+
+### **3. 🌐 Cloudflare Tunnels (Exposición pública temporal)**
+
+```bash
+./deploy-local-cloudflare.sh
+```
+
+- **Uso**: Demostración pública, acceso desde internet
+- **Acceso**: Cualquier dispositivo con internet
+- **Coste**: Cero (con tu dominio)
+- **Complejidad**: Media
+- **URL**: `https://[subdominio].trycloudflare.com`
+
+### **4. 🖥️ VPS IONOS (Producción profesional)**
+
+```bash
+./deploy-vps.sh
+```
+
+- **Uso**: Producción, centro educativo con recursos
+- **Acceso**: Público con dominio propio
+- **Coste**: 1€/mes (VPS)
+- **Complejidad**: Media-Alta
+- **URL**: `https://tu-dominio.com/api`
+
+### **Matriz de Decisión**
+
+| Escenario                 | Opción Recomendada | Comando                        | Ventajas                |
+| ------------------------- | ------------------ | ------------------------------ | ----------------------- |
+| **Desarrollo**            | Local básico       | `./setup.sh`                   | Rápido, simple          |
+| **Presentación TFG**      | Centro educativo   | `./deploy-centro-educativo.sh` | Profesional, sin costes |
+| **Demo pública**          | Cloudflare Tunnels | `./deploy-local-cloudflare.sh` | Acceso global, temporal |
+| **Centro educativo real** | VPS IONOS          | `./deploy-vps.sh`              | Producción, estable     |
 
 ### Configuración Manual
 
@@ -42,6 +90,12 @@ Ver [CONTRIBUTING.md](CONTRIBUTING.md) para instrucciones detalladas.
 ### 🔑 Configuración de Google OAuth
 
 Para autenticación con Google, sigue la [guía completa](backend/docs/GOOGLE_OAUTH_SETUP.md).
+
+### Windows (PowerShell)
+
+```bash
+.\setup.ps1
+```
 
 ## � Backend API - Proyecto FCT (Production Ready)
 
@@ -151,12 +205,13 @@ proyecto-fct/
 ### Frontend
 
 - **Framework**: Flutter + Dart
-- **Arquitectura**: Clean Architecture
-- **Estado**: Riverpod
-- **Navegación**: AutoRoute
-- **DI**: GetIt
-- **Generación de código**: build_runner + freezed
-- **Testing**: flutter_test + mockito
+- **Arquitectura**: Clean Architecture (estructura básica creada)
+- **Estado**: Riverpod (planificado)
+- **Navegación**: AutoRoute (planificado)
+- **DI**: GetIt (planificado)
+- **Generación de código**: build_runner + freezed (planificado)
+- **Testing**: flutter_test + mockito (planificado)
+- **Estado actual**: Estructura básica Android creada, desarrollo en progreso
 
 ## 🏗️ Requisitos Previos
 
@@ -234,6 +289,9 @@ proyecto-fct/
 
 - [Documentación Técnica del Backend](./backend/docs/TECHNICAL_DOCUMENTATION.md)
 - [Estado del Proyecto](./backend/docs/PROJECT_STATUS.md)
+- [Documentación del Frontend](./frontend/README.md)
+- [Configuración para Centro Educativo](./docs/CENTRO_EDUCATIVO_SETUP.md)
+- [Configuración Cloudflare](./docs/CLOUDFLARE_SETUP.md)
 
 ## Scripts Disponibles
 
@@ -374,12 +432,31 @@ git commit -m "fix(api): corregir error en la paginación de usuarios"
 
 ## 📊 Estado del Proyecto
 
-- ✅ Backend API con autenticación
-- ✅ Frontend Flutter con navegación
+### ✅ Completado
+
+- ✅ Backend API NestJS con autenticación JWT + Google OAuth
+- ✅ Sistema de rate limiting implementado
+- ✅ Arquitectura Clean Architecture en backend
+- ✅ Sistema de roles y autorización
+- ✅ Gestión de proyectos, tareas y comentarios
+- ✅ Sistema de evaluaciones para anteproyectos
+- ✅ Gestión de archivos con uploads
 - ✅ CI/CD Pipeline configurado
-- 🔄 Integración con base de datos
-- 🔄 Testing automatizado
-- 📋 Documentación en progreso
+- ✅ Documentación técnica completa
+- ✅ Configuración Docker optimizada
+
+### 🔄 En Desarrollo
+
+- 🔄 Frontend Flutter (estructura básica creada)
+- 🔄 Testing automatizado completo
+- 🔄 Integración frontend-backend
+
+### 📋 Pendiente
+
+- 📋 Desarrollo completo del frontend Flutter
+- 📋 Sistema de notificaciones en tiempo real
+- 📋 Optimizaciones de rendimiento
+- 📋 Despliegue en producción
 
 ## 📧 Contacto
 

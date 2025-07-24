@@ -75,6 +75,21 @@ DB_PASSWORD=contraseña_generada_automáticamente
 - [ ] Configuración de Flutter para OAuth
 - [ ] Configuración de producción
 
+## 📚 Actualización de Documentación
+
+### Completado:
+
+- [x] Actualización del README.md principal con estado actual del proyecto
+- [x] Actualización del backend/README.md con nuevas funcionalidades
+- [x] Actualización del backend/PROJECT_STATUS.md con fechas actuales
+- [x] Actualización del backend/TECHNICAL_DOCUMENTATION.md con nuevas tecnologías
+- [x] Creación del frontend/README.md con estado actual del desarrollo
+- [x] Documentación de rate limiting y Google OAuth actualizada
+- [x] Creación de scripts de despliegue para diferentes escenarios
+- [x] Documentación completa de opciones de despliegue en README principal
+- [x] Documentación de despliegue en README del backend
+- [x] Guía para centro educativo sin dependencias externas
+
 ## 🔒 Seguridad
 
 ### Implementado:
@@ -93,6 +108,6 @@ DB_PASSWORD=contraseña_generada_automáticamente
 
 ---
 
-**Fecha**: 2025-07-24
+**Fecha**: 2025-01-24
 **Estado**: ✅ Completado
-**Próximo**: Configuración de PostgreSQL
+**Próximo**: Configuración de PostgreSQL y desarrollo del frontend
