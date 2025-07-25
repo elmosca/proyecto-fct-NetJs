@@ -118,41 +118,36 @@ Para autenticación con Google, sigue la [guía completa](backend/docs/GOOGLE_OA
 - Docker & Docker Compose
 - Variables de entorno configuradas
 
-### Opción 1: Desarrollo Local
+### Script de Despliegue Interactivo
+
+El proyecto incluye un script de despliegue interactivo que te guía paso a paso para configurar el despliegue según tus necesidades específicas.
 
 ```bash
-git clone https://github.com/elmosca/proyecto-fct-NetJs.git -b production-backend
-cd proyecto-fct-NetJs/backend
-cp .env.example .env
-# Editar .env con tus configuraciones
-docker compose up -d
+# Ejecutar el script interactivo
+./deploy-interactive.sh
 ```
 
-### Opción 2: Producción
+### Tipos de Despliegue Disponibles
 
-```bash
-# Clonar rama de producción
-git clone https://github.com/elmosca/proyecto-fct-NetJs.git -b production-backend
+1. **🏠 Desarrollo Local** - Para desarrollo y pruebas locales
+2. **🎓 Centro Educativo** - Para uso interno en centros educativos  
+3. **🌐 Local con Cloudflare Tunnel** - Para demos y presentaciones
+4. **🏢 VPS Profesional** - Para producción en VPS propio
+5. **🎯 Despliegue Genérico** - Configuración flexible para múltiples entornos
 
-# Variables de entorno para producción
-export NODE_ENV=production
-export DATABASE_URL="postgresql://user:pass@your-db-host:5432/tfg_production"
-export JWT_SECRET="your-ultra-secure-jwt-secret"
-export CORS_ORIGIN="https://tu-app.com,https://www.tu-app.com"
+### Características del Script
 
-# Build y deploy
-cd proyecto-fct-NetJs/backend
-docker build -t tfg-backend-api:latest .
-docker run -d \
-  --name tfg-api \
-  -p 3000:3000 \
-  -e NODE_ENV=production \
-  -e DATABASE_URL=$DATABASE_URL \
-  -e JWT_SECRET=$JWT_SECRET \
-  -e CORS_ORIGIN=$CORS_ORIGIN \
-  --restart unless-stopped \
-  tfg-backend-api:latest
-```
+- ✅ **Interfaz interactiva** con colores y mensajes claros
+- ✅ **Generación automática** de archivos de configuración
+- ✅ **Contraseñas seguras** generadas automáticamente
+- ✅ **Scripts de gestión** creados automáticamente
+- ✅ **Verificación de prerrequisitos** antes del despliegue
+- ✅ **Configuración de Nginx** incluida cuando es necesario
+
+### Documentación Completa
+
+Para información detallada sobre el despliegue, consulta:
+- [README-DEPLOY-INTERACTIVE.md](README-DEPLOY-INTERACTIVE.md) - Guía completa del script interactivo
 
 ## 🏗️ Arquitectura
 
