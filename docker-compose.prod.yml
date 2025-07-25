@@ -1,0 +1,164 @@
+# Docker Compose para Producción - Backend API
+
+version: '3.8'
+
+services:
+  # API Backend
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      target: production
+    image: tfg-backend-api:latest
+    container_name: tfg-api-prod
+    restart: unless-stopped
+    ports:
+      - "${API_PORT:-3000}:3000"
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      
+      # Base de Datos
+      DATABASE_URL: ${DATABASE_URL}
+      DB_HOST: ${DB_HOST:-postgres}
+      DB_PORT: ${DB_PORT:-5432}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_DATABASE: ${DB_DATABASE}
+      
+      # Autenticación
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRATION: ${JWT_EXPIRATION:-24h}
+      JWT_REFRESH_EXPIRATION: ${JWT_REFRESH_EXPIRATION:-7d}
+      
+      # CORS y Seguridad
+      CORS_ORIGIN: ${CORS_ORIGIN}
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS}
+      
+      # Archivos
+      MAX_FILE_SIZE_MB: ${MAX_FILE_SIZE_MB:-10}
+      ALLOWED_FILE_TYPES: ${ALLOWED_FILE_TYPES:-pdf,doc,docx,jpg,jpeg,png}
+      
+      # Rate Limiting
+      RATE_LIMIT_TTL: ${RATE_LIMIT_TTL:-60}
+      RATE_LIMIT_REQUESTS: ${RATE_LIMIT_REQUESTS:-100}
+      
+    volumes:
+      - ./backend/storage:/usr/src/app/storage
+      - ./backend/logs:/usr/src/app/logs
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - tfg-network
+    healthcheck:
+      test: ["CMD", "nc", "-z", "127.0.0.1", "3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: "0.5"
+        reservations:
+          memory: 256M
+          cpus: "0.25"
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+        delay: 5s
+
+  # Base de Datos PostgreSQL
+  postgres:
+    image: postgres:13-alpine
+    container_name: tfg-postgres-prod
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --lc-collate=C --lc-ctype=C"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backend/init-scripts:/docker-entrypoint-initdb.d
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    networks:
+      - tfg-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME} -d ${DB_DATABASE}"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: "1.0"
+        reservations:
+          memory: 512M
+          cpus: "0.5"
+
+  # Redis para caché y sesiones (opcional)
+  redis:
+    image: redis:7-alpine
+    container_name: tfg-redis-prod
+    restart: unless-stopped
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-secure_redis_password}
+    volumes:
+      - redis_data:/data
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    networks:
+      - tfg-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+          cpus: "0.25"
+        reservations:
+          memory: 128M
+          cpus: "0.125"
+
+  # Nginx Load Balancer (configurado para VPS con SSL automático)
+  nginx:
+    image: nginx:alpine
+    container_name: tfg-nginx-prod
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:80:80"    # Solo localhost para Cloudflare
+      - "127.0.0.1:443:443"  # Solo localhost para Cloudflare
+    volumes:
+      - /etc/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+      - /var/log/nginx:/var/log/nginx
+    depends_on:
+      - api
+    networks:
+      - tfg-network
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+          cpus: "0.25"
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+
+networks:
+  tfg-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
