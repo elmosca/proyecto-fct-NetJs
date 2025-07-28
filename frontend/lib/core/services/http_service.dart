@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:fct_frontend/core/interceptors/error_interceptor.dart';
 import 'package:fct_frontend/core/services/storage_service.dart';
 import 'package:fct_frontend/core/utils/logger.dart';
 
@@ -14,6 +15,10 @@ class HttpService {
   final StorageService _storageService;
 
   void _setupInterceptors() {
+    // Add error interceptor first
+    _dio.interceptors.add(ErrorInterceptor());
+
+    // Add auth and logging interceptor
     _dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) async {
@@ -32,9 +37,6 @@ class HttpService {
           handler.next(response);
         },
         onError: (error, handler) {
-          Logger.error(
-              '❌ HTTP Error: ${error.response?.statusCode} ${error.requestOptions.path}');
-
           // Handle 401 Unauthorized
           if (error.response?.statusCode == 401) {
             _handleUnauthorized();

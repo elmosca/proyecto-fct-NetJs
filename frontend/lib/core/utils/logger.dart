@@ -49,14 +49,14 @@ class Logger {
     final levelName = level.name.toUpperCase();
 
     final logMessage = '$emoji [$timestamp] $levelName [$logTag]: $message';
-    print(logMessage);
+    debugPrint(logMessage);
 
     if (error != null) {
-      print('   Error details: $error');
+      debugPrint('   Error details: $error');
     }
 
     if (stackTrace != null) {
-      print('   Stack trace: $stackTrace');
+      debugPrint('   Stack trace: $stackTrace');
     }
   }
 

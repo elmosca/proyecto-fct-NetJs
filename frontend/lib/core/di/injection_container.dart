@@ -1,8 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:fct_frontend/core/constants/app_constants.dart';
+import 'package:fct_frontend/core/services/auth_service.dart';
 import 'package:fct_frontend/core/services/http_service.dart';
 import 'package:fct_frontend/core/services/storage_service.dart';
 import 'package:fct_frontend/core/services/websocket_service.dart';
+import 'package:fct_frontend/core/utils/logger.dart';
 import 'package:fct_frontend/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:fct_frontend/features/auth/domain/repositories/auth_repository.dart';
 import 'package:fct_frontend/features/auth/domain/usecases/login_usecase.dart';
@@ -18,17 +20,26 @@ Future<void> initializeDependencies() async {
   getIt.registerLazySingleton<HttpService>(
     () => HttpService(
       dio: getIt<Dio>(),
+      storageService: getIt<StorageService>(),
     ),
   );
 
   getIt.registerLazySingleton<WebSocketService>(
     () => WebSocketService(
       channel: getIt<WebSocketChannel>(),
+      storageService: getIt<StorageService>(),
     ),
   );
 
   getIt.registerLazySingleton<StorageService>(
     () => StorageService(),
+  );
+
+  getIt.registerLazySingleton<AuthService>(
+    () => AuthService(
+      httpService: getIt<HttpService>(),
+      storageService: getIt<StorageService>(),
+    ),
   );
 
   // HTTP Client
@@ -51,7 +62,7 @@ Future<void> initializeDependencies() async {
         LogInterceptor(
           requestBody: true,
           responseBody: true,
-          logPrint: (obj) => print(obj),
+          logPrint: (obj) => Logger.debug(obj.toString()),
         ),
       ]);
 
