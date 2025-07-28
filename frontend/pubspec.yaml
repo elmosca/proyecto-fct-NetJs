@@ -37,9 +37,13 @@ dependencies:
   flutter_markdown: ^0.6.18
 
   # Utils
-  intl: ^0.18.1
+  intl: ^0.20.2
   url_launcher: ^6.2.2
   shared_preferences: ^2.2.2
+
+  # Internacionalización
+  flutter_localizations:
+    sdk: flutter
 
   # Cupertino Icons
   cupertino_icons: ^1.0.2
@@ -69,11 +73,6 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
-    - assets/fonts/
+    - assets/i18n/
 
-  fonts:
-    - family: Roboto
-      fonts:
-        - asset: assets/fonts/Roboto-Regular.ttf
-        - asset: assets/fonts/Roboto-Bold.ttf
-          weight: 700
+  generate: true

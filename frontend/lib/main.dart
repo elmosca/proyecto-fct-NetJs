@@ -1,6 +1,9 @@
-import 'package:fct_frontend/core/routes/app_router.dart';
+import 'package:fct_frontend/core/providers/locale_provider.dart';
 import 'package:fct_frontend/core/theme/app_theme.dart';
+import 'package:fct_frontend/features/auth/presentation/pages/login_page.dart';
+import 'package:fct_frontend/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() async {
@@ -18,15 +21,26 @@ class FCTApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final appRouter = ref.watch(appRouterProvider);
+    final locale = ref.watch(localeProvider);
 
-    return MaterialApp.router(
+    return MaterialApp(
       title: 'FCT - Gestión de Proyectos',
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.system,
-      routerConfig: appRouter,
+      home: const LoginPage(),
       debugShowCheckedModeBanner: false,
+      locale: locale,
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('es'), // Spanish
+        Locale('en'), // English
+      ],
     );
   }
 }
