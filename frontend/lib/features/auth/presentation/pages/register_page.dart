@@ -5,14 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 @RoutePage()
-class LoginPage extends ConsumerWidget {
-  const LoginPage({super.key});
+class RegisterPage extends ConsumerWidget {
+  const RegisterPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final _formKey = GlobalKey<FormState>();
     final _emailController = TextEditingController();
     final _passwordController = TextEditingController();
+    final _firstNameController = TextEditingController();
+    final _lastNameController = TextEditingController();
 
     ref.listen(authNotifierProvider, (previous, next) {
       next.whenOrNull(
@@ -24,8 +26,10 @@ class LoginPage extends ConsumerWidget {
         data: (state) {
           state.whenOrNull(
             authenticated: (user) {
-              // Navegar al dashboard después del login exitoso
-              context.router.replaceNamed('/dashboard');
+              // TODO: Navegar al dashboard
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('¡Registro exitoso!')),
+              );
             },
           );
         },
@@ -36,7 +40,7 @@ class LoginPage extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Iniciar Sesión'),
+        title: const Text('Crear Cuenta'),
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -46,6 +50,20 @@ class LoginPage extends ConsumerWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                AppTextField(
+                  label: 'Nombre',
+                  controller: _firstNameController,
+                  validator: (value) =>
+                      value!.isEmpty ? 'Introduce tu nombre' : null,
+                ),
+                const SizedBox(height: 16),
+                AppTextField(
+                  label: 'Apellidos',
+                  controller: _lastNameController,
+                  validator: (value) =>
+                      value!.isEmpty ? 'Introduce tus apellidos' : null,
+                ),
+                const SizedBox(height: 16),
                 AppTextField(
                   label: 'Email',
                   controller: _emailController,
@@ -73,44 +91,18 @@ class LoginPage extends ConsumerWidget {
                 ),
                 const SizedBox(height: 24),
                 AppButton(
-                  text: 'Iniciar Sesión',
+                  text: 'Registrarse',
                   isLoading: authState.isLoading,
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      ref.read(authNotifierProvider.notifier).login(
+                      ref.read(authNotifierProvider.notifier).register(
                             _emailController.text,
                             _passwordController.text,
+                            _firstNameController.text,
+                            _lastNameController.text,
                           );
                     }
                   },
-                ),
-                const SizedBox(height: 16),
-                // Google OAuth será añadido en v2.0
-                // AppButton(
-                //   text: 'Iniciar Sesión con Google',
-                //   onPressed: () => // TODO: Google OAuth
-                // ),
-                // const SizedBox(height: 16),
-                TextButton(
-                  onPressed: () {
-                    context.router.pushNamed('/register');
-                  },
-                  child: const Text('¿No tienes cuenta? Regístrate'),
-                ),
-                const SizedBox(height: 8),
-                TextButton(
-                  onPressed: () {
-                    context.router.pushNamed('/forgot-password');
-                  },
-                  child: const Text('¿Olvidaste tu contraseña?'),
-                ),
-                const SizedBox(height: 16),
-                // Para testing: botón de navegación al dashboard
-                TextButton(
-                  onPressed: () {
-                    context.router.pushNamed('/dashboard');
-                  },
-                  child: const Text('🧪 Test Dashboard (debe activar AuthGuard)'),
                 ),
               ],
             ),
@@ -119,4 +111,4 @@ class LoginPage extends ConsumerWidget {
       ),
     );
   }
-}
+} 

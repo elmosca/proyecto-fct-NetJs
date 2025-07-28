@@ -1,33 +1,31 @@
 import 'package:dio/dio.dart';
+import 'package:fct_frontend/core/interceptors/auth_interceptor.dart';
 import 'package:fct_frontend/core/interceptors/error_interceptor.dart';
-import 'package:fct_frontend/core/services/storage_service.dart';
+import 'package:fct_frontend/core/services/token_manager.dart';
 import 'package:fct_frontend/core/utils/logger.dart';
 
 class HttpService {
   HttpService({
     required Dio dio,
-    required StorageService storageService,
+    required TokenManager tokenManager,
   })  : _dio = dio,
-        _storageService = storageService {
+        _tokenManager = tokenManager {
     _setupInterceptors();
   }
   final Dio _dio;
-  final StorageService _storageService;
+  final TokenManager _tokenManager;
 
   void _setupInterceptors() {
-    // Add error interceptor first
+    // Add auth interceptor (handles JWT tokens automatically)
+    _dio.interceptors.add(AuthInterceptor(_tokenManager));
+    
+    // Add error interceptor
     _dio.interceptors.add(ErrorInterceptor());
 
-    // Add auth and logging interceptor
+    // Add logging interceptor
     _dio.interceptors.add(
       InterceptorsWrapper(
-        onRequest: (options, handler) async {
-          // Add auth token if available
-          final token = await _storageService.getToken();
-          if (token != null) {
-            options.headers['Authorization'] = 'Bearer $token';
-          }
-
+        onRequest: (options, handler) {
           Logger.info('🌐 HTTP Request: ${options.method} ${options.path}');
           handler.next(options);
         },
@@ -36,22 +34,8 @@ class HttpService {
               '✅ HTTP Response: ${response.statusCode} ${response.requestOptions.path}');
           handler.next(response);
         },
-        onError: (error, handler) {
-          // Handle 401 Unauthorized
-          if (error.response?.statusCode == 401) {
-            _handleUnauthorized();
-          }
-
-          handler.next(error);
-        },
       ),
     );
-  }
-
-  void _handleUnauthorized() {
-    // Clear token and redirect to login
-    _storageService.clearToken();
-    // TODO: Navigate to login page
   }
 
   Future<Response<T>> get<T>(
