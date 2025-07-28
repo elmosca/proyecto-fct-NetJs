@@ -157,6 +157,106 @@ proyecto-fct/
 - **DI**: GetIt
 - **Generación de código**: build_runner + freezed
 - **Testing**: flutter_test + mockito
+- **Internacionalización**: Soporte completo bilingüe (Castellano/Inglés)
+
+## 🌍 Internacionalización (i18n)
+
+### **Soporte Bilingüe Completo**
+
+El proyecto incluye **soporte completo para dos idiomas** para facilitar el trabajo en un entorno educativo bilingüe:
+
+#### **Idiomas Soportados**
+- 🇪🇸 **Castellano**: Idioma principal del centro educativo
+- 🇬🇧 **Inglés**: Idioma secundario para estudiantes internacionales y contenido bilingüe
+
+#### **Características de Internacionalización**
+
+##### **🔄 Cambio de Idioma en Tiempo Real**
+- Selector de idioma integrado en el perfil de usuario
+- Cambio instantáneo sin necesidad de reiniciar la aplicación
+- Persistencia automática de la preferencia de idioma
+- Detección automática del idioma del sistema operativo
+
+##### **📱 Contenido Dinámico Multilingüe**
+- **Interfaz de usuario**: Todos los textos, botones, etiquetas y mensajes
+- **Contenido de usuario**: Títulos de proyectos, descripciones, comentarios
+- **Documentación**: Ayuda, tutoriales, mensajes de error y validación
+- **Notificaciones**: Emails, push notifications, mensajes del sistema
+
+##### **🏗️ Arquitectura de Internacionalización**
+
+```
+frontend/
+├── lib/
+│   ├── core/
+│   │   ├── i18n/                    # Configuración de i18n
+│   │   │   ├── locale_provider.dart # Gestión de idioma
+│   │   │   └── i18n_config.dart     # Configuración
+│   │   └── widgets/
+│   │       └── language_selector.dart # Selector de idioma
+├── assets/
+│   └── i18n/
+│       ├── app_es.arb              # Traducciones en castellano
+│       └── app_en.arb              # Traducciones en inglés
+```
+
+##### **🔧 Configuración Técnica**
+
+```dart
+// Configuración en MaterialApp
+MaterialApp(
+  localizationsDelegates: const [
+    AppLocalizations.delegate,
+    GlobalMaterialLocalizations.delegate,
+    GlobalWidgetsLocalizations.delegate,
+    GlobalCupertinoLocalizations.delegate,
+  ],
+  supportedLocales: const [
+    Locale('es', ''), // Castellano
+    Locale('en', ''), // Inglés
+  ],
+  locale: context.watch<LocaleProvider>().locale,
+)
+```
+
+##### **📝 Uso en el Código**
+
+```dart
+// Ejemplo de uso en widgets
+Text(AppLocalizations.of(context)!.loginTitle)
+Text(AppLocalizations.of(context)!.projectDescription)
+
+// Cambio de idioma programático
+final localeNotifier = ref.read(localeProvider.notifier);
+localeNotifier.setLocaleFromLanguageCode('en');
+```
+
+##### **🧪 Testing de Internacionalización**
+- Tests unitarios para verificar traducciones
+- Tests de widgets con diferentes idiomas
+- Tests de integración con cambio de idioma
+- Verificación de textos largos en ambos idiomas
+- Tests de accesibilidad en ambos idiomas
+
+##### **⚡ Comandos de Desarrollo**
+
+```bash
+# Generar archivos de localización
+flutter gen-l10n
+
+# Ejecutar tests de internacionalización
+flutter test test/core/i18n/
+
+# Verificar traducciones
+flutter analyze lib/core/i18n/
+```
+
+##### **🎯 Beneficios para el Centro Educativo**
+- **Inclusividad**: Acceso para estudiantes internacionales
+- **Flexibilidad**: Contenido adaptable según necesidades
+- **Escalabilidad**: Fácil adición de nuevos idiomas
+- **Consistencia**: Experiencia uniforme en ambos idiomas
+- **Accesibilidad**: Mejora la experiencia para usuarios no nativos
 
 ## 🏗️ Requisitos Previos
 
@@ -377,6 +477,7 @@ git commit -m "fix(api): corregir error en la paginación de usuarios"
 - ✅ Backend API con autenticación
 - ✅ Frontend Flutter con navegación
 - ✅ CI/CD Pipeline configurado
+- ✅ **Internacionalización completa (Castellano/Inglés)**
 - 🔄 Integración con base de datos
 - 🔄 Testing automatizado
 - 📋 Documentación en progreso
