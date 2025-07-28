@@ -58,7 +58,7 @@
 - [Estado Actual del Desarrollo](#-estado-actual-del-desarrollo)
 
 ---
-
+>>>>>>> 44217fba1d2d6cc6eb1c305a14638bfe7213a001
 ## 📋 Información del Proyecto
 
 - **Tecnología**: Flutter (Web, Android, iOS)
@@ -164,43 +164,72 @@ frontend/
 
 ### **Fase 3: Autenticación** ⏱️ 1-2 semanas
 
+<<<<<<< HEAD
 - [ ] **3.1** Pantalla de login (email/password) - **Stitch**
 - [ ] **3.2** Integración con Google OAuth
 - [ ] **3.3** Pantalla de registro - **Stitch**
 - [ ] **3.4** Recuperación de contraseña - **Stitch**
+=======
+- [ ] **3.1** Pantalla de login (email/password)
+- [ ] **3.2** Integración con Google OAuth
+- [ ] **3.3** Pantalla de registro
+- [ ] **3.4** Recuperación de contraseña
+>>>>>>> 44217fba1d2d6cc6eb1c305a14638bfe7213a001
 - [ ] **3.5** Gestión de tokens JWT
 - [ ] **3.6** Middleware de autenticación
 - [ ] **3.7** Tests de autenticación
 
 ### **Fase 4: Dashboard y Navegación** ⏱️ 1 semana
 
+<<<<<<< HEAD
 - [ ] **4.1** Layout principal con navegación - **Stitch**
 - [ ] **4.2** Dashboard principal - **Stitch**
 - [ ] **4.3** Menú lateral (drawer) - **Stitch**
+=======
+- [ ] **4.1** Layout principal con navegación
+- [ ] **4.2** Dashboard principal
+- [ ] **4.3** Menú lateral (drawer)
+>>>>>>> 44217fba1d2d6cc6eb1c305a14638bfe7213a001
 - [ ] **4.4** Navegación por roles
 - [ ] **4.5** Breadcrumbs y navegación
 
 ### **Fase 5: Gestión de Usuarios** ⏱️ 1-2 semanas
 
+<<<<<<< HEAD
 - [ ] **5.1** Lista de usuarios (con filtros y búsqueda) - **Stitch**
 - [ ] **5.2** Perfil de usuario - **Stitch**
 - [ ] **5.3** Edición de perfil - **Stitch**
 - [ ] **5.4** Gestión de roles y permisos
 - [ ] **5.5** Creación de usuarios (admin) - **Stitch**
+=======
+- [ ] **5.1** Lista de usuarios (con filtros y búsqueda)
+- [ ] **5.2** Perfil de usuario
+- [ ] **5.3** Edición de perfil
+- [ ] **5.4** Gestión de roles y permisos
+- [ ] **5.5** Creación de usuarios (admin)
+>>>>>>> 44217fba1d2d6cc6eb1c305a14638bfe7213a001
 - [ ] **5.6** Tests de usuarios
 
 ### **Fase 6: Gestión de Proyectos** ⏱️ 2-3 semanas
 
+<<<<<<< HEAD
 - [ ] **6.1** Lista de proyectos - **Stitch**
 - [ ] **6.2** Creación de proyectos - **Stitch**
 - [ ] **6.3** Detalle de proyecto - **Stitch**
 - [ ] **6.4** Edición de proyectos - **Stitch**
+=======
+- [ ] **6.1** Lista de proyectos
+- [ ] **6.2** Creación de proyectos
+- [ ] **6.3** Detalle de proyecto
+- [ ] **6.4** Edición de proyectos
+>>>>>>> 44217fba1d2d6cc6eb1c305a14638bfe7213a001
 - [ ] **6.5** Asignación de estudiantes
 - [ ] **6.6** Gestión de tutores
 - [ ] **6.7** Tests de proyectos
 
 ### **Fase 7: Sistema de Anteproyectos** ⏱️ 3-4 semanas
 
+<<<<<<< HEAD
 - [ ] **7.1** Lista de anteproyectos - **Stitch**
 - [ ] **7.2** Creación de anteproyectos - **Stitch**
 - [ ] **7.3** Detalle de anteproyecto - **Stitch**
@@ -210,14 +239,31 @@ frontend/
   - [ ] Aprobación/rechazo - **Stitch**
   - [ ] Programación de defensa - **Stitch**
   - [ ] Completado - **Stitch**
+=======
+- [ ] **7.1** Lista de anteproyectos
+- [ ] **7.2** Creación de anteproyectos
+- [ ] **7.3** Detalle de anteproyecto
+- [ ] **7.4** Ciclo de vida completo:
+  - [ ] Submit para revisión
+  - [ ] Revisión por tutores
+  - [ ] Aprobación/rechazo
+  - [ ] Programación de defensa
+  - [ ] Completado
+>>>>>>> 44217fba1d2d6cc6eb1c305a14638bfe7213a001
 - [ ] **7.5** Sistema de archivos adjuntos
 - [ ] **7.6** Tests de anteproyectos
 
 ### **Fase 8: Kanban de Tareas** ⏱️ 2-3 semanas
 
+<<<<<<< HEAD
 - [ ] **8.1** Vista Kanban con drag & drop - **Stitch**
 - [ ] **8.2** Creación de tareas - **Stitch**
 - [ ] **8.3** Edición de tareas - **Stitch**
+=======
+- [ ] **8.1** Vista Kanban con drag & drop
+- [ ] **8.2** Creación de tareas
+- [ ] **8.3** Edición de tareas
+>>>>>>> 44217fba1d2d6cc6eb1c305a14638bfe7213a001
 - [ ] **8.4** Asignación de usuarios
 - [ ] **8.5** Cambio de estado (drag & drop)
 - [ ] **8.6** Filtros y búsqueda
@@ -225,8 +271,13 @@ frontend/
 
 ### **Fase 9: Sistema de Comentarios** ⏱️ 1-2 semanas
 
+<<<<<<< HEAD
 - [ ] **9.1** Comentarios en tareas - **Stitch**
 - [ ] **9.2** Comentarios en proyectos - **Stitch**
+=======
+- [ ] **9.1** Comentarios en tareas
+- [ ] **9.2** Comentarios en proyectos
+>>>>>>> 44217fba1d2d6cc6eb1c305a14638bfe7213a001
 - [ ] **9.3** Editor de comentarios (markdown)
 - [ ] **9.4** Notificaciones de comentarios
 - [ ] **9.5** Tests de comentarios
@@ -235,17 +286,30 @@ frontend/
 
 - [ ] **10.1** WebSocket connection
 - [ ] **10.2** Notificaciones en tiempo real
+<<<<<<< HEAD
 - [ ] **10.3** Centro de notificaciones - **Stitch**
 - [ ] **10.4** Notificaciones push (mobile)
 - [ ] **10.5** Configuración de notificaciones - **Stitch**
+=======
+- [ ] **10.3** Centro de notificaciones
+- [ ] **10.4** Notificaciones push (mobile)
+- [ ] **10.5** Configuración de notificaciones
+>>>>>>> 44217fba1d2d6cc6eb1c305a14638bfe7213a001
 - [ ] **10.6** Tests de notificaciones
 
 ### **Fase 11: Sistema de Evaluaciones** ⏱️ 2-3 semanas
 
+<<<<<<< HEAD
 - [ ] **11.1** Criterios de evaluación - **Stitch**
 - [ ] **11.2** Formularios de evaluación - **Stitch**
 - [ ] **11.3** Calificaciones - **Stitch**
 - [ ] **11.4** Reportes de evaluación - **Stitch**
+=======
+- [ ] **11.1** Criterios de evaluación
+- [ ] **11.2** Formularios de evaluación
+- [ ] **11.3** Calificaciones
+- [ ] **11.4** Reportes de evaluación
+>>>>>>> 44217fba1d2d6cc6eb1c305a14638bfe7213a001
 - [ ] **11.5** Tests de evaluaciones
 
 ### **Fase 12: Optimización y Testing** ⏱️ 2-3 semanas
@@ -321,6 +385,7 @@ dev_dependencies:
   mockito: ^5.4.4
 ```
 
+<<<<<<< HEAD
 ## 🎨 Herramientas de Diseño UI
 
 ### **Stitch - Design with AI (Google)**
@@ -586,6 +651,8 @@ flutter doctor
 flutter pub deps
 ```
 
+=======
+>>>>>>> 44217fba1d2d6cc6eb1c305a14638bfe7213a001
 ## 📱 Características por Plataforma
 
 ### **Web (PWA)**
@@ -663,6 +730,7 @@ flutter pub deps
 
 ## 🔄 Workflow de Desarrollo
 
+<<<<<<< HEAD
 ### **Git Flow y Ciclo de Vida**
 
 #### **Estructura de Ramas**
@@ -990,6 +1058,14 @@ git checkout develop
 git merge temp/conflict-resolution
 git branch -d temp/conflict-resolution
 ```
+=======
+### **Git Flow**
+
+1. **main**: Código de producción
+2. **develop**: Código de desarrollo
+3. **feature/**: Nuevas funcionalidades
+4. **hotfix/**: Correcciones urgentes
+>>>>>>> 44217fba1d2d6cc6eb1c305a14638bfe7213a001
 
 ### **Code Review**
 
@@ -997,15 +1073,19 @@ git branch -d temp/conflict-resolution
 - [ ] Tests automáticos en CI/CD
 - [ ] Análisis de código estático
 - [ ] Verificación de accesibilidad
+<<<<<<< HEAD
 - [ ] Checklist de review obligatorio
 - [ ] Comentarios constructivos
 - [ ] Aprobación de al menos 1 reviewer
+=======
+>>>>>>> 44217fba1d2d6cc6eb1c305a14638bfe7213a001
 
 ### **Deployment**
 
 - [ ] Web: Despliegue automático en Vercel/Netlify
 - [ ] Android: Build automático para Google Play
 - [ ] iOS: Build automático para App Store
+<<<<<<< HEAD
 - [ ] GitHub Pages para documentación
 - [ ] Docker Hub para imágenes de contenedores
 
@@ -1179,6 +1259,8 @@ npx conventional-changelog-cli -p angular -i CHANGELOG.md -s
 flutter test --coverage
 genhtml coverage/lcov.info -o coverage/html
 ```
+=======
+>>>>>>> 44217fba1d2d6cc6eb1c305a14638bfe7213a001
 
 ## ⏱️ Estimación de Tiempos
 
@@ -1198,6 +1280,7 @@ genhtml coverage/lcov.info -o coverage/html
 
 ## 🚀 Próximos Pasos Inmediatos
 
+<<<<<<< HEAD
 ### **Configuración del Repositorio**
 1. **Inicializar proyecto Flutter**
 2. **Configurar estructura de carpetas**
@@ -1218,6 +1301,13 @@ genhtml coverage/lcov.info -o coverage/html
 13. **Definir templates de prompts para pantallas principales**
 14. **Configurar workflow de integración Stitch → Proyecto**
 15. **Crear guías de adaptación de código generado**
+=======
+1. **Inicializar proyecto Flutter**
+2. **Configurar estructura de carpetas**
+3. **Instalar dependencias base**
+4. **Configurar tema y estilos**
+5. **Implementar modelos de datos**
+>>>>>>> 44217fba1d2d6cc6eb1c305a14638bfe7213a001
 
 ## 📝 Notas de Desarrollo
 
@@ -1256,8 +1346,13 @@ genhtml coverage/lcov.info -o coverage/html
 
 ### **Últimas Actualizaciones**
 
+<<<<<<< HEAD
 - **2024-12-25**: Creación del plan de desarrollo
 - **Próxima actualización**: 2025-01-01
+=======
+- **2024-12-19**: Creación del plan de desarrollo
+- **Próxima actualización**: 2024-12-26
+>>>>>>> 44217fba1d2d6cc6eb1c305a14638bfe7213a001
 
 ### **Bloqueadores Actuales**
 
@@ -1268,6 +1363,7 @@ genhtml coverage/lcov.info -o coverage/html
 - Complejidad de la integración con Google OAuth
 - Gestión de WebSockets en múltiples plataformas
 - Optimización de rendimiento en dispositivos móviles
+<<<<<<< HEAD
 - **Dependencia de Stitch**: Posible limitación de acceso o cambios en la herramienta
 - **Calidad del código generado**: Necesidad de revisión y adaptación manual
 - **Consistencia de diseño**: Mantener coherencia visual entre pantallas generadas
@@ -1285,4 +1381,11 @@ genhtml coverage/lcov.info -o coverage/html
 
 **Última actualización**: 2025-07-26
 **Próxima revisión**: 2025-01-01
+=======
+
+---
+
+**Última actualización**: 2024-12-19
+**Próxima revisión**: 2024-12-26
+>>>>>>> 44217fba1d2d6cc6eb1c305a14638bfe7213a001
 **Responsable**: Equipo de desarrollo frontend
