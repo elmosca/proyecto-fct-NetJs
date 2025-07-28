@@ -14,6 +14,7 @@
 
 ### 📋 Plan de Desarrollo
 - [Plan de Desarrollo por Fases](#-plan-de-desarrollo-por-fases)
+- [Internacionalización (i18n) - Soporte Bilingüe](#-internacionalización-i18n---soporte-bilingüe)
   - [Fase 1: Configuración Base](#fase-1-configuración-base-️-1-2-semanas)
   - [Fase 2: Core y Shared](#fase-2-core-y-shared-️-1-2-semanas)
   - [Fase 3: Autenticación](#fase-3-autenticación-️-1-2-semanas)
@@ -90,6 +91,13 @@
 - ✅ **Android** (APK + Google Play Store)
 - ✅ **iOS** (App Store)
 
+### **Idiomas Soportados**
+
+- ✅ **Castellano** (idioma principal)
+- ✅ **Inglés** (idioma secundario)
+- 🔄 **Sistema de cambio de idioma en tiempo real**
+- 🔄 **Contenido dinámico multilingüe**
+
 ## 🏗️ Arquitectura del Proyecto
 
 ### Estructura de Carpetas (Clean Architecture)
@@ -100,6 +108,7 @@ frontend/
 │   ├── core/                    # Código compartido
 │   │   ├── constants/           # Constantes de la app
 │   │   ├── extensions/          # Extensiones de Dart
+│   │   ├── i18n/               # Internacionalización
 │   │   ├── theme/              # Configuración de temas
 │   │   ├── utils/              # Utilidades generales
 │   │   └── widgets/            # Widgets reutilizables
@@ -148,7 +157,12 @@ frontend/
   - [ ] dio (cliente HTTP)
   - [ ] web_socket_channel (WebSockets)
 - [ ] **1.4** Configurar tema y estilos base
-- [ ] **1.5** Configurar internacionalización (i18n)
+- [ ] **1.5** Configurar internacionalización (i18n) - **Soporte Bilingüe Castellano/Inglés**
+  - [ ] Configurar `flutter_localizations`
+  - [ ] Crear archivos de traducción para castellano e inglés
+  - [ ] Implementar selector de idioma en tiempo real
+  - [ ] Configurar `MaterialApp` con soporte multilingüe
+  - [ ] Crear sistema de fallback para traducciones faltantes
 - [ ] **1.6** Configurar logging y debugging
 - [ ] **1.7** Configurar tests unitarios y de widgets
 
@@ -368,6 +382,10 @@ dependencies:
   intl: ^0.18.1
   url_launcher: ^6.2.2
   shared_preferences: ^2.2.2
+
+  # Internacionalización
+  flutter_localizations:
+    sdk: flutter
 
 dev_dependencies:
   # Code Generation
@@ -653,6 +671,187 @@ flutter pub deps
 
 =======
 >>>>>>> 44217fba1d2d6cc6eb1c305a14638bfe7213a001
+## 🌍 Internacionalización (i18n) - Soporte Bilingüe
+
+### **Requisitos del Centro Bilingüe**
+
+La aplicación debe soportar completamente dos idiomas para facilitar el trabajo en un entorno educativo bilingüe:
+
+#### **Idiomas Soportados**
+- **Castellano**: Idioma principal del centro
+- **Inglés**: Idioma secundario para estudiantes internacionales y contenido bilingüe
+
+#### **Funcionalidades de Internacionalización**
+
+##### **1. Cambio de Idioma en Tiempo Real**
+- Selector de idioma en el perfil de usuario
+- Cambio instantáneo sin reiniciar la aplicación
+- Persistencia de la preferencia de idioma
+- Detección automática del idioma del sistema
+
+##### **2. Contenido Dinámico Multilingüe**
+- **Interfaz de usuario**: Todos los textos, botones, etiquetas
+- **Contenido de usuario**: Títulos de proyectos, descripciones, comentarios
+- **Documentación**: Ayuda, tutoriales, mensajes de error
+- **Notificaciones**: Emails, push notifications, mensajes del sistema
+
+##### **3. Estructura de Archivos de Traducción**
+
+```dart
+// lib/core/i18n/
+├── app_es.arb          # Traducciones en castellano
+├── app_en.arb          # Traducciones en inglés
+├── i18n_config.dart    # Configuración de internacionalización
+└── locale_provider.dart # Provider para gestión de idioma
+```
+
+##### **4. Ejemplo de Archivos de Traducción**
+
+```json
+// app_es.arb
+{
+  "loginTitle": "Iniciar Sesión",
+  "emailLabel": "Correo Electrónico",
+  "passwordLabel": "Contraseña",
+  "loginButton": "Entrar",
+  "forgotPassword": "¿Olvidaste tu contraseña?",
+  "registerLink": "¿No tienes cuenta? Regístrate",
+  "projectTitle": "Título del Proyecto",
+  "projectDescription": "Descripción del Proyecto",
+  "createProject": "Crear Proyecto",
+  "editProject": "Editar Proyecto",
+  "deleteProject": "Eliminar Proyecto",
+  "confirmDelete": "¿Estás seguro de que quieres eliminar este elemento?",
+  "save": "Guardar",
+  "cancel": "Cancelar",
+  "loading": "Cargando...",
+  "error": "Error",
+  "success": "Éxito",
+  "warning": "Advertencia"
+}
+
+// app_en.arb
+{
+  "loginTitle": "Login",
+  "emailLabel": "Email",
+  "passwordLabel": "Password",
+  "loginButton": "Sign In",
+  "forgotPassword": "Forgot your password?",
+  "registerLink": "Don't have an account? Sign up",
+  "projectTitle": "Project Title",
+  "projectDescription": "Project Description",
+  "createProject": "Create Project",
+  "editProject": "Edit Project",
+  "deleteProject": "Delete Project",
+  "confirmDelete": "Are you sure you want to delete this item?",
+  "save": "Save",
+  "cancel": "Cancel",
+  "loading": "Loading...",
+  "error": "Error",
+  "success": "Success",
+  "warning": "Warning"
+}
+```
+
+##### **5. Implementación en el Código**
+
+```dart
+// Uso en widgets
+class LoginScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(AppLocalizations.of(context)!.loginTitle),
+      ),
+      body: Column(
+        children: [
+          TextFormField(
+            decoration: InputDecoration(
+              labelText: AppLocalizations.of(context)!.emailLabel,
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () {},
+            child: Text(AppLocalizations.of(context)!.loginButton),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// Provider para cambio de idioma
+class LocaleProvider extends ChangeNotifier {
+  Locale _locale = const Locale('es');
+  
+  Locale get locale => _locale;
+  
+  void setLocale(Locale locale) {
+    _locale = locale;
+    notifyListeners();
+  }
+  
+  void toggleLanguage() {
+    _locale = _locale.languageCode == 'es' 
+        ? const Locale('en') 
+        : const Locale('es');
+    notifyListeners();
+  }
+}
+```
+
+##### **6. Configuración en MaterialApp**
+
+```dart
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('es', ''), // Castellano
+        Locale('en', ''), // Inglés
+      ],
+      locale: context.watch<LocaleProvider>().locale,
+      home: HomeScreen(),
+    );
+  }
+}
+```
+
+##### **7. Testing de Internacionalización**
+
+- [ ] Tests unitarios para traducciones
+- [ ] Tests de widgets con diferentes idiomas
+- [ ] Tests de integración con cambio de idioma
+- [ ] Verificación de textos largos en ambos idiomas
+- [ ] Tests de accesibilidad en ambos idiomas
+
+##### **8. Consideraciones Especiales**
+
+###### **Textos Dinámicos**
+- Manejo de plurales en ambos idiomas
+- Formateo de fechas según locale
+- Formateo de números según locale
+- Dirección del texto (LTR/RTL)
+
+###### **Contenido de Usuario**
+- Soporte para contenido creado en ambos idiomas
+- Búsqueda multilingüe
+- Filtros por idioma de contenido
+- Etiquetas de idioma en contenido
+
+###### **Performance**
+- Carga lazy de archivos de traducción
+- Caché de traducciones
+- Optimización de strings largos
+
 ## 📱 Características por Plataforma
 
 ### **Web (PWA)**
@@ -1326,6 +1525,9 @@ genhtml coverage/lcov.info -o coverage/html
 - Diseño responsive para todas las pantallas
 - Feedback visual para todas las acciones
 - Estados de carga y error claros
+- **Soporte completo para castellano e inglés**
+- **Textos adaptables a diferentes longitudes**
+- **Iconografía universal (no dependiente del idioma)**
 
 ### **Seguridad**
 

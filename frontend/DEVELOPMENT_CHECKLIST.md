@@ -4,7 +4,7 @@
 
 - **Fecha de inicio**: 2024-12-25
 - **Estado actual**: Configuración inicial
-- **Progreso total**: 0% (0/89 tareas completadas)
+- **Progreso total**: 0% (0/106 tareas completadas)
 - **Fase actual**: Fase 1 - Configuración Base
 - **Última actualización**: 2024-12-25
 
@@ -40,7 +40,12 @@
   - [ ] Definir colores y tipografías
   - [ ] Configurar modo claro/oscuro
 
-- [ ] **1.5** Configurar internacionalización (i18n)
+- [ ] **1.5** Configurar internacionalización (i18n) - **Soporte Bilingüe Castellano/Inglés**
+  - [ ] Configurar `flutter_localizations`
+  - [ ] Crear archivos de traducción para castellano e inglés
+  - [ ] Implementar selector de idioma en tiempo real
+  - [ ] Configurar `MaterialApp` con soporte multilingüe
+  - [ ] Crear sistema de fallback para traducciones faltantes
   - [ ] Instalar `flutter_localizations`
   - [ ] Crear archivos de traducción
   - [ ] Configurar `MaterialApp`
@@ -219,6 +224,29 @@
 
 ---
 
+## 🌍 Configuración de Internacionalización
+
+### **Soporte Bilingüe Castellano/Inglés**
+- [ ] Configurar `flutter_localizations` en `pubspec.yaml`
+- [ ] Crear estructura de carpetas `lib/core/i18n/`
+- [ ] Crear archivos de traducción `app_es.arb` y `app_en.arb`
+- [ ] Implementar `LocaleProvider` para gestión de idioma
+- [ ] Configurar `MaterialApp` con soporte multilingüe
+- [ ] Implementar selector de idioma en perfil de usuario
+- [ ] Crear sistema de persistencia de preferencia de idioma
+- [ ] Implementar detección automática del idioma del sistema
+- [ ] Configurar formateo de fechas y números según locale
+- [ ] Implementar tests de internacionalización
+
+### **Contenido Multilingüe**
+- [ ] Traducir todos los textos de la interfaz
+- [ ] Implementar soporte para contenido de usuario en ambos idiomas
+- [ ] Configurar búsqueda multilingüe
+- [ ] Implementar filtros por idioma de contenido
+- [ ] Configurar notificaciones en ambos idiomas
+- [ ] Implementar emails multilingües
+- [ ] Crear documentación en ambos idiomas
+
 ## 🛠️ Configuración de Herramientas
 
 ### **Git y GitHub**
@@ -267,6 +295,7 @@
 - **Funcionalidades**: 0/6 (0%)
 - **Testing**: 0/6 (0%)
 - **Deployment**: 0/6 (0%)
+- **Internacionalización**: 0/17 (0%)
 
 ### **Tareas con Stitch**
 - **Total tareas Stitch**: 25
@@ -279,6 +308,7 @@
 
 ### **Últimas Actualizaciones**
 - **2024-12-25**: Creación del checklist de desarrollo
+- **2024-12-25**: Añadido soporte bilingüe castellano/inglés
 
 ### **Bloqueadores Actuales**
 - Ninguno identificado
@@ -306,5 +336,5 @@ grep -A 5 "Estado.*:" frontend/DEVELOPMENT_CHECKLIST.md
 ---
 
 **Última actualización**: 2025-07-27 
-**Próxima revisión**: 2025-07-
+**Próxima revisión**: Díaria
 **Responsable**: Equipo de desarrollo frontend 
