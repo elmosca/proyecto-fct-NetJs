@@ -1,0 +1,10 @@
+import 'package:fct_frontend/features/auth/domain/repositories/auth_repository.dart';
+import 'package:fct_frontend/shared/models/user.dart';
+
+class LoginUseCase {
+  LoginUseCase(this._authRepository);
+  final AuthRepository _authRepository;
+
+  Future<User> call(String email, String password) async =>
+      await _authRepository.login(email, password);
+}

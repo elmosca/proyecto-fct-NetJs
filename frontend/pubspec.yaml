@@ -1,0 +1,79 @@
+name: fct_frontend
+description: Frontend Flutter para el sistema de gestión de proyectos FCT
+publish_to: "none"
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+  flutter: ">=3.16.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Gestión de Estado
+  flutter_riverpod: ^2.4.9
+  riverpod_annotation: ^2.3.3
+
+  # Navegación
+  auto_route: ^7.8.4
+
+  # Inyección de Dependencias
+  get_it: ^7.6.4
+
+  # Modelos y Serialización
+  freezed_annotation: ^2.4.1
+  json_annotation: ^4.8.1
+
+  # HTTP Client
+  dio: ^5.4.0
+
+  # WebSockets
+  web_socket_channel: ^2.4.0
+
+  # UI Components
+  flutter_svg: ^2.0.9
+  cached_network_image: ^3.3.0
+  flutter_markdown: ^0.6.18
+
+  # Utils
+  intl: ^0.18.1
+  url_launcher: ^6.2.2
+  shared_preferences: ^2.2.2
+
+  # Cupertino Icons
+  cupertino_icons: ^1.0.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  # Code Generation
+  build_runner: ^2.4.7
+  freezed: ^2.4.6
+  json_serializable: ^6.7.1
+  riverpod_generator: ^2.3.9
+  auto_route_generator: ^7.3.2
+
+  # Testing
+  integration_test:
+    sdk: flutter
+  mockito: ^5.4.4
+
+  # Linting
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/icons/
+    - assets/fonts/
+
+  fonts:
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto-Regular.ttf
+        - asset: assets/fonts/Roboto-Bold.ttf
+          weight: 700
