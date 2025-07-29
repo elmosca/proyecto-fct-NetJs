@@ -1927,5 +1927,233 @@ class AppTheme {
 
 ---
 
-**Última actualización**: 2025-07-28
-**Versión**: 1.0.0 
+## 🔧 Configuración Inicial del .gitignore
+
+### ⚠️ CRÍTICO: Configurar .gitignore ANTES del Primer Commit
+
+**Problema:** Si no configuras el `.gitignore` antes del primer commit, los archivos generados se trackearán automáticamente y causarán problemas futuros.
+
+#### **Paso 1: Crear Proyecto Flutter**
+
+```bash
+# Crear nuevo proyecto Flutter
+flutter create my_project
+cd my_project
+```
+
+#### **Paso 2: Configurar .gitignore INMEDIATAMENTE**
+
+**⚠️ NO hacer ningún commit hasta configurar el .gitignore**
+
+```bash
+# Verificar que .gitignore existe y está configurado
+cat .gitignore
+```
+
+**Contenido mínimo del .gitignore para Flutter:**
+
+```gitignore
+# Flutter/Dart specific
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+build/
+
+# Android
+**/android/**/gradle-wrapper.jar
+**/android/.gradle
+**/android/captures/
+**/android/gradlew
+**/android/gradlew.bat
+**/android/local.properties
+**/android/**/GeneratedPluginRegistrant.java
+
+# iOS
+**/ios/**/*.mode1v3
+**/ios/**/*.mode2v3
+**/ios/**/*.moved-aside
+**/ios/**/*.pbxuser
+**/ios/**/*.perspectivev3
+**/ios/**/*sync/
+**/ios/**/.sconsign.dblite
+**/ios/**/.tags*
+**/ios/**/.vagrant/
+**/ios/**/DerivedData/
+**/ios/**/Icon?
+**/ios/**/Pods/
+**/ios/**/.symlinks/
+**/ios/**/profile
+**/ios/**/xcuserdata
+**/ios/.generated/
+**/ios/Flutter/App.framework
+**/ios/Flutter/Flutter.framework
+**/ios/Flutter/Flutter.podspec
+**/ios/Flutter/Generated.xcconfig
+**/ios/Flutter/ephemeral/
+**/ios/Flutter/app.flx
+**/ios/Flutter/app.zip
+**/ios/Flutter/flutter_assets/
+**/ios/Flutter/flutter_export_environment.sh
+**/ios/ServiceDefinitions.json
+**/ios/Runner/GeneratedPluginRegistrant.*
+
+# Coverage
+coverage/
+
+# Symbols
+app.*.symbols
+
+# Exceptions to above rules.
+!**/ios/**/default.mode1v3
+!**/ios/**/default.mode2v3
+!**/ios/**/default.pbxuser
+!**/ios/**/default.perspectivev3
+!/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
+
+# Generated files
+*.g.dart
+*.freezed.dart
+*.injectable.dart
+*.config.dart
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IMPORTANTE: NO ignorar estos archivos de documentación
+!DEVELOPMENT_CHECKLIST.md
+!FRONTEND_DEVELOPMENT_GUIDE.md
+!docs/
+!assets/i18n/
+!cspell.json
+```
+
+#### **Paso 3: Verificar Configuración**
+
+```bash
+# Verificar que archivos generados NO están en Git
+git status
+
+# Verificar que archivos importantes SÍ están incluidos
+git add .gitignore
+git status
+```
+
+#### **Paso 4: Primer Commit Limpio**
+
+```bash
+# Solo committear archivos de código fuente
+git add lib/
+git add pubspec.yaml
+git add .gitignore
+git add README.md
+git add DEVELOPMENT_CHECKLIST.md
+git add FRONTEND_DEVELOPMENT_GUIDE.md
+
+# Verificar antes del commit
+git status
+
+# Commit inicial
+git commit -m "feat: configuración inicial del proyecto Flutter
+
+- Configurar estructura Clean Architecture
+- Configurar .gitignore para archivos generados
+- Añadir documentación de desarrollo
+- Configurar dependencias base"
+```
+
+### 📋 Checklist de Configuración Inicial
+
+#### **✅ Checklist para Nuevos Proyectos:**
+
+- [ ] **Crear proyecto Flutter**: `flutter create project_name`
+- [ ] **Configurar .gitignore ANTES del primer commit**
+- [ ] **Verificar archivos generados NO están en Git**: `git status`
+- [ ] **Verificar archivos importantes SÍ están incluidos**
+- [ ] **Primer commit solo con código fuente**
+- [ ] **Documentar configuración inicial**
+
+#### **✅ Checklist para Proyectos Existentes:**
+
+- [ ] **Identificar archivos generados en Git**: `git ls-files | grep -E "\.(g\.dart|freezed\.dart|flutter-plugins|GeneratedPluginRegistrant|local\.properties)$"`
+- [ ] **Ejecutar limpieza**: `./scripts/clean_generated_files.ps1`
+- [ ] **Verificar protección de archivos importantes**
+- [ ] **Regenerar archivos necesarios**: `flutter pub get && flutter build`
+- [ ] **Documentar estado actual**
+
+#### **✅ Checklist para Desarrollo Continuo:**
+
+- [ ] **Revisar `git status` antes de commits**
+- [ ] **Usar scripts de verificación**: `./scripts/verify_git_state.ps1`
+- [ ] **Mantener documentación actualizada**
+- [ ] **Verificar estado periódicamente**
+
+### 🛠️ Scripts de Mantenimiento
+
+#### **1. Script de Limpieza (Nuevo Proyecto):**
+```powershell
+# frontend/scripts/clean_generated_files.ps1
+# Usar al detectar archivos generados en Git
+```
+
+#### **2. Script de Recuperación (Existente):**
+```powershell
+# frontend/scripts/restore_docs.ps1
+# Usar si se pierden archivos de documentación
+```
+
+#### **3. Script de Verificación:**
+```powershell
+# frontend/scripts/verify_git_state.ps1
+# Verificar estado de archivos en Git
+```
+
+#### **Comandos de Verificación**
+
+```bash
+# Verificar qué archivos están en Git
+git ls-files | grep -E "\.(g\.dart|freezed\.dart|flutter-plugins|GeneratedPluginRegistrant|local\.properties)$"
+
+# Verificar archivos importantes
+git ls-files | grep -E "(DEVELOPMENT_CHECKLIST|FRONTEND_DEVELOPMENT_GUIDE|PROJECT_CONTEXT|app_es\.arb|cspell\.json)$"
+
+# Verificar estado del working directory
+git status
+```
+
+### 🎯 Lecciones Aprendidas
+
+#### **✅ Lo que Funciona:**
+1. **Configurar .gitignore ANTES del primer commit**: Evita problemas futuros
+2. **Archivos generados fuera de Git**: Evita conflictos
+3. **Regeneración automática**: Flutter maneja archivos generados
+4. **Scripts de recuperación**: Respaldan archivos importantes
+5. **Documentación actualizada**: Guía para futuros desarrollos
+
+#### **❌ Lo que NO Funciona:**
+1. **Archivos generados en Git**: Causan conflictos constantes
+2. **Configurar .gitignore después**: Los archivos ya están trackeados
+3. **Merge manual con archivos generados**: Pérdida de documentación
+4. **Cambios de rama sin limpieza**: Problemas recurrentes
+
+#### **🔧 Mejores Prácticas Establecidas:**
+1. **Configuración inicial correcta**: .gitignore antes del primer commit
+2. **Commits incrementales**: Cada tarea es un commit independiente
+3. **Documentación preservada**: Scripts de recuperación siempre disponibles
+4. **Verificación constante**: Revisar estado de Git regularmente
+5. **Limpieza preventiva**: Eliminar archivos generados del tracking
+
+---
+
+**Nota:** Esta documentación debe actualizarse cada vez que se identifiquen nuevos problemas o se implementen nuevas soluciones relacionadas con archivos generados por Flutter.
+
+**Fecha de última actualización:** 2025-07-29  
+**Versión de la documentación:** 2.0.0  
+**Estado:** Problema resuelto con solución documentada 
