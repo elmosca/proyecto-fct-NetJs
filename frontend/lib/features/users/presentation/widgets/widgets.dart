@@ -1,3 +1,4 @@
+export 'audit_log_item.dart';
 export 'authorized_widget.dart';
 export 'change_password_dialog.dart';
 export 'export_dialog.dart';

@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:excel/excel.dart';
+import 'package:fct_frontend/core/services/audit_service.dart';
 import 'package:fct_frontend/features/users/domain/entities/user_entity.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -16,7 +17,8 @@ class ExportService {
   factory ExportService() => _instance;
   ExportService._internal();
 
-  /// Exporta usuarios en el formato especificado
+  final AuditService _auditService = AuditService();
+
   Future<String?> exportUsers({
     required List<UserEntity> users,
     required ExportFormat format,
@@ -24,31 +26,42 @@ class ExportService {
     List<String>? selectedFields,
   }) async {
     try {
-      // Solicitar permisos si es necesario
-      if (Platform.isAndroid || Platform.isIOS) {
-        final status = await Permission.storage.request();
-        if (!status.isGranted) {
-          throw Exception('Permisos de almacenamiento no concedidos');
-        }
+      // Solicitar permisos
+      final status = await Permission.storage.request();
+      if (!status.isGranted) {
+        throw Exception('Permisos de almacenamiento denegados');
       }
 
       final fileName = _generateFileName(format, scope);
       final data = _prepareData(users, selectedFields);
 
+      String? filePath;
       switch (format) {
         case ExportFormat.csv:
-          return await _exportToCsv(data, fileName);
+          filePath = await _exportToCsv(data, fileName);
+          break;
         case ExportFormat.excel:
-          return await _exportToExcel(data, fileName);
+          filePath = await _exportToExcel(data, fileName);
+          break;
         case ExportFormat.pdf:
-          return await _exportToPdf(data, fileName);
+          filePath = await _exportToPdf(data, fileName);
+          break;
       }
+
+      // Registrar auditoría
+      await _auditService.logDataExported(
+        format: format.name,
+        recordCount: users.length,
+        scope: scope.name,
+        selectedFields: selectedFields,
+      );
+
+      return filePath;
     } catch (e) {
-      throw Exception('Error al exportar: $e');
+      rethrow;
     }
   }
 
-  /// Genera el nombre del archivo
   String _generateFileName(ExportFormat format, ExportScope scope) {
     final timestamp = DateTime.now().millisecondsSinceEpoch;
     final scopeText = scope == ExportScope.all
@@ -67,11 +80,8 @@ class ExportService {
     }
   }
 
-  /// Prepara los datos para exportación
   List<Map<String, dynamic>> _prepareData(
-    List<UserEntity> users,
-    List<String>? selectedFields,
-  ) {
+      List<UserEntity> users, List<String>? selectedFields) {
     final defaultFields = [
       'id',
       'firstName',
@@ -79,9 +89,8 @@ class ExportService {
       'email',
       'role',
       'isActive',
-      'createdAt',
+      'createdAt'
     ];
-
     final fields = selectedFields ?? defaultFields;
 
     return users.map((user) {
@@ -108,10 +117,10 @@ class ExportService {
             data['Estado'] = user.isActive == true ? 'Activo' : 'Inactivo';
             break;
           case 'createdAt':
-            data['Fecha de Creación'] = user.createdAt?.toString() ?? 'N/A';
+            data['Fecha de Creación'] = user.createdAt?.toIso8601String() ?? '';
             break;
           case 'avatar':
-            data['Avatar'] = user.avatar ?? 'N/A';
+            data['Avatar'] = user.avatar ?? '';
             break;
         }
       }
@@ -120,38 +129,40 @@ class ExportService {
     }).toList();
   }
 
-  /// Obtiene el nombre de visualización del rol
   String _getRoleDisplayName(String role) {
-    switch (role.toLowerCase()) {
-      case 'admin':
-        return 'Administrador';
-      case 'tutor':
-        return 'Tutor';
+    switch (role) {
       case 'student':
         return 'Estudiante';
+      case 'tutor':
+        return 'Tutor';
+      case 'admin':
+        return 'Administrador';
       default:
         return role;
     }
   }
 
-  /// Exporta a CSV
   Future<String?> _exportToCsv(
-    List<Map<String, dynamic>> data,
-    String fileName,
-  ) async {
+      List<Map<String, dynamic>> data, String fileName) async {
     if (data.isEmpty) return null;
 
     final headers = data.first.keys.toList();
     final csvContent = StringBuffer();
 
-    // Añadir encabezados
-    csvContent.writeln(headers.map((h) => '"$h"').join(','));
+    // Encabezados
+    csvContent.writeln(headers.join(','));
 
-    // Añadir datos
+    // Datos
     for (final row in data) {
       final values = headers.map((header) {
         final value = row[header]?.toString() ?? '';
-        return '"${value.replaceAll('"', '""')}"';
+        // Escapar comillas y comas
+        if (value.contains(',') ||
+            value.contains('"') ||
+            value.contains('\n')) {
+          return '"${value.replaceAll('"', '""')}"';
+        }
+        return value;
       });
       csvContent.writeln(values.join(','));
     }
@@ -159,59 +170,50 @@ class ExportService {
     return await _saveFile(fileName, csvContent.toString());
   }
 
-  /// Exporta a Excel
   Future<String?> _exportToExcel(
-    List<Map<String, dynamic>> data,
-    String fileName,
-  ) async {
+      List<Map<String, dynamic>> data, String fileName) async {
     if (data.isEmpty) return null;
 
     final excel = Excel.createExcel();
     final sheet = excel['Usuarios'];
 
-    // Añadir encabezados
     final headers = data.first.keys.toList();
+
+    // Encabezados
     for (int i = 0; i < headers.length; i++) {
-      sheet.cell(CellIndex.indexByColumnRow(columnIndex: i, rowIndex: 0))
-        ..value = headers[i]
-        ..cellStyle = CellStyle(
-          bold: true,
-          horizontalAlign: HorizontalAlign.Center,
-          backgroundColorHex: '#E0E0E0',
-        );
+      final header = headers[i];
+      sheet
+          .cell(CellIndex.indexByColumnRow(
+            columnIndex: i,
+            rowIndex: 0,
+          ))
+          .value = header;
     }
 
-    // Añadir datos
+    // Datos
     for (int rowIndex = 0; rowIndex < data.length; rowIndex++) {
       final row = data[rowIndex];
       for (int colIndex = 0; colIndex < headers.length; colIndex++) {
         final header = headers[colIndex];
         final value = row[header]?.toString() ?? '';
 
-        sheet.cell(CellIndex.indexByColumnRow(
-          columnIndex: colIndex,
-          rowIndex: rowIndex + 1,
-        ))
-          ..value = value
-          ..cellStyle = CellStyle(
-            horizontalAlign: HorizontalAlign.Left,
-          );
+        sheet
+            .cell(CellIndex.indexByColumnRow(
+              columnIndex: colIndex,
+              rowIndex: rowIndex + 1,
+            ))
+            .value = value;
       }
     }
 
     final bytes = excel.encode();
     if (bytes == null) return null;
 
-    return await _saveFile(fileName, bytes);
+    return await _saveFile(fileName, Uint8List.fromList(bytes));
   }
 
-  /// Exporta a PDF (simulado - en una implementación real usarías pdf package)
   Future<String?> _exportToPdf(
-    List<Map<String, dynamic>> data,
-    String fileName,
-  ) async {
-    if (data.isEmpty) return null;
-
+      List<Map<String, dynamic>> data, String fileName) async {
     // Por ahora, exportamos como CSV con extensión .pdf
     // En una implementación real, usarías el paquete pdf
     final csvContent =
@@ -219,7 +221,6 @@ class ExportService {
     return csvContent?.replaceAll('.csv', '.pdf');
   }
 
-  /// Guarda el archivo y retorna la ruta
   Future<String?> _saveFile(String fileName, dynamic content) async {
     try {
       Directory? directory;
@@ -231,7 +232,7 @@ class ExportService {
       }
 
       if (directory == null) {
-        throw Exception('No se pudo obtener el directorio de almacenamiento');
+        throw Exception('No se pudo acceder al directorio de descargas');
       }
 
       final downloadsDir = Directory('${directory.path}/Downloads');
@@ -255,7 +256,6 @@ class ExportService {
     }
   }
 
-  /// Comparte el archivo exportado
   Future<void> shareFile(String filePath) async {
     try {
       await Share.shareXFiles([XFile(filePath)]);
@@ -264,23 +264,16 @@ class ExportService {
     }
   }
 
-  /// Obtiene estadísticas de exportación
   Map<String, dynamic> getExportStats(
       List<UserEntity> users, ExportScope scope) {
     final totalUsers = users.length;
     final activeUsers = users.where((u) => u.isActive == true).length;
     final inactiveUsers = totalUsers - activeUsers;
 
-    final roleStats = <String, int>{};
-    for (final user in users) {
-      roleStats[user.role] = (roleStats[user.role] ?? 0) + 1;
-    }
-
     return {
-      'total': totalUsers,
-      'active': activeUsers,
-      'inactive': inactiveUsers,
-      'roles': roleStats,
+      'totalUsers': totalUsers,
+      'activeUsers': activeUsers,
+      'inactiveUsers': inactiveUsers,
       'scope': scope.name,
       'exportedAt': DateTime.now().toIso8601String(),
     };
