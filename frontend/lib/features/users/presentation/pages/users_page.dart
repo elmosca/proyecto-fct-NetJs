@@ -5,6 +5,8 @@ import 'package:fct_frontend/core/widgets/loading_widget.dart';
 import 'package:fct_frontend/features/users/domain/entities/permission_enum.dart';
 import 'package:fct_frontend/features/users/presentation/providers/users_provider.dart';
 import 'package:fct_frontend/features/users/presentation/widgets/authorized_widget.dart';
+import 'package:fct_frontend/features/users/presentation/widgets/pagination_controls_widget.dart';
+import 'package:fct_frontend/features/users/presentation/widgets/pagination_status_widget.dart';
 import 'package:fct_frontend/features/users/presentation/widgets/quick_search_widget.dart';
 import 'package:fct_frontend/features/users/presentation/widgets/user_filters.dart';
 import 'package:fct_frontend/features/users/presentation/widgets/user_list_item.dart';
@@ -42,8 +44,10 @@ class _UsersPageState extends ConsumerState<UsersPage> {
   }
 
   void _onScroll() {
-    if (_scrollController.position.pixels >=
-        _scrollController.position.maxScrollExtent - 200) {
+    final usersState = ref.read(usersProvider);
+    if (usersState.canLoadMore &&
+        _scrollController.position.pixels >=
+            _scrollController.position.maxScrollExtent - 200) {
       ref.read(usersProvider.notifier).loadMoreUsers();
     }
   }
@@ -56,6 +60,12 @@ class _UsersPageState extends ConsumerState<UsersPage> {
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.users),
         actions: [
+          // Estado de paginación
+          PermissionWidget(
+            permission: PermissionEnum.usersView,
+            child: const PaginationStatusWidget(),
+          ),
+          const SizedBox(width: 8),
           // Búsqueda rápida
           PermissionWidget(
             permission: PermissionEnum.usersView,
@@ -129,6 +139,12 @@ class _UsersPageState extends ConsumerState<UsersPage> {
           Expanded(
             child: _buildUsersList(usersState),
           ),
+
+          // Controles de paginación
+          PermissionWidget(
+            permission: PermissionEnum.usersView,
+            child: const PaginationControlsWidget(),
+          ),
         ],
       ),
     );
@@ -173,14 +189,20 @@ class _UsersPageState extends ConsumerState<UsersPage> {
       },
       child: ListView.builder(
         controller: _scrollController,
-        itemCount: state.users.length + (state.hasMore ? 1 : 0),
+        itemCount: state.users.length + (state.isLoadingMore ? 1 : 0),
         itemBuilder: (context, index) {
           if (index == state.users.length) {
             // Indicador de carga para paginación
-            return const Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Center(
-                child: CircularProgressIndicator(),
+            return Container(
+              padding: const EdgeInsets.all(16.0),
+              child: const Center(
+                child: Column(
+                  children: [
+                    CircularProgressIndicator(),
+                    SizedBox(height: 8),
+                    Text('Cargando más usuarios...'),
+                  ],
+                ),
               ),
             );
           }

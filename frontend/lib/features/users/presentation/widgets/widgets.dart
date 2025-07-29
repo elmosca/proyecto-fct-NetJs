@@ -1,5 +1,7 @@
 export 'authorized_widget.dart';
 export 'change_password_dialog.dart';
+export 'pagination_controls_widget.dart';
+export 'pagination_status_widget.dart';
 export 'profile_form.dart';
 export 'quick_search_widget.dart';
 export 'user_filters.dart';

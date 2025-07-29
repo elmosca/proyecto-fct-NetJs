@@ -1,7 +1,9 @@
 import 'package:fct_frontend/features/users/domain/entities/role_enum.dart';
+import 'package:fct_frontend/features/users/presentation/providers/users_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class UserFilters extends StatefulWidget {
+class UserFilters extends ConsumerStatefulWidget {
   const UserFilters({
     super.key,
     required this.onFiltersChanged,
@@ -12,10 +14,10 @@ class UserFilters extends StatefulWidget {
   final VoidCallback onClearFilters;
 
   @override
-  State<UserFilters> createState() => _UserFiltersState();
+  ConsumerState<UserFilters> createState() => _UserFiltersState();
 }
 
-class _UserFiltersState extends State<UserFilters> {
+class _UserFiltersState extends ConsumerState<UserFilters> {
   final TextEditingController _searchController = TextEditingController();
   String? _selectedRole;
   bool? _selectedStatus;
@@ -61,6 +63,9 @@ class _UserFiltersState extends State<UserFilters> {
 
   @override
   Widget build(BuildContext context) {
+    final usersState = ref.watch(usersProvider);
+    final pageSizeOptions = ref.watch(pageSizeOptionsProvider);
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -249,6 +254,38 @@ class _UserFiltersState extends State<UserFilters> {
                     });
                     _applyFilters();
                   },
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 16),
+
+            // Configuración de paginación
+            Row(
+              children: [
+                const Text('Paginación: ',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: DropdownButtonFormField<int>(
+                    value: usersState.pageSize,
+                    decoration: const InputDecoration(
+                      labelText: 'Elementos por página',
+                      border: OutlineInputBorder(),
+                      prefixIcon: Icon(Icons.view_list),
+                    ),
+                    items: pageSizeOptions.map((size) {
+                      return DropdownMenuItem<int>(
+                        value: size,
+                        child: Text('$size elementos'),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      if (value != null) {
+                        ref.read(usersProvider.notifier).changePageSize(value);
+                      }
+                    },
+                  ),
                 ),
               ],
             ),
