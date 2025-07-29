@@ -32,7 +32,8 @@ foreach ($file in $contextFiles) {
         $size = (Get-Item $file).Length
         $sizeKB = [math]::Round($size / 1KB, 1)
         Write-Host "✅ $file ($sizeKB KB)" -ForegroundColor Green
-    } else {
+    }
+    else {
         Write-Host "❌ $file (no encontrado)" -ForegroundColor Red
     }
 }

@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:fct_frontend/features/dashboard/presentation/providers/notification_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -239,7 +238,7 @@ class NotificationDialog extends ConsumerWidget {
             notificationNotifier.markAsRead(notification.id);
           }
           // TODO: Navegar a la pantalla correspondiente según el tipo
-          Navigator.of(context).pop();
+          // Navigator.of(context).pop(); // Comentado temporalmente
         },
       ),
     );

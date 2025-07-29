@@ -3,6 +3,7 @@ import 'package:fct_frontend/core/constants/app_constants.dart';
 import 'package:fct_frontend/core/services/auth_service.dart';
 import 'package:fct_frontend/core/services/http_service.dart';
 import 'package:fct_frontend/core/services/storage_service.dart';
+import 'package:fct_frontend/core/services/token_manager.dart';
 import 'package:fct_frontend/core/services/websocket_service.dart';
 import 'package:fct_frontend/core/utils/logger.dart';
 import 'package:fct_frontend/features/auth/data/repositories/auth_repository_impl.dart';
@@ -10,17 +11,34 @@ import 'package:fct_frontend/features/auth/domain/repositories/auth_repository.d
 import 'package:fct_frontend/features/auth/domain/usecases/login_usecase.dart';
 import 'package:fct_frontend/features/auth/domain/usecases/logout_usecase.dart';
 import 'package:fct_frontend/features/auth/domain/usecases/register_usecase.dart';
+import 'package:fct_frontend/features/users/data/repositories/user_repository_impl.dart';
+import 'package:fct_frontend/features/users/domain/repositories/user_repository.dart';
+import 'package:fct_frontend/features/users/domain/services/authorization_service.dart';
+import 'package:fct_frontend/features/users/domain/usecases/usecases.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 final GetIt getIt = GetIt.instance;
 
 Future<void> initializeDependencies() async {
   // Core Services
+  getIt.registerLazySingleton<StorageService>(
+    () => StorageService(),
+  );
+
+  // SharedPreferences
+  final prefs = await SharedPreferences.getInstance();
+  getIt.registerLazySingleton<SharedPreferences>(() => prefs);
+
+  getIt.registerLazySingleton<TokenManager>(
+    () => TokenManager(getIt<SharedPreferences>()),
+  );
+
   getIt.registerLazySingleton<HttpService>(
     () => HttpService(
       dio: getIt<Dio>(),
-      storageService: getIt<StorageService>(),
+      tokenManager: getIt<TokenManager>(),
     ),
   );
 
@@ -31,15 +49,16 @@ Future<void> initializeDependencies() async {
     ),
   );
 
-  getIt.registerLazySingleton<StorageService>(
-    () => StorageService(),
-  );
-
   getIt.registerLazySingleton<AuthService>(
     () => AuthService(
       httpService: getIt<HttpService>(),
       storageService: getIt<StorageService>(),
     ),
+  );
+
+  // Authorization Service
+  getIt.registerLazySingleton<AuthorizationService>(
+    () => AuthorizationServiceImpl(),
   );
 
   // HTTP Client
@@ -77,15 +96,17 @@ Future<void> initializeDependencies() async {
     ),
   );
 
-  // Repositories
+  // Auth Repositories
   getIt.registerLazySingleton<AuthRepository>(
-    () => AuthRepositoryImpl(
-      httpService: getIt<HttpService>(),
-      storageService: getIt<StorageService>(),
-    ),
+    () => AuthRepositoryImpl(getIt<TokenManager>()),
   );
 
-  // Use Cases
+  // Users Repositories
+  getIt.registerLazySingleton<UserRepository>(
+    () => UserRepositoryImpl(getIt<HttpService>()),
+  );
+
+  // Auth Use Cases
   getIt.registerLazySingleton<LoginUseCase>(
     () => LoginUseCase(getIt<AuthRepository>()),
   );
@@ -96,5 +117,22 @@ Future<void> initializeDependencies() async {
 
   getIt.registerLazySingleton<RegisterUseCase>(
     () => RegisterUseCase(getIt<AuthRepository>()),
+  );
+
+  // Users Use Cases
+  getIt.registerLazySingleton<GetUsersUseCase>(
+    () => GetUsersUseCase(getIt<UserRepository>()),
+  );
+
+  getIt.registerLazySingleton<CreateUserUseCase>(
+    () => CreateUserUseCase(getIt<UserRepository>()),
+  );
+
+  getIt.registerLazySingleton<UpdateUserUseCase>(
+    () => UpdateUserUseCase(getIt<UserRepository>()),
+  );
+
+  getIt.registerLazySingleton<DeleteUserUseCase>(
+    () => DeleteUserUseCase(getIt<UserRepository>()),
   );
 }
