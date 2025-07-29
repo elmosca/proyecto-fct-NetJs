@@ -8,28 +8,41 @@ class UserListItem extends StatelessWidget {
     required this.onEdit,
     required this.onDelete,
     required this.onToggleStatus,
+    this.isSelected = false,
+    this.isSelectionMode = false,
+    this.onSelectionChanged,
   });
 
   final UserEntity user;
   final VoidCallback onEdit;
   final VoidCallback onDelete;
   final VoidCallback onToggleStatus;
+  final bool isSelected;
+  final bool isSelectionMode;
+  final Function(String)? onSelectionChanged;
 
   @override
   Widget build(BuildContext context) {
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       child: ListTile(
-        leading: CircleAvatar(
-          backgroundColor: _getRoleColor(user.role),
-          child: Text(
-            _getInitials(user.firstName, user.lastName),
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
+        leading: isSelectionMode
+            ? Checkbox(
+                value: isSelected,
+                onChanged: (value) {
+                  onSelectionChanged?.call(user.id);
+                },
+              )
+            : CircleAvatar(
+                backgroundColor: _getRoleColor(user.role),
+                child: Text(
+                  _getInitials(user.firstName, user.lastName),
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
         title: Text(
           '${user.firstName} ${user.lastName}',
           style: const TextStyle(fontWeight: FontWeight.bold),
@@ -47,7 +60,7 @@ class UserListItem extends StatelessWidget {
                     vertical: 2,
                   ),
                   decoration: BoxDecoration(
-                    color: _getRoleColor(user.role).withOpacity(0.2),
+                    color: _getRoleColor(user.role).withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
@@ -67,8 +80,8 @@ class UserListItem extends StatelessWidget {
                   ),
                   decoration: BoxDecoration(
                     color: (user.isActive ?? true)
-                        ? Colors.green.withOpacity(0.2)
-                        : Colors.red.withOpacity(0.2),
+                        ? Colors.green.withValues(alpha: 0.2)
+                        : Colors.red.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
@@ -85,53 +98,55 @@ class UserListItem extends StatelessWidget {
             ),
           ],
         ),
-        trailing: PopupMenuButton<String>(
-          onSelected: (value) {
-            switch (value) {
-              case 'edit':
-                onEdit();
-                break;
-              case 'toggle':
-                onToggleStatus();
-                break;
-              case 'delete':
-                onDelete();
-                break;
-            }
-          },
-          itemBuilder: (context) => [
-            const PopupMenuItem(
-              value: 'edit',
-              child: Row(
-                children: [
-                  Icon(Icons.edit, size: 20),
-                  SizedBox(width: 8),
-                  Text('Editar'),
+        trailing: isSelectionMode
+            ? null
+            : PopupMenuButton<String>(
+                onSelected: (value) {
+                  switch (value) {
+                    case 'edit':
+                      onEdit();
+                      break;
+                    case 'toggle':
+                      onToggleStatus();
+                      break;
+                    case 'delete':
+                      onDelete();
+                      break;
+                  }
+                },
+                itemBuilder: (context) => [
+                  const PopupMenuItem(
+                    value: 'edit',
+                    child: Row(
+                      children: [
+                        Icon(Icons.edit, size: 20),
+                        SizedBox(width: 8),
+                        Text('Editar'),
+                      ],
+                    ),
+                  ),
+                  const PopupMenuItem(
+                    value: 'toggle',
+                    child: Row(
+                      children: [
+                        Icon(Icons.toggle_on, size: 20),
+                        SizedBox(width: 8),
+                        Text('Cambiar estado'),
+                      ],
+                    ),
+                  ),
+                  const PopupMenuItem(
+                    value: 'delete',
+                    child: Row(
+                      children: [
+                        Icon(Icons.delete, size: 20, color: Colors.red),
+                        SizedBox(width: 8),
+                        Text('Eliminar', style: TextStyle(color: Colors.red)),
+                      ],
+                    ),
+                  ),
                 ],
               ),
-            ),
-            const PopupMenuItem(
-              value: 'toggle',
-              child: Row(
-                children: [
-                  Icon(Icons.toggle_on, size: 20),
-                  SizedBox(width: 8),
-                  Text('Cambiar estado'),
-                ],
-              ),
-            ),
-            const PopupMenuItem(
-              value: 'delete',
-              child: Row(
-                children: [
-                  Icon(Icons.delete, size: 20, color: Colors.red),
-                  SizedBox(width: 8),
-                  Text('Eliminar', style: TextStyle(color: Colors.red)),
-                ],
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }

@@ -5,6 +5,7 @@ import 'package:fct_frontend/core/widgets/loading_widget.dart';
 import 'package:fct_frontend/features/users/domain/entities/permission_enum.dart';
 import 'package:fct_frontend/features/users/presentation/providers/users_provider.dart';
 import 'package:fct_frontend/features/users/presentation/widgets/authorized_widget.dart';
+import 'package:fct_frontend/features/users/presentation/widgets/export_dialog.dart';
 import 'package:fct_frontend/features/users/presentation/widgets/pagination_controls_widget.dart';
 import 'package:fct_frontend/features/users/presentation/widgets/pagination_status_widget.dart';
 import 'package:fct_frontend/features/users/presentation/widgets/quick_search_widget.dart';
@@ -26,6 +27,8 @@ class UsersPage extends ConsumerStatefulWidget {
 class _UsersPageState extends ConsumerState<UsersPage> {
   final ScrollController _scrollController = ScrollController();
   bool _showFilters = false;
+  bool _isSelectionMode = false;
+  final Set<String> _selectedUserIds = <String>{};
 
   @override
   void initState() {
@@ -50,6 +53,56 @@ class _UsersPageState extends ConsumerState<UsersPage> {
             _scrollController.position.maxScrollExtent - 200) {
       ref.read(usersProvider.notifier).loadMoreUsers();
     }
+  }
+
+  void _toggleSelectionMode() {
+    setState(() {
+      _isSelectionMode = !_isSelectionMode;
+      if (!_isSelectionMode) {
+        _selectedUserIds.clear();
+      }
+    });
+  }
+
+  void _toggleUserSelection(String userId) {
+    setState(() {
+      if (_selectedUserIds.contains(userId)) {
+        _selectedUserIds.remove(userId);
+      } else {
+        _selectedUserIds.add(userId);
+      }
+    });
+  }
+
+  void _selectAllUsers() {
+    final usersState = ref.read(usersProvider);
+    setState(() {
+      _selectedUserIds.clear();
+      _selectedUserIds.addAll(usersState.users.map((u) => u.id));
+    });
+  }
+
+  void _clearSelection() {
+    setState(() {
+      _selectedUserIds.clear();
+    });
+  }
+
+  void _showExportDialog() {
+    final usersState = ref.read(usersProvider);
+    final selectedUsers = usersState.users
+        .where((user) => _selectedUserIds.contains(user.id))
+        .toList();
+
+    showDialog(
+      context: context,
+      builder: (context) => ExportDialog(
+        users: usersState.users,
+        filteredUsers:
+            usersState.users, // Por ahora, todos los usuarios cargados
+        selectedUsers: selectedUsers,
+      ),
+    );
   }
 
   @override
@@ -90,6 +143,25 @@ class _UsersPageState extends ConsumerState<UsersPage> {
               },
             ),
           ),
+          // Botón de selección
+          PermissionWidget(
+            permission: PermissionEnum.usersView,
+            child: IconButton(
+              icon: Icon(_isSelectionMode
+                  ? Icons.check_box
+                  : Icons.check_box_outline_blank),
+              onPressed: _toggleSelectionMode,
+            ),
+          ),
+          // Botón de exportación
+          if (_isSelectionMode || usersState.users.isNotEmpty)
+            PermissionWidget(
+              permission: PermissionEnum.usersView,
+              child: IconButton(
+                icon: const Icon(Icons.file_download),
+                onPressed: _showExportDialog,
+              ),
+            ),
           // Botón de crear usuario
           PermissionWidget(
             permission: PermissionEnum.usersCreate,
@@ -115,6 +187,9 @@ class _UsersPageState extends ConsumerState<UsersPage> {
       ),
       body: Column(
         children: [
+          // Barra de selección
+          if (_isSelectionMode) _buildSelectionBar(usersState),
+
           // Estadísticas de usuarios
           PermissionWidget(
             permission: PermissionEnum.usersView,
@@ -144,6 +219,45 @@ class _UsersPageState extends ConsumerState<UsersPage> {
           PermissionWidget(
             permission: PermissionEnum.usersView,
             child: const PaginationControlsWidget(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSelectionBar(UsersState usersState) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      color: Theme.of(context).primaryColor.withValues(alpha: 0.1),
+      child: Row(
+        children: [
+          Icon(
+            Icons.check_box,
+            color: Theme.of(context).primaryColor,
+          ),
+          const SizedBox(width: 8),
+          Text(
+            '${_selectedUserIds.length} usuarios seleccionados',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Theme.of(context).primaryColor,
+            ),
+          ),
+          const Spacer(),
+          if (_selectedUserIds.length < usersState.users.length)
+            TextButton(
+              onPressed: _selectAllUsers,
+              child: const Text('Seleccionar todos'),
+            ),
+          if (_selectedUserIds.isNotEmpty)
+            TextButton(
+              onPressed: _clearSelection,
+              child: const Text('Limpiar'),
+            ),
+          ElevatedButton.icon(
+            onPressed: _selectedUserIds.isNotEmpty ? _showExportDialog : null,
+            icon: const Icon(Icons.file_download),
+            label: const Text('Exportar'),
           ),
         ],
       ),
@@ -210,6 +324,9 @@ class _UsersPageState extends ConsumerState<UsersPage> {
           final user = state.users[index];
           return UserListItem(
             user: user,
+            isSelected: _selectedUserIds.contains(user.id),
+            isSelectionMode: _isSelectionMode,
+            onSelectionChanged: _isSelectionMode ? _toggleUserSelection : null,
             onEdit: () {
               // TODO: Implementar edición de usuario
               ScaffoldMessenger.of(context).showSnackBar(
