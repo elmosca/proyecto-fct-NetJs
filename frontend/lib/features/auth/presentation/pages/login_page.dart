@@ -24,8 +24,8 @@ class LoginPage extends ConsumerWidget {
         data: (state) {
           state.whenOrNull(
             authenticated: (user) {
-              // Navegar al dashboard después del login exitoso
-              context.router.replaceNamed('/dashboard');
+              // Navegar al layout principal después del login exitoso
+              context.router.replaceNamed('/app/dashboard');
             },
           );
         },
@@ -110,7 +110,8 @@ class LoginPage extends ConsumerWidget {
                   onPressed: () {
                     context.router.pushNamed('/dashboard');
                   },
-                  child: const Text('🧪 Test Dashboard (debe activar AuthGuard)'),
+                  child:
+                      const Text('🧪 Test Dashboard (debe activar AuthGuard)'),
                 ),
               ],
             ),

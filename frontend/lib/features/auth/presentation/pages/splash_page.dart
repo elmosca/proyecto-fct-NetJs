@@ -21,8 +21,8 @@ class SplashPage extends ConsumerWidget {
               // Estado de carga, no hacer nada
             },
             authenticated: (user) {
-              // Usuario autenticado, navegar al dashboard
-              context.router.replaceNamed('/dashboard');
+              // Usuario autenticado, navegar al layout principal
+              context.router.replaceNamed('/app/dashboard');
             },
             unauthenticated: () {
               // Usuario no autenticado, navegar al login
