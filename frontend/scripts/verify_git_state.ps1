@@ -23,7 +23,8 @@ $importantFiles = @(
 Write-Host "📋 Verificando archivos generados..." -ForegroundColor Yellow
 $generatedInGit = @()
 foreach ($file in $generatedFiles) {
-    if (git ls-files --error-unmatch $file 2>$null) {
+    $result = git ls-files --error-unmatch $file 2>$null
+    if ($LASTEXITCODE -eq 0) {
         $generatedInGit += $file
         Write-Host "  ❌ $file está en Git (NO debería)" -ForegroundColor Red
     }
@@ -35,7 +36,8 @@ foreach ($file in $generatedFiles) {
 Write-Host "🛡️ Verificando archivos importantes..." -ForegroundColor Yellow
 $importantMissing = @()
 foreach ($file in $importantFiles) {
-    if (git ls-files --error-unmatch $file 2>$null) {
+    $result = git ls-files --error-unmatch $file 2>$null
+    if ($LASTEXITCODE -eq 0) {
         Write-Host "  ✅ $file está protegido" -ForegroundColor Green
     }
     else {
