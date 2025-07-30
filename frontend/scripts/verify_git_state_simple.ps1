@@ -1,5 +1,5 @@
-# Script para verificar el estado de archivos en Git
-# Uso: .\verify_git_state.ps1
+# Script simplificado para verificar el estado de archivos en Git
+# Uso: .\verify_git_state_simple.ps1
 
 Write-Host " Verificando estado de archivos en Git..." -ForegroundColor Cyan
 
@@ -23,9 +23,8 @@ $importantFiles = @(
 Write-Host "📋 Verificando archivos generados..." -ForegroundColor Yellow
 $generatedInGit = @()
 foreach ($file in $generatedFiles) {
-    $output = git ls-files --error-unmatch $file 2>$null
-    $exitCode = $LASTEXITCODE
-    if ($exitCode -eq 0) {
+    $exists = git ls-files $file 2>$null
+    if ($exists) {
         $generatedInGit += $file
         Write-Host "  ❌ $file está en Git (NO debería)" -ForegroundColor Red
     }
@@ -37,9 +36,8 @@ foreach ($file in $generatedFiles) {
 Write-Host "🛡️ Verificando archivos importantes..." -ForegroundColor Yellow
 $importantMissing = @()
 foreach ($file in $importantFiles) {
-    $output = git ls-files --error-unmatch $file 2>$null
-    $exitCode = $LASTEXITCODE
-    if ($exitCode -eq 0) {
+    $exists = git ls-files $file 2>$null
+    if ($exists) {
         Write-Host "  ✅ $file está protegido" -ForegroundColor Green
     }
     else {
