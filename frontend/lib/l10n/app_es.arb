@@ -1,0 +1,143 @@
+{
+  "@@locale": "es",
+  "appTitle": "FCT - Gestión de Proyectos",
+  "@appTitle": {
+    "description": "Título de la aplicación"
+  },
+  "login": "Iniciar Sesión",
+  "@login": {
+    "description": "Texto del botón de login"
+  },
+  "register": "Registrarse",
+  "@register": {
+    "description": "Texto del botón de registro"
+  },
+  "logout": "Cerrar Sesión",
+  "@logout": {
+    "description": "Texto del botón de logout"
+  },
+  "email": "Correo electrónico",
+  "@email": {
+    "description": "Etiqueta del campo email"
+  },
+  "password": "Contraseña",
+  "@password": {
+    "description": "Etiqueta del campo contraseña"
+  },
+  "firstName": "Nombre",
+  "@firstName": {
+    "description": "Etiqueta del campo nombre"
+  },
+  "lastName": "Apellidos",
+  "@lastName": {
+    "description": "Etiqueta del campo apellidos"
+  },
+  "dashboard": "Dashboard",
+  "@dashboard": {
+    "description": "Título del dashboard"
+  },
+  "projects": "Proyectos",
+  "@projects": {
+    "description": "Título de la sección proyectos"
+  },
+  "tasks": "Tareas",
+  "@tasks": {
+    "description": "Título de la sección tareas"
+  },
+  "users": "Usuarios",
+  "@users": {
+    "description": "Título de la sección usuarios"
+  },
+  "settings": "Configuración",
+  "@settings": {
+    "description": "Título de la sección configuración"
+  },
+  "profile": "Perfil",
+  "@profile": {
+    "description": "Título de la sección perfil"
+  },
+  "language": "Idioma",
+  "@language": {
+    "description": "Etiqueta del selector de idioma"
+  },
+  "theme": "Tema",
+  "@theme": {
+    "description": "Etiqueta del selector de tema"
+  },
+  "light": "Claro",
+  "@light": {
+    "description": "Opción de tema claro"
+  },
+  "dark": "Oscuro",
+  "@dark": {
+    "description": "Opción de tema oscuro"
+  },
+  "system": "Sistema",
+  "@system": {
+    "description": "Opción de tema del sistema"
+  },
+  "save": "Guardar",
+  "@save": {
+    "description": "Texto del botón guardar"
+  },
+  "cancel": "Cancelar",
+  "@cancel": {
+    "description": "Texto del botón cancelar"
+  },
+  "delete": "Eliminar",
+  "@delete": {
+    "description": "Texto del botón eliminar"
+  },
+  "edit": "Editar",
+  "@edit": {
+    "description": "Texto del botón editar"
+  },
+  "add": "Añadir",
+  "@add": {
+    "description": "Texto del botón añadir"
+  },
+  "search": "Buscar",
+  "@search": {
+    "description": "Placeholder del campo búsqueda"
+  },
+  "loading": "Cargando...",
+  "@loading": {
+    "description": "Texto de carga"
+  },
+  "error": "Error",
+  "@error": {
+    "description": "Título de error"
+  },
+  "success": "Éxito",
+  "@success": {
+    "description": "Título de éxito"
+  },
+  "warning": "Advertencia",
+  "@warning": {
+    "description": "Título de advertencia"
+  },
+  "info": "Información",
+  "@info": {
+    "description": "Título de información"
+  },
+  "retry": "Reintentar",
+  "@retry": {
+    "description": "Texto del botón reintentar"
+  },
+  "noData": "No hay datos",
+  "@noData": {
+    "description": "Texto cuando no hay datos"
+  },
+  "noDataMessage": "No se encontraron elementos",
+  "@noDataMessage": {
+    "description": "Mensaje cuando no hay datos"
+  },
+  "welcome": "Bienvenido",
+  "@welcome": {
+    "description": "Texto de bienvenida"
+  },
+  "welcomeMessage": "Bienvenido al sistema de gestión de proyectos FCT",
+  "@welcomeMessage": {
+    "description": "Mensaje de bienvenida"
+  }
+} 
