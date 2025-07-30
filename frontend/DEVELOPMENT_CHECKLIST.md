@@ -1,9 +1,9 @@
 ## 📊 Estado General del Proyecto
 
 - **Fecha de inicio**: 2025-07-28
-- **Estado actual**: Fase 4 completada
-- **Progreso total**: 14.4% (16/111 tareas completadas)
-- **Fase actual**: Fase 5 - Gestión de Usuarios
+- **Estado actual**: Fase 6 completada
+- **Progreso total**: 35.1% (39/111 tareas completadas)
+- **Fase actual**: Fase 7 - Anteproyectos
 - **Última actualización**: 2025-07-28
 
 ---
@@ -99,7 +99,7 @@
 
 ## 📝 Fase 7: Anteproyectos ⏱️ 2-3 semanas
 
-### **Estado**: 🔴 No iniciado (0/8 tareas completadas)
+### **Estado**: 🟡 En Progreso (0/8 tareas completadas)
 
 - [ ] **7.1** Implementar CRUD de anteproyectos
 - [ ] **7.2** Configurar flujo de aprobación
