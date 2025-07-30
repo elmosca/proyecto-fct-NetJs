@@ -15,6 +15,12 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
+    AuditLogsRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const AuditLogsPage(),
+      );
+    },
     DashboardRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -43,6 +49,12 @@ abstract class _$AppRouter extends RootStackRouter {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const ProfilePage(),
+      );
+    },
+    ProjectsListRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const ProjectsListPage(),
       );
     },
     ProjectsRoute.name: (routeData) {
@@ -75,6 +87,12 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const TasksPage(),
       );
     },
+    UserProfileRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const UserProfilePage(),
+      );
+    },
     UsersRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -82,6 +100,20 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
   };
+}
+
+/// generated route for
+/// [AuditLogsPage]
+class AuditLogsRoute extends PageRouteInfo<void> {
+  const AuditLogsRoute({List<PageRouteInfo>? children})
+      : super(
+          AuditLogsRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'AuditLogsRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
@@ -155,6 +187,20 @@ class ProfileRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [ProjectsListPage]
+class ProjectsListRoute extends PageRouteInfo<void> {
+  const ProjectsListRoute({List<PageRouteInfo>? children})
+      : super(
+          ProjectsListRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ProjectsListRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
 /// [ProjectsPage]
 class ProjectsRoute extends PageRouteInfo<void> {
   const ProjectsRoute({List<PageRouteInfo>? children})
@@ -220,6 +266,20 @@ class TasksRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'TasksRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [UserProfilePage]
+class UserProfileRoute extends PageRouteInfo<void> {
+  const UserProfileRoute({List<PageRouteInfo>? children})
+      : super(
+          UserProfileRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'UserProfileRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

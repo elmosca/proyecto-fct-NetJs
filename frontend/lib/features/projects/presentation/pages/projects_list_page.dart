@@ -1,5 +1,4 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:fct_frontend/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -9,14 +8,14 @@ import '../widgets/project_card_widget.dart';
 import '../widgets/project_filters_widget.dart';
 
 @RoutePage()
-class ProjectsPage extends ConsumerStatefulWidget {
-  const ProjectsPage({super.key});
+class ProjectsListPage extends ConsumerStatefulWidget {
+  const ProjectsListPage({super.key});
 
   @override
-  ConsumerState<ProjectsPage> createState() => _ProjectsPageState();
+  ConsumerState<ProjectsListPage> createState() => _ProjectsListPageState();
 }
 
-class _ProjectsPageState extends ConsumerState<ProjectsPage> {
+class _ProjectsListPageState extends ConsumerState<ProjectsListPage> {
   final TextEditingController _searchController = TextEditingController();
   ProjectStatus? _selectedStatus;
   String _searchQuery = '';
@@ -46,7 +45,7 @@ class _ProjectsPageState extends ConsumerState<ProjectsPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.projects),
+        title: const Text('Proyectos'),
         actions: [
           IconButton(
             icon: const Icon(Icons.add),
