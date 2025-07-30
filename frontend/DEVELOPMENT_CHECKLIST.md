@@ -1,7 +1,7 @@
 ## 📊 Estado General del Proyecto
 
 - **Fecha de inicio**: 2025-07-28
-- **Estado actual**: Fase 7 completada
+- **Estado actual**: Fase 8 en progreso
 - **Progreso total**: 42.3% (47/111 tareas completadas)
 - **Fase actual**: Fase 8 - Tareas y Milestones
 - **Última actualización**: 2025-07-28
@@ -114,7 +114,7 @@
 
 ## ✅ Fase 8: Tareas y Milestones ⏱️ 2-3 semanas
 
-### **Estado**: 🔴 No iniciado (0/8 tareas completadas)
+### **Estado**: 🟡 En Progreso (0/8 tareas completadas)
 
 - [ ] **8.1** Implementar CRUD de tareas
 - [ ] **8.2** Configurar asignación de tareas
