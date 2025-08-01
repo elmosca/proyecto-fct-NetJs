@@ -61,7 +61,7 @@ class _AnteprojectsListPageState extends ConsumerState<AnteprojectsListPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.anteprojectsTitle),
+        title: Text(AppLocalizations.of(context).anteprojectsTitle),
         actions: [
           IconButton(
             icon: const Icon(Icons.add),
@@ -99,10 +99,10 @@ class _AnteprojectsListPageState extends ConsumerState<AnteprojectsListPage> {
                 if (anteprojects.isEmpty) {
                   return EmptyStateWidget(
                     icon: Icons.description_outlined,
-                    title: AppLocalizations.of(context)!.noAnteprojectsTitle,
+                    title: AppLocalizations.of(context).noAnteprojectsTitle,
                     message:
-                        AppLocalizations.of(context)!.noAnteprojectsMessage,
-                    actionText: AppLocalizations.of(context)!.createAnteproject,
+                        AppLocalizations.of(context).noAnteprojectsMessage,
+                    actionText: AppLocalizations.of(context).createAnteproject,
                     onActionPressed: () {
                       context.router.pushNamed('/anteprojects/create');
                     },
@@ -167,12 +167,12 @@ class _AnteprojectsListPageState extends ConsumerState<AnteprojectsListPage> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(AppLocalizations.of(context)!.deleteAnteprojectTitle),
-        content: Text(AppLocalizations.of(context)!.deleteAnteprojectMessage),
+        title: Text(AppLocalizations.of(context).deleteAnteprojectTitle),
+        content: Text(AppLocalizations.of(context).deleteAnteprojectMessage),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: Text(AppLocalizations.of(context)!.cancel),
+            child: Text(AppLocalizations.of(context).cancel),
           ),
           TextButton(
             onPressed: () {
@@ -182,7 +182,7 @@ class _AnteprojectsListPageState extends ConsumerState<AnteprojectsListPage> {
                   .deleteAnteproject(anteproject.id);
             },
             style: TextButton.styleFrom(foregroundColor: AppColors.error),
-            child: Text(AppLocalizations.of(context)!.delete),
+            child: Text(AppLocalizations.of(context).delete),
           ),
         ],
       ),
@@ -193,12 +193,12 @@ class _AnteprojectsListPageState extends ConsumerState<AnteprojectsListPage> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(AppLocalizations.of(context)!.submitAnteprojectTitle),
-        content: Text(AppLocalizations.of(context)!.submitAnteprojectMessage),
+        title: Text(AppLocalizations.of(context).submitAnteprojectTitle),
+        content: Text(AppLocalizations.of(context).submitAnteprojectMessage),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: Text(AppLocalizations.of(context)!.cancel),
+            child: Text(AppLocalizations.of(context).cancel),
           ),
           TextButton(
             onPressed: () {
@@ -207,7 +207,7 @@ class _AnteprojectsListPageState extends ConsumerState<AnteprojectsListPage> {
                   .read(anteprojectsNotifierProvider.notifier)
                   .submitAnteproject(anteproject.id);
             },
-            child: Text(AppLocalizations.of(context)!.submit),
+            child: Text(AppLocalizations.of(context).submit),
           ),
         ],
       ),

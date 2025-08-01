@@ -111,7 +111,7 @@ class _UsersPageState extends ConsumerState<UsersPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.users),
+        title: Text(AppLocalizations.of(context).users),
         actions: [
           // Estado de paginación
           PermissionWidget(

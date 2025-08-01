@@ -46,7 +46,7 @@ class _ProjectsPageState extends ConsumerState<ProjectsPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.projects),
+        title: Text(AppLocalizations.of(context).projects),
         actions: [
           IconButton(
             icon: const Icon(Icons.add),

@@ -60,7 +60,7 @@ class TaskCard extends StatelessWidget {
                               children: [
                                 const Icon(Icons.edit, size: 16),
                                 const SizedBox(width: 8),
-                                Text(AppLocalizations.of(context)!.edit),
+                                Text(AppLocalizations.of(context).edit),
                               ],
                             ),
                           ),
@@ -72,7 +72,7 @@ class TaskCard extends StatelessWidget {
                                 const Icon(Icons.delete, size: 16, color: Colors.red),
                                 const SizedBox(width: 8),
                                 Text(
-                                  AppLocalizations.of(context)!.delete,
+                                  AppLocalizations.of(context).delete,
                                   style: const TextStyle(color: Colors.red),
                                 ),
                               ],
@@ -107,7 +107,7 @@ class TaskCard extends StatelessWidget {
                     const Icon(Icons.person, size: 16),
                     const SizedBox(width: 4),
                     Text(
-                      '${task.assignees.length} ${AppLocalizations.of(context)!.assignees}',
+                      '${task.assignees.length} ${AppLocalizations.of(context).assignees}',
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                   ],

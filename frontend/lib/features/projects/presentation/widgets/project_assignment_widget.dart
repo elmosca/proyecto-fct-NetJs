@@ -174,7 +174,7 @@ class _ProjectAssignmentWidgetState
                 widget.onTutorsAssigned(_selectedTutors);
                 Navigator.of(context).pop();
               },
-              child: Text(AppLocalizations.of(context)!.save),
+              child: Text(AppLocalizations.of(context).save),
             ),
           ),
           const SizedBox(width: 16),
@@ -183,7 +183,7 @@ class _ProjectAssignmentWidgetState
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text(AppLocalizations.of(context)!.cancel),
+              child: Text(AppLocalizations.of(context).cancel),
             ),
           ),
         ],

@@ -5,7 +5,6 @@ import 'package:fct_frontend/features/tasks/presentation/providers/task_provider
 import 'package:fct_frontend/features/tasks/presentation/widgets/task_card_widget.dart';
 import 'package:fct_frontend/features/tasks/presentation/widgets/task_filters_widget.dart';
 import 'package:fct_frontend/core/widgets/loading_widget.dart';
-import 'package:fct_frontend/core/widgets/error_widget.dart';
 import 'package:fct_frontend/core/widgets/empty_state_widget.dart';
 
 class TasksListPage extends ConsumerStatefulWidget {

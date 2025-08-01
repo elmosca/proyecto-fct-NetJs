@@ -59,7 +59,7 @@ class MainLayoutPage extends ConsumerWidget {
 
   PreferredSizeWidget _buildAppBar(BuildContext context) {
     return AppBar(
-      title: Text(AppLocalizations.of(context)!.appTitle),
+      title: Text(AppLocalizations.of(context).appTitle),
       actions: [
         const GlobalSearchWidget(),
         const SizedBox(width: 8),
@@ -85,16 +85,16 @@ class MainLayoutPage extends ConsumerWidget {
           itemBuilder: (context) => [
             PopupMenuItem(
               value: 'profile',
-              child: Text(AppLocalizations.of(context)!.profile),
+              child: Text(AppLocalizations.of(context).profile),
             ),
             PopupMenuItem(
               value: 'settings',
-              child: Text(AppLocalizations.of(context)!.settings),
+              child: Text(AppLocalizations.of(context).settings),
             ),
             const PopupMenuDivider(),
             PopupMenuItem(
               value: 'logout',
-              child: Text(AppLocalizations.of(context)!.logout),
+              child: Text(AppLocalizations.of(context).logout),
             ),
           ],
         ),

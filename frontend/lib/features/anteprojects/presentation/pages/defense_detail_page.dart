@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:intl/intl.dart';
 import 'package:fct_frontend/core/widgets/loading_widget.dart';
-import 'package:fct_frontend/core/widgets/error_widget.dart';
 import 'package:fct_frontend/features/anteprojects/presentation/providers/defense_providers.dart';
 import 'package:fct_frontend/features/anteprojects/domain/entities/defense.dart';
 

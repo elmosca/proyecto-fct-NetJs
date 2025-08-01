@@ -23,7 +23,7 @@ class AnteprojectDetailPage extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.anteprojectDetails),
+        title: Text(AppLocalizations.of(context).anteprojectDetails),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
@@ -40,7 +40,7 @@ class AnteprojectDetailPage extends ConsumerWidget {
         data: (anteproject) {
           if (anteproject == null) {
             return Center(
-              child: Text(AppLocalizations.of(context)!.anteprojectNotFound),
+              child: Text(AppLocalizations.of(context).anteprojectNotFound),
             );
           }
 

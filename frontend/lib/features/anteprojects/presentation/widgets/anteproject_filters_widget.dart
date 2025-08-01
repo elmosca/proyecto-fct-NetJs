@@ -28,7 +28,7 @@ class AnteprojectFiltersWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            AppLocalizations.of(context)!.filters,
+            AppLocalizations.of(context).filters,
             style: Theme.of(context).textTheme.titleSmall?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -39,7 +39,7 @@ class AnteprojectFiltersWidget extends StatelessWidget {
               Expanded(
                 child: TextField(
                   decoration: InputDecoration(
-                    hintText: AppLocalizations.of(context)!.searchAnteprojects,
+                    hintText: AppLocalizations.of(context).searchAnteprojects,
                     prefixIcon: const Icon(Icons.search),
                     border: const OutlineInputBorder(),
                     contentPadding: const EdgeInsets.symmetric(
@@ -72,7 +72,7 @@ class AnteprojectFiltersWidget extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(AppLocalizations.of(context)!.status),
+            Text(AppLocalizations.of(context).status),
             const SizedBox(width: 4),
             const Icon(Icons.arrow_drop_down),
           ],
@@ -81,7 +81,7 @@ class AnteprojectFiltersWidget extends StatelessWidget {
       itemBuilder: (context) => [
         PopupMenuItem(
           value: null,
-          child: Text(AppLocalizations.of(context)!.allStatuses),
+          child: Text(AppLocalizations.of(context).allStatuses),
         ),
         ...AnteprojectStatus.values.map((status) => PopupMenuItem(
               value: status,

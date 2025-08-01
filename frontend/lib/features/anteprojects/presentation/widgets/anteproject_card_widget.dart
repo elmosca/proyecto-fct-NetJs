@@ -98,19 +98,19 @@ class AnteprojectCardWidget extends StatelessWidget {
                     IconButton(
                       icon: const Icon(Icons.edit, size: 20),
                       onPressed: onEdit,
-                      tooltip: AppLocalizations.of(context)!.edit,
+                      tooltip: AppLocalizations.of(context).edit,
                     ),
                   if (onDelete != null)
                     IconButton(
                       icon: const Icon(Icons.delete, size: 20),
                       onPressed: onDelete,
-                      tooltip: AppLocalizations.of(context)!.delete,
+                      tooltip: AppLocalizations.of(context).delete,
                     ),
                   if (onSubmit != null)
                     IconButton(
                       icon: const Icon(Icons.send, size: 20),
                       onPressed: onSubmit,
-                      tooltip: AppLocalizations.of(context)!.submit,
+                      tooltip: AppLocalizations.of(context).submit,
                     ),
                 ],
               ),
