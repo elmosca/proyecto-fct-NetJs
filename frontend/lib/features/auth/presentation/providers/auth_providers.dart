@@ -2,7 +2,6 @@ import 'package:fct_frontend/core/providers/core_providers.dart';
 import 'package:fct_frontend/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:fct_frontend/features/auth/domain/repositories/auth_repository.dart';
 import 'package:fct_frontend/features/auth/domain/usecases/usecases.dart';
-import 'package:fct_frontend/features/auth/domain/usecases/request_password_reset_usecase.dart';
 import 'package:fct_frontend/features/auth/presentation/providers/auth_state.dart';
 import 'package:fct_frontend/shared/models/user.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -26,7 +25,8 @@ RegisterUseCase registerUseCase(RegisterUseCaseRef ref) {
 }
 
 @riverpod
-RequestPasswordResetUseCase requestPasswordResetUseCase(RequestPasswordResetUseCaseRef ref) {
+RequestPasswordResetUseCase requestPasswordResetUseCase(
+    RequestPasswordResetUseCaseRef ref) {
   return RequestPasswordResetUseCase(ref.watch(authRepositoryProvider));
 }
 
@@ -47,13 +47,13 @@ class AuthNotifier extends _$AuthNotifier {
   Future<AuthState> _checkAuthStatus() async {
     try {
       final tokenManager = ref.read(tokenManagerProvider);
-      
+
       // Verificar si hay un token válido almacenado
       if (tokenManager.hasValidToken) {
         // TODO: Validar token con el backend
         // Por ahora asumimos que el token es válido
         // En producción, aquí haríamos una llamada al backend para verificar
-        
+
         // Simular usuario autenticado
         final user = User(
           id: tokenManager.userId ?? 'unknown',
@@ -62,7 +62,7 @@ class AuthNotifier extends _$AuthNotifier {
           lastName: 'Autenticado',
           role: 'student',
         );
-        
+
         return AuthState.authenticated(user);
       } else {
         return const AuthState.unauthenticated();
@@ -110,7 +110,7 @@ class AuthNotifier extends _$AuthNotifier {
       // Limpiar tokens almacenados
       final tokenManager = ref.read(tokenManagerProvider);
       await tokenManager.clearAll();
-      
+
       // Actualizar estado
       state = const AsyncValue.data(AuthState.unauthenticated());
     } catch (e) {
