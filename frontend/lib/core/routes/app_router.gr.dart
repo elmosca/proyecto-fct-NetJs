@@ -119,6 +119,19 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const ProfilePage(),
       );
     },
+    ProgressReportRoute.name: (routeData) {
+      final args = routeData.argsAs<ProgressReportRouteArgs>(
+          orElse: () => const ProgressReportRouteArgs());
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: ProgressReportPage(
+          key: args.key,
+          projectId: args.projectId,
+          fromDate: args.fromDate,
+          toDate: args.toDate,
+        ),
+      );
+    },
     ProjectsListRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -160,6 +173,12 @@ abstract class _$AppRouter extends RootStackRouter {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const SplashPage(),
+      );
+    },
+    TaskReportsRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const TaskReportsPage(),
       );
     },
     TasksRoute.name: (routeData) {
@@ -470,6 +489,54 @@ class ProfileRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [ProgressReportPage]
+class ProgressReportRoute extends PageRouteInfo<ProgressReportRouteArgs> {
+  ProgressReportRoute({
+    Key? key,
+    String? projectId,
+    DateTime? fromDate,
+    DateTime? toDate,
+    List<PageRouteInfo>? children,
+  }) : super(
+          ProgressReportRoute.name,
+          args: ProgressReportRouteArgs(
+            key: key,
+            projectId: projectId,
+            fromDate: fromDate,
+            toDate: toDate,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'ProgressReportRoute';
+
+  static const PageInfo<ProgressReportRouteArgs> page =
+      PageInfo<ProgressReportRouteArgs>(name);
+}
+
+class ProgressReportRouteArgs {
+  const ProgressReportRouteArgs({
+    this.key,
+    this.projectId,
+    this.fromDate,
+    this.toDate,
+  });
+
+  final Key? key;
+
+  final String? projectId;
+
+  final DateTime? fromDate;
+
+  final DateTime? toDate;
+
+  @override
+  String toString() {
+    return 'ProgressReportRouteArgs{key: $key, projectId: $projectId, fromDate: $fromDate, toDate: $toDate}';
+  }
+}
+
+/// generated route for
 /// [ProjectsListPage]
 class ProjectsListRoute extends PageRouteInfo<void> {
   const ProjectsListRoute({List<PageRouteInfo>? children})
@@ -583,6 +650,20 @@ class SplashRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'SplashRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [TaskReportsPage]
+class TaskReportsRoute extends PageRouteInfo<void> {
+  const TaskReportsRoute({List<PageRouteInfo>? children})
+      : super(
+          TaskReportsRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'TaskReportsRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
