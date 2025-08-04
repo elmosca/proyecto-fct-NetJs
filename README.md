@@ -27,6 +27,24 @@ node --version  # Debe mostrar v20.x.x
 
 ### Configuración Automática
 
+#### Opción 1: Script Unificado (Recomendado)
+
+```bash
+# Instalación completa (backend + frontend)
+./install.sh
+
+# Solo backend
+./install.sh --backend-only
+
+# Solo frontend
+./install.sh --frontend-only
+
+# Saltar instalación de dependencias del sistema
+./install.sh --skip-deps
+```
+
+#### Opción 2: Scripts Específicos
+
 ```bash
 # Linux/macOS
 ./setup.sh
@@ -37,7 +55,7 @@ node --version  # Debe mostrar v20.x.x
 
 ### Configuración Manual
 
-Ver [CONTRIBUTING.md](CONTRIBUTING.md) para instrucciones detalladas.
+Ver [DEPLOYMENT.md](DEPLOYMENT.md) para la guía completa de despliegue y [CONTRIBUTING.md](CONTRIBUTING.md) para instrucciones detalladas de contribución.
 
 ### 🔑 Configuración de Google OAuth
 
