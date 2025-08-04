@@ -61,25 +61,48 @@ setup_backend() {
     # Configurar variables de entorno
     if [ ! -f .env ]; then
         print_status "Creando archivo .env..."
-        cp .env.example .env
-        print_warning "⚠️  Edita backend/.env con tus configuraciones antes de continuar"
+        cat > .env << EOF
+# Configuración de la Base de Datos
+DB_HOST=localhost
+DB_PORT=5432
+DB_USERNAME=postgres
+DB_PASSWORD=postgres
+DB_DATABASE=fct_backend_db
+
+# Configuración JWT
+JWT_SECRET=your-super-secret-key-change-in-production
+JWT_EXPIRATION=1h
+
+# Configuración del Servidor
+PORT=3000
+NODE_ENV=development
+
+# Configuración de CORS
+CORS_ORIGIN=http://localhost:3000,http://localhost:8080
+EOF
+        print_status "✅ Archivo .env creado con configuración por defecto"
     fi
-    
+
     # Iniciar base de datos
     print_status "Iniciando base de datos con Docker..."
     docker-compose up -d
-    
+
     # Esperar a que la DB esté lista
     print_status "Esperando a que la base de datos esté lista..."
-    sleep 10
-    
+    # Esperar hasta que el contenedor de postgres esté saludable y accesible
+    until docker-compose exec -T postgres pg_isready -h localhost -p 5432 -U postgres; do
+      printf '.'
+      sleep 2
+    done
+    echo "" # Nueva línea después de los puntos de espera
+
     # Ejecutar migraciones y seeds
     print_status "Ejecutando migraciones..."
-    npm run migration:run 2>/dev/null || print_warning "Migraciones fallaron o no configuradas"
-    
+    npm run migration:run || print_warning "Migraciones fallaron o no configuradas"
+
     print_status "Ejecutando seeds..."
-    npm run seed 2>/dev/null || print_warning "Seeds fallaron o no configurados"
-    
+    npm run db:seed || print_warning "Seeds fallaron o no configurados"
+
     cd ..
 }
 
