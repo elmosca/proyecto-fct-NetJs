@@ -41,14 +41,9 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     CreateEvaluationRoute.name: (routeData) {
-      final args = routeData.argsAs<CreateEvaluationRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: CreateEvaluationPage(
-          key: args.key,
-          defenseId: args.defenseId,
-          evaluatorId: args.evaluatorId,
-        ),
+        child: const CreateEvaluationPage(),
       );
     },
     DashboardRoute.name: (routeData) {
@@ -271,45 +266,16 @@ class AuditLogsRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [CreateEvaluationPage]
-class CreateEvaluationRoute extends PageRouteInfo<CreateEvaluationRouteArgs> {
-  CreateEvaluationRoute({
-    Key? key,
-    required String defenseId,
-    required String evaluatorId,
-    List<PageRouteInfo>? children,
-  }) : super(
+class CreateEvaluationRoute extends PageRouteInfo<void> {
+  const CreateEvaluationRoute({List<PageRouteInfo>? children})
+      : super(
           CreateEvaluationRoute.name,
-          args: CreateEvaluationRouteArgs(
-            key: key,
-            defenseId: defenseId,
-            evaluatorId: evaluatorId,
-          ),
           initialChildren: children,
         );
 
   static const String name = 'CreateEvaluationRoute';
 
-  static const PageInfo<CreateEvaluationRouteArgs> page =
-      PageInfo<CreateEvaluationRouteArgs>(name);
-}
-
-class CreateEvaluationRouteArgs {
-  const CreateEvaluationRouteArgs({
-    this.key,
-    required this.defenseId,
-    required this.evaluatorId,
-  });
-
-  final Key? key;
-
-  final String defenseId;
-
-  final String evaluatorId;
-
-  @override
-  String toString() {
-    return 'CreateEvaluationRouteArgs{key: $key, defenseId: $defenseId, evaluatorId: $evaluatorId}';
-  }
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
