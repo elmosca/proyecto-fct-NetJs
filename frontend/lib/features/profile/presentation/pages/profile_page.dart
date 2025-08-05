@@ -14,7 +14,7 @@ class ProfilePage extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.profile),
+        title: Text(AppLocalizations.of(context).profile),
         actions: [
           IconButton(
             icon: const Icon(Icons.edit),

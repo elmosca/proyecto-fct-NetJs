@@ -9,6 +9,10 @@ import 'package:fct_frontend/features/dashboard/presentation/pages/main_layout_p
 import 'package:fct_frontend/features/profile/presentation/pages/profile_page.dart';
 import 'package:fct_frontend/features/projects/presentation/pages/projects_page.dart';
 import 'package:fct_frontend/features/settings/presentation/pages/settings_page.dart';
+import 'package:fct_frontend/features/tasks/presentation/pages/milestones_page.dart';
+import 'package:fct_frontend/features/tasks/presentation/pages/progress_report_page.dart';
+import 'package:fct_frontend/features/tasks/presentation/pages/task_exports_page.dart';
+import 'package:fct_frontend/features/tasks/presentation/pages/task_reports_page.dart';
 import 'package:fct_frontend/features/tasks/presentation/pages/tasks_page.dart';
 import 'package:fct_frontend/features/users/presentation/pages/users_page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -55,6 +59,22 @@ class AppRouter extends _$AppRouter {
             AutoRoute(
               path: 'tasks',
               page: TasksRoute.page,
+            ),
+            AutoRoute(
+              path: 'milestones',
+              page: MilestonesRoute.page,
+            ),
+            AutoRoute(
+              path: 'task-reports',
+              page: TaskReportsRoute.page,
+            ),
+            AutoRoute(
+              path: 'task-exports',
+              page: TaskExportsRoute.page,
+            ),
+            AutoRoute(
+              path: 'progress-report',
+              page: ProgressReportRoute.page,
             ),
             AutoRoute(
               path: 'users',

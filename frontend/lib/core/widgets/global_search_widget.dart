@@ -81,7 +81,7 @@ class _GlobalSearchWidgetState extends ConsumerState<GlobalSearchWidget> {
     return IconButton(
       icon: const Icon(Icons.search),
       onPressed: _expandSearch,
-      tooltip: AppLocalizations.of(context)!.search,
+      tooltip: AppLocalizations.of(context).search,
     );
   }
 
@@ -124,7 +124,7 @@ class _GlobalSearchWidgetState extends ConsumerState<GlobalSearchWidget> {
               controller: _searchController,
               focusNode: _searchFocusNode,
               decoration: InputDecoration(
-                hintText: AppLocalizations.of(context)!.search,
+                hintText: AppLocalizations.of(context).search,
                 border: InputBorder.none,
                 contentPadding: const EdgeInsets.symmetric(vertical: 8),
                 isDense: true,
@@ -257,18 +257,18 @@ class _GlobalSearchWidgetState extends ConsumerState<GlobalSearchWidget> {
           ),
           if (results.projects.isNotEmpty)
             _buildResultSection(
-              title: AppLocalizations.of(context)!.projects,
+              title: AppLocalizations.of(context).projects,
               items:
                   results.projects.map((p) => _buildProjectResult(p)).toList(),
             ),
           if (results.users.isNotEmpty)
             _buildResultSection(
-              title: AppLocalizations.of(context)!.users,
+              title: AppLocalizations.of(context).users,
               items: results.users.map((u) => _buildUserResult(u)).toList(),
             ),
           if (results.tasks.isNotEmpty)
             _buildResultSection(
-              title: AppLocalizations.of(context)!.tasks,
+              title: AppLocalizations.of(context).tasks,
               items: results.tasks.map((t) => _buildTaskResult(t)).toList(),
             ),
         ],

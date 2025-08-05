@@ -1635,6 +1635,258 @@ genhtml coverage/lcov.info -o coverage/html
 - [ ] Compartir archivos
 - [ ] Modo oscuro automático
 
+---
+
+## 🌐 Desarrollo Multiplataforma
+
+### **Estrategia de Desarrollo Simultáneo**
+
+#### **¿Por qué esta estrategia?**
+
+1. **Validación Temprana**: Identificar problemas de web desde el inicio
+2. **Feedback Rápido**: Mostrar ambas plataformas funcionando
+3. **Ahorro de Tiempo**: No rehacer código después
+4. **Testing Real**: Usuarios pueden probar ambas plataformas
+
+#### **Diferencias Clave entre Web y Móvil**
+
+| Aspecto | Web | Móvil |
+|---------|-----|-------|
+| **Navegación** | URLs, browser back/forward | Stack navigation, gestures |
+| **Gestos** | Mouse, keyboard, scroll | Touch, swipe, pinch |
+| **Storage** | localStorage, IndexedDB | SQLite, SharedPreferences |
+| **Performance** | JavaScript engine | Native performance |
+| **Offline** | Service Worker | Native offline capabilities |
+| **Updates** | Browser refresh | App store updates |
+
+#### **Flutter Web Consideraciones Especiales**
+
+##### **1. Navegación Web**
+```dart
+// Configurar URLs para web
+@AutoRouterConfig()
+class AppRouter extends _$AppRouter {
+  @override
+  List<AutoRoute> get routes => [
+    AutoRoute(
+      path: '/projects/:id', // URL amigable para web
+      page: ProjectDetailRoute.page,
+    ),
+  ];
+}
+```
+
+##### **2. Responsive Design Web**
+```dart
+class ResponsiveWebLayout extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        if (constraints.maxWidth > 1200) {
+          return DesktopLayout(); // 3 columnas
+        } else if (constraints.maxWidth > 768) {
+          return TabletLayout(); // 2 columnas
+        } else {
+          return MobileLayout(); // 1 columna
+        }
+      },
+    );
+  }
+}
+```
+
+##### **3. PWA Configuration**
+```json
+// web/manifest.json
+{
+  "name": "Sistema FCT",
+  "short_name": "FCT",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1976d2",
+  "icons": [
+    {
+      "src": "icons/Icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
+```
+
+#### **Testing Cross-Platform**
+
+##### **1. Testing Checklist**
+- [ ] **Navegación**: URLs funcionan en web, stack en móvil
+- [ ] **Gestos**: Touch en móvil, mouse en web
+- [ ] **Responsive**: Todos los breakpoints
+- [ ] **Performance**: Tiempo de carga en ambas plataformas
+- [ ] **Offline**: Funcionamiento sin conexión
+- [ ] **Storage**: Persistencia de datos
+
+##### **2. Herramientas de Testing**
+```bash
+# Testing web
+flutter test --platform chrome
+
+# Testing móvil
+flutter test --platform android
+flutter test --platform ios
+
+# Performance testing
+flutter run --profile --web-renderer html
+flutter run --profile --web-renderer canvaskit
+```
+
+#### **Deploy Multiplataforma**
+
+##### **1. Web Deploy (GitHub Pages)**
+```yaml
+# .github/workflows/deploy-web.yml
+name: Deploy Web
+on:
+  push:
+    branches: [main]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+      - run: flutter build web
+      - uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build/web
+```
+
+##### **2. Mobile Deploy**
+```yaml
+# .github/workflows/deploy-mobile.yml
+name: Deploy Mobile
+on:
+  push:
+    tags: ['v*']
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+      - run: flutter build apk --release
+      - uses: actions/upload-artifact@v3
+        with:
+          name: app-release
+          path: build/app/outputs/flutter-apk/app-release.apk
+```
+
+#### **Optimización Multiplataforma**
+
+##### **1. Web Optimizations**
+```dart
+// Lazy loading para web
+class LazyWebWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return kIsWeb 
+      ? FutureBuilder(
+          future: _loadData(),
+          builder: (context, snapshot) {
+            return snapshot.hasData 
+              ? DataWidget(data: snapshot.data!)
+              : LoadingWidget();
+          },
+        )
+      : DataWidget(data: data); // Móvil carga inmediatamente
+  }
+}
+```
+
+##### **2. Mobile Optimizations**
+```dart
+// Gestos nativos para móvil
+class MobileGestureDetector extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return kIsWeb 
+      ? WebWidget()
+      : GestureDetector(
+          onHorizontalDragEnd: (details) {
+            // Navegación por gestos en móvil
+            if (details.primaryVelocity! > 0) {
+              Navigator.pop(context);
+            }
+          },
+          child: MobileWidget(),
+        );
+  }
+}
+```
+
+#### **Workflow de Desarrollo Multiplataforma**
+
+##### **1. Desarrollo Diario**
+```bash
+# 1. Desarrollar feature
+flutter run -d chrome  # Testing web
+flutter run -d android # Testing móvil
+
+# 2. Commit y push
+git add .
+git commit -m "feat: nueva feature multiplataforma"
+git push origin feature/nueva-feature
+
+# 3. Deploy automático
+# GitHub Actions despliega web automáticamente
+```
+
+##### **2. Testing Continuo**
+```bash
+# Testing automático en CI/CD
+flutter test --platform chrome
+flutter test --platform android
+flutter test --platform ios
+
+# Performance testing
+flutter build web --profile
+flutter build apk --profile
+```
+
+##### **3. Release Process**
+```bash
+# 1. Crear tag
+git tag v1.0.0
+git push origin v1.0.0
+
+# 2. Deploy automático
+# - Web: GitHub Pages
+# - Android: APK generado
+# - iOS: Build para App Store
+```
+
+#### **Métricas de Calidad Multiplataforma**
+
+##### **1. Performance Metrics**
+- **Web**: Lighthouse score > 90
+- **Mobile**: App size < 50MB
+- **Load Time**: < 3s en ambas plataformas
+- **Memory Usage**: < 100MB en móvil
+
+##### **2. User Experience**
+- **Navigation**: Intuitiva en ambas plataformas
+- **Responsive**: Funciona en todos los tamaños
+- **Offline**: Funcionalidad básica sin conexión
+- **Accessibility**: Soporte para lectores de pantalla
+
+##### **3. Code Quality**
+- **Coverage**: > 80% en ambas plataformas
+- **Platform-specific code**: < 10% del código total
+- **Shared logic**: > 90% del código reutilizable
+
+---
+
 ## 🧪 Testing Strategy
 
 ### **Tests Unitarios**
@@ -1664,6 +1916,8 @@ genhtml coverage/lcov.info -o coverage/html
 - [ ] Cross-platform testing
 - [ ] Performance testing
 
+---
+
 ## 📊 Métricas de Calidad
 
 ### **Cobertura de Código**
@@ -1684,6 +1938,8 @@ genhtml coverage/lcov.info -o coverage/html
 - Navegación por teclado
 - Contraste de colores adecuado
 
+---
+
 ## ⏱️ Estimación de Tiempos
 
 ### **Desarrollo Total**
@@ -1700,7 +1956,73 @@ genhtml coverage/lcov.info -o coverage/html
 - Fase 9-11 (Advanced Features): 4-6 semanas
 - Fase 12-13 (Testing & Deploy): 3-5 semanas
 
+---
+
 ## 🚀 Próximos Pasos Inmediatos
+
+### **Fase A: Preparación Multiplataforma (1-2 semanas)**
+```bash
+# Prioridad ALTA - Hacer esto PRIMERO
+```
+
+#### **1. Configuración Flutter Web**
+- [ ] **Habilitar Flutter Web**: `flutter config --enable-web`
+- [ ] **Verificar build web**: `flutter build web`
+- [ ] **Configurar PWA**: Service worker, manifest.json, icons
+- [ ] **Optimizar para SEO**: Meta tags, sitemap, robots.txt
+
+#### **2. Testing Cross-Platform**
+- [ ] **Probar todas las features en web**
+- [ ] **Identificar problemas específicos de web**
+- [ ] **Ajustar responsive design para tablet/desktop**
+- [ ] **Verificar navegación web vs móvil**
+
+#### **3. Deploy Web Básico**
+- [ ] **Configurar GitHub Pages o Vercel**
+- [ ] **GitHub Actions para deploy automático**
+- [ ] **URL pública para testing**: `https://tu-usuario.github.io/proyecto-fct-NetJs`
+- [ ] **Configurar dominio personalizado (opcional)**
+
+### **Fase B: Integración Backend (1 semana)**
+```bash
+# Prioridad ALTA - Conectar con APIs reales
+```
+
+#### **4. Conectar APIs Reales**
+- [ ] **Reemplazar mocks con backend real**
+- [ ] **Configurar autenticación JWT**
+- [ ] **Testing de integración**
+- [ ] **Manejo de errores de red**
+
+### **Fase C: Optimización Multiplataforma (1-2 semanas)**
+```bash
+# Prioridad MEDIA - Mejorar experiencia
+```
+
+#### **5. Optimización Web**
+- [ ] **Lazy loading para web**
+- [ ] **Optimización de imágenes**
+- [ ] **Performance web (Lighthouse)**
+- [ ] **PWA completamente funcional**
+
+#### **6. Optimización Móvil**
+- [ ] **Gestos nativos**
+- [ ] **Offline capabilities**
+- [ ] **Push notifications**
+- [ ] **Optimización de batería**
+
+### **Fase D: Fase 10 - Gestión de Archivos (1-2 semanas)**
+```bash
+# Prioridad MEDIA - Nueva funcionalidad
+```
+
+#### **7. Sistema de Archivos Multiplataforma**
+- [ ] **Upload/download multiplataforma**
+- [ ] **Preview de archivos**
+- [ ] **Gestión de versiones**
+- [ ] **Integración con Google Drive/iCloud**
+
+---
 
 ### **Configuración del Repositorio**
 1. **Inicializar proyecto Flutter**
@@ -1723,199 +2045,7 @@ genhtml coverage/lcov.info -o coverage/html
 14. **Configurar workflow de integración Stitch → Proyecto**
 15. **Crear guías de adaptación de código generado**
 
-## 📝 Notas de Desarrollo
-
-### **Consideraciones Técnicas**
-
-- Usar `const` constructors donde sea posible
-- Implementar lazy loading para listas grandes
-- Optimizar imágenes y assets
-- Implementar error boundaries
-- Usar debounce para búsquedas
-
-### **UX/UI Guidelines**
-
-- Seguir Material Design 3
-- Implementar modo oscuro
-- Diseño responsive para todas las pantallas
-- Feedback visual para todas las acciones
-- Estados de carga y error claros
-- **Soporte completo para castellano e inglés**
-- **Textos adaptables a diferentes longitudes**
-- **Iconografía universal (no dependiente del idioma)**
-
-### **Seguridad**
-
-- Validación de datos en cliente
-- Sanitización de inputs
-- Manejo seguro de tokens
-- Cifrado de datos sensibles
-- HTTPS obligatorio
-
-## 📈 Estado Actual del Desarrollo
-
-### **Progreso General**
-
-- **Fase actual**: Fase 4 - Dashboard y Navegación (Completada)
-- **Progreso total**: 26.1% (29/111 tareas)
-- **Tareas completadas**: 29/111
-- **Semanas transcurridas**: 4
-
-### **Últimas Actualizaciones**
-
-- **2025-07-28**: Completada Fase 4 - Dashboard y Navegación
-- **2025-07-28**: Implementada búsqueda global y notificaciones push
-- **Próxima actualización**: 2025-08-01
-
-### **Bloqueadores Actuales**
-
-- Ninguno identificado
-
-### **Riesgos Identificados**
-
-- Complejidad de la integración con Google OAuth
-- Gestión de WebSockets en múltiples plataformas
-- Optimización de rendimiento en dispositivos móviles
-- **Dependencia de Stitch**: Posible limitación de acceso o cambios en la herramienta
-- **Calidad del código generado**: Necesidad de revisión y adaptación manual
-- **Consistencia de diseño**: Mantener coherencia visual entre pantallas generadas
-
-### **Beneficios de Stitch**
-
-- **Aceleración del desarrollo**: Reducción del 40-60% en tiempo de creación de UI
-- **Consistencia de Material Design 3**: Implementación automática de guidelines
-- **Responsive design**: Generación automática de layouts adaptativos
-- **Reducción de errores**: Menos bugs de UI gracias a código probado
-- **Documentación automática**: Código bien estructurado y comentado
-- **Iteración rápida**: Posibilidad de generar múltiples versiones rápidamente
-
 ---
-
-**Última actualización**: 2025-07-28
-**Próxima revisión**: 2025-08-01
-**Responsable**: Equipo de desarrollo frontend
-
-## 🔧 Configuración de Desarrollo
-
-### 1. Inyección de Dependencias
-```dart
-// lib/core/di/injection_container.dart
-final getIt = GetIt.instance;
-
-Future<void> initializeDependencies() async {
-  // Core
-  getIt.registerLazySingleton<Logger>(() => Logger());
-  getIt.registerLazySingleton<TokenManager>(() => TokenManager(SharedPreferences.getInstance()));
-  
-  // Services
-  getIt.registerLazySingleton<HttpService>(() => HttpService());
-  getIt.registerLazySingleton<AuthService>(() => AuthService());
-  getIt.registerLazySingleton<StorageService>(() => StorageService());
-  
-  // Repositories
-  getIt.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(
-    getIt<AuthDataSource>(),
-    getIt<UserDataSource>(),
-  ));
-  
-  // Use Cases
-  getIt.registerFactory<LoginUseCase>(() => LoginUseCase(getIt<AuthRepository>()));
-  getIt.registerFactory<LogoutUseCase>(() => LogoutUseCase(getIt<AuthRepository>()));
-}
-```
-
-### 2. Configuración de Temas
-```dart
-// lib/core/theme/app_theme.dart
-class AppTheme {
-  static ThemeData get lightTheme {
-    return ThemeData(
-      useMaterial3: true,
-      colorScheme: ColorScheme.fromSeed(
-        seedColor: AppColors.primary,
-        brightness: Brightness.light,
-      ),
-      appBarTheme: const AppBarTheme(
-        centerTitle: true,
-        elevation: 0,
-      ),
-      elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
-        ),
-      ),
-      inputDecorationTheme: InputDecorationTheme(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-        ),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      ),
-    );
-  }
-  
-  static ThemeData get darkTheme {
-    return ThemeData(
-      useMaterial3: true,
-      colorScheme: ColorScheme.fromSeed(
-        seedColor: AppColors.primary,
-        brightness: Brightness.dark,
-      ),
-      // Configuración específica para tema oscuro
-    );
-  }
-}
-```
-
-## 📋 Checklist de Implementación
-
-### Para cada Feature:
-- [ ] Crear estructura de carpetas (data, domain, presentation)
-- [ ] Implementar entidades del dominio
-- [ ] Definir interfaces de repositorio
-- [ ] Implementar casos de uso
-- [ ] Crear providers de estado
-- [ ] Implementar páginas y widgets
-- [ ] Configurar rutas
-- [ ] Escribir tests unitarios
-- [ ] Escribir tests de widgets
-- [ ] Documentar la implementación
-
-### Para cada Widget:
-- [ ] Hacer el widget reutilizable
-- [ ] Implementar responsive design
-- [ ] Agregar soporte para i18n
-- [ ] Manejar estados de loading y error
-- [ ] Implementar accesibilidad
-- [ ] Escribir tests
-
-## 🎯 Mejores Prácticas
-
-### 1. Código Limpio
-- Nombres descriptivos y significativos
-- Funciones pequeñas y con una sola responsabilidad
-- Evitar código duplicado
-- Comentarios explicativos cuando sea necesario
-
-### 2. Performance
-- Usar `const` constructors cuando sea posible
-- Implementar lazy loading para listas grandes
-- Optimizar rebuilds con `select` en Riverpod
-- Usar `ListView.builder` para listas largas
-
-### 3. Accesibilidad
-- Agregar `semanticsLabel` a widgets importantes
-- Usar colores con suficiente contraste
-- Implementar navegación por teclado
-- Proporcionar alternativas de texto para imágenes
-
-### 4. Testing
-- Tests unitarios para lógica de negocio
-- Tests de widgets para componentes UI
-- Tests de integración para flujos completos
-- Mantener coverage de código alto
 
 ## 📚 Recursos Adicionales
 
@@ -1924,8 +2054,11 @@ class AppTheme {
 - [AutoRoute Documentation](https://autoroute.dev/)
 - [Clean Architecture Guide](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
 - [Flutter Testing Guide](https://flutter.dev/docs/testing)
+- [Flutter Web Documentation](https://flutter.dev/docs/get-started/web)
+- [PWA Documentation](https://web.dev/progressive-web-apps/)
 
 ---
 
-**Última actualización**: 2025-07-28
-**Versión**: 1.0.0 
+**Última actualización**: 2025-01-29  
+**Próxima revisión**: 2025-02-01  
+**Responsable**: Equipo de desarrollo frontend

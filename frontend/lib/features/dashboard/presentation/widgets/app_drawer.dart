@@ -91,38 +91,38 @@ class AppDrawer extends ConsumerWidget {
         _buildDrawerItem(
           context,
           icon: Icons.dashboard,
-          title: AppLocalizations.of(context)!.dashboard,
+          title: AppLocalizations.of(context).dashboard,
           route: '/app/dashboard',
         ),
         _buildDrawerItem(
           context,
           icon: Icons.work,
-          title: AppLocalizations.of(context)!.projects,
+          title: AppLocalizations.of(context).projects,
           route: '/app/projects',
         ),
         _buildDrawerItem(
           context,
           icon: Icons.task,
-          title: AppLocalizations.of(context)!.tasks,
+          title: AppLocalizations.of(context).tasks,
           route: '/app/tasks',
         ),
         _buildDrawerItem(
           context,
           icon: Icons.people,
-          title: AppLocalizations.of(context)!.users,
+          title: AppLocalizations.of(context).users,
           route: '/app/users',
         ),
         const Divider(),
         _buildDrawerItem(
           context,
           icon: Icons.person,
-          title: AppLocalizations.of(context)!.profile,
+          title: AppLocalizations.of(context).profile,
           route: '/app/profile',
         ),
         _buildDrawerItem(
           context,
           icon: Icons.settings,
-          title: AppLocalizations.of(context)!.settings,
+          title: AppLocalizations.of(context).settings,
           route: '/app/settings',
         ),
       ],
@@ -150,7 +150,7 @@ class AppDrawer extends ConsumerWidget {
       children: [
         ListTile(
           leading: const Icon(Icons.logout),
-          title: Text(AppLocalizations.of(context)!.logout),
+          title: Text(AppLocalizations.of(context).logout),
           onTap: () async {
             Navigator.pop(context);
             await ref.read(authNotifierProvider.notifier).logout();
