@@ -1,0 +1,755 @@
+{
+  "@@locale": "en",
+  "appTitle": "FCT - Project Management",
+  "@appTitle": {
+    "description": "Application title"
+  },
+  "login": "Login",
+  "@login": {
+    "description": "Login button text"
+  },
+  "register": "Register",
+  "@register": {
+    "description": "Register button text"
+  },
+  "logout": "Logout",
+  "@logout": {
+    "description": "Logout button text"
+  },
+  "email": "Email",
+  "@email": {
+    "description": "Email field label"
+  },
+  "password": "Password",
+  "@password": {
+    "description": "Password field label"
+  },
+  "firstName": "First Name",
+  "@firstName": {
+    "description": "First name field label"
+  },
+  "lastName": "Last Name",
+  "@lastName": {
+    "description": "Last name field label"
+  },
+  "dashboard": "Dashboard",
+  "@dashboard": {
+    "description": "Dashboard title"
+  },
+  "projects": "Projects",
+  "@projects": {
+    "description": "Projects section title"
+  },
+  "tasks": "Tasks",
+  "@tasks": {
+    "description": "Tasks section title"
+  },
+  "users": "Users",
+  "@users": {
+    "description": "Users section title"
+  },
+  "settings": "Settings",
+  "@settings": {
+    "description": "Settings section title"
+  },
+  "profile": "Profile",
+  "@profile": {
+    "description": "Profile section title"
+  },
+  "language": "Language",
+  "@language": {
+    "description": "Language selector label"
+  },
+  "theme": "Theme",
+  "@theme": {
+    "description": "Theme selector label"
+  },
+  "light": "Light",
+  "@light": {
+    "description": "Light theme option"
+  },
+  "dark": "Dark",
+  "@dark": {
+    "description": "Dark theme option"
+  },
+  "system": "System",
+  "@system": {
+    "description": "System theme option"
+  },
+  "save": "Save",
+  "@save": {
+    "description": "Save button text"
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Cancel button text"
+  },
+  "delete": "Delete",
+  "@delete": {
+    "description": "Delete button text"
+  },
+  "edit": "Edit",
+  "@edit": {
+    "description": "Edit button text"
+  },
+  "add": "Add",
+  "@add": {
+    "description": "Add button text"
+  },
+  "search": "Search",
+  "@search": {
+    "description": "Search field placeholder"
+  },
+  "loading": "Loading...",
+  "@loading": {
+    "description": "Loading text"
+  },
+  "error": "Error",
+  "@error": {
+    "description": "Error title"
+  },
+  "success": "Success",
+  "@success": {
+    "description": "Success title"
+  },
+  "warning": "Warning",
+  "@warning": {
+    "description": "Warning title"
+  },
+  "info": "Information",
+  "@info": {
+    "description": "Information title"
+  },
+  "retry": "Retry",
+  "@retry": {
+    "description": "Retry button text"
+  },
+  "noData": "No data",
+  "@noData": {
+    "description": "Text when there's no data"
+  },
+  "noDataMessage": "No items found",
+  "@noDataMessage": {
+    "description": "Message when there's no data"
+  },
+  "welcome": "Welcome",
+  "@welcome": {
+    "description": "Welcome text"
+  },
+  "welcomeMessage": "Welcome to the FCT project management system",
+  "@welcomeMessage": {
+    "description": "Welcome message"
+  },
+  "listView": "List View",
+  "@listView": {
+    "description": "Text for list view"
+  },
+  "kanbanView": "Kanban View",
+  "@kanbanView": {
+    "description": "Text for Kanban view"
+  },
+  "filters": "Filters",
+  "@filters": {
+    "description": "Text for filters"
+  },
+  "createTask": "Create Task",
+  "@createTask": {
+    "description": "Text for create task"
+  },
+  "noTasks": "No tasks",
+  "@noTasks": {
+    "description": "Text when there are no tasks"
+  },
+  "noTasksMessage": "No tasks found",
+  "@noTasksMessage": {
+    "description": "Message when there are no tasks"
+  },
+  "createFirstTask": "Create first task",
+  "@createFirstTask": {
+    "description": "Text for create first task"
+  },
+  "editTask": "Edit Task",
+  "@editTask": {
+    "description": "Text for edit task"
+  },
+  "deleteTask": "Delete task",
+  "@deleteTask": {
+    "description": "Text for delete task"
+  },
+  "deleteTaskConfirmation": "Are you sure you want to delete this task?",
+  "@deleteTaskConfirmation": {
+    "description": "Confirmation for delete task"
+  },
+  "milestones": "Milestones",
+  "@milestones": {
+    "description": "Milestones section title"
+  },
+  "create": "Create",
+  "@create": {
+    "description": "Create button text"
+  },
+  "title": "Title",
+  "@title": {
+    "description": "Title field label"
+  },
+  "titleRequired": "Title is required",
+  "@titleRequired": {
+    "description": "Error message for required title"
+  },
+  "description": "Description",
+  "@description": {
+    "description": "Description field label"
+  },
+  "descriptionRequired": "Description is required",
+  "@descriptionRequired": {
+    "description": "Error message for required description"
+  },
+  "priority": "Priority",
+  "@priority": {
+    "description": "Priority field label"
+  },
+  "complexity": "Complexity",
+  "@complexity": {
+    "description": "Complexity field label"
+  },
+  "dueDate": "Due Date",
+  "@dueDate": {
+    "description": "Due date field label"
+  },
+  "estimatedHours": "Estimated Hours",
+  "@estimatedHours": {
+    "description": "Estimated hours field label"
+  },
+  "tags": "Tags",
+  "@tags": {
+    "description": "Tags field label"
+  },
+  "tagsHint": "Separated by commas",
+  "@tagsHint": {
+    "description": "Hint for tags field"
+  },
+  "assignees": "Assignees",
+  "@assignees": {
+    "description": "Assignees field label"
+  },
+  "assigneesHint": "Select users",
+  "@assigneesHint": {
+    "description": "Hint for assignees field"
+  },
+  "clear": "Clear",
+  "@clear": {
+    "description": "Clear button text"
+  },
+  "apply": "Apply",
+  "@apply": {
+    "description": "Apply button text"
+  },
+  "searchTasksHint": "Search tasks...",
+  "@searchTasksHint": {
+    "description": "Hint for search tasks"
+  },
+  "status": "Status",
+  "@status": {
+    "description": "Status field label"
+  },
+  "all": "All",
+  "@all": {
+    "description": "Text for all option"
+  },
+  "selectDateRange": "Select date range",
+  "@selectDateRange": {
+    "description": "Text for select date range"
+  },
+  "submit": "Submit",
+  "@submit": {
+    "description": "Submit button text"
+  },
+  "taskDetails": "Task Details",
+  "@taskDetails": {
+    "description": "Task details page title"
+  },
+  "basicInformation": "Basic Information",
+  "@basicInformation": {
+    "description": "Basic information section title"
+  },
+  "metadata": "Metadata",
+  "@metadata": {
+    "description": "Metadata section title"
+  },
+  "actions": "Actions",
+  "@actions": {
+    "description": "Actions section title"
+  },
+  "changeStatus": "Change Status",
+  "@changeStatus": {
+    "description": "Text for change status"
+  },
+  "createdAt": "Created at",
+  "@createdAt": {
+    "description": "Label for creation date"
+  },
+  "updatedAt": "Updated at",
+  "@updatedAt": {
+    "description": "Label for update date"
+  },
+  "createdBy": "Created by",
+  "@createdBy": {
+    "description": "Label for creator"
+  },
+  "project": "Project",
+  "@project": {
+    "description": "Label for project"
+  },
+  "createMilestone": "Create milestone",
+  "@createMilestone": {
+    "description": "Text for create milestone"
+  },
+  "editMilestone": "Edit milestone",
+  "@editMilestone": {
+    "description": "Text for edit milestone"
+  },
+  "deleteMilestone": "Delete milestone",
+  "@deleteMilestone": {
+    "description": "Text for delete milestone"
+  },
+  "deleteMilestoneConfirmation": "Are you sure you want to delete this milestone?",
+  "@deleteMilestoneConfirmation": {
+    "description": "Confirmation for delete milestone"
+  },
+  "milestoneDetails": "Milestone Details",
+  "@milestoneDetails": {
+    "description": "Milestone details page title"
+  },
+  "milestoneNumber": "Milestone number",
+  "@milestoneNumber": {
+    "description": "Label for milestone number"
+  },
+  "plannedDate": "Planned date",
+  "@plannedDate": {
+    "description": "Label for planned date"
+  },
+  "completedDate": "Completed date",
+  "@completedDate": {
+    "description": "Label for completed date"
+  },
+  "milestoneType": "Milestone type",
+  "@milestoneType": {
+    "description": "Label for milestone type"
+  },
+  "expectedDeliverables": "Expected deliverables",
+  "@expectedDeliverables": {
+    "description": "Label for expected deliverables"
+  },
+  "reviewComments": "Review comments",
+  "@reviewComments": {
+    "description": "Label for review comments"
+  },
+  "isFromAnteproject": "From anteproject",
+  "@isFromAnteproject": {
+    "description": "Label to indicate if from anteproject"
+  },
+  "noMilestones": "No milestones",
+  "@noMilestones": {
+    "description": "Text when there are no milestones"
+  },
+  "noMilestonesMessage": "No milestones found",
+  "@noMilestonesMessage": {
+    "description": "Message when there are no milestones"
+  },
+  "createFirstMilestone": "Create first milestone",
+  "@createFirstMilestone": {
+    "description": "Text for create first milestone"
+  },
+  "milestoneNumberRequired": "Milestone number is required",
+  "@milestoneNumberRequired": {
+    "description": "Error message for required milestone number"
+  },
+  "plannedDateRequired": "Planned date is required",
+  "@plannedDateRequired": {
+    "description": "Error message for required planned date"
+  },
+  "completeMilestone": "Complete milestone",
+  "@completeMilestone": {
+    "description": "Text for complete milestone"
+  },
+  "milestoneCompleted": "Milestone completed",
+  "@milestoneCompleted": {
+    "description": "Message for milestone completed"
+  },
+  "milestoneDelayed": "Milestone delayed",
+  "@milestoneDelayed": {
+    "description": "Message for milestone delayed"
+  },
+  "milestoneInProgress": "Milestone in progress",
+  "@milestoneInProgress": {
+    "description": "Message for milestone in progress"
+  },
+  "milestonePending": "Milestone pending",
+  "@milestonePending": {
+    "description": "Message for milestone pending"
+  },
+  "assignUsers": "Assign users",
+  "@assignUsers": {
+    "description": "Text for assign users"
+  },
+  "assignUserToTask": "Assign user to task",
+  "@assignUserToTask": {
+    "description": "Text for assign user to task"
+  },
+  "unassignUser": "Unassign user",
+  "@unassignUser": {
+    "description": "Text for unassign user"
+  },
+  "assignedUsers": "Assigned users",
+  "@assignedUsers": {
+    "description": "Text for assigned users"
+  },
+  "availableUsers": "Available users",
+  "@availableUsers": {
+    "description": "Text for available users"
+  },
+  "selectUsers": "Select users",
+  "@selectUsers": {
+    "description": "Text for select users"
+  },
+  "searchUsers": "Search users...",
+  "@searchUsers": {
+    "description": "Placeholder for search users"
+  },
+  "noUsersAssigned": "No users assigned",
+  "@noUsersAssigned": {
+    "description": "Text when no users are assigned"
+  },
+  "noUsersAvailable": "No users available",
+  "@noUsersAvailable": {
+    "description": "Text when no users are available"
+  },
+  "userAssignedSuccessfully": "User assigned successfully",
+  "@userAssignedSuccessfully": {
+    "description": "Message for user assigned successfully"
+  },
+  "userUnassignedSuccessfully": "User unassigned successfully",
+  "@userUnassignedSuccessfully": {
+    "description": "Message for user unassigned successfully"
+  },
+  "errorAssigningUser": "Error assigning user",
+  "@errorAssigningUser": {
+    "description": "Message for error assigning user"
+  },
+  "errorUnassigningUser": "Error unassigning user",
+  "@errorUnassigningUser": {
+    "description": "Message for error unassigning user"
+  },
+  "assignUser": "Assign",
+  "@assignUser": {
+    "description": "Text for assign button"
+  },
+  "unassignUser": "Unassign",
+  "@unassignUser": {
+    "description": "Text for unassign button"
+  },
+  "userManagement": "User management",
+  "@userManagement": {
+    "description": "Text for user management"
+  },
+  "filterByRole": "Filter by role",
+  "@filterByRole": {
+    "description": "Text for filter by role"
+  },
+  "allRoles": "All roles",
+  "@allRoles": {
+    "description": "Text for all roles"
+  },
+  "student": "Student",
+  "@student": {
+    "description": "Text for student role"
+  },
+  "tutor": "Tutor",
+  "@tutor": {
+    "description": "Text for tutor role"
+  },
+  "admin": "Administrator",
+  "@admin": {
+    "description": "Text for admin role"
+  },
+  "dependencies": "Dependencies",
+  "@dependencies": {
+    "description": "Text for dependencies"
+  },
+  "taskDependencies": "Task dependencies",
+  "@taskDependencies": {
+    "description": "Text for task dependencies"
+  },
+  "addDependency": "Add dependency",
+  "@addDependency": {
+    "description": "Text for add dependency"
+  },
+  "removeDependency": "Remove dependency",
+  "@removeDependency": {
+    "description": "Text for remove dependency"
+  },
+  "selectDependency": "Select dependency",
+  "@selectDependency": {
+    "description": "Text for select dependency"
+  },
+  "dependencyAdded": "Dependency added successfully",
+  "@dependencyAdded": {
+    "description": "Text for dependency added"
+  },
+  "dependencyRemoved": "Dependency removed successfully",
+  "@dependencyRemoved": {
+    "description": "Text for dependency removed"
+  },
+  "errorAddingDependency": "Error adding dependency",
+  "@errorAddingDependency": {
+    "description": "Text for error adding dependency"
+  },
+  "errorRemovingDependency": "Error removing dependency",
+  "@errorRemovingDependency": {
+    "description": "Text for error removing dependency"
+  },
+  "noDependencies": "No dependencies",
+  "@noDependencies": {
+    "description": "Text for no dependencies"
+  },
+  "noDependents": "No tasks depend on this one",
+  "@noDependents": {
+    "description": "Text for no dependents"
+  },
+  "dependsOn": "Depends on",
+  "@dependsOn": {
+    "description": "Text for depends on"
+  },
+  "dependents": "Tasks that depend",
+  "@dependents": {
+    "description": "Text for tasks that depend"
+  },
+  "circularDependencyError": "Cannot create a circular dependency",
+  "@circularDependencyError": {
+    "description": "Text for circular dependency error"
+  },
+  "dependencyConflict": "Dependency conflict detected",
+  "@dependencyConflict": {
+    "description": "Text for dependency conflict"
+  },
+  "manageDependencies": "Manage dependencies",
+  "@manageDependencies": {
+    "description": "Text for manage dependencies"
+  },
+  "dependencyGraph": "Dependency graph",
+  "@dependencyGraph": {
+    "description": "Text for dependency graph"
+  },
+  "dependencyChain": "Dependency chain",
+  "@dependencyChain": {
+    "description": "Text for dependency chain"
+  },
+  "notifications": "Notifications",
+  "@notifications": {
+    "description": "Text for notifications"
+  },
+  "taskNotifications": "Task notifications",
+  "@taskNotifications": {
+    "description": "Text for task notifications"
+  },
+  "newTaskAssigned": "New task assigned",
+  "@newTaskAssigned": {
+    "description": "Text for new task assigned"
+  },
+  "taskStatusChanged": "Task status updated",
+  "@taskStatusChanged": {
+    "description": "Text for task status changed"
+  },
+  "taskDueDateReminder": "Due date reminder",
+  "@taskDueDateReminder": {
+    "description": "Text for due date reminder"
+  },
+  "taskOverdue": "Task overdue",
+  "@taskOverdue": {
+    "description": "Text for task overdue"
+  },
+  "taskCompleted": "Task completed",
+  "@taskCompleted": {
+    "description": "Text for task completed"
+  },
+  "dependencyCompleted": "Dependency completed",
+  "@dependencyCompleted": {
+    "description": "Text for dependency completed"
+  },
+  "newComment": "New comment",
+  "@newComment": {
+    "description": "Text for new comment"
+  },
+  "priorityChanged": "Priority updated",
+  "@priorityChanged": {
+    "description": "Text for priority changed"
+  },
+  "milestoneReached": "Milestone reached",
+  "@milestoneReached": {
+    "description": "Text for milestone reached"
+  },
+  "markAsRead": "Mark as read",
+  "@markAsRead": {
+    "description": "Text for mark as read"
+  },
+  "markAllAsRead": "Mark all as read",
+  "@markAllAsRead": {
+    "description": "Text for mark all as read"
+  },
+  "unreadNotifications": "Unread notifications",
+  "@unreadNotifications": {
+    "description": "Text for unread notifications"
+  },
+  "noNotifications": "No notifications",
+  "@noNotifications": {
+    "description": "Text for no notifications"
+  },
+  "notificationSettings": "Notification settings",
+  "@notificationSettings": {
+    "description": "Text for notification settings"
+  },
+  "enableTaskNotifications": "Enable task notifications",
+  "@enableTaskNotifications": {
+    "description": "Text for enable task notifications"
+  },
+  "enableDueDateReminders": "Enable due date reminders",
+  "@enableDueDateReminders": {
+    "description": "Text for enable due date reminders"
+  },
+  "enableOverdueNotifications": "Enable overdue notifications",
+  "@enableOverdueNotifications": {
+    "description": "Text for enable overdue notifications"
+  },
+  "enableStatusChangeNotifications": "Enable status change notifications",
+  "@enableStatusChangeNotifications": {
+    "description": "Text for enable status change notifications"
+  },
+  "enableAssignmentNotifications": "Enable assignment notifications",
+  "@enableAssignmentNotifications": {
+    "description": "Text for enable assignment notifications"
+  },
+  "reminderDays": "Reminder days",
+  "@reminderDays": {
+    "description": "Text for reminder days"
+  },
+  "notificationSound": "Notification sound",
+  "@notificationSound": {
+    "description": "Text for notification sound"
+  },
+  "notificationVibration": "Notification vibration",
+  "@notificationVibration": {
+    "description": "Text for notification vibration"
+  },
+  "reports": "Reports",
+  "@reports": {
+    "description": "Text for reports"
+  },
+  "taskReports": "Task reports",
+  "@taskReports": {
+    "description": "Text for task reports"
+  },
+  "generateReport": "Generate report",
+  "@generateReport": {
+    "description": "Text for generate report"
+  },
+  "reportTypes": "Report types",
+  "@reportTypes": {
+    "description": "Text for report types"
+  },
+  "statusSummary": "Status summary",
+  "@statusSummary": {
+    "description": "Text for status summary"
+  },
+  "progressByUser": "Progress by user",
+  "@progressByUser": {
+    "description": "Text for progress by user"
+  },
+  "progressByProject": "Progress by project",
+  "@progressByProject": {
+    "description": "Text for progress by project"
+  },
+  "overdueSummary": "Overdue summary",
+  "@overdueSummary": {
+    "description": "Text for overdue summary"
+  },
+  "completionTrends": "Completion trends",
+  "@completionTrends": {
+    "description": "Text for completion trends"
+  },
+  "priorityDistribution": "Priority distribution",
+  "@priorityDistribution": {
+    "description": "Text for priority distribution"
+  },
+  "complexityAnalysis": "Complexity analysis",
+  "@complexityAnalysis": {
+    "description": "Text for complexity analysis"
+  },
+  "dependencyAnalysis": "Dependency analysis",
+  "@dependencyAnalysis": {
+    "description": "Text for dependency analysis"
+  },
+  "timeAnalysis": "Time analysis",
+  "@timeAnalysis": {
+    "description": "Text for time analysis"
+  },
+  "customReport": "Custom report",
+  "@customReport": {
+    "description": "Text for custom report"
+  },
+  "exportReport": "Export report",
+  "@exportReport": {
+    "description": "Text for export report"
+  },
+  "scheduleReport": "Schedule report",
+  "@scheduleReport": {
+    "description": "Text for schedule report"
+  },
+  "reportStatus": "Report status",
+  "@reportStatus": {
+    "description": "Text for report status"
+  },
+  "reportFilters": "Report filters",
+  "@reportFilters": {
+    "description": "Text for report filters"
+  },
+  "reportData": "Report data",
+  "@reportData": {
+    "description": "Text for report data"
+  },
+  "reportHistory": "Report history",
+  "@reportHistory": {
+    "description": "Text for report history"
+  },
+  "reportSchedules": "Scheduled reports",
+  "@reportSchedules": {
+    "description": "Text for scheduled reports"
+  },
+  "noReports": "No reports",
+  "@noReports": {
+    "description": "Text for no reports"
+  },
+  "reportGenerated": "Report generated successfully",
+  "@reportGenerated": {
+    "description": "Text for report generated"
+  },
+  "errorGeneratingReport": "Error generating report",
+  "@errorGeneratingReport": {
+    "description": "Text for error generating report"
+  },
+  "reportExported": "Report exported successfully",
+  "@reportExported": {
+    "description": "Text for report exported"
+  },
+  "errorExportingReport": "Error exporting report",
+  "@errorExportingReport": {
+    "description": "Text for error exporting report"
+  },
+  "reportScheduled": "Report scheduled successfully",
+  "@reportScheduled": {
+    "description": "Text for report scheduled"
+  },
+  "errorSchedulingReport": "Error scheduling report",
+  "@errorSchedulingReport": {
+    "description": "Text for error scheduling report"
+  }
+} 

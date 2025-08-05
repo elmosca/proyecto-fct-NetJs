@@ -31,6 +31,25 @@ Una descripción clara de cualquier solución o funcionalidad alternativa que ha
 - [ ] UI/UX
 - [ ] Documentación
 
+## 🌐 Multiplataforma
+- [ ] Android - Funcionalidad requerida
+- [ ] iOS - Funcionalidad requerida
+- [ ] Web - Funcionalidad requerida
+- [ ] PWA - Funcionalidad requerida
+- [ ] Responsive design necesario
+
+## 🚀 Performance
+- [ ] ¿La funcionalidad requiere optimizaciones especiales?
+- [ ] ¿Afectará el rendimiento de la aplicación?
+- [ ] ¿Necesita lazy loading o paginación?
+- [ ] ¿Requiere cache strategies?
+
+## ♿ Accesibilidad
+- [ ] ¿La funcionalidad debe ser accesible para screen readers?
+- [ ] ¿Requiere navegación por teclado?
+- [ ] ¿Necesita alternativas de texto para imágenes?
+- [ ] ¿Debe considerar usuarios con discapacidades?
+
 ## 🔧 Complejidad Estimada
 - [ ] Baja (< 1 día)
 - [ ] Media (1-3 días)

@@ -156,6 +156,139 @@
             }
         },
         {
+            "label": "Flutter: Build Web",
+            "type": "shell",
+            "command": "flutter",
+            "args": [
+                "build",
+                "web",
+                "--release"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "Flutter: Build Android APK",
+            "type": "shell",
+            "command": "flutter",
+            "args": [
+                "build",
+                "apk",
+                "--release"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "Flutter: Build iOS",
+            "type": "shell",
+            "command": "flutter",
+            "args": [
+                "build",
+                "ios",
+                "--release"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "Flutter: Doctor",
+            "type": "shell",
+            "command": "flutter",
+            "args": [
+                "doctor"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "Flutter: Limpiar archivos generados",
+            "type": "shell",
+            "command": "flutter",
+            "args": [
+                "packages",
+                "pub",
+                "run",
+                "build_runner",
+                "clean"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "Flutter: Verificar dependencias",
+            "type": "shell",
+            "command": "flutter",
+            "args": [
+                "pub",
+                "deps"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "Flutter: Actualizar dependencias",
+            "type": "shell",
+            "command": "flutter",
+            "args": [
+                "pub",
+                "upgrade"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "Flutter: Tests de integración",
+            "type": "shell",
+            "command": "flutter",
+            "args": [
+                "test",
+                "integration_test/"
+            ],
+            "group": "test",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            }
+        },
+        {
             "label": "Flujo completo: Clean + Get + Generate + Analyze",
             "dependsOrder": "sequence",
             "dependsOn": [
@@ -163,6 +296,38 @@
                 "Flutter: Obtener dependencias",
                 "Flutter: Generar código (build_runner)",
                 "Flutter: Análisis completo"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "Flujo de testing completo",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "Flutter: Ejecutar tests",
+                "Flutter: Tests con cobertura",
+                "Flutter: Tests de integración"
+            ],
+            "group": "test",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "Flujo de build multiplataforma",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "Flutter: Build Web",
+                "Flutter: Build Android APK",
+                "Flutter: Build iOS"
             ],
             "group": "build",
             "presentation": {

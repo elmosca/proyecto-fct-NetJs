@@ -1,13 +1,16 @@
 {
-    "name": "frontend",
-    "short_name": "frontend",
-    "start_url": ".",
+    "name": "Sistema de Gestión de Proyectos FCT",
+    "short_name": "Sistema FCT",
+    "start_url": "/",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#1976d2",
+    "theme_color": "#1976d2",
+    "description": "Sistema de gestión de proyectos para el ciclo formativo DAM - CIFP Carlos III de Cartagena",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
+    "scope": "/",
+    "lang": "es",
+    "categories": ["education", "productivity"],
     "icons": [
         {
             "src": "icons/Icon-192.png",

@@ -22,6 +22,15 @@
     "editor.wordWrapColumn": 120,
     "editor.insertSpaces": true,
     "editor.detectIndentation": false,
+    "editor.tabSize": 2,
+    "editor.minimap.enabled": true,
+    "editor.minimap.showSlider": "always",
+    "editor.bracketPairColorization.enabled": true,
+    "editor.guides.bracketPairs": true,
+    "editor.suggestSelection": "first",
+    "editor.tabCompletion": "onlySnippets",
+    "editor.snippetSuggestions": "top",
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
     // ========================================
     // DART/FLUTTER ESPECÍFICO
     // ========================================
@@ -38,6 +47,9 @@
     "dart.showMainCodeLens": false,
     "dart.showTestCodeLens": true,
     "dart.renameFilesWithClasses": "always",
+    "dart.runTestsInShell": false,
+    "dart.debugExternalLibraries": false,
+    "dart.debugSdkLibraries": false,
     // ========================================
     // NOMENCLATURA Y CONVENCIONES
     // ========================================
@@ -46,12 +58,34 @@
     // ARCHIVOS Y EXPLORADOR
     // ========================================
     "files.associations": {
-        "*.dart": "dart"
+        "*.dart": "dart",
+        "*.yaml": "yaml",
+        "*.yml": "yaml",
+        "*.json": "json",
+        "*.md": "markdown"
     },
     "explorer.fileNesting.enabled": true,
     "explorer.fileNesting.patterns": {
         "pubspec.yaml": "pubspec.lock",
-        "*.dart": "${capture}.g.dart, ${capture}.freezed.dart, ${capture}.mocks.dart"
+        "*.dart": "${capture}.g.dart, ${capture}.freezed.dart, ${capture}.mocks.dart",
+        "*.yaml": "*.yml",
+        "*.json": "*.jsonc"
+    },
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "**/*.freezed.dart": false,
+        "**/*.g.dart": false
+    },
+    "files.watcherExclude": {
+        "**/build/**": true,
+        "**/.dart_tool/**": true,
+        "**/.flutter-plugins": true,
+        "**/.flutter-plugins-dependencies": true
     },
     // ========================================
     // AUTOCOMPLETADO Y SNIPPETS
@@ -73,7 +107,35 @@
         "editor.wordBasedSuggestions": "off",
         "editor.insertSpaces": true,
         "editor.tabSize": 2,
+        "editor.detectIndentation": false,
+        "editor.rulers": [80, 120],
+        "editor.wordWrap": "bounded",
+        "editor.wordWrapColumn": 120
+    },
+    // ========================================
+    // CONFIGURACIÓN PARA YAML
+    // ========================================
+    "[yaml]": {
+        "editor.insertSpaces": true,
+        "editor.tabSize": 2,
         "editor.detectIndentation": false
+    },
+    // ========================================
+    // CONFIGURACIÓN PARA JSON
+    // ========================================
+    "[json]": {
+        "editor.insertSpaces": true,
+        "editor.tabSize": 2,
+        "editor.detectIndentation": false
+    },
+    // ========================================
+    // CONFIGURACIÓN PARA MARKDOWN
+    // ========================================
+    "[markdown]": {
+        "editor.insertSpaces": true,
+        "editor.tabSize": 2,
+        "editor.detectIndentation": false,
+        "editor.wordWrap": "on"
     },
     // ========================================
     // TESTING
@@ -84,5 +146,40 @@
     // ========================================
     // GIT
     // ========================================
-    "git.ignoreLimitWarning": true
+    "git.ignoreLimitWarning": true,
+    "git.enableSmartCommit": true,
+    "git.confirmSync": false,
+    "git.autofetch": true,
+    // ========================================
+    // TERMINAL
+    // ========================================
+    "terminal.integrated.defaultProfile.windows": "PowerShell",
+    "terminal.integrated.defaultProfile.linux": "bash",
+    "terminal.integrated.defaultProfile.osx": "bash",
+    // ========================================
+    // WORKSPACE
+    // ========================================
+    "workbench.iconTheme": "material-icon-theme",
+    "workbench.colorTheme": "Default Dark+",
+    "workbench.editor.enablePreview": false,
+    "workbench.editor.enablePreviewFromQuickOpen": false,
+    // ========================================
+    // SEARCH
+    // ========================================
+    "search.exclude": {
+        "**/build": true,
+        "**/.dart_tool": true,
+        "**/node_modules": true,
+        "**/coverage": true
+    },
+    // ========================================
+    // PERFORMANCE
+    // ========================================
+    "files.autoSave": "afterDelay",
+    "files.autoSaveDelay": 1000,
+    "editor.quickSuggestions": {
+        "other": true,
+        "comments": false,
+        "strings": false
+    }
 }

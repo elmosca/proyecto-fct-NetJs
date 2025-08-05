@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
   <!--
     If you are serving your web app in a path other than the root, change the
@@ -18,21 +18,81 @@
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="A new Flutter project.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Sistema de gestión de proyectos para el ciclo formativo DAM - CIFP Carlos III de Cartagena. Gestiona anteproyectos, proyectos, tareas y evaluaciones.">
+  <meta name="keywords" content="FCT, DAM, proyectos, gestión, educación, Cartagena, desarrollo">
+  <meta name="author" content="CIFP Carlos III de Cartagena">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://elmosca.github.io/proyecto-fct-NetJs/">
+  <meta property="og:title" content="Sistema de Gestión de Proyectos FCT">
+  <meta property="og:description" content="Sistema de gestión de proyectos para el ciclo formativo DAM">
+  <meta property="og:image" content="icons/Icon-512.png">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://elmosca.github.io/proyecto-fct-NetJs/">
+  <meta property="twitter:title" content="Sistema de Gestión de Proyectos FCT">
+  <meta property="twitter:description" content="Sistema de gestión de proyectos para el ciclo formativo DAM">
+  <meta property="twitter:image" content="icons/Icon-512.png">
 
   <!-- iOS meta tags & icons -->
   <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="frontend">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Sistema FCT">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png"/>
 
-  <title>frontend</title>
+  <title>Sistema de Gestión de Proyectos FCT</title>
   <link rel="manifest" href="manifest.json">
+
+  <!-- Preload critical resources -->
+  <link rel="preload" href="flutter.js" as="script">
+  <link rel="preload" href="main.dart.js" as="script">
 </head>
 <body>
+  <!-- Loading indicator -->
+  <div id="loading">
+    <style>
+      body {
+        inset: 0;
+        overflow: hidden;
+        margin: 0;
+        padding: 16px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+        background-color: #1976d2;
+        color: white;
+      }
+      .loading-container {
+        text-align: center;
+      }
+      .spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px solid rgba(255, 255, 255, 0.3);
+        border-top: 4px solid white;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 16px;
+      }
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+    </style>
+    <div class="loading-container">
+      <div class="spinner"></div>
+      <div>Cargando Sistema FCT...</div>
+    </div>
+  </div>
+
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>

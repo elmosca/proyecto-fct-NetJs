@@ -2,9 +2,9 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [main, develop]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   # Análisis y tests del Backend
@@ -13,7 +13,7 @@ jobs:
     defaults:
       run:
         working-directory: ./backend
-    
+
     services:
       postgres:
         image: postgres:13
@@ -30,30 +30,30 @@ jobs:
           - 5432:5432
 
     steps:
-    - uses: actions/checkout@v4
-    
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
-        cache: 'npm'
-        cache-dependency-path: './backend/package-lock.json'
-    
-    - name: Install dependencies
-      run: npm ci
-    
-    - name: Run linting
-      run: npm run lint
-    
-    - name: Run unit tests
-      run: npm run test
-      env:
-        DATABASE_URL: postgresql://test:test@localhost:5432/test_db
-    
-    - name: Run e2e tests
-      run: npm run test:e2e
-      env:
-        DATABASE_URL: postgresql://test:test@localhost:5432/test_db
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+          cache: "npm"
+          cache-dependency-path: "./backend/package-lock.json"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run linting
+        run: npm run lint
+
+      - name: Run unit tests
+        run: npm run test
+        env:
+          DATABASE_URL: postgresql://test:test@localhost:5432/test_db
+
+      - name: Run e2e tests
+        run: npm run test:e2e
+        env:
+          DATABASE_URL: postgresql://test:test@localhost:5432/test_db
 
   # Análisis y tests del Frontend
   frontend-test:
@@ -61,79 +61,155 @@ jobs:
     defaults:
       run:
         working-directory: ./frontend
-    
+
     steps:
-    - uses: actions/checkout@v4
-    
-    - name: Setup Flutter
-      uses: subosito/flutter-action@v2
-      with:
-        flutter-version: '3.16.0'
-        channel: 'stable'
-    
-    - name: Install dependencies
-      run: flutter pub get
-    
-    - name: Verify formatting
-      run: dart format --output=none --set-exit-if-changed .
-    
-    - name: Analyze project source
-      run: flutter analyze
-    
-    - name: Generate code with build_runner
-      run: flutter packages pub run build_runner build --delete-conflicting-outputs
-    
-    - name: Run tests
-      run: flutter test --coverage
-    
-    - name: Upload coverage to Codecov
-      if: github.event_name == 'push'
-      uses: codecov/codecov-action@v3
-      with:
-        file: ./frontend/coverage/lcov.info
-        flags: frontend
+      - uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.16.0"
+          channel: "stable"
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Verify formatting
+        run: dart format --output=none --set-exit-if-changed .
+
+      - name: Analyze project source
+        run: flutter analyze
+
+      - name: Generate code with build_runner
+        run: flutter packages pub run build_runner build --delete-conflicting-outputs
+
+      - name: Run unit and widget tests
+        run: flutter test --coverage
+
+      - name: Run integration tests
+        run: flutter test integration_test/
+
+      - name: Run golden tests
+        run: flutter test --tags=golden
+
+      - name: Upload coverage to Codecov
+        if: github.event_name == 'push'
+        uses: codecov/codecov-action@v3
+        with:
+          file: ./frontend/coverage/lcov.info
+          flags: frontend
+
+  # Tests multiplataforma
+  multiplatform-test:
+    runs-on: ubuntu-latest
+    needs: frontend-test
+    defaults:
+      run:
+        working-directory: ./frontend
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.16.0"
+          channel: "stable"
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Generate code
+        run: flutter packages pub run build_runner build --delete-conflicting-outputs
+
+      - name: Test Web
+        run: flutter test --platform=chrome
+
+      - name: Test Android (emulator)
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 29
+          script: flutter test --platform=android
+
+  # Análisis de performance
+  performance-analysis:
+    runs-on: ubuntu-latest
+    needs: frontend-test
+    defaults:
+      run:
+        working-directory: ./frontend
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.16.0"
+          channel: "stable"
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Generate code
+        run: flutter packages pub run build_runner build --delete-conflicting-outputs
+
+      - name: Analyze performance
+        run: flutter analyze --no-fatal-infos
+
+      - name: Check for memory leaks
+        run: flutter test --coverage --reporter=expanded
 
   # Build de la aplicación Flutter
   flutter-build:
     runs-on: ubuntu-latest
-    needs: frontend-test
+    needs: [frontend-test, multiplatform-test, performance-analysis]
     if: github.ref == 'refs/heads/main'
     defaults:
       run:
         working-directory: ./frontend
-    
+
     steps:
-    - uses: actions/checkout@v4
-    
-    - name: Setup Flutter
-      uses: subosito/flutter-action@v2
-      with:
-        flutter-version: '3.16.0'
-        channel: 'stable'
-    
-    - name: Install dependencies
-      run: flutter pub get
-    
-    - name: Generate code
-      run: flutter packages pub run build_runner build --delete-conflicting-outputs
-    
-    - name: Build APK
-      run: flutter build apk --release
-    
-    - name: Build Web
-      run: flutter build web --release
-    
-    - name: Upload APK artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: app-release-apk
-        path: ./frontend/build/app/outputs/flutter-apk/app-release.apk
-    
-    - name: Upload Web artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: web-build
-        path: ./frontend/build/web/
+      - uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.16.0"
+          channel: "stable"
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Generate code
+        run: flutter packages pub run build_runner build --delete-conflicting-outputs
+
+      - name: Build APK
+        run: flutter build apk --release
+
+      - name: Build Web (PWA)
+        run: flutter build web --release --pwa-strategy offline-first
+
+      - name: Build iOS (simulator)
+        run: flutter build ios --release --no-codesign
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: app-release-apk
+          path: ./frontend/build/app/outputs/flutter-apk/app-release.apk
+
+      - name: Upload Web artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: web-build
+          path: ./frontend/build/web/
+
+      - name: Upload iOS artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ios-build
+          path: ./frontend/build/ios/
 
   # Docker build del Backend
   backend-docker:
@@ -143,13 +219,13 @@ jobs:
     defaults:
       run:
         working-directory: ./backend
-    
+
     steps:
-    - uses: actions/checkout@v4
-    
-    - name: Build Docker image
-      run: docker build -t backend-app .
-    
+      - uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t backend-app .
+
     # Opcional: Push a registry si tienes configurado
     # - name: Push to registry
     #   run: |
