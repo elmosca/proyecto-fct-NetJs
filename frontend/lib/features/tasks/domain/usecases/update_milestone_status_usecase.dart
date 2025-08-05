@@ -1,4 +1,4 @@
-import 'package:fct_frontend/features/tasks/domain/entities/milestone_entity.dart';
+import 'package:fct_frontend/features/tasks/domain/entities/milestone.dart';
 import 'package:fct_frontend/features/tasks/domain/repositories/milestone_repository.dart';
 
 class UpdateMilestoneStatusUseCase {
@@ -6,7 +6,7 @@ class UpdateMilestoneStatusUseCase {
 
   UpdateMilestoneStatusUseCase(this._milestoneRepository);
 
-  Future<MilestoneEntity> execute(String milestoneId, MilestoneStatus status) {
+  Future<Milestone> execute(String milestoneId, MilestoneStatus status) {
     return _milestoneRepository.updateMilestoneStatus(milestoneId, status);
   }
 } 

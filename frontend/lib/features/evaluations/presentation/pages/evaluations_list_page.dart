@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:fct_frontend/core/i18n/app_localizations.dart';
+import 'package:fct_frontend/l10n/app_localizations.dart';
 import 'package:fct_frontend/core/theme/app_theme.dart';
 import 'package:fct_frontend/core/widgets/empty_state_widget.dart';
 import 'package:fct_frontend/core/widgets/error_widget.dart';
@@ -63,7 +63,7 @@ class _EvaluationsListPageState extends ConsumerState<EvaluationsListPage> {
       body: evaluationsAsync.when(
         data: (evaluations) => _buildEvaluationsList(evaluations),
         loading: () => const LoadingWidget(),
-        error: (error, stackTrace) => ErrorWidget(
+        error: (error, stackTrace) => ErrorDisplayWidget(
           message: error.toString(),
           onRetry: () => _loadEvaluations(),
         ),

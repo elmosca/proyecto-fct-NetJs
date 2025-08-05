@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:fct_frontend/features/tasks/domain/entities/task.dart';
+import 'package:fct_frontend/features/tasks/domain/entities/task_entity.dart';
 
 class TaskCardWidget extends StatelessWidget {
-  final Task task;
+  final TaskEntity task;
   final VoidCallback? onTap;
   final Function(TaskStatus)? onStatusChanged;
 
@@ -186,13 +186,13 @@ class TaskCardWidget extends StatelessWidget {
 
   Color _getStatusColor(TaskStatus status) {
     switch (status) {
-      case TaskStatus.todo:
+      case TaskStatus.pending:
         return Colors.grey;
       case TaskStatus.inProgress:
         return Colors.blue;
-      case TaskStatus.review:
+      case TaskStatus.underReview:
         return Colors.orange;
-      case TaskStatus.done:
+      case TaskStatus.completed:
         return Colors.green;
       case TaskStatus.cancelled:
         return Colors.red;

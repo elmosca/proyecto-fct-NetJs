@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fct_frontend/features/tasks/domain/entities/task.dart';
+import 'package:fct_frontend/features/tasks/domain/entities/task_entity.dart';
 
 class TaskFiltersWidget extends StatefulWidget {
   final String? selectedStatus;

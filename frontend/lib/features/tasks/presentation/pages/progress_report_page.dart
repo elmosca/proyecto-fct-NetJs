@@ -2,10 +2,12 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../l10n/app_localizations.dart';
+import 'package:fct_frontend/l10n/app_localizations.dart';
 import '../providers/milestone_providers.dart';
 import '../providers/task_providers.dart';
 import '../widgets/progress_report_widget.dart';
+import 'package:fct_frontend/features/tasks/domain/entities/task_entity.dart';
+import 'package:fct_frontend/features/tasks/domain/entities/milestone.dart';
 
 @RoutePage()
 class ProgressReportPage extends ConsumerStatefulWidget {
@@ -285,7 +287,7 @@ class _ProgressReportPageState extends ConsumerState<ProgressReportPage> {
     return filteredTasks;
   }
 
-  List<MilestoneEntity> _filterMilestones(List<MilestoneEntity> milestones) {
+  List<Milestone> _filterMilestones(List<Milestone> milestones) {
     var filteredMilestones = milestones;
 
     // Filtrar por proyecto

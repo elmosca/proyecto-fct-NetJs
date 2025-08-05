@@ -1,6 +1,5 @@
 import 'package:fct_frontend/features/tasks/data/datasources/milestone_remote_datasource.dart';
-import 'package:fct_frontend/features/tasks/domain/entities/milestone_dto.dart';
-import 'package:fct_frontend/features/tasks/domain/entities/milestone_entity.dart';
+import 'package:fct_frontend/features/tasks/domain/entities/milestone.dart';
 import 'package:fct_frontend/features/tasks/domain/repositories/milestone_repository.dart';
 
 class MilestoneRepositoryImpl implements MilestoneRepository {
@@ -9,25 +8,39 @@ class MilestoneRepositoryImpl implements MilestoneRepository {
   MilestoneRepositoryImpl(this._remoteDataSource);
 
   @override
-  Future<List<MilestoneEntity>> getMilestones(MilestoneFiltersDto filters) {
-    return _remoteDataSource.getMilestones(filters);
+  Future<List<Milestone>> getMilestones({
+    String? projectId,
+    String? anteprojectId,
+    String? assignedUserId,
+    MilestoneStatus? status,
+    String? searchQuery,
+    int? limit,
+    int? offset,
+  }) {
+    return _remoteDataSource.getMilestones(
+      projectId: projectId,
+      anteprojectId: anteprojectId,
+      assignedUserId: assignedUserId,
+      status: status,
+      searchQuery: searchQuery,
+      limit: limit,
+      offset: offset,
+    );
   }
 
   @override
-  Future<MilestoneEntity> getMilestoneById(String milestoneId) {
+  Future<Milestone?> getMilestoneById(String milestoneId) {
     return _remoteDataSource.getMilestoneById(milestoneId);
   }
 
   @override
-  Future<MilestoneEntity> createMilestone(
-      CreateMilestoneDto createMilestoneDto) {
-    return _remoteDataSource.createMilestone(createMilestoneDto);
+  Future<Milestone> createMilestone(Milestone milestone) {
+    return _remoteDataSource.createMilestone(milestone);
   }
 
   @override
-  Future<MilestoneEntity> updateMilestone(
-      String milestoneId, UpdateMilestoneDto updateMilestoneDto) {
-    return _remoteDataSource.updateMilestone(milestoneId, updateMilestoneDto);
+  Future<Milestone> updateMilestone(Milestone milestone) {
+    return _remoteDataSource.updateMilestone(milestone);
   }
 
   @override
@@ -36,33 +49,16 @@ class MilestoneRepositoryImpl implements MilestoneRepository {
   }
 
   @override
-  Future<List<MilestoneEntity>> getMilestonesByProject(String projectId) {
-    return _remoteDataSource.getMilestonesByProject(projectId);
-  }
-
-  @override
-  Future<MilestoneEntity> updateMilestoneStatus(
-      String milestoneId, MilestoneStatus status) {
+  Future<Milestone> updateMilestoneStatus(String milestoneId, MilestoneStatus status) async {
     return _remoteDataSource.updateMilestoneStatus(milestoneId, status);
   }
 
   @override
-  Future<MilestoneEntity> completeMilestone(String milestoneId) {
-    return _remoteDataSource.completeMilestone(milestoneId);
-  }
-
-  @override
-  Future<Map<String, dynamic>> getMilestoneStatistics(String? projectId) {
+  Future<Map<String, dynamic>> getMilestoneStatistics({
+    String? anteprojectId,
+    String? projectId,
+    String? userId,
+  }) async {
     return _remoteDataSource.getMilestoneStatistics(projectId);
-  }
-
-  @override
-  Future<MilestoneEntity?> getNextPendingMilestone(String projectId) {
-    return _remoteDataSource.getNextPendingMilestone(projectId);
-  }
-
-  @override
-  Future<List<MilestoneEntity>> getDelayedMilestones(String? projectId) {
-    return _remoteDataSource.getDelayedMilestones(projectId);
   }
 }

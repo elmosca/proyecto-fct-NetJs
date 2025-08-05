@@ -235,14 +235,18 @@ class _CreateMilestoneDialogState extends ConsumerState<CreateMilestoneDialog> {
     });
 
     try {
-      final createMilestoneDto = CreateMilestoneDto(
-        projectId: widget.projectId,
-        milestoneNumber: int.parse(_milestoneNumberController.text),
+      final createMilestoneDto = Milestone(
+        id: '',
         title: _titleController.text.trim(),
         description: _descriptionController.text.trim(),
+        projectId: widget.projectId,
+        anteprojectId: null, // Assuming no anteprojectId for now
+        assignedUserId: null, // Assuming no assignedUserId for now
+        status: MilestoneStatus.pending,
+        priority: MilestonePriority.medium, // Assuming a default priority
         plannedDate: _selectedPlannedDate!,
-        milestoneType: _selectedType,
-        isFromAnteproject: _isFromAnteproject,
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
         expectedDeliverables: _expectedDeliverablesController.text.isNotEmpty
             ? _expectedDeliverablesController.text
                 .split(',')

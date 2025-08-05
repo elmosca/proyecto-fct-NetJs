@@ -1,5 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:fct_frontend/features/tasks/domain/entities/task.dart';
+import 'package:fct_frontend/features/tasks/domain/entities/task_entity.dart';
 import 'package:fct_frontend/features/tasks/domain/repositories/task_repository.dart';
 import 'package:fct_frontend/features/tasks/domain/usecases/get_tasks_usecase.dart';
 import 'package:fct_frontend/features/tasks/domain/usecases/create_task_usecase.dart';
@@ -33,7 +33,7 @@ UpdateTaskStatusUseCase updateTaskStatusUseCase(UpdateTaskStatusUseCaseRef ref) 
 @riverpod
 class TasksNotifier extends _$TasksNotifier {
   @override
-  Future<List<Task>> build({
+  Future<List<TaskEntity>> build({
     String? projectId,
     String? anteprojectId,
     String? assignedUserId,
@@ -56,7 +56,7 @@ class TasksNotifier extends _$TasksNotifier {
     ref.invalidateSelf();
   }
 
-  Future<void> createTask(Task task) async {
+  Future<void> createTask(TaskEntity task) async {
     final useCase = ref.read(createTaskUseCaseProvider);
     await useCase.execute(task);
     ref.invalidateSelf();
@@ -72,7 +72,7 @@ class TasksNotifier extends _$TasksNotifier {
 @riverpod
 class TaskKanbanNotifier extends _$TaskKanbanNotifier {
   @override
-  Future<Map<TaskStatus, List<Task>>> build({
+  Future<Map<TaskStatus, List<TaskEntity>>> build({
     String? projectId,
     String? anteprojectId,
   }) async {
@@ -118,9 +118,15 @@ class TaskStatisticsNotifier extends _$TaskStatisticsNotifier {
 @riverpod
 class UpcomingTasksNotifier extends _$UpcomingTasksNotifier {
   @override
-  Future<List<Task>> build({int days = 7, String? userId}) async {
+  Future<List<TaskEntity>> build({
+    int days = 7,
+    String? userId,
+  }) async {
     final repository = ref.read(taskRepositoryProvider);
-    return repository.getUpcomingTasks(days: days, userId: userId);
+    return repository.getUpcomingTasks(
+      days: days,
+      userId: userId,
+    );
   }
 
   Future<void> refresh() async {
@@ -131,9 +137,13 @@ class UpcomingTasksNotifier extends _$UpcomingTasksNotifier {
 @riverpod
 class OverdueTasksNotifier extends _$OverdueTasksNotifier {
   @override
-  Future<List<Task>> build({String? userId}) async {
+  Future<List<TaskEntity>> build({
+    String? userId,
+  }) async {
     final repository = ref.read(taskRepositoryProvider);
-    return repository.getOverdueTasks(userId: userId);
+    return repository.getOverdueTasks(
+      userId: userId,
+    );
   }
 
   Future<void> refresh() async {

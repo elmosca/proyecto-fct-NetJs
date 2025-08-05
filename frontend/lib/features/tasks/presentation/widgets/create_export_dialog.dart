@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../l10n/app_localizations.dart';
+import 'package:fct_frontend/l10n/app_localizations.dart';
 import '../../domain/entities/task_export_dto.dart';
 import '../../domain/entities/task_export_entity.dart';
 

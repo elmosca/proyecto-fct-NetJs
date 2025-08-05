@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../l10n/app_localizations.dart';
-import '../../domain/entities/milestone_entity.dart';
+import 'package:fct_frontend/l10n/app_localizations.dart';
+import '../../domain/entities/milestone.dart';
 import '../../domain/entities/task_entity.dart';
 
 class ProgressReportWidget extends ConsumerWidget {
   final List<TaskEntity> tasks;
-  final List<MilestoneEntity> milestones;
+  final List<Milestone> milestones;
   final String? projectId;
   final DateTime? fromDate;
   final DateTime? toDate;
@@ -511,7 +511,7 @@ class ProgressReportWidget extends ConsumerWidget {
     );
   }
 
-  Widget _buildMilestoneItem(BuildContext context, MilestoneEntity milestone,
+  Widget _buildMilestoneItem(BuildContext context, Milestone milestone,
       AppLocalizations l10n, ThemeData theme) {
     return ListTile(
       leading: CircleAvatar(
@@ -533,11 +533,11 @@ class ProgressReportWidget extends ConsumerWidget {
         '${_getMilestoneStatusText(milestone.status, l10n)} • ${milestone.type.displayName}',
         style: theme.textTheme.bodySmall,
       ),
-      trailing: milestone.plannedDate != null
+      trailing: milestone.createdAt != null
           ? Text(
-              _formatDate(milestone.plannedDate),
+              _formatDate(milestone.createdAt!),
               style: theme.textTheme.bodySmall?.copyWith(
-                color: milestone.plannedDate.isBefore(DateTime.now()) &&
+                color: milestone.createdAt!.isBefore(DateTime.now()) &&
                         milestone.status != MilestoneStatus.completed
                     ? Colors.red
                     : theme.colorScheme.outline,

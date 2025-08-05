@@ -1,6 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:fct_frontend/core/widgets/empty_state_widget.dart';
 import 'package:fct_frontend/core/widgets/loading_widget.dart';
-import 'package:fct_frontend/features/tasks/domain/entities/milestone_entity.dart';
+import 'package:fct_frontend/features/tasks/domain/entities/milestone.dart';
 import 'package:fct_frontend/features/tasks/presentation/providers/milestone_providers.dart';
 import 'package:fct_frontend/features/tasks/presentation/widgets/create_milestone_dialog.dart';
 import 'package:fct_frontend/features/tasks/presentation/widgets/milestone_card.dart';
@@ -8,6 +9,7 @@ import 'package:fct_frontend/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+@RoutePage()
 class MilestonesPage extends ConsumerStatefulWidget {
   final String? projectId;
 
@@ -67,7 +69,7 @@ class _MilestonesPageState extends ConsumerState<MilestonesPage> {
     );
   }
 
-  Widget _buildMilestonesList(List<MilestoneEntity> milestones) {
+  Widget _buildMilestonesList(List<Milestone> milestones) {
     if (milestones.isEmpty) {
       return EmptyStateWidget(
         icon: Icons.flag,
@@ -130,23 +132,21 @@ class _MilestonesPageState extends ConsumerState<MilestonesPage> {
     );
   }
 
-  void _showEditMilestoneDialog(
-      BuildContext context, MilestoneEntity milestone) {
+  void _showEditMilestoneDialog(BuildContext context, Milestone milestone) {
     // TODO: Implementar diálogo de edición de milestone
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text('Editar: ${milestone.title}')),
     );
   }
 
-  void _showMilestoneDetails(BuildContext context, MilestoneEntity milestone) {
+  void _showMilestoneDetails(BuildContext context, Milestone milestone) {
     // TODO: Implementar navegación a página de detalles
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text('Detalles de: ${milestone.title}')),
     );
   }
 
-  void _showDeleteMilestoneDialog(
-      BuildContext context, MilestoneEntity milestone) {
+  void _showDeleteMilestoneDialog(BuildContext context, Milestone milestone) {
     final l10n = AppLocalizations.of(context);
     showDialog(
       context: context,
@@ -178,7 +178,7 @@ class _MilestonesPageState extends ConsumerState<MilestonesPage> {
     );
   }
 
-  void _deleteMilestone(MilestoneEntity milestone) {
+  void _deleteMilestone(Milestone milestone) {
     ref.read(milestonesNotifierProvider.notifier).deleteMilestone(milestone.id);
   }
 }

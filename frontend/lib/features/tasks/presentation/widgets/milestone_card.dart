@@ -1,10 +1,12 @@
-import 'package:fct_frontend/features/tasks/domain/entities/milestone_entity.dart';
+import 'package:fct_frontend/features/tasks/data/datasources/milestone_remote_datasource.dart';
+import 'package:fct_frontend/features/tasks/domain/entities/milestone.dart';
+import 'package:fct_frontend/features/tasks/domain/repositories/milestone_repository.dart';
 import 'package:fct_frontend/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class MilestoneCard extends StatelessWidget {
-  final MilestoneEntity milestone;
+  final Milestone milestone;
   final VoidCallback? onTap;
   final VoidCallback? onEdit;
   final VoidCallback? onDelete;
@@ -54,7 +56,7 @@ class MilestoneCard extends StatelessWidget {
                                 ),
                               ),
                               child: Text(
-                                'Hito ${milestone.milestoneNumber}',
+                                'Hito ${milestone.id}',
                                 style: TextStyle(
                                   color: milestone.status.color,
                                   fontSize: 12,
@@ -137,25 +139,25 @@ class MilestoneCard extends StatelessWidget {
                   ),
                   const SizedBox(width: 4),
                   Text(
-                    '${l10n.plannedDate}: ${dateFormat.format(milestone.plannedDate)}',
+                    '${l10n.plannedDate}: ${dateFormat.format(milestone.createdAt)}',
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   const SizedBox(width: 16),
                   Icon(
-                    milestone.milestoneType.icon,
+                    milestone.type.icon,
                     size: 16,
-                    color: milestone.milestoneType.color,
+                    color: milestone.type.color,
                   ),
                   const SizedBox(width: 4),
                   Text(
-                    milestone.milestoneType.displayName,
+                    milestone.type.displayName,
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: milestone.milestoneType.color,
+                          color: milestone.type.color,
                         ),
                   ),
                 ],
               ),
-              if (milestone.completedDate != null) ...[
+              if (milestone.completedAt != null) ...[
                 const SizedBox(height: 8),
                 Row(
                   children: [
@@ -166,7 +168,7 @@ class MilestoneCard extends StatelessWidget {
                     ),
                     const SizedBox(width: 4),
                     Text(
-                      '${l10n.completedDate}: ${dateFormat.format(milestone.completedDate!)}',
+                      '${l10n.completedDate}: ${dateFormat.format(milestone.completedAt!)}',
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
                             color: Colors.green,
                             fontWeight: FontWeight.w500,
@@ -175,12 +177,12 @@ class MilestoneCard extends StatelessWidget {
                   ],
                 ),
               ],
-              if (milestone.expectedDeliverables.isNotEmpty) ...[
+              if (milestone.description.isNotEmpty) ...[
                 const SizedBox(height: 8),
                 Wrap(
                   spacing: 4,
                   runSpacing: 4,
-                  children: milestone.expectedDeliverables.map((deliverable) {
+                  children: milestone.description.map((deliverable) {
                     return Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 6,

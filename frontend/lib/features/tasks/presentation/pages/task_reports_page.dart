@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../l10n/app_localizations.dart';
+import 'package:fct_frontend/l10n/app_localizations.dart';
 import '../providers/task_report_providers.dart';
 import '../widgets/create_report_dialog.dart';
 import '../widgets/task_report_card.dart';

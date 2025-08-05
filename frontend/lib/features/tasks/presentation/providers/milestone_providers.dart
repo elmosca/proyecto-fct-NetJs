@@ -1,5 +1,4 @@
-import 'package:fct_frontend/features/tasks/domain/entities/milestone_dto.dart';
-import 'package:fct_frontend/features/tasks/domain/entities/milestone_entity.dart';
+import 'package:fct_frontend/features/tasks/domain/entities/milestone.dart';
 import 'package:fct_frontend/features/tasks/domain/repositories/milestone_repository.dart';
 import 'package:fct_frontend/features/tasks/domain/usecases/create_milestone_usecase.dart';
 import 'package:fct_frontend/features/tasks/domain/usecases/delete_milestone_usecase.dart';
@@ -61,14 +60,13 @@ MilestoneRepository milestoneRepository(MilestoneRepositoryRef ref) {
 @riverpod
 class MilestonesNotifier extends _$MilestonesNotifier {
   @override
-  Future<List<MilestoneEntity>> build() async {
+  Future<List<Milestone>> build() async {
     return _loadMilestones();
   }
 
-  Future<List<MilestoneEntity>> _loadMilestones() async {
+  Future<List<Milestone>> _loadMilestones() async {
     final useCase = ref.read(getMilestonesUseCaseProvider);
-    final filters = ref.read(milestoneFiltersNotifierProvider);
-    return await useCase.execute(filters);
+    return await useCase.execute();
   }
 
   Future<void> refreshMilestones() async {
@@ -76,23 +74,27 @@ class MilestonesNotifier extends _$MilestonesNotifier {
     state = await AsyncValue.guard(() => _loadMilestones());
   }
 
-  Future<void> createMilestone(CreateMilestoneDto createMilestoneDto) async {
+  Future<void> createMilestone(Milestone milestone) async {
     final useCase = ref.read(createMilestoneUseCaseProvider);
-    await useCase.execute(createMilestoneDto);
+    await useCase.execute(milestone);
     await refreshMilestones();
   }
 
-  Future<void> updateMilestone(
-      String milestoneId, UpdateMilestoneDto updateMilestoneDto) async {
+  Future<void> updateMilestone(Milestone milestone) async {
     final useCase = ref.read(updateMilestoneUseCaseProvider);
-    await useCase.execute(milestoneId, updateMilestoneDto);
+    await useCase.execute(milestone);
     await refreshMilestones();
   }
 
   Future<void> deleteMilestone(String milestoneId) async {
-    final useCase = ref.read(deleteMilestoneUseCaseProvider);
-    await useCase.execute(milestoneId);
-    await refreshMilestones();
+    state = const AsyncValue.loading();
+    try {
+      final useCase = ref.read(deleteMilestoneUseCaseProvider);
+      await useCase.execute(milestoneId);
+      await refreshMilestones();
+    } catch (error, stackTrace) {
+      state = AsyncValue.error(error, stackTrace);
+    }
   }
 
   Future<void> updateMilestoneStatus(
@@ -127,7 +129,7 @@ class MilestoneFiltersNotifier extends _$MilestoneFiltersNotifier {
     state = state.copyWith(status: status);
   }
 
-  void setMilestoneType(MilestoneType? milestoneType) {
+  void setMilestoneType(String? milestoneType) {
     state = state.copyWith(milestoneType: milestoneType);
   }
 

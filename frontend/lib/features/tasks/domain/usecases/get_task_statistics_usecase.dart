@@ -6,6 +6,6 @@ class GetTaskStatisticsUseCase {
   GetTaskStatisticsUseCase(this._taskRepository);
 
   Future<Map<String, dynamic>> execute(String? projectId) {
-    return _taskRepository.getTaskStatistics(projectId);
+    return _taskRepository.getTaskStatistics(projectId: projectId);
   }
 } 

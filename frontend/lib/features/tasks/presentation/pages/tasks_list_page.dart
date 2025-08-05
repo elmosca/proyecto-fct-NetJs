@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fct_frontend/features/tasks/domain/entities/task.dart';
+import 'package:fct_frontend/features/tasks/domain/entities/task_entity.dart';
 import 'package:fct_frontend/features/tasks/presentation/providers/task_providers.dart';
 import 'package:fct_frontend/features/tasks/presentation/widgets/task_card_widget.dart';
 import 'package:fct_frontend/features/tasks/presentation/widgets/task_filters_widget.dart';
@@ -35,7 +35,7 @@ class _TasksListPageState extends ConsumerState<TasksListPage> {
       assignedUserId: _assignedUserId,
       status: _selectedStatus != null ? TaskStatus.values.firstWhere(
         (s) => s.name == _selectedStatus,
-        orElse: () => TaskStatus.todo,
+        orElse: () => TaskStatus.pending,
       ) : null,
       priority: _selectedPriority != null ? TaskPriority.values.firstWhere(
         (p) => p.name == _selectedPriority,
@@ -63,7 +63,7 @@ class _TasksListPageState extends ConsumerState<TasksListPage> {
                 assignedUserId: _assignedUserId,
                 status: _selectedStatus != null ? TaskStatus.values.firstWhere(
                   (s) => s.name == _selectedStatus,
-                  orElse: () => TaskStatus.todo,
+                  orElse: () => TaskStatus.pending,
                 ) : null,
                 priority: _selectedPriority != null ? TaskPriority.values.firstWhere(
                   (p) => p.name == _selectedPriority,
@@ -113,7 +113,7 @@ class _TasksListPageState extends ConsumerState<TasksListPage> {
                       assignedUserId: _assignedUserId,
                       status: _selectedStatus != null ? TaskStatus.values.firstWhere(
                         (s) => s.name == _selectedStatus,
-                        orElse: () => TaskStatus.todo,
+                        orElse: () => TaskStatus.pending,
                       ) : null,
                       priority: _selectedPriority != null ? TaskPriority.values.firstWhere(
                         (p) => p.name == _selectedPriority,
@@ -141,7 +141,7 @@ class _TasksListPageState extends ConsumerState<TasksListPage> {
                               assignedUserId: _assignedUserId,
                               status: _selectedStatus != null ? TaskStatus.values.firstWhere(
                                 (s) => s.name == _selectedStatus,
-                                orElse: () => TaskStatus.todo,
+                                orElse: () => TaskStatus.pending,
                               ) : null,
                               priority: _selectedPriority != null ? TaskPriority.values.firstWhere(
                                 (p) => p.name == _selectedPriority,
@@ -157,7 +157,7 @@ class _TasksListPageState extends ConsumerState<TasksListPage> {
                 );
               },
               loading: () => const LoadingWidget(),
-              error: (error, stack) => ErrorWidget(
+              error: (error, stack) => ErrorDisplayWidget(
                 message: 'Error al cargar tareas: $error',
                 onRetry: () {
                   ref.read(tasksNotifierProvider(
@@ -166,7 +166,7 @@ class _TasksListPageState extends ConsumerState<TasksListPage> {
                     assignedUserId: _assignedUserId,
                     status: _selectedStatus != null ? TaskStatus.values.firstWhere(
                       (s) => s.name == _selectedStatus,
-                      orElse: () => TaskStatus.todo,
+                      orElse: () => TaskStatus.pending,
                     ) : null,
                     priority: _selectedPriority != null ? TaskPriority.values.firstWhere(
                       (p) => p.name == _selectedPriority,
