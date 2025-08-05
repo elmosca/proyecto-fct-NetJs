@@ -41,14 +41,9 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     CreateEvaluationRoute.name: (routeData) {
-      final args = routeData.argsAs<CreateEvaluationRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: CreateEvaluationPage(
-          key: args.key,
-          defenseId: args.defenseId,
-          evaluatorId: args.evaluatorId,
-        ),
+        child: const CreateEvaluationPage(),
       );
     },
     DashboardRoute.name: (routeData) {
@@ -111,6 +106,17 @@ abstract class _$AppRouter extends RootStackRouter {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const MainLayoutPage(),
+      );
+    },
+    MilestonesRoute.name: (routeData) {
+      final args = routeData.argsAs<MilestonesRouteArgs>(
+          orElse: () => const MilestonesRouteArgs());
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: MilestonesPage(
+          key: args.key,
+          projectId: args.projectId,
+        ),
       );
     },
     ProfileRoute.name: (routeData) {
@@ -271,45 +277,16 @@ class AuditLogsRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [CreateEvaluationPage]
-class CreateEvaluationRoute extends PageRouteInfo<CreateEvaluationRouteArgs> {
-  CreateEvaluationRoute({
-    Key? key,
-    required String defenseId,
-    required String evaluatorId,
-    List<PageRouteInfo>? children,
-  }) : super(
+class CreateEvaluationRoute extends PageRouteInfo<void> {
+  const CreateEvaluationRoute({List<PageRouteInfo>? children})
+      : super(
           CreateEvaluationRoute.name,
-          args: CreateEvaluationRouteArgs(
-            key: key,
-            defenseId: defenseId,
-            evaluatorId: evaluatorId,
-          ),
           initialChildren: children,
         );
 
   static const String name = 'CreateEvaluationRoute';
 
-  static const PageInfo<CreateEvaluationRouteArgs> page =
-      PageInfo<CreateEvaluationRouteArgs>(name);
-}
-
-class CreateEvaluationRouteArgs {
-  const CreateEvaluationRouteArgs({
-    this.key,
-    required this.defenseId,
-    required this.evaluatorId,
-  });
-
-  final Key? key;
-
-  final String defenseId;
-
-  final String evaluatorId;
-
-  @override
-  String toString() {
-    return 'CreateEvaluationRouteArgs{key: $key, defenseId: $defenseId, evaluatorId: $evaluatorId}';
-  }
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
@@ -472,6 +449,44 @@ class MainLayoutRoute extends PageRouteInfo<void> {
   static const String name = 'MainLayoutRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [MilestonesPage]
+class MilestonesRoute extends PageRouteInfo<MilestonesRouteArgs> {
+  MilestonesRoute({
+    Key? key,
+    String? projectId,
+    List<PageRouteInfo>? children,
+  }) : super(
+          MilestonesRoute.name,
+          args: MilestonesRouteArgs(
+            key: key,
+            projectId: projectId,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'MilestonesRoute';
+
+  static const PageInfo<MilestonesRouteArgs> page =
+      PageInfo<MilestonesRouteArgs>(name);
+}
+
+class MilestonesRouteArgs {
+  const MilestonesRouteArgs({
+    this.key,
+    this.projectId,
+  });
+
+  final Key? key;
+
+  final String? projectId;
+
+  @override
+  String toString() {
+    return 'MilestonesRouteArgs{key: $key, projectId: $projectId}';
+  }
 }
 
 /// generated route for
