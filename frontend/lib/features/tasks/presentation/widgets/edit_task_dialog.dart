@@ -1,0 +1,304 @@
+import 'package:fct_frontend/core/widgets/app_text_field.dart';
+import 'package:fct_frontend/features/tasks/domain/entities/task_dto.dart';
+import 'package:fct_frontend/features/tasks/domain/entities/task_entity.dart';
+import 'package:fct_frontend/features/tasks/presentation/providers/task_providers.dart';
+import 'package:fct_frontend/l10n/app_localizations.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+class EditTaskDialog extends ConsumerStatefulWidget {
+  final TaskEntity task;
+
+  const EditTaskDialog({
+    super.key,
+    required this.task,
+  });
+
+  @override
+  ConsumerState<EditTaskDialog> createState() => _EditTaskDialogState();
+}
+
+class _EditTaskDialogState extends ConsumerState<EditTaskDialog> {
+  final _formKey = GlobalKey<FormState>();
+  late final TextEditingController _titleController;
+  late final TextEditingController _descriptionController;
+  late final TextEditingController _estimatedHoursController;
+  late final TextEditingController _tagsController;
+  late final TextEditingController _assigneesController;
+
+  late TaskPriority _selectedPriority;
+  late TaskComplexity _selectedComplexity;
+  late DateTime? _selectedDueDate;
+  bool _isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // Inicializar controladores con los valores actuales de la tarea
+    _titleController = TextEditingController(text: widget.task.title);
+    _descriptionController =
+        TextEditingController(text: widget.task.description);
+    _estimatedHoursController = TextEditingController(
+        text: widget.task.estimatedHours?.toString() ?? '');
+    _tagsController = TextEditingController(text: widget.task.tags.join(', '));
+    _assigneesController =
+        TextEditingController(text: widget.task.assignees.join(', '));
+
+    _selectedPriority = widget.task.priority;
+    _selectedComplexity = widget.task.complexity;
+    _selectedDueDate = widget.task.dueDate;
+  }
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _descriptionController.dispose();
+    _estimatedHoursController.dispose();
+    _tagsController.dispose();
+    _assigneesController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
+    return AlertDialog(
+      title: Text(l10n.editTask),
+      content: Form(
+        key: _formKey,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              AppTextField(
+                controller: _titleController,
+                label: l10n.title,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return '${l10n.title} es requerido';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16),
+              TextFormField(
+                controller: _descriptionController,
+                decoration: InputDecoration(
+                  labelText: l10n.description,
+                  border: const OutlineInputBorder(),
+                ),
+                maxLines: 3,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return '${l10n.description} es requerido';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  Expanded(
+                    child: DropdownButtonFormField<TaskPriority>(
+                      value: _selectedPriority,
+                      decoration: InputDecoration(
+                        labelText: l10n.priority,
+                        border: const OutlineInputBorder(),
+                      ),
+                      items: TaskPriority.values.map((priority) {
+                        return DropdownMenuItem(
+                          value: priority,
+                          child: Text(_getPriorityText(priority, l10n)),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        if (value != null) {
+                          setState(() {
+                            _selectedPriority = value;
+                          });
+                        }
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: DropdownButtonFormField<TaskComplexity>(
+                      value: _selectedComplexity,
+                      decoration: InputDecoration(
+                        labelText: l10n.complexity,
+                        border: const OutlineInputBorder(),
+                      ),
+                      items: TaskComplexity.values.map((complexity) {
+                        return DropdownMenuItem(
+                          value: complexity,
+                          child: Text(_getComplexityText(complexity, l10n)),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        if (value != null) {
+                          setState(() {
+                            _selectedComplexity = value;
+                          });
+                        }
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextFormField(
+                      controller: _estimatedHoursController,
+                      decoration: InputDecoration(
+                        labelText: l10n.estimatedHours,
+                        border: const OutlineInputBorder(),
+                      ),
+                      keyboardType: TextInputType.number,
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: InkWell(
+                      onTap: _selectDueDate,
+                      child: InputDecorator(
+                        decoration: InputDecoration(
+                          labelText: l10n.dueDate,
+                          border: const OutlineInputBorder(),
+                        ),
+                        child: Text(
+                          _selectedDueDate != null
+                              ? '${_selectedDueDate!.day}/${_selectedDueDate!.month}/${_selectedDueDate!.year}'
+                              : 'Seleccionar fecha',
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              AppTextField(
+                controller: _tagsController,
+                label: l10n.tags,
+                hint: 'tag1, tag2, tag3',
+              ),
+              const SizedBox(height: 16),
+              AppTextField(
+                controller: _assigneesController,
+                label: l10n.assignees,
+                hint: 'user1@email.com, user2@email.com',
+              ),
+            ],
+          ),
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: _isLoading ? null : () => Navigator.of(context).pop(),
+          child: Text(l10n.cancel),
+        ),
+        ElevatedButton(
+          onPressed: _isLoading ? null : _updateTask,
+          child: _isLoading
+              ? const SizedBox(
+                  width: 20,
+                  height: 20,
+                  child: CircularProgressIndicator(strokeWidth: 2),
+                )
+              : Text(l10n.save),
+        ),
+      ],
+    );
+  }
+
+  String _getPriorityText(TaskPriority priority, AppLocalizations l10n) {
+    switch (priority) {
+      case TaskPriority.low:
+        return 'Baja';
+      case TaskPriority.medium:
+        return 'Media';
+      case TaskPriority.high:
+        return 'Alta';
+    }
+  }
+
+  String _getComplexityText(TaskComplexity complexity, AppLocalizations l10n) {
+    switch (complexity) {
+      case TaskComplexity.simple:
+        return 'Simple';
+      case TaskComplexity.medium:
+        return 'Media';
+      case TaskComplexity.complex:
+        return 'Compleja';
+    }
+  }
+
+  Future<void> _selectDueDate() async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: _selectedDueDate ?? DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime.now().add(const Duration(days: 365)),
+    );
+    if (picked != null && picked != _selectedDueDate) {
+      setState(() {
+        _selectedDueDate = picked;
+      });
+    }
+  }
+
+  Future<void> _updateTask() async {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      final updateTaskDto = UpdateTaskDto(
+        title: _titleController.text.trim(),
+        description: _descriptionController.text.trim(),
+        priority: _selectedPriority,
+        complexity: _selectedComplexity,
+        dueDate: _selectedDueDate,
+        estimatedHours: _estimatedHoursController.text.isNotEmpty
+            ? int.tryParse(_estimatedHoursController.text)
+            : null,
+        tags: _tagsController.text.isNotEmpty
+            ? _tagsController.text.split(',').map((e) => e.trim()).toList()
+            : [],
+        assignees: _assigneesController.text.isNotEmpty
+            ? _assigneesController.text.split(',').map((e) => e.trim()).toList()
+            : [],
+      );
+
+      await ref.read(tasksNotifierProvider.notifier).updateTask(
+            widget.task.id,
+            updateTaskDto,
+          );
+
+      if (mounted) {
+        Navigator.of(context).pop();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Tarea actualizada exitosamente')),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error al actualizar tarea: $e')),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
+}

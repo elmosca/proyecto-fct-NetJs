@@ -27,9 +27,20 @@ export class CreateSystemSettings1752167755670 implements MigrationInterface {
                 CONSTRAINT "FK_system_settings_updatedById" FOREIGN KEY ("updatedById") REFERENCES "users"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
             )
         `);
+
+        // Insertar valores por defecto del sistema
+        await queryRunner.query(`
+            INSERT INTO "system_settings" ("settingKey", "settingValue", "settingType", "description", "isEditable") 
+            VALUES 
+                ('allowed_file_types', 'pdf,doc,docx,txt,jpg,jpeg,png,gif', 'string', 'Tipos de archivos permitidos para subida', true),
+                ('max_file_size_mb', '10', 'integer', 'Tamaño máximo de archivo en MB', true)
+            ON CONFLICT ("settingKey") DO NOTHING;
+        `);
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
+        // Eliminar datos de configuración del sistema
+        await queryRunner.query(`DELETE FROM "system_settings" WHERE "settingKey" IN ('allowed_file_types', 'max_file_size_mb')`);
         await queryRunner.query(`DROP TABLE "system_settings"`);
         await queryRunner.query(`DROP TYPE "public"."system_settings_settingtype_enum"`);
     }

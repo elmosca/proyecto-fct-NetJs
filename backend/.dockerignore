@@ -1,17 +1,51 @@
+# Dependencies
 node_modules
 npm-debug.log
-.git
-.gitignore
-README.md
-.env
-.nyc_output
+
+# Build outputs
+dist
+.dist
 coverage
 .nyc_output
-Dockerfile*
-.dockerignore
+
+# Development files
+.git
+.gitignore
 .idea
 *.iml
+.vscode
+
+# Logs
 *.log
-.dist
-dist
-storage/uploads
+logs
+
+# Environment files (se copian explícitamente)
+.env.local
+.env.*.local
+
+# Test files
+test
+*.spec.ts
+*.test.ts
+
+# Documentation
+README.md
+docs
+*.md
+
+# Docker files
+Dockerfile*
+.dockerignore
+docker-compose*.yml
+
+# Uploads (se montan como volumen)
+storage/uploads/*
+!storage/uploads/.gitkeep
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Cache directories
+.cache
+.tmp

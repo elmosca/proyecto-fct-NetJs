@@ -84,5 +84,29 @@
     // ========================================
     // GIT
     // ========================================
-    "git.ignoreLimitWarning": true
+    "git.ignoreLimitWarning": true,
+    // ========================================
+    // TERMINAL CONFIGURATION
+    // ========================================
+    "terminal.integrated.defaultProfile.linux": "bash",
+    "terminal.integrated.defaultProfile.windows": "WSL",
+    "terminal.integrated.shell.linux": "/bin/bash",
+    "terminal.integrated.shellArgs.linux": [],
+    "terminal.integrated.profiles.linux": {
+        "bash": {
+            "path": "/bin/bash",
+            "args": []
+        }
+    },
+    "terminal.integrated.profiles.windows": {
+        "WSL": {
+            "path": "C:\\Windows\\System32\\wsl.exe",
+            "args": [
+                "-d",
+                "Ubuntu",
+                "--exec",
+                "/bin/bash"
+            ]
+        }
+    }
 }

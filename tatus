@@ -1,0 +1,147 @@
+[1mdiff --git a/backend/.env.example b/backend/.env.example[m
+[1mindex 5245dfe..c1eab41 100644[m
+[1m--- a/backend/.env.example[m
+[1m+++ b/backend/.env.example[m
+[36m@@ -1,93 +1,82 @@[m
+ # ========================================[m
+[31m-# 🚀 FCT BACKEND - Variables de Entorno[m
+[31m-# ========================================[m
+[31m-# [m
+[31m-# 📋 INSTRUCCIONES:[m
+[31m-# 1. Copia este archivo: cp env.example .env[m
+[31m-# 2. Edita .env con tus valores reales[m
+[31m-# 3. NUNCA commitees el archivo .env[m
+[31m-#[m
+[31m-# 🔐 CREDENCIALES SENSIBLES:[m
+[31m-# - Las credenciales de Google OAuth se obtienen de Google Cloud Console[m
+[31m-# - El JWT_SECRET debe ser una clave segura de 32+ caracteres[m
+[31m-# - La contraseña de la base de datos debe ser segura[m
+[32m+[m[32m# CONFIGURACIÓN DE VARIABLES DE ENTORNO[m
+[32m+[m[32m# Backend FCT - Proyecto de Microservicios[m
+ # ========================================[m
+ [m
+ # ========================================[m
+[31m-# 🌐 CONFIGURACIÓN DEL SERVIDOR[m
+[32m+[m[32m# CONFIGURACIÓN DE BASE DE DATOS[m
+ # ========================================[m
+[31m-NODE_ENV=development[m
+[31m-PORT=3000[m
+[31m-HOST=0.0.0.0[m
+[32m+[m[32mDB_HOST=postgres[m
+[32m+[m[32mDB_PORT=5432[m
+[32m+[m[32mDB_USERNAME=postgres[m
+[32m+[m[32mDB_PASSWORD=postgres[m
+[32m+[m[32mDB_DATABASE=fct_backend_db[m
+ [m
+ # ========================================[m
+[31m-# 🔐 AUTENTICACIÓN JWT[m
+[32m+[m[32m# CONFIGURACIÓN JWT[m
+ # ========================================[m
+[31m-JWT_SECRET=tu_clave_secreta_muy_larga_y_compleja_aqui_minimo_32_caracteres[m
+[31m-JWT_EXPIRES_IN=7d[m
+[31m-JWT_REFRESH_EXPIRES_IN=30d[m
+[32m+[m[32mJWT_SECRET=your-super-secret-key-change-in-production[m
+[32m+[m[32mJWT_EXPIRATION=1h[m
+ [m
+ # ========================================[m
+[31m-# 🔑 GOOGLE OAUTH (OBLIGATORIO)[m
+[32m+[m[32m# CONFIGURACIÓN DEL SERVIDOR[m
+ # ========================================[m
+[31m-# Obtener de: https://console.cloud.google.com/apis/credentials[m
+[31m-GOOGLE_CLIENT_ID=tu_google_client_id_aqui.apps.googleusercontent.com[m
+[31m-GOOGLE_CLIENT_SECRET=tu_google_client_secret_aqui[m
+[32m+[m[32mPORT=3000[m
+[32m+[m[32mNODE_ENV=development[m
+ [m
+ # ========================================[m
+[31m-# 🗄️ BASE DE DATOS POSTGRESQL[m
+[32m+[m[32m# CONFIGURACIÓN DE CORS[m
+ # ========================================[m
+[31m-DB_HOST=localhost[m
+[31m-DB_PORT=5432[m
+[31m-DB_USERNAME=postgres[m
+[31m-DB_PASSWORD=tu_contraseña_segura_aqui[m
+[31m-DB_DATABASE=fct_backend_db[m
+[31m-DB_SYNCHRONIZE=true[m
+[31m-DB_LOGGING=false[m
+[32m+[m[32mCORS_ORIGIN=http://localhost:3000,http://localhost:8080[m
+ [m
+ # ========================================[m
+[31m-# 📧 CONFIGURACIÓN DE EMAIL (GMAIL)[m
+[32m+[m[32m# CONFIGURACIÓN DE GOOGLE OAUTH[m
+[32m+[m[32m# ========================================[m
+[32m+[m[32m# Obtener desde: https://console.cloud.google.com/apis/credentials[m
+[32m+[m[32mGOOGLE_CLIENT_ID=your-google-client-id[m
+[32m+[m[32mGOOGLE_CLIENT_SECRET=your-google-client-secret[m
+[32m+[m[32mGOOGLE_CALLBACK_URL=http://localhost:3000/auth/google/callback[m
+[32m+[m
+ # ========================================[m
+[31m-# Usar App Password de Gmail, NO la contraseña normal[m
+[32m+[m[32m# CONFIGURACIÓN DE EMAIL (GMAIL)[m
+[32m+[m[32m# ========================================[m
+[32m+[m[32m# Configurar App Password: https://support.google.com/accounts/answer/185833[m
+ MAIL_HOST=smtp.gmail.com[m
+ MAIL_PORT=587[m
+[31m-MAIL_SECURE=false[m
+[31m-MAIL_USER=tu_email@gmail.com[m
+[31m-MAIL_PASS=tu_app_password_de_gmail[m
+[32m+[m[32mMAIL_USER=your-email@gmail.com[m
+[32m+[m[32mMAIL_PASS=your-app-password[m
+ [m
+ # ========================================[m
+[31m-# 🌍 FRONTEND Y CORS[m
+[32m+[m[32m# CONFIGURACIÓN DE FRONTEND[m
+ # ========================================[m
+[31m-FRONTEND_URL=http://localhost:3000[m
+[31m-CORS_ORIGIN=http://localhost:3000,http://localhost:8080[m
+[32m+[m[32mFRONTEND_URL=http://localhost:8080[m
+ [m
+ # ========================================[m
+[31m-# 📊 LOGGING Y MONITOREO[m
+[32m+[m[32m# CONFIGURACIÓN DE ARCHIVOS[m
+ # ========================================[m
+[31m-LOG_LEVEL=info[m
+[31m-ENABLE_SWAGGER=true[m
+[31m-ENABLE_RATE_LIMITING=true[m
+[32m+[m[32mMAX_FILE_SIZE_MB=10[m
+[32m+[m[32mALLOWED_FILE_TYPES=jpg,jpeg,png,gif,pdf,doc,docx,xls,xlsx,ppt,pptx,txt[m
+ [m
+ # ========================================[m
+[31m-# 🔒 SEGURIDAD[m
+[32m+[m[32m# CONFIGURACIÓN DE LOGS[m
+ # ========================================[m
+[31m-BCRYPT_ROUNDS=12[m
+[31m-RATE_LIMIT_WINDOW_MS=900000[m
+[31m-RATE_LIMIT_MAX_REQUESTS=100[m
+[32m+[m[32mLOG_LEVEL=debug[m
+[32m+[m[32mLOG_FILE=logs/app.log[m
+ [m
+ # ========================================[m
+[31m-# 🐳 DOCKER (Para desarrollo con Docker)[m
+[32m+[m[32m# CONFIGURACIÓN DE RATE LIMITING[m
+[32m+[m[32m# ========================================[m
+[32m+[m[32mRATE_LIMIT_TTL=60[m
+[32m+[m[32mRATE_LIMIT_LIMIT=100[m
+[32m+[m
+ # ========================================[m
+[31m-# Si usas Docker, cambia DB_HOST a:[m
+[31m-# DB_HOST=db[m
+[32m+[m[32m# CONFIGURACIÓN DE SEGURIDAD[m
+[32m+[m[32m# ========================================[m
+[32m+[m[32mBCRYPT_ROUNDS=12[m
+[32m+[m[32mSESSION_SECRET=your-session-secret-change-in-production[m
+ [m
+ # ========================================[m
+[31m-# 🚀 PRODUCCIÓN[m
+[32m+[m[32m# CONFIGURACIÓN DE MONITOREO[m
+ # ========================================[m
+[31m-# Para producción, cambia:[m
+[31m-# NODE_ENV=production[m
+[31m-# FRONTEND_URL=https://tu-dominio.com[m
+[31m-# CORS_ORIGIN=https://tu-dominio.com[m
+[31m-# DB_SYNCHRONIZE=false[m
+[31m-# ENABLE_SWAGGER=false[m
+[31m-# ======================================== [m
+\ No newline at end of file[m
+[32m+[m[32mENABLE_HEALTH_CHECK=true[m
+[32m+[m[32mHEALTH_CHECK_INTERVAL=30000[m
