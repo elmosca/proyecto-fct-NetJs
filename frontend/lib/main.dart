@@ -1,3 +1,4 @@
+import 'package:fct_frontend/core/di/injection_container.dart';
 import 'package:fct_frontend/core/providers/locale_provider.dart';
 import 'package:fct_frontend/core/theme/app_theme.dart';
 import 'package:fct_frontend/features/auth/presentation/pages/login_page.dart';
@@ -8,6 +9,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  
+  // Inicializar dependencias con GetIt
+  await initializeDependencies();
 
   runApp(
     const ProviderScope(
