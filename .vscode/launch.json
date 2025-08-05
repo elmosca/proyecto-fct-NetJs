@@ -33,10 +33,37 @@
             ]
         },
         {
+            "name": "Flutter: Web Debug",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main.dart",
+            "cwd": "${workspaceFolder}/frontend",
+            "args": [
+                "-d",
+                "chrome",
+                "--web-port",
+                "8080"
+            ]
+        },
+        {
             "name": "Flutter: Tests",
             "request": "launch",
             "type": "dart",
             "program": "test/",
+            "cwd": "${workspaceFolder}/frontend"
+        },
+        {
+            "name": "Flutter: Integration Tests",
+            "request": "launch",
+            "type": "dart",
+            "program": "integration_test/",
+            "cwd": "${workspaceFolder}/frontend"
+        },
+        {
+            "name": "Flutter: Widget Tests",
+            "request": "launch",
+            "type": "dart",
+            "program": "test/widget_test/",
             "cwd": "${workspaceFolder}/frontend"
         },
         {
@@ -54,6 +81,38 @@
             },
             "console": "integratedTerminal",
             "restart": true
+        },
+        {
+            "name": "Backend: NestJS Tests",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceFolder}/backend/node_modules/.bin/jest",
+            "args": [
+                "--runInBand",
+                "--detectOpenHandles"
+            ],
+            "cwd": "${workspaceFolder}/backend",
+            "console": "integratedTerminal",
+            "env": {
+                "NODE_ENV": "test"
+            }
+        },
+        {
+            "name": "Backend: E2E Tests",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceFolder}/backend/node_modules/.bin/jest",
+            "args": [
+                "--config",
+                "./test/jest-e2e.json",
+                "--runInBand",
+                "--detectOpenHandles"
+            ],
+            "cwd": "${workspaceFolder}/backend",
+            "console": "integratedTerminal",
+            "env": {
+                "NODE_ENV": "test"
+            }
         }
     ],
     "compounds": [
@@ -62,6 +121,20 @@
             "configurations": [
                 "Backend: NestJS Debug",
                 "Flutter: Debug"
+            ]
+        },
+        {
+            "name": "Full Stack Tests",
+            "configurations": [
+                "Backend: NestJS Tests",
+                "Flutter: Tests"
+            ]
+        },
+        {
+            "name": "Full Stack E2E",
+            "configurations": [
+                "Backend: E2E Tests",
+                "Flutter: Integration Tests"
             ]
         }
     ]

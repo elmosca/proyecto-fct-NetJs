@@ -6,6 +6,35 @@ Este documento define la arquitectura, patrones de diseño y guías de implement
 
 ## 🏗️ Arquitectura del Proyecto
 
+### Clean Architecture + 5 Recomendaciones Fundamentales del Equipo Flutter
+
+Este proyecto implementa las **5 recomendaciones "Strongly recommend"** del equipo oficial de Flutter como base fundamental de la arquitectura:
+
+#### **1. Separación de Concernidos** (STRONGLY RECOMMEND)
+- **Lógica de negocio separada de la UI**: Los widgets solo se encargan de la presentación
+- **Patrones MVVM, Clean Architecture**: Implementación estricta de capas
+- **Widgets enfocados solo en presentación**: Sin lógica de negocio en la UI
+
+#### **2. Inyección de Dependencias** (STRONGLY RECOMMEND)
+- **SIEMPRE usar inyección de dependencias**: getIt, Riverpod
+- **NUNCA objetos globalmente accesibles**: Evitar singletons globales
+- **Abstract classes para facilitar testing**: Interfaces para todas las dependencias
+
+#### **3. Navegación con go_router** (RECOMMEND)
+- **go_router como solución oficial**: Migración desde auto_route
+- **Rutas nombradas y tipadas**: Navegación type-safe
+- **Deep linking y guards de autenticación**: Navegación robusta
+
+#### **4. Convenciones de Nombres Estándar** (RECOMMEND)
+- **Nomenclatura según componente arquitectónico**: HomeViewModel, UserRepository
+- **`ui/core/` en lugar de `/widgets/`**: Estructura recomendada
+- **Evitar nombres que se confundan con el SDK**: No usar Controller, Service genéricos
+
+#### **5. Repositorios Abstractos** (STRONGLY RECOMMEND)
+- **Repositories como fuente de verdad**: Única fuente de datos
+- **SIEMPRE crear abstract repository classes**: Interfaces obligatorias
+- **Cache strategies y fallbacks**: Implementación robusta de datos
+
 ### Clean Architecture - Estructura de Capas
 
 ```
@@ -48,6 +77,120 @@ lib/
 
 ## 🎯 Principios de Diseño
 
+### 0. 5 Recomendaciones Fundamentales del Equipo Flutter (OBLIGATORIAS)
+
+Estas recomendaciones son **OBLIGATORIAS** para todo el desarrollo en este proyecto:
+
+#### **1. Separación de Concernidos** (STRONGLY RECOMMEND)
+```dart
+// ✅ CORRECTO - Widget solo para presentación
+class UserListScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<UserListViewModel>(
+      builder: (context, viewModel, child) {
+        return Scaffold(
+          body: ListView.builder(
+            itemBuilder: (context, index) => UserCard(
+              user: viewModel.users[index],
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+// ✅ CORRECTO - ViewModel para lógica de negocio
+class UserListViewModel extends ChangeNotifier {
+  final UserRepository _userRepository;
+  
+  UserListViewModel(this._userRepository);
+  
+  Future<void> loadUsers() async {
+    // Lógica de negocio aquí
+    final users = await _userRepository.getUsers();
+    // Actualizar estado
+  }
+}
+```
+
+#### **2. Inyección de Dependencias** (STRONGLY RECOMMEND)
+```dart
+// ✅ CORRECTO - Inyección a través de constructor
+class UserService {
+  final UserRepository _repository;
+  final Logger _logger;
+  
+  UserService(this._repository, this._logger);
+}
+
+// ❌ INCORRECTO - Objeto global
+class UserService {
+  static final UserRepository _repository = UserRepository();
+}
+```
+
+#### **3. Navegación con go_router** (RECOMMEND)
+```dart
+// ✅ CORRECTO - go_router oficial
+final router = GoRouter(
+  routes: [
+    GoRoute(
+      path: '/users/:id',
+      name: 'user-details',
+      builder: (context, state) {
+        final userId = state.pathParameters['id']!;
+        return UserDetailsScreen(userId: userId);
+      },
+    ),
+  ],
+);
+
+// Uso en widgets
+ElevatedButton(
+  onPressed: () => context.goNamed('user-details', 
+    pathParameters: {'id': '123'}),
+  child: Text('Ver Usuario'),
+)
+```
+
+#### **4. Convenciones de Nombres Estándar** (RECOMMEND)
+```dart
+// ✅ CORRECTO
+class HomeViewModel extends ChangeNotifier { }
+class UserRepository { }
+class ClientApiService { }
+class HomeScreen extends StatelessWidget { }
+
+// ❌ INCORRECTO
+class HomeController { }  // Se confunde con Flutter
+class UserService { }     // Muy genérico
+class ApiClient { }       // No sigue convención
+```
+
+#### **5. Repositorios Abstractos** (STRONGLY RECOMMEND)
+```dart
+// ✅ CORRECTO - Abstract repository
+abstract class UserRepository {
+  Future<User> getUser(String id);
+  Future<List<User>> getUsers();
+}
+
+// ✅ CORRECTO - Implementación
+class UserRepositoryImpl implements UserRepository {
+  final UserApiService _apiService;
+  final UserLocalDataSource _localDataSource;
+  
+  UserRepositoryImpl(this._apiService, this._localDataSource);
+  
+  @override
+  Future<User> getUser(String id) async {
+    // Implementación con cache y fallback
+  }
+}
+```
+
 ### 1. Clean Architecture
 - **Separación de responsabilidades**: Cada capa tiene una responsabilidad específica
 - **Independencia de frameworks**: El dominio no depende de Flutter
@@ -68,20 +211,21 @@ lib/
 
 ## 🔧 Stack Tecnológico
 
-### Dependencias Principales
+### Dependencias Principales (Siguiendo Recomendaciones Oficiales)
 ```yaml
 dependencies:
   flutter:
     sdk: flutter
   
-  # Estado y gestión de datos
+  # Estado y gestión de datos (RECOMENDACIÓN OFICIAL)
   flutter_riverpod: ^2.4.9
   riverpod_annotation: ^2.3.3
   
-  # Navegación
-  auto_route: ^7.8.4
+  # Navegación (RECOMENDACIÓN OFICIAL)
+  go_router: ^13.2.0
+  # auto_route: ^7.8.4  # Alternativa, pero go_router es la recomendación oficial
   
-  # Inyección de dependencias
+  # Inyección de dependencias (STRONGLY RECOMMEND)
   get_it: ^7.6.4
   
   # Generación de código
@@ -109,12 +253,13 @@ dependencies:
   file_picker: ^6.1.1
 
 dev_dependencies:
-  # Generación de código
+  # Generación de código (Siguiendo Recomendaciones Oficiales)
   build_runner: ^2.4.7
   freezed: ^2.4.6
   json_serializable: ^6.7.1
   riverpod_generator: ^2.3.9
-  auto_route_generator: ^7.3.2
+  # auto_route_generator: ^7.3.2  # Alternativa
+  go_router_generator: ^9.0.0  # Generador oficial para go_router
   
   # Testing
   flutter_test:
@@ -253,6 +398,108 @@ dev_dependencies:
 - [ ] **12.6** Caché de datos
 
 ### **Fase 13: Preparación para Producción** ⏱️ 1-2 semanas
+
+- [ ] **13.1** Configuración de builds de producción
+- [ ] **13.2** Optimización de assets
+- [ ] **13.3** Configuración de CI/CD
+- [ ] **13.4** Documentación de deployment
+- [ ] **13.5** Monitoreo y analytics
+
+## 🎯 Guías de Implementación Específicas
+
+### Performance y Optimización
+- Usa `const` widgets para optimización
+- Implementa `shouldRebuild` en `CustomPainter`
+- Usa `RepaintBoundary` para widgets complejos
+- Evita rebuilds innecesarios con `ValueNotifier`
+- Usa `compute()` para operaciones pesadas
+- Implementa lazy loading para listas grandes
+
+### Widgets y UI
+- Usa `const` constructors siempre que sea posible
+- Prefiere `SizedBox` sobre `Container` para espaciado
+- Usa `ListView.builder` para listas largas
+- Implementa `dispose()` para limpiar recursos
+- Usa `SliverAppBar` para scroll effects complejos
+- Prefiere `Expanded` y `Flexible` sobre tamaños fijos
+- Usa `MediaQuery` para responsive design
+
+### Estado y Gestión de Datos
+- Usa `StatefulWidget` solo cuando sea necesario
+- Prefiere `StatelessWidget` para widgets simples
+- Implementa `ChangeNotifier` para estado local
+- Usa `FutureBuilder` y `StreamBuilder` apropiadamente
+- Maneja estados de carga, error y éxito
+- Implementa retry logic para operaciones fallidas
+
+### Testing
+- Usa `flutter_test` para pruebas de widgets
+- Usa `integration_test` para probar módulos completos y APIs
+- Mockea servicios externos en tests unitarios
+- Usa `WidgetTester` para testing de widgets
+- Implementa golden tests para UI consistente
+- Usa `pumpAndSettle()` para animaciones en tests
+
+### Internacionalización
+- Usa `AppLocalizations` para todos los textos
+- Implementa pluralización correctamente
+- Maneja diferentes formatos de fecha/hora
+- Usa `NumberFormat` para formateo de números
+- Implementa RTL support cuando sea necesario
+
+### Accesibilidad
+- Usa `Semantics` para screen readers
+- Implementa `FocusNode` para navegación por teclado
+- Usa colores con suficiente contraste
+- Proporciona alternativas de texto para imágenes
+- Implementa gestos alternativos para discapacidades
+
+### Seguridad
+- No almacenes datos sensibles en SharedPreferences
+- Usa `flutter_secure_storage` para credenciales
+- Valida todas las entradas del usuario
+- Implementa rate limiting para APIs
+- Usa HTTPS para todas las comunicaciones
+
+### Debugging y Logging
+- Usa `debugPrint` en lugar de `print`
+- Implementa logging estructurado
+- Usa `Flutter Inspector` para debugging de UI
+- Implementa error reporting (Firebase Crashlytics)
+- Usa `flutter doctor` para verificar el entorno
+
+### Multiplataforma
+- Desarrolla simultáneamente para Web, Android e iOS
+- Usa `kIsWeb` para detectar plataforma web
+- Implementa responsive design con `MediaQuery`
+- Maneja diferencias de navegación entre plataformas
+- Optimiza para PWA en web
+- Implementa offline support cuando sea posible
+
+### Git Workflow
+- Usa Git Flow para gestión de ramas
+- Implementa Conventional Commits:
+  - `feat`: nuevas características
+  - `fix`: correcciones de bugs
+  - `docs`: documentación
+  - `test`: tests
+  - `refactor`: refactorización
+  - `perf`: mejoras de rendimiento
+  - `build`: cambios en build system
+  - `ci`: cambios en CI/CD
+  - `chore`: tareas de mantenimiento
+- Usa Pull Request templates
+- Implementa GitHub Actions para CI/CD
+- Configura branch protection rules
+- Usa semantic versioning
+
+### Gestión de Proyectos
+- Usa GitHub Issues para tracking de tareas
+- Implementa Project Boards para gestión visual
+- Usa milestones para releases
+- Documenta decisiones de arquitectura (ADRs)
+- Mantén un changelog actualizado
+- Usa code reviews obligatorios
 
 - [ ] **13.1** Configuración de builds
 - [ ] **13.2** Configuración de CI/CD

@@ -225,5 +225,159 @@
             "${3:// Lógica principal}"
         ],
         "description": "Patrón early return para evitar anidación"
+    },
+    "go_router Route": {
+        "prefix": "flroute",
+        "body": [
+            "/// Ruta para ${1:Feature}",
+            "GoRoute(",
+            "  path: '/${2:path}',",
+            "  name: ${3:RouteName},",
+            "  builder: (context, state) => const ${4:WidgetName}(),",
+            "  redirect: (context, state) {",
+            "    ${5:// Lógica de redirección si es necesaria}",
+            "    return null;",
+            "  },",
+            "),"
+        ],
+        "description": "Ruta con go_router siguiendo las convenciones"
+    },
+    "go_router Nested Route": {
+        "prefix": "flnestedroute",
+        "body": [
+            "/// Ruta anidada para ${1:Feature}",
+            "ShellRoute(",
+            "  builder: (context, state, child) => ${2:LayoutWidget}(child: child),",
+            "  routes: [",
+            "    GoRoute(",
+            "      path: '/${3:path}',",
+            "      name: ${4:RouteName},",
+            "      builder: (context, state) => const ${5:WidgetName}(),",
+            "    ),",
+            "  ],",
+            "),"
+        ],
+        "description": "Ruta anidada con go_router"
+    },
+    "Multiplatform Widget": {
+        "prefix": "flmp",
+        "body": [
+            "/// Widget multiplataforma para ${1:Feature}",
+            "class ${2:WidgetName} extends StatelessWidget {",
+            "  const ${2:WidgetName}({super.key});",
+            "",
+            "  @override",
+            "  Widget build(BuildContext context) {",
+            "    if (kIsWeb) {",
+            "      return ${3:WebWidget}();",
+            "    } else if (Platform.isAndroid) {",
+            "      return ${4:AndroidWidget}();",
+            "    } else if (Platform.isIOS) {",
+            "      return ${5:IOSWidget}();",
+            "    }",
+            "    return ${6:DefaultWidget}();",
+            "  }",
+            "}"
+        ],
+        "description": "Widget que se adapta a diferentes plataformas"
+    },
+    "Integration Test": {
+        "prefix": "flitest",
+        "body": [
+            "import 'package:flutter_test/flutter_test.dart';",
+            "import 'package:integration_test/integration_test.dart';",
+            "import 'package:${1:app_name}/main.dart' as app;",
+            "",
+            "void main() {",
+            "  IntegrationTestWidgetsFlutterBinding.ensureInitialized();",
+            "",
+            "  group('${2:Feature} Integration Tests', () {",
+            "    testWidgets('${3:should_do_something}', (tester) async {",
+            "      app.main();",
+            "      await tester.pumpAndSettle();",
+            "",
+            "      // Given",
+            "      ${4:// Configuración inicial}",
+            "",
+            "      // When",
+            "      ${5:// Acción a ejecutar}",
+            "",
+            "      // Then",
+            "      ${6:// Verificaciones}",
+            "    });",
+            "  });",
+            "}"
+        ],
+        "description": "Test de integración completo"
+    },
+    "Golden Test": {
+        "prefix": "flgolden",
+        "body": [
+            "testWidgets('${1:widget_name} golden test', (WidgetTester tester) async {",
+            "  // Arrange",
+            "  await tester.pumpWidget(",
+            "    MaterialApp(",
+            "      home: ${2:WidgetName}(),",
+            "    ),",
+            "  );",
+            "",
+            "  // Act",
+            "  await tester.pumpAndSettle();",
+            "",
+            "  // Assert",
+            "  await expectLater(",
+            "    find.byType(${2:WidgetName}),",
+            "    matchesGoldenFile('${3:golden_file_name}.png'),",
+            "  );",
+            "});"
+        ],
+        "description": "Test golden para verificar consistencia visual"
+    },
+    "Provider with Riverpod": {
+        "prefix": "flprovider",
+        "body": [
+            "/// Provider para ${1:Feature}",
+            "final ${2:featureProvider} = Provider<${3:Service}>((ref) {",
+            "  return ${3:Service}();",
+            "});",
+            "",
+            "/// StateNotifierProvider para ${1:Feature}",
+            "final ${4:featureStateProvider} = StateNotifierProvider<${5:Controller}, ${6:State}>((ref) {",
+            "  return ${5:Controller}();",
+            "});"
+        ],
+        "description": "Providers con Riverpod"
+    },
+    "Error Handling": {
+        "prefix": "flerror",
+        "body": [
+            "try {",
+            "  ${1:// Código que puede fallar}",
+            "} on ${2:ExceptionType} catch (e) {",
+            "  ${3:// Manejo específico}",
+            "  rethrow;",
+            "} catch (e) {",
+            "  ${4:// Manejo general}",
+            "  throw ${5:CustomException}('${6:Error message}: $e');",
+            "}"
+        ],
+        "description": "Manejo de errores estructurado"
+    },
+    "Performance Widget": {
+        "prefix": "flperf",
+        "body": [
+            "/// Widget optimizado para performance",
+            "class ${1:WidgetName} extends StatelessWidget {",
+            "  const ${1:WidgetName}({super.key});",
+            "",
+            "  @override",
+            "  Widget build(BuildContext context) {",
+            "    return RepaintBoundary(",
+            "      child: ${2:ChildWidget}(),",
+            "    );",
+            "  }",
+            "}"
+        ],
+        "description": "Widget con optimizaciones de performance"
     }
 }

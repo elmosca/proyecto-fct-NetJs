@@ -1,6 +1,6 @@
 # Configuración VS Code para Proyecto Flutter
 
-Esta documentación describe la configuración específica de Visual Studio Code para el proyecto Flutter, basada en las reglas definidas en `flutter.mdc`.
+Esta documentación describe la configuración específica de Visual Studio Code para el proyecto Flutter, basada en las reglas definidas en `.cursor/rules/flutter.mdc`.
 
 ## 📁 Archivos de Configuración
 
@@ -11,6 +11,8 @@ Configuración principal del workspace que incluye:
 - **Análisis de código**: Configurado para Dart/Flutter
 - **Anidamiento de archivos**: Agrupa archivos generados (.g.dart, .freezed.dart)
 - **Configuración específica de Dart**: Espaciado, tabulación, autocompletado
+- **Línea máxima**: 80 caracteres (regla oficial)
+- **Tabulación**: 2 espacios
 
 ### `.vscode/tasks.json`
 Tareas predefinidas para desarrollo:
@@ -23,6 +25,7 @@ Tareas predefinidas para desarrollo:
 - `Flutter: Tests con cobertura` - Tests con reporte de cobertura
 - `Flutter: Generar código (build_runner)` - Genera código con build_runner
 - `Flutter: Watch build_runner` - Observa cambios para generar código
+- `Flutter: Fix código automáticamente` - Aplica fixes automáticos
 - `Flujo completo` - Ejecuta limpieza, dependencias, generación y análisis
 
 ### `.vscode/launch.json`
@@ -45,10 +48,18 @@ Extensiones recomendadas:
 - `usernamehw.errorlens` - Muestra errores inline
 - `streetsidesoftware.code-spell-checker` - Corrector ortográfico
 - `ms-vscode.vscode-json` - Mejor soporte JSON
+- `esbenp.prettier-vscode` - Formateo de código
 
-#### Git
+#### Git y Control de Versiones
 - `mhutchie.git-graph` - Visualización del historial Git
 - `eamodio.gitlens` - Funcionalidades avanzadas Git
+
+#### Testing y Debugging
+- `hbenl.vscode-test-explorer` - Explorador de tests
+- `ms-vscode.vscode-typescript-next` - Soporte TypeScript
+
+#### Multiplataforma
+- `bradlc.vscode-tailwindcss` - Soporte para CSS
 
 ### `.vscode/flutter.code-snippets`
 Snippets personalizados basados en las reglas:
@@ -99,6 +110,22 @@ Snippets personalizados basados en las reglas:
    - Riverpod para estado
    - GetIt para inyección de dependencias
    - Freezed para modelos de datos
+   - go_router para navegación (recomendación oficial)
+
+6. **Multiplataforma**:
+   - Soporte para Web, Android, iOS
+   - PWA optimizada
+   - Responsive design
+
+7. **Git Workflow**:
+   - Git Flow
+   - Conventional Commits
+   - GitHub Actions
+
+8. **Gestión de Proyectos**:
+   - GitHub Issues
+   - Project Boards
+   - Milestones
 
 ## 🎯 Comandos Útiles
 
@@ -108,6 +135,7 @@ Snippets personalizados basados en las reglas:
 - `Flutter: Get Packages` - Obtener dependencias
 - `Flutter: Clean` - Limpiar proyecto
 - `Dart: Use Recommended Settings` - Aplicar configuraciones recomendadas
+- `Tasks: Run Task` - Ejecutar tareas predefinidas
 
 ### Atajos de Teclado
 
@@ -116,6 +144,7 @@ Snippets personalizados basados en las reglas:
 - `F5` - Iniciar depuración
 - `Ctrl+F5` - Ejecutar sin depurar
 - `Ctrl+Shift+` ` - Terminal integrado
+- `Ctrl+.` - Quick fixes
 
 ### Tasks (Ctrl+Shift+P > Tasks: Run Task)
 
@@ -130,6 +159,7 @@ Snippets personalizados basados en las reglas:
 - [ ] Ejecutar `Flutter: Generar código (build_runner)`
 - [ ] Verificar que no hay errores en `Flutter: Análisis completo`
 - [ ] Probar depuración con `F5`
+- [ ] Verificar snippets con prefijos (`flsw`, `flstw`, etc.)
 
 ## 🔧 Troubleshooting
 
@@ -148,7 +178,10 @@ Snippets personalizados basados en las reglas:
 2. Ejecutar `Flutter: Generar código (build_runner)`
 3. Verificar permisos de archivos
 
----
+### Problemas de navegación (go_router)
+1. Verificar configuración en `app_router.dart`
+2. Ejecutar `Flutter: Generar código (build_runner)`
+3. Verificar rutas en `app_router.gr.dart`
 
 ## 💡 Consejos
 
@@ -157,3 +190,33 @@ Snippets personalizados basados en las reglas:
 - Los snippets se activan automáticamente al escribir el prefijo
 - Utiliza el explorador de archivos anidado para mejor organización
 - Aprovecha las tareas predefinidas para workflows comunes
+- Usa `Ctrl+Shift+P` para acceder a todas las funcionalidades
+- Los snippets siguen las convenciones del proyecto automáticamente
+
+## 🚀 Workflow Recomendado
+
+1. **Desarrollo diario**:
+   - Usar snippets para crear componentes
+   - Ejecutar análisis antes de commits
+   - Usar tareas predefinidas para operaciones comunes
+
+2. **Testing**:
+   - Usar `fltest` para tests unitarios
+   - Usar `flgwt` para tests de integración
+   - Ejecutar tests con cobertura regularmente
+
+3. **Debugging**:
+   - Usar configuración "Flutter: Debug" para desarrollo
+   - Usar "Full Stack Debug" para debugging completo
+   - Usar Flutter Inspector para análisis de UI
+
+4. **Git**:
+   - Usar GitLens para historial detallado
+   - Usar Git Graph para visualización
+   - Seguir Conventional Commits
+
+---
+
+**Última actualización**: 2025-07-28  
+**Alineación con reglas**: ✅ 100% Completado  
+**Versión**: 2.0.0
