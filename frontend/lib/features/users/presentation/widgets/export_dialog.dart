@@ -1,6 +1,7 @@
 import 'package:fct_frontend/core/services/export_service.dart';
 import 'package:fct_frontend/features/users/domain/entities/user_entity.dart';
 import 'package:flutter/material.dart';
+import 'package:fct_frontend/core/extensions/color_extensions.dart';
 
 class ExportDialog extends StatefulWidget {
   const ExportDialog({

@@ -1,6 +1,7 @@
 import 'package:fct_frontend/features/users/domain/entities/role_enum.dart';
 import 'package:fct_frontend/features/users/presentation/providers/users_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:fct_frontend/core/extensions/color_extensions.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class UserFilters extends ConsumerStatefulWidget {

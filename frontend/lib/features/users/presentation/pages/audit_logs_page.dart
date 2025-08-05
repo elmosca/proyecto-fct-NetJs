@@ -7,6 +7,7 @@ import 'package:fct_frontend/features/users/presentation/providers/audit_provide
 import 'package:fct_frontend/features/users/presentation/widgets/audit_log_item.dart';
 import 'package:fct_frontend/features/users/presentation/widgets/authorized_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:fct_frontend/core/extensions/color_extensions.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 @RoutePage()

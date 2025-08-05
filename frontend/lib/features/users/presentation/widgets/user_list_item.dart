@@ -1,5 +1,6 @@
 import 'package:fct_frontend/features/users/domain/entities/user_entity.dart';
 import 'package:flutter/material.dart';
+import 'package:fct_frontend/core/extensions/color_extensions.dart';
 
 class UserListItem extends StatelessWidget {
   const UserListItem({

@@ -1,5 +1,6 @@
 import 'package:fct_frontend/core/services/audit_service.dart';
 import 'package:flutter/material.dart';
+import 'package:fct_frontend/core/extensions/color_extensions.dart';
 import 'package:intl/intl.dart';
 
 class AuditLogItem extends StatelessWidget {

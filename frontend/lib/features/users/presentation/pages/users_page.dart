@@ -14,6 +14,7 @@ import 'package:fct_frontend/features/users/presentation/widgets/user_list_item.
 import 'package:fct_frontend/features/users/presentation/widgets/users_stats_widget.dart';
 import 'package:fct_frontend/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:fct_frontend/core/extensions/color_extensions.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 @RoutePage()

@@ -1,5 +1,6 @@
 import 'package:fct_frontend/core/utils/validators.dart';
 import 'package:fct_frontend/core/widgets/app_button.dart';
+import 'package:fct_frontend/core/extensions/color_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

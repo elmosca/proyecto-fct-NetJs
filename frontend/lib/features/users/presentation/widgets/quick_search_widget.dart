@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:fct_frontend/core/extensions/color_extensions.dart';
 
 class QuickSearchWidget extends StatefulWidget {
   const QuickSearchWidget({
