@@ -1,257 +1,211 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
 import 'app_localizations.dart';
 
+// ignore_for_file: type=lint
+
+/// The translations for English (`en`).
 class AppLocalizationsEn extends AppLocalizations {
-  AppLocalizationsEn() : super('en');
+  AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get appTitle => 'FCT - Project Management';
+  String get loginTitle => 'Login';
+
   @override
-  String get dashboard => 'Dashboard';
+  String get emailLabel => 'Email';
+
   @override
-  String get projects => 'Projects';
+  String get passwordLabel => 'Password';
+
   @override
-  String get tasks => 'Tasks';
+  String get loginButton => 'Sign In';
+
   @override
-  String get milestones => 'Milestones';
+  String get forgotPassword => 'Forgot your password?';
+
   @override
-  String get profile => 'Profile';
+  String get registerLink => 'Don\'t have an account? Sign up';
+
   @override
-  String get settings => 'Settings';
+  String get projectTitle => 'Project Title';
+
   @override
-  String get login => 'Login';
+  String get projectDescription => 'Project Description';
+
   @override
-  String get register => 'Register';
+  String get createProject => 'Create Project';
+
   @override
-  String get logout => 'Logout';
+  String get editProject => 'Edit Project';
+
   @override
-  String get email => 'Email';
+  String get deleteProject => 'Delete Project';
+
   @override
-  String get password => 'Password';
-  @override
-  String get firstName => 'First Name';
-  @override
-  String get lastName => 'Last Name';
-  @override
-  String get create => 'Create';
-  @override
-  String get edit => 'Edit';
-  @override
-  String get delete => 'Delete';
+  String get confirmDelete => 'Are you sure you want to delete this item?';
+
   @override
   String get save => 'Save';
+
   @override
   String get cancel => 'Cancel';
-  @override
-  String get submit => 'Submit';
-  @override
-  String get taskDetails => 'Task Details';
-  @override
-  String get basicInformation => 'Basic Information';
-  @override
-  String get metadata => 'Metadata';
-  @override
-  String get actions => 'Actions';
-  @override
-  String get changeStatus => 'Change Status';
-  @override
-  String get createdAt => 'Created at';
-  @override
-  String get updatedAt => 'Updated at';
-  @override
-  String get createdBy => 'Created by';
-  @override
-  String get project => 'Project';
-  @override
-  String get createMilestone => 'Create milestone';
-  @override
-  String get editMilestone => 'Edit milestone';
-  @override
-  String get deleteMilestone => 'Delete milestone';
-  @override
-  String get deleteMilestoneConfirmation =>
-      'Are you sure you want to delete this milestone?';
-  @override
-  String get milestoneDetails => 'Milestone Details';
-  @override
-  String get milestoneNumber => 'Milestone number';
-  @override
-  String get plannedDate => 'Planned date';
-  @override
-  String get completedDate => 'Completed date';
-  @override
-  String get milestoneType => 'Milestone type';
-  @override
-  String get expectedDeliverables => 'Expected deliverables';
-  @override
-  String get reviewComments => 'Review comments';
-  @override
-  String get isFromAnteproject => 'From anteproject';
-  @override
-  String get noMilestones => 'No milestones';
-  @override
-  String get noMilestonesMessage => 'No milestones found';
-  @override
-  String get createFirstMilestone => 'Create first milestone';
-  @override
-  String get milestoneNumberRequired => 'Milestone number is required';
-  @override
-  String get plannedDateRequired => 'Planned date is required';
-  @override
-  String get completeMilestone => 'Complete milestone';
-  @override
-  String get milestoneCompleted => 'Milestone completed';
-  @override
-  String get milestoneDelayed => 'Milestone delayed';
-  @override
-  String get milestoneInProgress => 'Milestone in progress';
-  @override
-  String get milestonePending => 'Milestone pending';
-  @override
-  String get assignUsers => 'Assign users';
-  @override
-  String get assignUserToTask => 'Assign user to task';
-  @override
-  String get unassignUser => 'Unassign user';
-  @override
-  String get assignedUsers => 'Assigned users';
-  @override
-  String get availableUsers => 'Available users';
-  @override
-  String get selectUsers => 'Select users';
-  @override
-  String get searchUsers => 'Search users...';
-  @override
-  String get noUsersAssigned => 'No users assigned';
-  @override
-  String get noUsersAvailable => 'No users available';
-  @override
-  String get userAssignedSuccessfully => 'User assigned successfully';
-  @override
-  String get userUnassignedSuccessfully => 'User unassigned successfully';
-  @override
-  String get errorAssigningUser => 'Error assigning user';
-  @override
-  String get errorUnassigningUser => 'Error unassigning user';
-  @override
-  String get assignUser => 'Assign';
-  @override
-  String get unassignUserButton => 'Unassign';
-  @override
-  String get userManagement => 'User management';
-  @override
-  String get filterByRole => 'Filter by role';
-  @override
-  String get allRoles => 'All roles';
-  @override
-  String get student => 'Student';
-  @override
-  String get tutor => 'Tutor';
-  @override
-  String get admin => 'Administrator';
-  @override
-  String get clear => 'Clear';
-  @override
-  String get apply => 'Apply';
-  @override
-  String get add => 'Add';
-  @override
-  String get search => 'Search';
-  @override
-  String get filter => 'Filter';
-  @override
-  String get filters => 'Filters';
-  @override
-  String get all => 'All';
-  @override
-  String get status => 'Status';
-  @override
-  String get priority => 'Priority';
-  @override
-  String get complexity => 'Complexity';
-  @override
-  String get title => 'Title';
-  @override
-  String get description => 'Description';
-  @override
-  String get dueDate => 'Due Date';
-  @override
-  String get estimatedHours => 'Estimated Hours';
-  @override
-  String get tags => 'Tags';
-  @override
-  String get assignees => 'Assignees';
-  @override
-  String get createTask => 'Create Task';
-  @override
-  String get deleteTask => 'Delete Task';
-  @override
-  String get listView => 'List View';
-  @override
-  String get kanbanView => 'Kanban View';
-  @override
-  String get searchTasksHint => 'Search tasks...';
-  @override
-  String get selectDateRange => 'Select date range';
+
   @override
   String get loading => 'Loading...';
+
   @override
   String get error => 'Error';
-  @override
-  String get info => 'Information';
-  @override
-  String get noData => 'No data';
-  @override
-  String get noDataMessage => 'No items found';
-  @override
-  String get noTasks => 'No tasks';
-  @override
-  String get noTasksMessage => 'No tasks found';
-  @override
-  String get createFirstTask => 'Create first task';
-  @override
-  String get editTask => 'Edit Task';
-  @override
-  String get deleteTaskConfirmation =>
-      'Are you sure you want to delete this task?';
-  @override
-  String get descriptionRequired => 'Description is required';
-  @override
-  String get titleRequired => 'Title is required';
-  @override
-  String get language => 'Language';
-  @override
-  String get dark => 'Dark';
-  @override
-  String get light => 'Light';
 
-  // Additional strings
   @override
-  String get users => 'Users';
+  String get success => 'Success';
+
   @override
-  String get anteprojectDetails => 'Anteproject Details';
+  String get warning => 'Warning';
+
   @override
-  String get anteprojectNotFound => 'Anteproject not found';
+  String get createExport => 'Create Export';
+
   @override
-  String get anteprojectsTitle => 'Anteprojects';
+  String get exportTitle => 'Export Title';
+
   @override
-  String get noAnteprojectsTitle => 'No anteprojects';
+  String get exportDescription => 'Export Description';
+
   @override
-  String get noAnteprojectsMessage => 'No anteprojects found';
+  String get exportFormat => 'Export Format';
+
   @override
-  String get createAnteproject => 'Create Anteproject';
+  String get exportFilters => 'Export Filters';
+
   @override
-  String get deleteAnteprojectTitle => 'Delete Anteproject';
+  String get projectId => 'Project ID';
+
   @override
-  String get deleteAnteprojectMessage =>
-      'Are you sure you want to delete this anteproject?';
+  String get milestoneId => 'Milestone ID';
+
   @override
-  String get submitAnteprojectTitle => 'Submit Anteproject';
+  String get fromDate => 'From Date';
+
   @override
-  String get submitAnteprojectMessage =>
-      'Are you sure you want to submit this anteproject?';
+  String get toDate => 'To Date';
+
   @override
-  String get searchAnteprojects => 'Search anteprojects...';
+  String get taskStatus => 'Task Status';
+
   @override
-  String get allStatuses => 'All Statuses';
+  String get selectStatus => 'Select Status';
+
+  @override
+  String get exportColumns => 'Export Columns';
+
+  @override
+  String get selectAll => 'Select All';
+
+  @override
+  String get deselectAll => 'Deselect All';
+
+  @override
+  String get selectAtLeastOneColumn => 'Please select at least one column';
+
+  @override
+  String get milestoneDetails => 'Milestone Details';
+
+  @override
+  String get edit => 'Edit';
+
+  @override
+  String get delete => 'Delete';
+
+  @override
+  String get basicInformation => 'Basic Information';
+
+  @override
+  String get status => 'Status';
+
+  @override
+  String get milestoneType => 'Milestone Type';
+
+  @override
+  String get plannedDate => 'Planned Date';
+
+  @override
+  String get completedDate => 'Completed Date';
+
+  @override
+  String get createdAt => 'Created At';
+
+  @override
+  String get updatedAt => 'Updated At';
+
+  @override
+  String get description => 'Description';
+
+  @override
+  String get metadata => 'Metadata';
+
+  @override
+  String get project => 'Project';
+
+  @override
+  String get isFromAnteproject => 'From Anteproject';
+
+  @override
+  String get expectedDeliverables => 'Expected Deliverables';
+
+  @override
+  String get reviewComments => 'Review Comments';
+
+  @override
+  String get actions => 'Actions';
+
+  @override
+  String get changeStatus => 'Change Status';
+
+  @override
+  String get deleteMilestone => 'Delete Milestone';
+
+  @override
+  String get deleteMilestoneConfirmation => 'Are you sure you want to delete this milestone?';
+
+  @override
+  String get editMilestone => 'Edit Milestone';
+
+  @override
+  String get title => 'Title';
+
+  @override
+  String get milestones => 'Milestones';
+
+  @override
+  String get noMilestones => 'No Milestones';
+
+  @override
+  String get noMilestonesMessage => 'No milestones found. Create your first milestone to get started.';
+
+  @override
+  String get progressReport => 'Progress Report';
+
+  @override
+  String get filter => 'Filter';
+
+  @override
+  String get refresh => 'Refresh';
+
+  @override
+  String get errorLoadingData => 'Error Loading Data';
+
+  @override
+  String get retry => 'Retry';
+
+  @override
+  String get filterReport => 'Filter Report';
+
+  @override
+  String get allProjects => 'All Projects';
+
+  @override
+  String get clearFilters => 'Clear Filters';
+
+  @override
+  String get apply => 'Apply';
 }
