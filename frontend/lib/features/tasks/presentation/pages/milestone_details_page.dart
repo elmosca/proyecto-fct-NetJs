@@ -16,7 +16,7 @@ class MilestoneDetailsPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: AppBar(
@@ -466,6 +466,8 @@ class MilestoneDetailsPage extends ConsumerWidget {
         return 'Completado';
       case MilestoneStatus.delayed:
         return 'Retrasado';
+      case MilestoneStatus.cancelled:
+        return 'Cancelado';
     }
   }
 
@@ -491,7 +493,7 @@ class MilestoneDetailsPage extends ConsumerWidget {
 
   void _showDeleteDialog(
       BuildContext context, MilestoneEntity milestone, WidgetRef? ref) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -521,7 +523,7 @@ class MilestoneDetailsPage extends ConsumerWidget {
   }
 
   void _changeStatus(BuildContext context, MilestoneEntity milestone) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder: (context) => AlertDialog(

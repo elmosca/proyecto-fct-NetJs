@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:fct_frontend/core/widgets/empty_state_widget.dart';
 import 'package:fct_frontend/core/widgets/loading_widget.dart';
 import 'package:fct_frontend/features/tasks/domain/entities/milestone_entity.dart';
@@ -8,6 +9,7 @@ import 'package:fct_frontend/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+@RoutePage()
 class MilestonesPage extends ConsumerStatefulWidget {
   final String? projectId;
 
@@ -37,7 +39,7 @@ class _MilestonesPageState extends ConsumerState<MilestonesPage> {
   @override
   Widget build(BuildContext context) {
     final milestonesState = ref.watch(milestonesNotifierProvider);
-    final l10n = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: AppBar(
@@ -71,8 +73,8 @@ class _MilestonesPageState extends ConsumerState<MilestonesPage> {
     if (milestones.isEmpty) {
       return EmptyStateWidget(
         icon: Icons.flag,
-        title: AppLocalizations.of(context).noMilestones,
-        message: AppLocalizations.of(context).noMilestonesMessage,
+        title: AppLocalizations.of(context)!.noMilestones,
+        message: AppLocalizations.of(context)!.noMilestonesMessage,
         onAction: () => _showCreateMilestoneDialog(context),
       );
     }
@@ -147,7 +149,7 @@ class _MilestonesPageState extends ConsumerState<MilestonesPage> {
 
   void _showDeleteMilestoneDialog(
       BuildContext context, MilestoneEntity milestone) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
