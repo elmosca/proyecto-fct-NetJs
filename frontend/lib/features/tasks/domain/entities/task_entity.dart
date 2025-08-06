@@ -43,6 +43,8 @@ enum TaskStatus {
   underReview,
   @JsonValue('completed')
   completed,
+  @JsonValue('cancelled')
+  cancelled,
 }
 
 enum TaskPriority {
@@ -52,6 +54,8 @@ enum TaskPriority {
   medium,
   @JsonValue('high')
   high,
+  @JsonValue('critical')
+  critical,
 }
 
 enum TaskComplexity {
@@ -74,6 +78,8 @@ extension TaskStatusExtension on TaskStatus {
         return 'En Revisión';
       case TaskStatus.completed:
         return 'Completada';
+      case TaskStatus.cancelled:
+        return 'Cancelada';
     }
   }
 
@@ -87,6 +93,8 @@ extension TaskStatusExtension on TaskStatus {
         return 'Under Review';
       case TaskStatus.completed:
         return 'Completed';
+      case TaskStatus.cancelled:
+        return 'Cancelled';
     }
   }
 
@@ -100,6 +108,8 @@ extension TaskStatusExtension on TaskStatus {
         return Colors.orange;
       case TaskStatus.completed:
         return Colors.green;
+      case TaskStatus.cancelled:
+        return Colors.red;
     }
   }
 
@@ -113,6 +123,8 @@ extension TaskStatusExtension on TaskStatus {
         return Icons.rate_review;
       case TaskStatus.completed:
         return Icons.check_circle_outline;
+      case TaskStatus.cancelled:
+        return Icons.cancel;
     }
   }
 }
@@ -126,6 +138,8 @@ extension TaskPriorityExtension on TaskPriority {
         return 'Media';
       case TaskPriority.high:
         return 'Alta';
+      case TaskPriority.critical:
+        return 'Crítica';
     }
   }
 
@@ -137,6 +151,8 @@ extension TaskPriorityExtension on TaskPriority {
         return 'Medium';
       case TaskPriority.high:
         return 'High';
+      case TaskPriority.critical:
+        return 'Critical';
     }
   }
 
@@ -148,6 +164,8 @@ extension TaskPriorityExtension on TaskPriority {
         return Colors.orange;
       case TaskPriority.high:
         return Colors.red;
+      case TaskPriority.critical:
+        return Colors.purple;
     }
   }
 }

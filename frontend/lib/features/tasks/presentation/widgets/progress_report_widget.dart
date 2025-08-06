@@ -1,9 +1,8 @@
+import 'package:fct_frontend/features/tasks/domain/entities/milestone_entity.dart';
+import 'package:fct_frontend/features/tasks/domain/entities/task_entity.dart';
+import 'package:fct_frontend/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../../l10n/app_localizations.dart';
-import '../../domain/entities/milestone_entity.dart';
-import '../../domain/entities/task_entity.dart';
 
 class ProgressReportWidget extends ConsumerWidget {
   final List<TaskEntity> tasks;
@@ -428,7 +427,7 @@ class ProgressReportWidget extends ConsumerWidget {
               ],
             ),
           );
-        }).toList(),
+        }),
       ],
     );
   }
@@ -448,8 +447,7 @@ class ProgressReportWidget extends ConsumerWidget {
         ),
         const SizedBox(height: 8),
         ...recentTasks
-            .map((task) => _buildTaskItem(context, task, l10n, theme))
-            .toList(),
+            .map((task) => _buildTaskItem(context, task, l10n, theme)),
       ],
     );
   }
@@ -503,10 +501,8 @@ class ProgressReportWidget extends ConsumerWidget {
           ),
         ),
         const SizedBox(height: 8),
-        ...recentMilestones
-            .map((milestone) =>
-                _buildMilestoneItem(context, milestone, l10n, theme))
-            .toList(),
+        ...recentMilestones.map((milestone) =>
+            _buildMilestoneItem(context, milestone, l10n, theme)),
       ],
     );
   }
@@ -594,8 +590,7 @@ class ProgressReportWidget extends ConsumerWidget {
             ),
             const SizedBox(height: 16),
             ...recentItems
-                .map((item) => _buildTimelineItem(context, item, l10n, theme))
-                .toList(),
+                .map((item) => _buildTimelineItem(context, item, l10n, theme)),
           ],
         ),
       ),

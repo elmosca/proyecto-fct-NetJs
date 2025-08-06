@@ -37,6 +37,8 @@ enum MilestoneStatus {
   completed,
   @JsonValue('delayed')
   delayed,
+  @JsonValue('cancelled')
+  cancelled,
 }
 
 enum MilestoneType {
@@ -61,6 +63,8 @@ extension MilestoneStatusExtension on MilestoneStatus {
         return 'Completado';
       case MilestoneStatus.delayed:
         return 'Retrasado';
+      case MilestoneStatus.cancelled:
+        return 'Cancelado';
     }
   }
 
@@ -74,6 +78,8 @@ extension MilestoneStatusExtension on MilestoneStatus {
         return 'Completed';
       case MilestoneStatus.delayed:
         return 'Delayed';
+      case MilestoneStatus.cancelled:
+        return 'Cancelled';
     }
   }
 
@@ -87,6 +93,8 @@ extension MilestoneStatusExtension on MilestoneStatus {
         return Colors.green;
       case MilestoneStatus.delayed:
         return Colors.red;
+      case MilestoneStatus.cancelled:
+        return Colors.orange;
     }
   }
 
@@ -100,6 +108,8 @@ extension MilestoneStatusExtension on MilestoneStatus {
         return Icons.check_circle_outline;
       case MilestoneStatus.delayed:
         return Icons.warning;
+      case MilestoneStatus.cancelled:
+        return Icons.cancel;
     }
   }
 }

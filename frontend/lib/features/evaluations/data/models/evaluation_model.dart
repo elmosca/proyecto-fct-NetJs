@@ -1,6 +1,5 @@
+import 'package:fct_frontend/features/evaluations/domain/entities/evaluation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-
-import '../../domain/entities/evaluation.dart';
 
 part 'evaluation_model.freezed.dart';
 part 'evaluation_model.g.dart';
@@ -24,25 +23,9 @@ class EvaluationModel with _$EvaluationModel {
 
   factory EvaluationModel.fromJson(Map<String, dynamic> json) =>
       _$EvaluationModelFromJson(json);
+}
 
-  factory EvaluationModel.fromEntity(Evaluation entity) {
-    return EvaluationModel(
-      id: entity.id,
-      anteprojectId: entity.anteprojectId,
-      evaluatorId: entity.evaluatorId,
-      scores:
-          entity.scores.map((s) => EvaluationScoreModel.fromEntity(s)).toList(),
-      totalScore: entity.totalScore,
-      comments: entity.comments,
-      status: entity.status.name,
-      submittedAt: entity.submittedAt,
-      createdAt: entity.createdAt,
-      updatedAt: entity.updatedAt,
-      evaluatorName: entity.evaluatorName,
-      anteprojectTitle: entity.anteprojectTitle,
-    );
-  }
-
+extension EvaluationModelExtension on EvaluationModel {
   Evaluation toEntity() {
     return Evaluation(
       id: id,
@@ -61,6 +44,27 @@ class EvaluationModel with _$EvaluationModel {
   }
 }
 
+extension EvaluationModelStaticExtension on EvaluationModel {
+  static EvaluationModel fromEntity(Evaluation entity) {
+    return EvaluationModel(
+      id: entity.id,
+      anteprojectId: entity.anteprojectId,
+      evaluatorId: entity.evaluatorId,
+      scores: entity.scores
+          .map((s) => EvaluationScoreModelStaticExtension.fromEntity(s))
+          .toList(),
+      totalScore: entity.totalScore,
+      comments: entity.comments,
+      status: entity.status.name,
+      submittedAt: entity.submittedAt,
+      createdAt: entity.createdAt,
+      updatedAt: entity.updatedAt,
+      evaluatorName: entity.evaluatorName,
+      anteprojectTitle: entity.anteprojectTitle,
+    );
+  }
+}
+
 @freezed
 class EvaluationScoreModel with _$EvaluationScoreModel {
   const factory EvaluationScoreModel({
@@ -73,17 +77,9 @@ class EvaluationScoreModel with _$EvaluationScoreModel {
 
   factory EvaluationScoreModel.fromJson(Map<String, dynamic> json) =>
       _$EvaluationScoreModelFromJson(json);
+}
 
-  factory EvaluationScoreModel.fromEntity(EvaluationScore entity) {
-    return EvaluationScoreModel(
-      criteriaId: entity.criteriaId,
-      criteriaName: entity.criteriaName,
-      score: entity.score,
-      maxScore: entity.maxScore,
-      comments: entity.comments,
-    );
-  }
-
+extension EvaluationScoreModelExtension on EvaluationScoreModel {
   EvaluationScore toEntity() {
     return EvaluationScore(
       criteriaId: criteriaId,
@@ -91,6 +87,18 @@ class EvaluationScoreModel with _$EvaluationScoreModel {
       score: score,
       maxScore: maxScore,
       comments: comments,
+    );
+  }
+}
+
+extension EvaluationScoreModelStaticExtension on EvaluationScoreModel {
+  static EvaluationScoreModel fromEntity(EvaluationScore entity) {
+    return EvaluationScoreModel(
+      criteriaId: entity.criteriaId,
+      criteriaName: entity.criteriaName,
+      score: entity.score,
+      maxScore: entity.maxScore,
+      comments: entity.comments,
     );
   }
 }

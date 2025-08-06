@@ -1,14 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:fct_frontend/core/widgets/app_button.dart';
-import 'package:fct_frontend/core/widgets/app_text_field.dart';
 import 'package:fct_frontend/core/widgets/loading_widget.dart';
+import 'package:fct_frontend/features/evaluations/domain/entities/evaluation.dart';
+import 'package:fct_frontend/features/evaluations/domain/entities/evaluation_criteria.dart';
+import 'package:fct_frontend/features/evaluations/presentation/providers/evaluation_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../domain/entities/evaluation.dart';
-import '../../domain/entities/evaluation_criteria.dart';
-import '../providers/evaluation_providers.dart';
-import '../widgets/evaluation_form.dart';
 
 @RoutePage()
 class CreateEvaluationPage extends ConsumerStatefulWidget {
@@ -25,7 +22,7 @@ class _CreateEvaluationPageState extends ConsumerState<CreateEvaluationPage> {
   final _commentsController = TextEditingController();
 
   List<EvaluationCriteria> _criteria = [];
-  Map<String, double> _scores = {};
+  final Map<String, double> _scores = {};
   bool _isLoading = false;
 
   @override
@@ -52,9 +49,20 @@ class _CreateEvaluationPageState extends ConsumerState<CreateEvaluationPage> {
       body: criteriaAsync.when(
         data: (criteria) => _buildForm(criteria),
         loading: () => const LoadingWidget(),
-        error: (error, stackTrace) => ErrorWidget(
-          message: error.toString(),
-          onRetry: _loadCriteria,
+        error: (error, stackTrace) => Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.error, size: 64, color: Colors.red),
+              const SizedBox(height: 16),
+              Text('Error: ${error.toString()}'),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: _loadCriteria,
+                child: const Text('Reintentar'),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -70,10 +78,13 @@ class _CreateEvaluationPageState extends ConsumerState<CreateEvaluationPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            AppTextField(
+            TextFormField(
               controller: _anteprojectController,
-              label: 'ID del Anteproyecto',
-              hint: 'Ingrese el ID del anteproyecto',
+              decoration: const InputDecoration(
+                labelText: 'ID del Anteproyecto',
+                hintText: 'Ingrese el ID del anteproyecto',
+                border: OutlineInputBorder(),
+              ),
               keyboardType: TextInputType.number,
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -83,10 +94,13 @@ class _CreateEvaluationPageState extends ConsumerState<CreateEvaluationPage> {
               },
             ),
             const SizedBox(height: 16),
-            AppTextField(
+            TextFormField(
               controller: _commentsController,
-              label: 'Comentarios',
-              hint: 'Comentarios adicionales sobre la evaluación',
+              decoration: const InputDecoration(
+                labelText: 'Comentarios',
+                hintText: 'Comentarios adicionales sobre la evaluación',
+                border: OutlineInputBorder(),
+              ),
               maxLines: 3,
             ),
             const SizedBox(height: 24),
@@ -308,7 +322,7 @@ class _CreateEvaluationPageState extends ConsumerState<CreateEvaluationPage> {
             backgroundColor: Colors.green,
           ),
         );
-        context.router.pop();
+        Navigator.pop(context);
       }
     } catch (e) {
       if (mounted) {

@@ -5,7 +5,6 @@ import 'package:fct_frontend/core/widgets/notification_badge_widget.dart';
 import 'package:fct_frontend/features/dashboard/presentation/widgets/app_bottom_navigation.dart';
 import 'package:fct_frontend/features/dashboard/presentation/widgets/app_drawer.dart';
 import 'package:fct_frontend/features/dashboard/presentation/widgets/responsive_layout.dart';
-import 'package:fct_frontend/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -42,15 +41,15 @@ class MainLayoutPage extends ConsumerWidget {
   Widget _buildDesktopLayout(BuildContext context) {
     return Scaffold(
       appBar: _buildAppBar(context),
-      body: Row(
+      body: const Row(
         children: [
-          const SizedBox(
+          SizedBox(
             width: 250,
             child: AppDrawer(),
           ),
-          const VerticalDivider(width: 1),
+          VerticalDivider(width: 1),
           Expanded(
-            child: const AutoRouter(),
+            child: AutoRouter(),
           ),
         ],
       ),
@@ -59,7 +58,7 @@ class MainLayoutPage extends ConsumerWidget {
 
   PreferredSizeWidget _buildAppBar(BuildContext context) {
     return AppBar(
-      title: Text(AppLocalizations.of(context).appTitle),
+      title: const Text('Sistema FCT'),
       actions: [
         const GlobalSearchWidget(),
         const SizedBox(width: 8),
@@ -83,18 +82,18 @@ class MainLayoutPage extends ConsumerWidget {
             }
           },
           itemBuilder: (context) => [
-            PopupMenuItem(
+            const PopupMenuItem(
               value: 'profile',
-              child: Text(AppLocalizations.of(context).profile),
+              child: Text('Perfil'),
             ),
-            PopupMenuItem(
+            const PopupMenuItem(
               value: 'settings',
-              child: Text(AppLocalizations.of(context).settings),
+              child: Text('Configuración'),
             ),
             const PopupMenuDivider(),
-            PopupMenuItem(
+            const PopupMenuItem(
               value: 'logout',
-              child: Text(AppLocalizations.of(context).logout),
+              child: Text('Cerrar Sesión'),
             ),
           ],
         ),

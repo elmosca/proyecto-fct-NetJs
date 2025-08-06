@@ -1,8 +1,6 @@
-import 'package:fct_frontend/l10n/app_localizations.dart';
+import 'package:fct_frontend/shared/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../../../shared/models/user.dart';
 
 class ProjectAssignmentWidget extends ConsumerStatefulWidget {
   final String projectId;
@@ -52,13 +50,13 @@ class _ProjectAssignmentWidgetState
       children: [
         TabBar(
           controller: _tabController,
-          tabs: [
+          tabs: const [
             Tab(
-              icon: const Icon(Icons.school),
+              icon: Icon(Icons.school),
               text: 'Estudiantes',
             ),
             Tab(
-              icon: const Icon(Icons.person),
+              icon: Icon(Icons.person),
               text: 'Tutores',
             ),
           ],
@@ -174,7 +172,7 @@ class _ProjectAssignmentWidgetState
                 widget.onTutorsAssigned(_selectedTutors);
                 Navigator.of(context).pop();
               },
-              child: Text(AppLocalizations.of(context).save),
+              child: const Text('Guardar'),
             ),
           ),
           const SizedBox(width: 16),
@@ -183,7 +181,7 @@ class _ProjectAssignmentWidgetState
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text(AppLocalizations.of(context).cancel),
+              child: const Text('Cancelar'),
             ),
           ),
         ],

@@ -1,6 +1,5 @@
+import 'package:fct_frontend/features/evaluations/domain/entities/evaluation_criteria.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-
-import '../../domain/entities/evaluation_criteria.dart';
 
 part 'evaluation_criteria_model.freezed.dart';
 part 'evaluation_criteria_model.g.dart';
@@ -19,19 +18,9 @@ class EvaluationCriteriaModel with _$EvaluationCriteriaModel {
 
   factory EvaluationCriteriaModel.fromJson(Map<String, dynamic> json) =>
       _$EvaluationCriteriaModelFromJson(json);
+}
 
-  factory EvaluationCriteriaModel.fromEntity(EvaluationCriteria entity) {
-    return EvaluationCriteriaModel(
-      id: entity.id,
-      name: entity.name,
-      description: entity.description,
-      maxScore: entity.maxScore,
-      isActive: entity.isActive,
-      displayOrder: entity.displayOrder,
-      createdAt: entity.createdAt,
-    );
-  }
-
+extension EvaluationCriteriaModelExtension on EvaluationCriteriaModel {
   EvaluationCriteria toEntity() {
     return EvaluationCriteria(
       id: id,
@@ -41,6 +30,20 @@ class EvaluationCriteriaModel with _$EvaluationCriteriaModel {
       isActive: isActive,
       displayOrder: displayOrder,
       createdAt: createdAt,
+    );
+  }
+}
+
+extension EvaluationCriteriaModelStaticExtension on EvaluationCriteriaModel {
+  static EvaluationCriteriaModel fromEntity(EvaluationCriteria entity) {
+    return EvaluationCriteriaModel(
+      id: entity.id,
+      name: entity.name,
+      description: entity.description,
+      maxScore: entity.maxScore,
+      isActive: entity.isActive,
+      displayOrder: entity.displayOrder,
+      createdAt: entity.createdAt,
     );
   }
 }

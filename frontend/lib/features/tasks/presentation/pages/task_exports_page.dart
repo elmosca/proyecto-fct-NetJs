@@ -1,14 +1,15 @@
+import 'package:fct_frontend/core/widgets/empty_state_widget.dart';
+import 'package:fct_frontend/core/widgets/loading_widget.dart';
+import 'package:fct_frontend/features/tasks/domain/entities/task_export_dto.dart';
+import 'package:fct_frontend/features/tasks/domain/entities/task_export_entity.dart';
+import 'package:fct_frontend/features/tasks/presentation/providers/task_export_providers.dart';
+import 'package:fct_frontend/features/tasks/presentation/widgets/create_export_dialog.dart';
+import 'package:fct_frontend/features/tasks/presentation/widgets/task_export_card.dart';
+import 'package:fct_frontend/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../core/widgets/empty_state_widget.dart';
-import '../../../core/widgets/loading_widget.dart';
-import '../../../l10n/app_localizations.dart';
-import '../../domain/entities/task_export_entity.dart';
-import '../providers/task_export_providers.dart';
-import '../widgets/create_export_dialog.dart';
-import '../widgets/task_export_card.dart';
-
+@RoutePage()
 class TaskExportsPage extends ConsumerStatefulWidget {
   const TaskExportsPage({super.key});
 

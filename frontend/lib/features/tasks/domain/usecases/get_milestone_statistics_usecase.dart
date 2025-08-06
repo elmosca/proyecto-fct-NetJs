@@ -6,6 +6,6 @@ class GetMilestoneStatisticsUseCase {
   GetMilestoneStatisticsUseCase(this._milestoneRepository);
 
   Future<Map<String, dynamic>> execute(String? projectId) {
-    return _milestoneRepository.getMilestoneStatistics(projectId);
+    return _milestoneRepository.getMilestoneStatistics(projectId: projectId);
   }
-} 
+}

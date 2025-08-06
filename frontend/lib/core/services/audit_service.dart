@@ -1,5 +1,8 @@
+import 'package:dio/dio.dart';
 import 'package:fct_frontend/core/services/http_service.dart';
+import 'package:fct_frontend/core/services/token_manager.dart';
 import 'package:fct_frontend/core/utils/logger.dart';
+import 'package:shared_preferences/src/shared_preferences_legacy.dart';
 
 enum AuditActionType {
   create,
@@ -112,7 +115,14 @@ class AuditService {
   factory AuditService() => _instance;
   AuditService._internal();
 
-  final HttpService _httpService = HttpService();
+  // Se debe inicializar HttpService con instancias válidas de Dio y TokenManager.
+  // Aquí se asume que existen singletons o métodos de acceso global para estos servicios.
+  // Se debe inicializar HttpService con instancias válidas de Dio y TokenManager.
+  // Aquí se asume que existen singletons o métodos de acceso global para estos servicios.
+  final HttpService _httpService = HttpService(
+    dio: Dio(), // Reemplaza con la instancia global si aplica
+    tokenManager: TokenManager('' as SharedPreferences), // Reemplaza con la instancia global y el argumento requerido si aplica
+  );
 
   /// Registra una acción de auditoría
   Future<void> logAction({

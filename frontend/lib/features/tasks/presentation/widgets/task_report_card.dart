@@ -1,8 +1,7 @@
+import 'package:fct_frontend/features/tasks/domain/entities/task_report_entity.dart';
+import 'package:fct_frontend/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
-import '../../../l10n/app_localizations.dart';
-import '../../domain/entities/task_report_entity.dart';
 
 class TaskReportCard extends StatelessWidget {
   final TaskReport report;

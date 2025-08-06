@@ -34,7 +34,7 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
     try {
       final useCase = ref.read(requestPasswordResetUseCaseProvider);
       await useCase(_emailController.text);
-      
+
       setState(() {
         _emailSent = true;
         _isLoading = false;
@@ -149,7 +149,7 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
                 const SizedBox(height: 24),
                 TextButton(
                   onPressed: () {
-                    context.router.pop();
+                    Navigator.pop(context);
                   },
                   child: const Text('Volver al Login'),
                 ),
@@ -160,4 +160,4 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
       ),
     );
   }
-} 
+}

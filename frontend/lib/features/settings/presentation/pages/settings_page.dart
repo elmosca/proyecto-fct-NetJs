@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:fct_frontend/core/widgets/language_selector.dart';
-import 'package:fct_frontend/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -12,7 +11,7 @@ class SettingsPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context).settings),
+        title: const Text('Configuración'),
       ),
       body: ListView(
         children: [
@@ -79,11 +78,11 @@ class SettingsPage extends ConsumerWidget {
                   ),
             ),
           ),
-          ListTile(
-            leading: const Icon(Icons.language),
-            title: const Text('Idioma de la Aplicación'),
-            subtitle: const Text('Español'),
-            trailing: const LanguageSelector(),
+          const ListTile(
+            leading: Icon(Icons.language),
+            title: Text('Idioma de la Aplicación'),
+            subtitle: Text('Español'),
+            trailing: LanguageSelector(),
           ),
         ],
       ),
@@ -197,10 +196,10 @@ class SettingsPage extends ConsumerWidget {
                   ),
             ),
           ),
-          ListTile(
-            leading: const Icon(Icons.info),
-            title: const Text('Versión'),
-            subtitle: const Text('1.0.0'),
+          const ListTile(
+            leading: Icon(Icons.info),
+            title: Text('Versión'),
+            subtitle: Text('1.0.0'),
           ),
           ListTile(
             leading: const Icon(Icons.description),

@@ -1,16 +1,11 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:fct_frontend/core/i18n/app_localizations.dart';
-import 'package:fct_frontend/core/theme/app_theme.dart';
-import 'package:fct_frontend/core/widgets/empty_state_widget.dart';
-import 'package:fct_frontend/core/widgets/error_widget.dart';
 import 'package:fct_frontend/core/widgets/loading_widget.dart';
+import 'package:fct_frontend/features/evaluations/domain/entities/evaluation.dart';
+import 'package:fct_frontend/features/evaluations/presentation/providers/evaluation_providers.dart';
+import 'package:fct_frontend/features/evaluations/presentation/widgets/evaluation_card.dart';
+import 'package:fct_frontend/features/evaluations/presentation/widgets/evaluation_filter_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../domain/entities/evaluation.dart';
-import '../providers/evaluation_providers.dart';
-import '../widgets/evaluation_card.dart';
-import '../widgets/evaluation_filter_dialog.dart';
 
 @RoutePage()
 class EvaluationsListPage extends ConsumerStatefulWidget {
@@ -42,30 +37,40 @@ class _EvaluationsListPageState extends ConsumerState<EvaluationsListPage> {
   @override
   Widget build(BuildContext context) {
     final evaluationsAsync = ref.watch(evaluationsNotifierProvider);
-    final l10n = AppLocalizations.of(context);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.evaluationsTitle),
+        title: const Text('Evaluaciones'),
         actions: [
           IconButton(
             icon: const Icon(Icons.filter_list),
             onPressed: _showFilterDialog,
-            tooltip: l10n.filter,
+            tooltip: 'Filtros',
           ),
           IconButton(
             icon: const Icon(Icons.add),
             onPressed: () => _navigateToCreateEvaluation(),
-            tooltip: l10n.createEvaluation,
+            tooltip: 'Crear Evaluación',
           ),
         ],
       ),
       body: evaluationsAsync.when(
         data: (evaluations) => _buildEvaluationsList(evaluations),
         loading: () => const LoadingWidget(),
-        error: (error, stackTrace) => ErrorWidget(
-          message: error.toString(),
-          onRetry: () => _loadEvaluations(),
+        error: (error, stackTrace) => Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.error, size: 64, color: Colors.red),
+              const SizedBox(height: 16),
+              Text('Error: ${error.toString()}'),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: _loadEvaluations,
+                child: const Text('Reintentar'),
+              ),
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -77,12 +82,28 @@ class _EvaluationsListPageState extends ConsumerState<EvaluationsListPage> {
 
   Widget _buildEvaluationsList(List<Evaluation> evaluations) {
     if (evaluations.isEmpty) {
-      return EmptyStateWidget(
-        icon: Icons.assessment,
-        title: AppLocalizations.of(context).noEvaluationsTitle,
-        message: AppLocalizations.of(context).noEvaluationsMessage,
-        actionText: AppLocalizations.of(context).createFirstEvaluation,
-        onAction: () => _navigateToCreateEvaluation(),
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.assessment, size: 64, color: Colors.grey),
+            const SizedBox(height: 16),
+            const Text(
+              'No hay evaluaciones',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8),
+            const Text(
+              'Crea la primera evaluación para comenzar',
+              style: TextStyle(color: Colors.grey),
+            ),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () => _navigateToCreateEvaluation(),
+              child: const Text('Crear Evaluación'),
+            ),
+          ],
+        ),
       );
     }
 
@@ -160,16 +181,16 @@ class _EvaluationsListPageState extends ConsumerState<EvaluationsListPage> {
   }
 
   void _showDeleteConfirmation(Evaluation evaluation) {
-    final l10n = AppLocalizations.of(context);
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(l10n.deleteEvaluationTitle),
-        content: Text(l10n.deleteEvaluationMessage),
+        title: const Text('Eliminar Evaluación'),
+        content: const Text(
+            '¿Estás seguro de que quieres eliminar esta evaluación?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: Text(l10n.cancel),
+            child: const Text('Cancelar'),
           ),
           TextButton(
             onPressed: () {
@@ -177,7 +198,7 @@ class _EvaluationsListPageState extends ConsumerState<EvaluationsListPage> {
               _deleteEvaluation(evaluation);
             },
             style: TextButton.styleFrom(foregroundColor: Colors.red),
-            child: Text(l10n.delete),
+            child: const Text('Eliminar'),
           ),
         ],
       ),
@@ -197,21 +218,20 @@ class _EvaluationsListPageState extends ConsumerState<EvaluationsListPage> {
   }
 
   void _approveEvaluation(Evaluation evaluation) {
-    final l10n = AppLocalizations.of(context);
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(l10n.approveEvaluationTitle),
-        content: Column(
+        title: const Text('Aprobar Evaluación'),
+        content: const Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(l10n.approveEvaluationMessage),
-            const SizedBox(height: 16),
+            Text('¿Estás seguro de que quieres aprobar esta evaluación?'),
+            SizedBox(height: 16),
             TextField(
               decoration: InputDecoration(
-                labelText: l10n.comments,
-                hintText: l10n.optionalComments,
-                border: const OutlineInputBorder(),
+                labelText: 'Comentarios',
+                hintText: 'Comentarios opcionales',
+                border: OutlineInputBorder(),
               ),
               maxLines: 3,
             ),
@@ -220,7 +240,7 @@ class _EvaluationsListPageState extends ConsumerState<EvaluationsListPage> {
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: Text(l10n.cancel),
+            child: const Text('Cancelar'),
           ),
           ElevatedButton(
             onPressed: () {
@@ -231,7 +251,7 @@ class _EvaluationsListPageState extends ConsumerState<EvaluationsListPage> {
                     null, // TODO: Obtener comentarios del TextField
                   );
             },
-            child: Text(l10n.approve),
+            child: const Text('Aprobar'),
           ),
         ],
       ),
@@ -239,24 +259,24 @@ class _EvaluationsListPageState extends ConsumerState<EvaluationsListPage> {
   }
 
   void _rejectEvaluation(Evaluation evaluation) {
-    final l10n = AppLocalizations.of(context);
     final reasonController = TextEditingController();
 
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(l10n.rejectEvaluationTitle),
+        title: const Text('Rechazar Evaluación'),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(l10n.rejectEvaluationMessage),
+            const Text(
+                '¿Estás seguro de que quieres rechazar esta evaluación?'),
             const SizedBox(height: 16),
             TextField(
               controller: reasonController,
-              decoration: InputDecoration(
-                labelText: l10n.rejectionReason,
-                hintText: l10n.rejectionReasonHint,
-                border: const OutlineInputBorder(),
+              decoration: const InputDecoration(
+                labelText: 'Motivo del rechazo',
+                hintText: 'Explica el motivo del rechazo',
+                border: OutlineInputBorder(),
               ),
               maxLines: 3,
             ),
@@ -265,7 +285,7 @@ class _EvaluationsListPageState extends ConsumerState<EvaluationsListPage> {
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: Text(l10n.cancel),
+            child: const Text('Cancelar'),
           ),
           ElevatedButton(
             onPressed: () {
@@ -278,7 +298,7 @@ class _EvaluationsListPageState extends ConsumerState<EvaluationsListPage> {
               }
             },
             style: ElevatedButton.styleFrom(foregroundColor: Colors.red),
-            child: Text(l10n.reject),
+            child: const Text('Rechazar'),
           ),
         ],
       ),

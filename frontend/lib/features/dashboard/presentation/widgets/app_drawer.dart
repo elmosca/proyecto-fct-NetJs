@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:fct_frontend/features/auth/presentation/providers/auth_providers.dart';
 import 'package:fct_frontend/features/auth/presentation/providers/auth_state.dart';
-import 'package:fct_frontend/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -91,38 +90,38 @@ class AppDrawer extends ConsumerWidget {
         _buildDrawerItem(
           context,
           icon: Icons.dashboard,
-          title: AppLocalizations.of(context).dashboard,
+          title: 'Dashboard',
           route: '/app/dashboard',
         ),
         _buildDrawerItem(
           context,
           icon: Icons.work,
-          title: AppLocalizations.of(context).projects,
+          title: 'Proyectos',
           route: '/app/projects',
         ),
         _buildDrawerItem(
           context,
           icon: Icons.task,
-          title: AppLocalizations.of(context).tasks,
+          title: 'Tareas',
           route: '/app/tasks',
         ),
         _buildDrawerItem(
           context,
           icon: Icons.people,
-          title: AppLocalizations.of(context).users,
+          title: 'Usuarios',
           route: '/app/users',
         ),
         const Divider(),
         _buildDrawerItem(
           context,
           icon: Icons.person,
-          title: AppLocalizations.of(context).profile,
+          title: 'Perfil',
           route: '/app/profile',
         ),
         _buildDrawerItem(
           context,
           icon: Icons.settings,
-          title: AppLocalizations.of(context).settings,
+          title: 'Configuración',
           route: '/app/settings',
         ),
       ],
@@ -150,7 +149,7 @@ class AppDrawer extends ConsumerWidget {
       children: [
         ListTile(
           leading: const Icon(Icons.logout),
-          title: Text(AppLocalizations.of(context).logout),
+          title: const Text('Cerrar Sesión'),
           onTap: () async {
             Navigator.pop(context);
             await ref.read(authNotifierProvider.notifier).logout();

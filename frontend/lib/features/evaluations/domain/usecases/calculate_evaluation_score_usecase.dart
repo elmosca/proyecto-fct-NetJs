@@ -1,5 +1,4 @@
-import '../entities/evaluation.dart';
-import '../entities/evaluation_result.dart';
+import 'package:fct_frontend/features/evaluations/domain/entities/evaluation.dart';
 
 class CalculateEvaluationScoreUseCase {
   const CalculateEvaluationScoreUseCase();
@@ -34,11 +33,11 @@ class CalculateEvaluationScoreUseCase {
 
   String calculateGrade(List<EvaluationScore> scores) {
     final percentage = calculatePercentage(scores);
-    
+
     if (percentage >= 90) return 'A';
     if (percentage >= 80) return 'B';
     if (percentage >= 70) return 'C';
     if (percentage >= 60) return 'D';
     return 'F';
   }
-} 
+}

@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:fct_frontend/features/anteprojects/presentation/providers/defense_providers.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 @RoutePage()
 class ScheduleDefensePage extends ConsumerStatefulWidget {
@@ -17,7 +17,8 @@ class ScheduleDefensePage extends ConsumerStatefulWidget {
   });
 
   @override
-  ConsumerState<ScheduleDefensePage> createState() => _ScheduleDefensePageState();
+  ConsumerState<ScheduleDefensePage> createState() =>
+      _ScheduleDefensePageState();
 }
 
 class _ScheduleDefensePageState extends ConsumerState<ScheduleDefensePage> {
@@ -27,9 +28,9 @@ class _ScheduleDefensePageState extends ConsumerState<ScheduleDefensePage> {
   final _tutorController = TextEditingController();
   final _locationController = TextEditingController();
   final _notesController = TextEditingController();
-  
-  DateTime _selectedDate = DateTime.now().add(const Duration(days: 1));
-  TimeOfDay _selectedTime = const TimeOfDay(hour: 9, minute: 0);
+
+  final DateTime _selectedDate = DateTime.now().add(const Duration(days: 1));
+  final TimeOfDay _selectedTime = const TimeOfDay(hour: 9, minute: 0);
   bool _isLoading = false;
 
   @override
@@ -109,7 +110,7 @@ class _ScheduleDefensePageState extends ConsumerState<ScheduleDefensePage> {
               const SizedBox(height: 32),
               ElevatedButton(
                 onPressed: _isLoading ? null : _scheduleDefense,
-                child: _isLoading 
+                child: _isLoading
                     ? const CircularProgressIndicator()
                     : const Text('Programar Defensa'),
               ),
@@ -139,17 +140,17 @@ class _ScheduleDefensePageState extends ConsumerState<ScheduleDefensePage> {
       );
 
       await ref.read(defensesNotifierProvider.notifier).scheduleDefense(
-        anteprojectId: _anteprojectController.text.trim(),
-        studentId: _studentController.text.trim(),
-        tutorId: _tutorController.text.trim(),
-        scheduledDate: scheduledDate,
-        location: _locationController.text.trim().isEmpty 
-            ? null 
-            : _locationController.text.trim(),
-        notes: _notesController.text.trim().isEmpty 
-            ? null 
-            : _notesController.text.trim(),
-      );
+            anteprojectId: _anteprojectController.text.trim(),
+            studentId: _studentController.text.trim(),
+            tutorId: _tutorController.text.trim(),
+            scheduledDate: scheduledDate,
+            location: _locationController.text.trim().isEmpty
+                ? null
+                : _locationController.text.trim(),
+            notes: _notesController.text.trim().isEmpty
+                ? null
+                : _notesController.text.trim(),
+          );
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -158,7 +159,7 @@ class _ScheduleDefensePageState extends ConsumerState<ScheduleDefensePage> {
             backgroundColor: Colors.green,
           ),
         );
-        context.router.pop();
+        Navigator.pop(context);
       }
     } catch (error) {
       if (mounted) {
@@ -177,4 +178,4 @@ class _ScheduleDefensePageState extends ConsumerState<ScheduleDefensePage> {
       }
     }
   }
-} 
+}

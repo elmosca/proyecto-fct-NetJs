@@ -1,10 +1,10 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:fct_frontend/core/widgets/loading_widget.dart';
+import 'package:fct_frontend/features/anteprojects/domain/entities/defense.dart';
+import 'package:fct_frontend/features/anteprojects/presentation/providers/defense_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:intl/intl.dart';
-import 'package:fct_frontend/core/widgets/loading_widget.dart';
-import 'package:fct_frontend/features/anteprojects/presentation/providers/defense_providers.dart';
-import 'package:fct_frontend/features/anteprojects/domain/entities/defense.dart';
 
 @RoutePage()
 class DefenseDetailPage extends ConsumerWidget {
@@ -26,7 +26,9 @@ class DefenseDetailPage extends ConsumerWidget {
           IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: () {
-              ref.read(defenseDetailNotifierProvider(defenseId).notifier).refresh();
+              ref
+                  .read(defenseDetailNotifierProvider(defenseId).notifier)
+                  .refresh();
             },
             tooltip: 'Actualizar',
           ),
@@ -42,11 +44,24 @@ class DefenseDetailPage extends ConsumerWidget {
           return _DefenseDetailContent(defense: defense);
         },
         loading: () => const LoadingWidget(),
-        error: (error, stackTrace) => CustomErrorWidget(
-          error: error.toString(),
-          onRetry: () {
-            ref.read(defenseDetailNotifierProvider(defenseId).notifier).refresh();
-          },
+        error: (error, stackTrace) => Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.error, size: 64, color: Colors.red),
+              const SizedBox(height: 16),
+              Text('Error: ${error.toString()}'),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () {
+                  ref
+                      .read(defenseDetailNotifierProvider(defenseId).notifier)
+                      .refresh();
+                },
+                child: const Text('Reintentar'),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -67,9 +82,9 @@ class _DefenseDetailContent extends ConsumerWidget {
         children: [
           // Header con estado
           _buildHeader(context),
-          
+
           const SizedBox(height: 24),
-          
+
           // Información básica
           _buildSection(
             context,
@@ -82,23 +97,23 @@ class _DefenseDetailContent extends ConsumerWidget {
               _buildInfoRow('Estado:', defense.status.displayName),
             ],
           ),
-          
+
           const SizedBox(height: 16),
-          
+
           // Programación
           _buildSection(
             context,
             title: 'Programación',
             children: [
-              _buildInfoRow('Fecha Programada:', 
-                DateFormat('dd/MM/yyyy HH:mm').format(defense.scheduledDate)),
+              _buildInfoRow('Fecha Programada:',
+                  DateFormat('dd/MM/yyyy HH:mm').format(defense.scheduledDate)),
               if (defense.location != null)
                 _buildInfoRow('Ubicación:', defense.location!),
               if (defense.notes != null)
                 _buildInfoRow('Notas:', defense.notes!),
             ],
           ),
-          
+
           // Evaluación (si está completada)
           if (defense.status == DefenseStatus.completed) ...[
             const SizedBox(height: 16),
@@ -111,29 +126,31 @@ class _DefenseDetailContent extends ConsumerWidget {
                 if (defense.evaluationComments != null)
                   _buildInfoRow('Comentarios:', defense.evaluationComments!),
                 if (defense.completedDate != null)
-                  _buildInfoRow('Fecha de Finalización:', 
-                    DateFormat('dd/MM/yyyy HH:mm').format(defense.completedDate!)),
+                  _buildInfoRow(
+                      'Fecha de Finalización:',
+                      DateFormat('dd/MM/yyyy HH:mm')
+                          .format(defense.completedDate!)),
               ],
             ),
           ],
-          
+
           const SizedBox(height: 16),
-          
+
           // Metadatos
           _buildSection(
             context,
             title: 'Metadatos',
             children: [
-              _buildInfoRow('Creado:', 
-                DateFormat('dd/MM/yyyy HH:mm').format(defense.createdAt)),
+              _buildInfoRow('Creado:',
+                  DateFormat('dd/MM/yyyy HH:mm').format(defense.createdAt)),
               if (defense.updatedAt != null)
-                _buildInfoRow('Actualizado:', 
-                  DateFormat('dd/MM/yyyy HH:mm').format(defense.updatedAt!)),
+                _buildInfoRow('Actualizado:',
+                    DateFormat('dd/MM/yyyy HH:mm').format(defense.updatedAt!)),
             ],
           ),
-          
+
           const SizedBox(height: 24),
-          
+
           // Acciones
           _buildActions(context, ref),
         ],
@@ -144,7 +161,7 @@ class _DefenseDetailContent extends ConsumerWidget {
   Widget _buildHeader(BuildContext context) {
     Color statusColor;
     IconData statusIcon;
-    
+
     switch (defense.status) {
       case DefenseStatus.scheduled:
         statusColor = Colors.orange;
@@ -183,15 +200,15 @@ class _DefenseDetailContent extends ConsumerWidget {
                   Text(
                     'Defensa #${defense.id.substring(0, 8)}',
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                          fontWeight: FontWeight.bold,
+                        ),
                   ),
                   Text(
                     defense.status.displayName,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: statusColor,
-                      fontWeight: FontWeight.w500,
-                    ),
+                          color: statusColor,
+                          fontWeight: FontWeight.w500,
+                        ),
                   ),
                 ],
               ),
@@ -216,8 +233,8 @@ class _DefenseDetailContent extends ConsumerWidget {
             Text(
               title,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+                    fontWeight: FontWeight.bold,
+                  ),
             ),
             const SizedBox(height: 12),
             ...children,
@@ -264,8 +281,8 @@ class _DefenseDetailContent extends ConsumerWidget {
             Text(
               'Acciones',
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+                    fontWeight: FontWeight.bold,
+                  ),
             ),
             const SizedBox(height: 12),
             Row(
@@ -274,7 +291,9 @@ class _DefenseDetailContent extends ConsumerWidget {
                   Expanded(
                     child: ElevatedButton.icon(
                       onPressed: () {
-                        ref.read(defensesNotifierProvider.notifier).startDefense(defense.id);
+                        ref
+                            .read(defensesNotifierProvider.notifier)
+                            .startDefense(defense.id);
                       },
                       icon: const Icon(Icons.play_arrow),
                       label: const Text('Iniciar Defensa'),
@@ -284,7 +303,6 @@ class _DefenseDetailContent extends ConsumerWidget {
                       ),
                     ),
                   ),
-                
                 if (defense.status.canComplete) ...[
                   const SizedBox(width: 12),
                   Expanded(
@@ -301,7 +319,6 @@ class _DefenseDetailContent extends ConsumerWidget {
                     ),
                   ),
                 ],
-                
                 if (defense.status.canCancel) ...[
                   const SizedBox(width: 12),
                   Expanded(
@@ -325,4 +342,4 @@ class _DefenseDetailContent extends ConsumerWidget {
       ),
     );
   }
-} 
+}

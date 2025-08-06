@@ -1,8 +1,8 @@
+import 'package:fct_frontend/features/tasks/domain/entities/task_notification_dto.dart';
+import 'package:fct_frontend/features/tasks/domain/entities/task_notification_entity.dart';
+import 'package:fct_frontend/features/tasks/domain/repositories/task_notification_repository.dart';
+import 'package:riverpod/riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-
-import '../entities/task_notification_dto.dart';
-import '../entities/task_notification_entity.dart';
-import '../repositories/task_notification_repository.dart';
 
 part 'mark_notification_as_read_usecase.g.dart';
 
@@ -24,8 +24,7 @@ class MarkNotificationAsReadUseCase {
 
 /// Provider para el use case de marcar como leída
 @riverpod
-MarkNotificationAsReadUseCase markNotificationAsReadUseCase(
-    MarkNotificationAsReadUseCaseRef ref) {
-  final repository = ref.watch(taskNotificationRepositoryProvider);
-  return MarkNotificationAsReadUseCase(repository);
+MarkNotificationAsReadUseCase markNotificationAsReadUseCase(Ref ref) {
+  // TODO: Implementar provider del repositorio
+  throw UnimplementedError('taskNotificationRepositoryProvider not implemented');
 }

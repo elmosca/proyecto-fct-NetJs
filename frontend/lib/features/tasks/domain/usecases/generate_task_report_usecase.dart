@@ -1,8 +1,8 @@
+import 'package:fct_frontend/features/tasks/domain/entities/task_report_dto.dart';
+import 'package:fct_frontend/features/tasks/domain/entities/task_report_entity.dart';
+import 'package:fct_frontend/features/tasks/domain/repositories/task_report_repository.dart';
+import 'package:riverpod/riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-
-import '../entities/task_report_dto.dart';
-import '../entities/task_report_entity.dart';
-import '../repositories/task_report_repository.dart';
 
 part 'generate_task_report_usecase.g.dart';
 
@@ -24,8 +24,7 @@ class GenerateTaskReportUseCase {
 
 /// Provider para el use case de generar reportes
 @riverpod
-GenerateTaskReportUseCase generateTaskReportUseCase(
-    GenerateTaskReportUseCaseRef ref) {
-  final repository = ref.watch(taskReportRepositoryProvider);
-  return GenerateTaskReportUseCase(repository);
+GenerateTaskReportUseCase generateTaskReportUseCase(Ref ref) {
+  // TODO: Implementar provider del repositorio
+  throw UnimplementedError('taskReportRepositoryProvider not implemented');
 }

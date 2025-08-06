@@ -156,7 +156,7 @@ class _CreateEvaluationPageState extends ConsumerState<CreateEvaluationPage> {
             children: [
               Expanded(
                 child: OutlinedButton(
-                  onPressed: _isLoading ? null : () => context.router.pop(),
+                  onPressed: _isLoading ? null : () => Navigator.pop(context),
                   child: const Text('Cancelar'),
                 ),
               ),
@@ -215,7 +215,7 @@ class _CreateEvaluationPageState extends ConsumerState<CreateEvaluationPage> {
             const SizedBox(height: 12),
             Row(
               children: [
-                Expanded(
+                const Expanded(
                   child: Text('Puntuación:'),
                 ),
                 Expanded(
@@ -297,7 +297,7 @@ class _CreateEvaluationPageState extends ConsumerState<CreateEvaluationPage> {
             backgroundColor: Colors.green,
           ),
         );
-        context.router.pop();
+        Navigator.pop(context);
       }
     } catch (error) {
       if (mounted) {

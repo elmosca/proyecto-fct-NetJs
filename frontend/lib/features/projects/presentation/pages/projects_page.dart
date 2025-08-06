@@ -1,12 +1,10 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:fct_frontend/l10n/app_localizations.dart';
+import 'package:fct_frontend/features/projects/domain/entities/project_entity.dart';
+import 'package:fct_frontend/features/projects/presentation/providers/project_providers.dart';
+import 'package:fct_frontend/features/projects/presentation/widgets/project_card_widget.dart';
+import 'package:fct_frontend/features/projects/presentation/widgets/project_filters_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../domain/entities/project_entity.dart';
-import '../providers/project_providers.dart';
-import '../widgets/project_card_widget.dart';
-import '../widgets/project_filters_widget.dart';
 
 @RoutePage()
 class ProjectsPage extends ConsumerStatefulWidget {
@@ -46,7 +44,7 @@ class _ProjectsPageState extends ConsumerState<ProjectsPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context).projects),
+        title: const Text('Proyectos'),
         actions: [
           IconButton(
             icon: const Icon(Icons.add),

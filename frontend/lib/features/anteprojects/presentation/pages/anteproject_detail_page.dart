@@ -3,7 +3,6 @@ import 'package:fct_frontend/core/widgets/loading_widget.dart';
 import 'package:fct_frontend/features/anteprojects/presentation/providers/anteproject_providers.dart';
 import 'package:fct_frontend/features/anteprojects/presentation/widgets/anteproject_actions_widget.dart';
 import 'package:fct_frontend/features/anteprojects/presentation/widgets/anteproject_detail_widget.dart';
-import 'package:fct_frontend/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -23,7 +22,7 @@ class AnteprojectDetailPage extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context).anteprojectDetails),
+        title: const Text('Detalles del Anteproyecto'),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
@@ -39,8 +38,8 @@ class AnteprojectDetailPage extends ConsumerWidget {
       body: anteprojectAsync.when(
         data: (anteproject) {
           if (anteproject == null) {
-            return Center(
-              child: Text(AppLocalizations.of(context).anteprojectNotFound),
+            return const Center(
+              child: Text('Anteproyecto no encontrado'),
             );
           }
 
@@ -65,13 +64,23 @@ class AnteprojectDetailPage extends ConsumerWidget {
           );
         },
         loading: () => const LoadingWidget(),
-        error: (error, stackTrace) => AppErrorWidget(
-          message: error.toString(),
-          onRetry: () {
-            ref
-                .read(anteprojectDetailNotifierProvider(anteprojectId).notifier)
-                .refresh();
-          },
+        error: (error, stackTrace) => Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Error: ${error.toString()}'),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () {
+                  ref
+                      .read(anteprojectDetailNotifierProvider(anteprojectId)
+                          .notifier)
+                      .refresh();
+                },
+                child: const Text('Reintentar'),
+              ),
+            ],
+          ),
         ),
       ),
     );

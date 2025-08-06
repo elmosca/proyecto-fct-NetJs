@@ -1,4 +1,5 @@
 import 'package:fct_frontend/features/anteprojects/domain/entities/anteproject.dart';
+import 'package:fct_frontend/features/anteprojects/domain/repositories/anteproject_repository.dart';
 import 'package:fct_frontend/features/anteprojects/domain/usecases/approve_anteproject_usecase.dart';
 import 'package:fct_frontend/features/anteprojects/domain/usecases/create_anteproject_usecase.dart';
 import 'package:fct_frontend/features/anteprojects/domain/usecases/delete_anteproject_usecase.dart';
@@ -7,61 +8,55 @@ import 'package:fct_frontend/features/anteprojects/domain/usecases/get_anteproje
 import 'package:fct_frontend/features/anteprojects/domain/usecases/reject_anteproject_usecase.dart';
 import 'package:fct_frontend/features/anteprojects/domain/usecases/submit_anteproject_usecase.dart';
 import 'package:fct_frontend/features/anteprojects/domain/usecases/update_anteproject_usecase.dart';
+import 'package:riverpod/riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'anteproject_providers.g.dart';
 
 // Providers para casos de uso
 @riverpod
-GetAnteprojectsUseCase getAnteprojectsUseCase(GetAnteprojectsUseCaseRef ref) {
+GetAnteprojectsUseCase getAnteprojectsUseCase(Ref ref) {
   return GetAnteprojectsUseCase(ref.watch(anteprojectRepositoryProvider));
 }
 
 @riverpod
-GetAnteprojectByIdUseCase getAnteprojectByIdUseCase(
-    GetAnteprojectByIdUseCaseRef ref) {
+GetAnteprojectByIdUseCase getAnteprojectByIdUseCase(Ref ref) {
   return GetAnteprojectByIdUseCase(ref.watch(anteprojectRepositoryProvider));
 }
 
 @riverpod
-CreateAnteprojectUseCase createAnteprojectUseCase(
-    CreateAnteprojectUseCaseRef ref) {
+CreateAnteprojectUseCase createAnteprojectUseCase(Ref ref) {
   return CreateAnteprojectUseCase(ref.watch(anteprojectRepositoryProvider));
 }
 
 @riverpod
-UpdateAnteprojectUseCase updateAnteprojectUseCase(
-    UpdateAnteprojectUseCaseRef ref) {
+UpdateAnteprojectUseCase updateAnteprojectUseCase(Ref ref) {
   return UpdateAnteprojectUseCase(ref.watch(anteprojectRepositoryProvider));
 }
 
 @riverpod
-DeleteAnteprojectUseCase deleteAnteprojectUseCase(
-    DeleteAnteprojectUseCaseRef ref) {
+DeleteAnteprojectUseCase deleteAnteprojectUseCase(Ref ref) {
   return DeleteAnteprojectUseCase(ref.watch(anteprojectRepositoryProvider));
 }
 
 @riverpod
-SubmitAnteprojectUseCase submitAnteprojectUseCase(
-    SubmitAnteprojectUseCaseRef ref) {
+SubmitAnteprojectUseCase submitAnteprojectUseCase(Ref ref) {
   return SubmitAnteprojectUseCase(ref.watch(anteprojectRepositoryProvider));
 }
 
 @riverpod
-ApproveAnteprojectUseCase approveAnteprojectUseCase(
-    ApproveAnteprojectUseCaseRef ref) {
+ApproveAnteprojectUseCase approveAnteprojectUseCase(Ref ref) {
   return ApproveAnteprojectUseCase(ref.watch(anteprojectRepositoryProvider));
 }
 
 @riverpod
-RejectAnteprojectUseCase rejectAnteprojectUseCase(
-    RejectAnteprojectUseCaseRef ref) {
+RejectAnteprojectUseCase rejectAnteprojectUseCase(Ref ref) {
   return RejectAnteprojectUseCase(ref.watch(anteprojectRepositoryProvider));
 }
 
 // Provider para el repositorio (se implementará en la inyección de dependencias)
 @riverpod
-AnteprojectRepository anteprojectRepository(AnteprojectRepositoryRef ref) {
+AnteprojectRepository anteprojectRepository(Ref ref) {
   throw UnimplementedError(
       'Se debe configurar en la inyección de dependencias');
 }

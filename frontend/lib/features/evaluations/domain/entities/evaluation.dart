@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'evaluation_criteria.dart';
 
 part 'evaluation.freezed.dart';
 part 'evaluation.g.dart';
@@ -81,7 +80,7 @@ extension EvaluationStatusExtension on EvaluationStatus {
   bool get canSubmit => this == EvaluationStatus.draft;
   bool get canApprove => this == EvaluationStatus.submitted;
   bool get canReject => this == EvaluationStatus.submitted;
-  
+
   String get color {
     switch (this) {
       case EvaluationStatus.draft:
@@ -94,4 +93,4 @@ extension EvaluationStatusExtension on EvaluationStatus {
         return '#EF5350'; // Red
     }
   }
-} 
+}

@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:fct_frontend/features/anteprojects/domain/entities/evaluation.dart';
 import 'package:fct_frontend/features/anteprojects/domain/entities/evaluation_criteria.dart';
+import 'package:fct_frontend/features/evaluations/domain/entities/evaluation_result.dart';
+import 'package:fct_frontend/features/evaluations/domain/repositories/evaluation_repository.dart';
 
 abstract class EvaluationRemoteDataSource {
   Future<List<Evaluation>> getEvaluations({
@@ -164,20 +166,25 @@ class EvaluationRemoteDataSourceImpl implements EvaluationRemoteDataSource {
     final data = response.data;
 
     return EvaluationStatistics(
-      totalEvaluations: data['totalEvaluations'],
-      completedEvaluations: data['completedEvaluations'],
-      pendingEvaluations: data['pendingEvaluations'],
-      averageScore: data['averageScore'].toDouble(),
-      statusDistribution: Map<EvaluationStatus, int>.from(
-        data['statusDistribution'].map((key, value) => MapEntry(
-              EvaluationStatus.values.firstWhere((e) => e.name == key),
+      totalEvaluations: data['totalEvaluations'] ?? 0,
+      draftEvaluations: data['draftEvaluations'] ?? 0,
+      submittedEvaluations: data['submittedEvaluations'] ?? 0,
+      approvedEvaluations: data['approvedEvaluations'] ?? 0,
+      rejectedEvaluations: data['rejectedEvaluations'] ?? 0,
+      averageScore: (data['averageScore'] ?? 0.0).toDouble(),
+      gradeDistribution: Map<EvaluationGrade, int>.from(
+        (data['gradeDistribution'] ?? {}).map((key, value) => MapEntry(
+              EvaluationGrade.values.firstWhere((e) => e.name == key),
               value,
             )),
       ),
-      criteriaAverages: Map<String, double>.from(
-        data['criteriaAverages']
-            .map((key, value) => MapEntry(key, value.toDouble())),
-      ),
+      monthlyStats: (data['monthlyStats'] as List<dynamic>? ?? [])
+          .map((json) => MonthlyStats(
+                month: json['month'],
+                evaluations: json['evaluations'],
+                averageScore: (json['averageScore'] ?? 0.0).toDouble(),
+              ))
+          .toList(),
     );
   }
 }

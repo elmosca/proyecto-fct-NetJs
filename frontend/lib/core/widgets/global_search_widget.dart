@@ -1,5 +1,4 @@
 import 'package:fct_frontend/features/dashboard/presentation/providers/search_provider.dart';
-import 'package:fct_frontend/l10n/app_localizations.dart';
 import 'package:fct_frontend/shared/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -81,7 +80,7 @@ class _GlobalSearchWidgetState extends ConsumerState<GlobalSearchWidget> {
     return IconButton(
       icon: const Icon(Icons.search),
       onPressed: _expandSearch,
-      tooltip: AppLocalizations.of(context).search,
+      tooltip: 'Search',
     );
   }
 
@@ -123,10 +122,10 @@ class _GlobalSearchWidgetState extends ConsumerState<GlobalSearchWidget> {
             child: TextField(
               controller: _searchController,
               focusNode: _searchFocusNode,
-              decoration: InputDecoration(
-                hintText: AppLocalizations.of(context).search,
+              decoration: const InputDecoration(
+                hintText: 'Search',
                 border: InputBorder.none,
-                contentPadding: const EdgeInsets.symmetric(vertical: 8),
+                contentPadding: EdgeInsets.symmetric(vertical: 8),
                 isDense: true,
               ),
               onSubmitted: (_) => _performSearch(),
@@ -257,18 +256,18 @@ class _GlobalSearchWidgetState extends ConsumerState<GlobalSearchWidget> {
           ),
           if (results.projects.isNotEmpty)
             _buildResultSection(
-              title: AppLocalizations.of(context).projects,
+              title: 'Projects',
               items:
                   results.projects.map((p) => _buildProjectResult(p)).toList(),
             ),
           if (results.users.isNotEmpty)
             _buildResultSection(
-              title: AppLocalizations.of(context).users,
+              title: 'Users',
               items: results.users.map((u) => _buildUserResult(u)).toList(),
             ),
           if (results.tasks.isNotEmpty)
             _buildResultSection(
-              title: AppLocalizations.of(context).tasks,
+              title: 'Tasks',
               items: results.tasks.map((t) => _buildTaskResult(t)).toList(),
             ),
         ],

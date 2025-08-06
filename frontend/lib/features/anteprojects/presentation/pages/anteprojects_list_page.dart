@@ -1,13 +1,10 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:fct_frontend/core/theme/app_colors.dart';
 import 'package:fct_frontend/core/widgets/empty_state_widget.dart';
-import 'package:fct_frontend/core/widgets/error_widget.dart';
 import 'package:fct_frontend/core/widgets/loading_widget.dart';
 import 'package:fct_frontend/features/anteprojects/domain/entities/anteproject.dart';
 import 'package:fct_frontend/features/anteprojects/presentation/providers/anteproject_providers.dart';
 import 'package:fct_frontend/features/anteprojects/presentation/widgets/anteproject_card_widget.dart';
 import 'package:fct_frontend/features/anteprojects/presentation/widgets/anteproject_filters_widget.dart';
-import 'package:fct_frontend/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -61,7 +58,7 @@ class _AnteprojectsListPageState extends ConsumerState<AnteprojectsListPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context).anteprojectsTitle),
+        title: const Text('Anteproyectos'),
         actions: [
           IconButton(
             icon: const Icon(Icons.add),
@@ -97,21 +94,24 @@ class _AnteprojectsListPageState extends ConsumerState<AnteprojectsListPage> {
             child: anteprojectsAsync.when(
               data: (anteprojects) {
                 if (anteprojects.isEmpty) {
-                  return EmptyStateWidget(
+                  return const EmptyStateWidget(
                     icon: Icons.description_outlined,
-                    title: AppLocalizations.of(context).noAnteprojectsTitle,
+                    title: 'No hay anteproyectos',
                     message:
-                        AppLocalizations.of(context).noAnteprojectsMessage,
-                    actionText: AppLocalizations.of(context).createAnteproject,
-                    onActionPressed: () {
-                      context.router.pushNamed('/anteprojects/create');
-                    },
+                        'No se encontraron anteproyectos con los filtros aplicados',
                   );
                 }
 
                 return RefreshIndicator(
                   onRefresh: () async {
-                    ref.read(anteprojectsNotifierProvider.notifier).refresh();
+                    ref.invalidate(anteprojectsNotifierProvider(
+                      search: filters.search,
+                      status: filters.status,
+                      studentId: filters.studentId,
+                      tutorId: filters.tutorId,
+                      page: filters.page,
+                      limit: filters.limit,
+                    ));
                   },
                   child: ListView.builder(
                     controller: _scrollController,
@@ -150,11 +150,27 @@ class _AnteprojectsListPageState extends ConsumerState<AnteprojectsListPage> {
                 );
               },
               loading: () => const LoadingWidget(),
-              error: (error, stackTrace) => AppErrorWidget(
-                message: error.toString(),
-                onRetry: () {
-                  ref.read(anteprojectsNotifierProvider.notifier).refresh();
-                },
+              error: (error, stackTrace) => Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Error: ${error.toString()}'),
+                    const SizedBox(height: 16),
+                    ElevatedButton(
+                      onPressed: () {
+                        ref.invalidate(anteprojectsNotifierProvider(
+                          search: filters.search,
+                          status: filters.status,
+                          studentId: filters.studentId,
+                          tutorId: filters.tutorId,
+                          page: filters.page,
+                          limit: filters.limit,
+                        ));
+                      },
+                      child: const Text('Reintentar'),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -167,22 +183,22 @@ class _AnteprojectsListPageState extends ConsumerState<AnteprojectsListPage> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(AppLocalizations.of(context).deleteAnteprojectTitle),
-        content: Text(AppLocalizations.of(context).deleteAnteprojectMessage),
+        title: const Text('Eliminar Anteproyecto'),
+        content: const Text(
+            '¿Estás seguro de que quieres eliminar este anteproyecto?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: Text(AppLocalizations.of(context).cancel),
+            child: const Text('Cancelar'),
           ),
           TextButton(
             onPressed: () {
               Navigator.of(context).pop();
-              ref
-                  .read(anteprojectsNotifierProvider.notifier)
-                  .deleteAnteproject(anteproject.id);
+              // TODO: Implementar eliminación de anteproyecto
+              ref.invalidate(anteprojectsNotifierProvider);
             },
-            style: TextButton.styleFrom(foregroundColor: AppColors.error),
-            child: Text(AppLocalizations.of(context).delete),
+            style: TextButton.styleFrom(foregroundColor: Colors.red),
+            child: const Text('Eliminar'),
           ),
         ],
       ),
@@ -193,21 +209,21 @@ class _AnteprojectsListPageState extends ConsumerState<AnteprojectsListPage> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(AppLocalizations.of(context).submitAnteprojectTitle),
-        content: Text(AppLocalizations.of(context).submitAnteprojectMessage),
+        title: const Text('Enviar Anteproyecto'),
+        content: const Text(
+            '¿Estás seguro de que quieres enviar este anteproyecto para revisión?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: Text(AppLocalizations.of(context).cancel),
+            child: const Text('Cancelar'),
           ),
           TextButton(
             onPressed: () {
               Navigator.of(context).pop();
-              ref
-                  .read(anteprojectsNotifierProvider.notifier)
-                  .submitAnteproject(anteproject.id);
+              // TODO: Implementar envío de anteproyecto
+              ref.invalidate(anteprojectsNotifierProvider);
             },
-            child: Text(AppLocalizations.of(context).submit),
+            child: const Text('Enviar'),
           ),
         ],
       ),

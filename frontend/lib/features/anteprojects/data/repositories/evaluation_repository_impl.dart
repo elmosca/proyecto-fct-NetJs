@@ -113,10 +113,26 @@ class EvaluationRepositoryImpl implements EvaluationRepository {
     DateTime? startDate,
     DateTime? endDate,
   }) async {
-    return await _remoteDataSource.getEvaluationStatistics(
+    final stats = await _remoteDataSource.getEvaluationStatistics(
       evaluatorId: evaluatorId,
       startDate: startDate,
       endDate: endDate,
+    );
+
+    // Convertir de evaluations.EvaluationStatistics a EvaluationStatistics
+    return EvaluationStatistics(
+      totalEvaluations: stats.totalEvaluations,
+      completedEvaluations:
+          stats.approvedEvaluations + stats.rejectedEvaluations,
+      pendingEvaluations: stats.draftEvaluations + stats.submittedEvaluations,
+      averageScore: stats.averageScore,
+      statusDistribution: {
+        EvaluationStatus.draft: stats.draftEvaluations,
+        EvaluationStatus.submitted: stats.submittedEvaluations,
+        EvaluationStatus.approved: stats.approvedEvaluations,
+        EvaluationStatus.rejected: stats.rejectedEvaluations,
+      },
+      criteriaAverages: {}, // No disponible en la versión de evaluations
     );
   }
 }

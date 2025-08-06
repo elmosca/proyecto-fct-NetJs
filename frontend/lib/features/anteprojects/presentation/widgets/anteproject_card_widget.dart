@@ -1,5 +1,4 @@
 import 'package:fct_frontend/features/anteprojects/domain/entities/anteproject.dart';
-import 'package:fct_frontend/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class AnteprojectCardWidget extends StatelessWidget {
@@ -98,19 +97,19 @@ class AnteprojectCardWidget extends StatelessWidget {
                     IconButton(
                       icon: const Icon(Icons.edit, size: 20),
                       onPressed: onEdit,
-                      tooltip: AppLocalizations.of(context).edit,
+                      tooltip: 'Editar',
                     ),
                   if (onDelete != null)
                     IconButton(
                       icon: const Icon(Icons.delete, size: 20),
                       onPressed: onDelete,
-                      tooltip: AppLocalizations.of(context).delete,
+                      tooltip: 'Eliminar',
                     ),
                   if (onSubmit != null)
                     IconButton(
                       icon: const Icon(Icons.send, size: 20),
                       onPressed: onSubmit,
-                      tooltip: AppLocalizations.of(context).submit,
+                      tooltip: 'Enviar',
                     ),
                 ],
               ),

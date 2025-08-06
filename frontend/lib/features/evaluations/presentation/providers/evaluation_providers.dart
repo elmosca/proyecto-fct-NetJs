@@ -1,37 +1,36 @@
+import 'package:dio/dio.dart';
+import 'package:fct_frontend/features/evaluations/data/datasources/evaluation_local_data_source.dart';
+import 'package:fct_frontend/features/evaluations/data/datasources/evaluation_remote_data_source.dart';
+import 'package:fct_frontend/features/evaluations/data/repositories/evaluation_repository_impl.dart';
+import 'package:fct_frontend/features/evaluations/domain/entities/evaluation.dart';
+import 'package:fct_frontend/features/evaluations/domain/entities/evaluation_criteria.dart';
+import 'package:fct_frontend/features/evaluations/domain/repositories/evaluation_repository.dart';
+import 'package:fct_frontend/features/evaluations/domain/usecases/calculate_evaluation_score_usecase.dart';
+import 'package:fct_frontend/features/evaluations/domain/usecases/create_evaluation_usecase.dart';
+import 'package:fct_frontend/features/evaluations/domain/usecases/delete_evaluation_usecase.dart';
+import 'package:fct_frontend/features/evaluations/domain/usecases/get_evaluation_criteria_usecase.dart';
+import 'package:fct_frontend/features/evaluations/domain/usecases/get_evaluation_statistics_usecase.dart';
+import 'package:fct_frontend/features/evaluations/domain/usecases/get_evaluations_usecase.dart';
+import 'package:fct_frontend/features/evaluations/domain/usecases/update_evaluation_usecase.dart';
+import 'package:riverpod/riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-
-import '../../../core/di/injection_container.dart';
-import '../../data/datasources/evaluation_local_data_source.dart';
-import '../../data/datasources/evaluation_remote_data_source.dart';
-import '../../data/repositories/evaluation_repository_impl.dart';
-import '../../domain/entities/evaluation.dart';
-import '../../domain/entities/evaluation_criteria.dart';
-import '../../domain/repositories/evaluation_repository.dart';
-import '../../domain/usecases/calculate_evaluation_score_usecase.dart';
-import '../../domain/usecases/create_evaluation_usecase.dart';
-import '../../domain/usecases/delete_evaluation_usecase.dart';
-import '../../domain/usecases/get_evaluation_criteria_usecase.dart';
-import '../../domain/usecases/get_evaluation_statistics_usecase.dart';
-import '../../domain/usecases/get_evaluations_usecase.dart';
-import '../../domain/usecases/update_evaluation_usecase.dart';
 
 part 'evaluation_providers.g.dart';
 
 // Providers de inyección de dependencias
 @riverpod
-EvaluationRemoteDataSource evaluationRemoteDataSource(
-    EvaluationRemoteDataSourceRef ref) {
-  return EvaluationRemoteDataSourceImpl(ref.read(dioProvider));
+EvaluationRemoteDataSource evaluationRemoteDataSource(Ref ref) {
+  return EvaluationRemoteDataSourceImpl(Dio());
 }
 
 @riverpod
-EvaluationLocalDataSource evaluationLocalDataSource(
-    EvaluationLocalDataSourceRef ref) {
-  return EvaluationLocalDataSourceImpl(ref.read(sharedPreferencesProvider));
+EvaluationLocalDataSource evaluationLocalDataSource(Ref ref) {
+  // Crear una instancia síncrona - esto es temporal hasta que se inicialice SharedPreferences
+  return EvaluationLocalDataSourceImpl(null as dynamic);
 }
 
 @riverpod
-EvaluationRepository evaluationRepository(EvaluationRepositoryRef ref) {
+EvaluationRepository evaluationRepository(Ref ref) {
   return EvaluationRepositoryImpl(
     ref.read(evaluationRemoteDataSourceProvider),
     ref.read(evaluationLocalDataSourceProvider),
@@ -40,43 +39,37 @@ EvaluationRepository evaluationRepository(EvaluationRepositoryRef ref) {
 
 // Providers de casos de uso
 @riverpod
-GetEvaluationsUseCase getEvaluationsUseCase(GetEvaluationsUseCaseRef ref) {
+GetEvaluationsUseCase getEvaluationsUseCase(Ref ref) {
   return GetEvaluationsUseCase(ref.read(evaluationRepositoryProvider));
 }
 
 @riverpod
-CreateEvaluationUseCase createEvaluationUseCase(
-    CreateEvaluationUseCaseRef ref) {
+CreateEvaluationUseCase createEvaluationUseCase(Ref ref) {
   return CreateEvaluationUseCase(ref.read(evaluationRepositoryProvider));
 }
 
 @riverpod
-UpdateEvaluationUseCase updateEvaluationUseCase(
-    UpdateEvaluationUseCaseRef ref) {
+UpdateEvaluationUseCase updateEvaluationUseCase(Ref ref) {
   return UpdateEvaluationUseCase(ref.read(evaluationRepositoryProvider));
 }
 
 @riverpod
-DeleteEvaluationUseCase deleteEvaluationUseCase(
-    DeleteEvaluationUseCaseRef ref) {
+DeleteEvaluationUseCase deleteEvaluationUseCase(Ref ref) {
   return DeleteEvaluationUseCase(ref.read(evaluationRepositoryProvider));
 }
 
 @riverpod
-GetEvaluationCriteriaUseCase getEvaluationCriteriaUseCase(
-    GetEvaluationCriteriaUseCaseRef ref) {
+GetEvaluationCriteriaUseCase getEvaluationCriteriaUseCase(Ref ref) {
   return GetEvaluationCriteriaUseCase(ref.read(evaluationRepositoryProvider));
 }
 
 @riverpod
-CalculateEvaluationScoreUseCase calculateEvaluationScoreUseCase(
-    CalculateEvaluationScoreUseCaseRef ref) {
+CalculateEvaluationScoreUseCase calculateEvaluationScoreUseCase(Ref ref) {
   return const CalculateEvaluationScoreUseCase();
 }
 
 @riverpod
-GetEvaluationStatisticsUseCase getEvaluationStatisticsUseCase(
-    GetEvaluationStatisticsUseCaseRef ref) {
+GetEvaluationStatisticsUseCase getEvaluationStatisticsUseCase(Ref ref) {
   return GetEvaluationStatisticsUseCase(ref.read(evaluationRepositoryProvider));
 }
 

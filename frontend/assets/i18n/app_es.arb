@@ -1,997 +1,174 @@
 {
   "@@locale": "es",
-  "appTitle": "FCT - Gestión de Proyectos",
-  "@appTitle": {
-    "description": "Título de la aplicación"
-  },
-  "login": "Iniciar Sesión",
-  "@login": {
-    "description": "Texto del botón de login"
-  },
-  "register": "Registrarse",
-  "@register": {
-    "description": "Texto del botón de registro"
-  },
-  "logout": "Cerrar Sesión",
-  "@logout": {
-    "description": "Texto del botón de logout"
-  },
-  "email": "Correo electrónico",
-  "@email": {
-    "description": "Etiqueta del campo email"
-  },
-  "password": "Contraseña",
-  "@password": {
-    "description": "Etiqueta del campo contraseña"
-  },
-  "firstName": "Nombre",
-  "@firstName": {
-    "description": "Etiqueta del campo nombre"
-  },
-  "lastName": "Apellidos",
-  "@lastName": {
-    "description": "Etiqueta del campo apellidos"
-  },
-  "dashboard": "Dashboard",
-  "@dashboard": {
-    "description": "Título del dashboard"
-  },
-  "projects": "Proyectos",
-  "@projects": {
-    "description": "Título de la sección proyectos"
-  },
-  "tasks": "Tareas",
-  "@tasks": {
-    "description": "Título de la sección tareas"
-  },
-  "users": "Usuarios",
-  "@users": {
-    "description": "Título de la sección usuarios"
-  },
-  "settings": "Configuración",
-  "@settings": {
-    "description": "Título de la sección configuración"
-  },
-  "profile": "Perfil",
-  "@profile": {
-    "description": "Título de la sección perfil"
-  },
-  "language": "Idioma",
-  "@language": {
-    "description": "Etiqueta del selector de idioma"
-  },
-  "theme": "Tema",
-  "@theme": {
-    "description": "Etiqueta del selector de tema"
-  },
-  "light": "Claro",
-  "@light": {
-    "description": "Opción de tema claro"
-  },
-  "dark": "Oscuro",
-  "@dark": {
-    "description": "Opción de tema oscuro"
-  },
-  "system": "Sistema",
-  "@system": {
-    "description": "Opción de tema del sistema"
-  },
+  "loginTitle": "Iniciar Sesión",
+  "emailLabel": "Correo Electrónico",
+  "passwordLabel": "Contraseña",
+  "loginButton": "Entrar",
+  "forgotPassword": "¿Olvidaste tu contraseña?",
+  "registerLink": "¿No tienes cuenta? Regístrate",
+  "projectTitle": "Título del Proyecto",
+  "projectDescription": "Descripción del Proyecto",
+  "createProject": "Crear Proyecto",
+  "editProject": "Editar Proyecto",
+  "deleteProject": "Eliminar Proyecto",
+  "confirmDelete": "¿Estás seguro de que quieres eliminar este elemento?",
   "save": "Guardar",
-  "@save": {
-    "description": "Texto del botón guardar"
-  },
   "cancel": "Cancelar",
-  "@cancel": {
-    "description": "Texto del botón cancelar"
-  },
-  "delete": "Eliminar",
-  "@delete": {
-    "description": "Texto del botón eliminar"
-  },
-  "edit": "Editar",
-  "@edit": {
-    "description": "Texto del botón editar"
-  },
-  "add": "Añadir",
-  "@add": {
-    "description": "Texto del botón añadir"
-  },
-  "search": "Buscar",
-  "@search": {
-    "description": "Placeholder del campo búsqueda"
-  },
   "loading": "Cargando...",
-  "@loading": {
-    "description": "Texto de carga"
-  },
   "error": "Error",
-  "@error": {
-    "description": "Título de error"
-  },
   "success": "Éxito",
-  "@success": {
-    "description": "Título de éxito"
-  },
   "warning": "Advertencia",
-  "@warning": {
-    "description": "Título de advertencia"
-  },
-  "info": "Información",
-  "@info": {
-    "description": "Título de información"
-  },
-  "retry": "Reintentar",
-  "@retry": {
-    "description": "Texto del botón reintentar"
-  },
-  "noData": "No hay datos",
-  "@noData": {
-    "description": "Texto cuando no hay datos"
-  },
-  "noDataMessage": "No se encontraron elementos",
-  "@noDataMessage": {
-    "description": "Mensaje cuando no hay datos"
-  },
-  "welcome": "Bienvenido",
-  "@welcome": {
-    "description": "Texto de bienvenida"
-  },
-  "welcomeMessage": "Bienvenido al sistema de gestión de proyectos FCT",
-  "@welcomeMessage": {
-    "description": "Mensaje de bienvenida"
-  },
-  "listView": "Vista de lista",
-  "@listView": {
-    "description": "Texto para vista de lista"
-  },
-  "kanbanView": "Vista Kanban",
-  "@kanbanView": {
-    "description": "Texto para vista Kanban"
-  },
-  "filters": "Filtros",
-  "@filters": {
-    "description": "Texto para filtros"
-  },
-  "createTask": "Crear tarea",
-  "@createTask": {
-    "description": "Texto para crear tarea"
-  },
-  "noTasks": "No hay tareas",
-  "@noTasks": {
-    "description": "Texto cuando no hay tareas"
-  },
-  "noTasksMessage": "No se encontraron tareas",
-  "@noTasksMessage": {
-    "description": "Mensaje cuando no hay tareas"
-  },
-  "createFirstTask": "Crear primera tarea",
-  "@createFirstTask": {
-    "description": "Texto para crear primera tarea"
-  },
-  "editTask": "Editar tarea",
-  "@editTask": {
-    "description": "Texto para editar tarea"
-  },
-  "deleteTask": "Eliminar tarea",
-  "@deleteTask": {
-    "description": "Texto para eliminar tarea"
-  },
-  "deleteTaskConfirmation": "¿Estás seguro de que quieres eliminar esta tarea?",
-  "@deleteTaskConfirmation": {
-    "description": "Confirmación para eliminar tarea"
-  },
-  "milestones": "Hitos",
-  "@milestones": {
-    "description": "Título de la sección hitos"
-  },
-  "create": "Crear",
-  "@create": {
-    "description": "Texto del botón crear"
-  },
-  "title": "Título",
-  "@title": {
-    "description": "Etiqueta del campo título"
-  },
-  "titleRequired": "El título es requerido",
-  "@titleRequired": {
-    "description": "Mensaje de error para título requerido"
-  },
-  "description": "Descripción",
-  "@description": {
-    "description": "Etiqueta del campo descripción"
-  },
-  "descriptionRequired": "La descripción es requerida",
-  "@descriptionRequired": {
-    "description": "Mensaje de error para descripción requerida"
-  },
-  "priority": "Prioridad",
-  "@priority": {
-    "description": "Etiqueta del campo prioridad"
-  },
-  "complexity": "Complejidad",
-  "@complexity": {
-    "description": "Etiqueta del campo complejidad"
-  },
-  "dueDate": "Fecha de vencimiento",
-  "@dueDate": {
-    "description": "Etiqueta del campo fecha de vencimiento"
-  },
-  "estimatedHours": "Horas estimadas",
-  "@estimatedHours": {
-    "description": "Etiqueta del campo horas estimadas"
-  },
-  "tags": "Etiquetas",
-  "@tags": {
-    "description": "Etiqueta del campo etiquetas"
-  },
-  "tagsHint": "Separadas por comas",
-  "@tagsHint": {
-    "description": "Hint para el campo etiquetas"
-  },
-  "assignees": "Asignados",
-  "@assignees": {
-    "description": "Etiqueta del campo asignados"
-  },
-  "assigneesHint": "Selecciona usuarios",
-  "@assigneesHint": {
-    "description": "Hint para el campo asignados"
-  },
-  "clear": "Limpiar",
-  "@clear": {
-    "description": "Texto del botón limpiar"
-  },
-  "apply": "Aplicar",
-  "@apply": {
-    "description": "Texto del botón aplicar"
-  },
-  "searchTasksHint": "Buscar tareas...",
-  "@searchTasksHint": {
-    "description": "Hint para buscar tareas"
-  },
-  "status": "Estado",
-  "@status": {
-    "description": "Etiqueta del campo estado"
-  },
-  "all": "Todos",
-  "@all": {
-    "description": "Texto para opción todos"
-  },
-  "selectDateRange": "Seleccionar rango de fechas",
-  "@selectDateRange": {
-    "description": "Texto para seleccionar rango de fechas"
-  },
-  "submit": "Enviar",
-  "@submit": {
-    "description": "Texto del botón enviar"
-  },
-  "taskDetails": "Detalles de la Tarea",
-  "@taskDetails": {
-    "description": "Título de la página de detalles de tarea"
-  },
-  "basicInformation": "Información Básica",
-  "@basicInformation": {
-    "description": "Título de la sección de información básica"
-  },
-  "metadata": "Metadatos",
-  "@metadata": {
-    "description": "Título de la sección de metadatos"
-  },
-  "actions": "Acciones",
-  "@actions": {
-    "description": "Título de la sección de acciones"
-  },
-  "changeStatus": "Cambiar Estado",
-  "@changeStatus": {
-    "description": "Texto para cambiar estado"
-  },
-  "createdAt": "Creado el",
-  "@createdAt": {
-    "description": "Etiqueta para fecha de creación"
-  },
-  "updatedAt": "Actualizado el",
-  "@updatedAt": {
-    "description": "Etiqueta para fecha de actualización"
-  },
-  "createdBy": "Creado por",
-  "@createdBy": {
-    "description": "Etiqueta para creador"
-  },
-  "project": "Proyecto",
-  "@project": {
-    "description": "Etiqueta para proyecto"
-  },
-  "createMilestone": "Crear hito",
-  "@createMilestone": {
-    "description": "Texto para crear hito"
-  },
-  "editMilestone": "Editar hito",
-  "@editMilestone": {
-    "description": "Texto para editar hito"
-  },
-  "deleteMilestone": "Eliminar hito",
-  "@deleteMilestone": {
-    "description": "Texto para eliminar hito"
-  },
-  "deleteMilestoneConfirmation": "¿Estás seguro de que quieres eliminar este hito?",
-  "@deleteMilestoneConfirmation": {
-    "description": "Confirmación para eliminar hito"
-  },
-  "milestoneDetails": "Detalles del Hito",
-  "@milestoneDetails": {
-    "description": "Título de la página de detalles de hito"
-  },
-  "milestoneNumber": "Número de hito",
-  "@milestoneNumber": {
-    "description": "Etiqueta para número de hito"
-  },
-  "plannedDate": "Fecha planificada",
-  "@plannedDate": {
-    "description": "Etiqueta para fecha planificada"
-  },
-  "completedDate": "Fecha de completado",
-  "@completedDate": {
-    "description": "Etiqueta para fecha de completado"
-  },
-  "milestoneType": "Tipo de hito",
-  "@milestoneType": {
-    "description": "Etiqueta para tipo de hito"
-  },
-  "expectedDeliverables": "Entregables esperados",
-  "@expectedDeliverables": {
-    "description": "Etiqueta para entregables esperados"
-  },
-  "reviewComments": "Comentarios de revisión",
-  "@reviewComments": {
-    "description": "Etiqueta para comentarios de revisión"
-  },
-  "isFromAnteproject": "Proveniente de anteproyecto",
-  "@isFromAnteproject": {
-    "description": "Etiqueta para indicar si proviene de anteproyecto"
-  },
-  "noMilestones": "No hay hitos",
-  "@noMilestones": {
-    "description": "Texto cuando no hay hitos"
-  },
-  "noMilestonesMessage": "No se encontraron hitos",
-  "@noMilestonesMessage": {
-    "description": "Mensaje cuando no hay hitos"
-  },
-  "createFirstMilestone": "Crear primer hito",
-  "@createFirstMilestone": {
-    "description": "Texto para crear primer hito"
-  },
-  "milestoneNumberRequired": "El número de hito es requerido",
-  "@milestoneNumberRequired": {
-    "description": "Mensaje de error para número de hito requerido"
-  },
-  "plannedDateRequired": "La fecha planificada es requerida",
-  "@plannedDateRequired": {
-    "description": "Mensaje de error para fecha planificada requerida"
-  },
-  "completeMilestone": "Completar hito",
-  "@completeMilestone": {
-    "description": "Texto para completar hito"
-  },
-  "milestoneCompleted": "Hito completado",
-  "@milestoneCompleted": {
-    "description": "Mensaje de hito completado"
-  },
-  "milestoneDelayed": "Hito retrasado",
-  "@milestoneDelayed": {
-    "description": "Mensaje de hito retrasado"
-  },
-  "milestoneInProgress": "Hito en progreso",
-  "@milestoneInProgress": {
-    "description": "Mensaje de hito en progreso"
-  },
-  "milestonePending": "Hito pendiente",
-  "@milestonePending": {
-    "description": "Mensaje de hito pendiente"
-  },
-  "assignUsers": "Asignar usuarios",
-  "@assignUsers": {
-    "description": "Texto para asignar usuarios"
-  },
-  "assignUserToTask": "Asignar usuario a tarea",
-  "@assignUserToTask": {
-    "description": "Texto para asignar usuario a tarea"
-  },
-  "unassignUser": "Desasignar usuario",
-  "@unassignUser": {
-    "description": "Texto para desasignar usuario"
-  },
-  "assignedUsers": "Usuarios asignados",
-  "@assignedUsers": {
-    "description": "Texto para usuarios asignados"
-  },
-  "availableUsers": "Usuarios disponibles",
-  "@availableUsers": {
-    "description": "Texto para usuarios disponibles"
-  },
-  "selectUsers": "Seleccionar usuarios",
-  "@selectUsers": {
-    "description": "Texto para seleccionar usuarios"
-  },
-  "searchUsers": "Buscar usuarios...",
-  "@searchUsers": {
-    "description": "Placeholder para buscar usuarios"
-  },
-  "noUsersAssigned": "No hay usuarios asignados",
-  "@noUsersAssigned": {
-    "description": "Texto cuando no hay usuarios asignados"
-  },
-  "noUsersAvailable": "No hay usuarios disponibles",
-  "@noUsersAvailable": {
-    "description": "Texto cuando no hay usuarios disponibles"
-  },
-  "userAssignedSuccessfully": "Usuario asignado exitosamente",
-  "@userAssignedSuccessfully": {
-    "description": "Mensaje de usuario asignado exitosamente"
-  },
-  "userUnassignedSuccessfully": "Usuario desasignado exitosamente",
-  "@userUnassignedSuccessfully": {
-    "description": "Mensaje de usuario desasignado exitosamente"
-  },
-  "errorAssigningUser": "Error al asignar usuario",
-  "@errorAssigningUser": {
-    "description": "Mensaje de error al asignar usuario"
-  },
-  "errorUnassigningUser": "Error al desasignar usuario",
-  "@errorUnassigningUser": {
-    "description": "Mensaje de error al desasignar usuario"
-  },
-  "assignUser": "Asignar",
-  "@assignUser": {
-    "description": "Texto del botón asignar"
-  },
-  "unassignUser": "Desasignar",
-  "@unassignUser": {
-    "description": "Texto del botón desasignar"
-  },
-  "userManagement": "Gestión de usuarios",
-  "@userManagement": {
-    "description": "Texto para gestión de usuarios"
-  },
-  "filterByRole": "Filtrar por rol",
-  "@filterByRole": {
-    "description": "Texto para filtrar por rol"
-  },
-  "allRoles": "Todos los roles",
-  "@allRoles": {
-    "description": "Texto para todos los roles"
-  },
-  "student": "Estudiante",
-  "@student": {
-    "description": "Texto para rol estudiante"
-  },
-  "tutor": "Tutor",
-  "@tutor": {
-    "description": "Texto para rol tutor"
-  },
-  "admin": "Administrador",
-  "@admin": {
-    "description": "Texto para rol administrador"
-  },
-  "clear": "Limpiar",
-  "@clear": {
-    "description": "Texto para limpiar"
-  },
-  "dependencies": "Dependencias",
-  "@dependencies": {
-    "description": "Texto para dependencias"
-  },
-  "taskDependencies": "Dependencias de tareas",
-  "@taskDependencies": {
-    "description": "Texto para dependencias de tareas"
-  },
-  "addDependency": "Agregar dependencia",
-  "@addDependency": {
-    "description": "Texto para agregar dependencia"
-  },
-  "removeDependency": "Eliminar dependencia",
-  "@removeDependency": {
-    "description": "Texto para eliminar dependencia"
-  },
-  "selectDependency": "Seleccionar dependencia",
-  "@selectDependency": {
-    "description": "Texto para seleccionar dependencia"
-  },
-  "dependencyAdded": "Dependencia agregada exitosamente",
-  "@dependencyAdded": {
-    "description": "Texto para dependencia agregada"
-  },
-  "dependencyRemoved": "Dependencia eliminada exitosamente",
-  "@dependencyRemoved": {
-    "description": "Texto para dependencia eliminada"
-  },
-  "errorAddingDependency": "Error al agregar dependencia",
-  "@errorAddingDependency": {
-    "description": "Texto para error al agregar dependencia"
-  },
-  "errorRemovingDependency": "Error al eliminar dependencia",
-  "@errorRemovingDependency": {
-    "description": "Texto para error al eliminar dependencia"
-  },
-  "noDependencies": "No hay dependencias",
-  "@noDependencies": {
-    "description": "Texto para no hay dependencias"
-  },
-  "noDependents": "No hay tareas que dependan de esta",
-  "@noDependents": {
-    "description": "Texto para no hay dependientes"
-  },
-  "dependsOn": "Depende de",
-  "@dependsOn": {
-    "description": "Texto para depende de"
-  },
-  "dependents": "Tareas que dependen",
-  "@dependents": {
-    "description": "Texto para tareas que dependen"
-  },
-  "circularDependencyError": "No se puede crear una dependencia circular",
-  "@circularDependencyError": {
-    "description": "Texto para error de dependencia circular"
-  },
-  "dependencyConflict": "Conflicto de dependencias detectado",
-  "@dependencyConflict": {
-    "description": "Texto para conflicto de dependencias"
-  },
-  "manageDependencies": "Gestionar dependencias",
-  "@manageDependencies": {
-    "description": "Texto para gestionar dependencias"
-  },
-  "dependencyGraph": "Gráfico de dependencias",
-  "@dependencyGraph": {
-    "description": "Texto para gráfico de dependencias"
-  },
-  "dependencyChain": "Cadena de dependencias",
-  "@dependencyChain": {
-    "description": "Texto para cadena de dependencias"
-  },
-  "notifications": "Notificaciones",
-  "@notifications": {
-    "description": "Texto para notificaciones"
-  },
-  "taskNotifications": "Notificaciones de tareas",
-  "@taskNotifications": {
-    "description": "Texto para notificaciones de tareas"
-  },
-  "newTaskAssigned": "Nueva tarea asignada",
-  "@newTaskAssigned": {
-    "description": "Texto para nueva tarea asignada"
-  },
-  "taskStatusChanged": "Estado de tarea actualizado",
-  "@taskStatusChanged": {
-    "description": "Texto para estado de tarea cambiado"
-  },
-  "taskDueDateReminder": "Recordatorio de fecha de vencimiento",
-  "@taskDueDateReminder": {
-    "description": "Texto para recordatorio de fecha de vencimiento"
-  },
-  "taskOverdue": "Tarea vencida",
-  "@taskOverdue": {
-    "description": "Texto para tarea vencida"
-  },
-  "taskCompleted": "Tarea completada",
-  "@taskCompleted": {
-    "description": "Texto para tarea completada"
-  },
-  "dependencyCompleted": "Dependencia completada",
-  "@dependencyCompleted": {
-    "description": "Texto para dependencia completada"
-  },
-  "newComment": "Nuevo comentario",
-  "@newComment": {
-    "description": "Texto para nuevo comentario"
-  },
-  "priorityChanged": "Prioridad actualizada",
-  "@priorityChanged": {
-    "description": "Texto para prioridad cambiada"
-  },
-  "milestoneReached": "Hito alcanzado",
-  "@milestoneReached": {
-    "description": "Texto para hito alcanzado"
-  },
-  "markAsRead": "Marcar como leída",
-  "@markAsRead": {
-    "description": "Texto para marcar como leída"
-  },
-  "markAllAsRead": "Marcar todas como leídas",
-  "@markAllAsRead": {
-    "description": "Texto para marcar todas como leídas"
-  },
-  "unreadNotifications": "Notificaciones no leídas",
-  "@unreadNotifications": {
-    "description": "Texto para notificaciones no leídas"
-  },
-  "noNotifications": "No hay notificaciones",
-  "@noNotifications": {
-    "description": "Texto para no hay notificaciones"
-  },
-  "notificationSettings": "Configuración de notificaciones",
-  "@notificationSettings": {
-    "description": "Texto para configuración de notificaciones"
-  },
-  "enableTaskNotifications": "Habilitar notificaciones de tareas",
-  "@enableTaskNotifications": {
-    "description": "Texto para habilitar notificaciones de tareas"
-  },
-  "enableDueDateReminders": "Habilitar recordatorios de fecha de vencimiento",
-  "@enableDueDateReminders": {
-    "description": "Texto para habilitar recordatorios"
-  },
-  "enableOverdueNotifications": "Habilitar notificaciones de tareas vencidas",
-  "@enableOverdueNotifications": {
-    "description": "Texto para habilitar notificaciones vencidas"
-  },
-  "enableStatusChangeNotifications": "Habilitar notificaciones de cambio de estado",
-  "@enableStatusChangeNotifications": {
-    "description": "Texto para habilitar notificaciones de cambio de estado"
-  },
-  "enableAssignmentNotifications": "Habilitar notificaciones de asignación",
-  "@enableAssignmentNotifications": {
-    "description": "Texto para habilitar notificaciones de asignación"
-  },
-  "reminderDays": "Días de recordatorio",
-  "@reminderDays": {
-    "description": "Texto para días de recordatorio"
-  },
-  "notificationSound": "Sonido de notificación",
-  "@notificationSound": {
-    "description": "Texto para sonido de notificación"
-  },
-  "notificationVibration": "Vibración de notificación",
-  "@notificationVibration": {
-    "description": "Texto para vibración de notificación"
-  },
-  "reports": "Reportes",
-  "@reports": {
-    "description": "Texto para reportes"
-  },
-  "taskReports": "Reportes de tareas",
-  "@taskReports": {
-    "description": "Texto para reportes de tareas"
-  },
-  "generateReport": "Generar reporte",
-  "@generateReport": {
-    "description": "Texto para generar reporte"
-  },
-  "reportTypes": "Tipos de reporte",
-  "@reportTypes": {
-    "description": "Texto para tipos de reporte"
-  },
-  "statusSummary": "Resumen de estados",
-  "@statusSummary": {
-    "description": "Texto para resumen de estados"
-  },
-  "progressByUser": "Progreso por usuario",
-  "@progressByUser": {
-    "description": "Texto para progreso por usuario"
-  },
-  "progressByProject": "Progreso por proyecto",
-  "@progressByProject": {
-    "description": "Texto para progreso por proyecto"
-  },
-  "overdueSummary": "Resumen de vencidas",
-  "@overdueSummary": {
-    "description": "Texto para resumen de vencidas"
-  },
-  "completionTrends": "Tendencias de completado",
-  "@completionTrends": {
-    "description": "Texto para tendencias de completado"
-  },
-  "priorityDistribution": "Distribución de prioridades",
-  "@priorityDistribution": {
-    "description": "Texto para distribución de prioridades"
-  },
-  "complexityAnalysis": "Análisis de complejidad",
-  "@complexityAnalysis": {
-    "description": "Texto para análisis de complejidad"
-  },
-  "dependencyAnalysis": "Análisis de dependencias",
-  "@dependencyAnalysis": {
-    "description": "Texto para análisis de dependencias"
-  },
-  "timeAnalysis": "Análisis de tiempo",
-  "@timeAnalysis": {
-    "description": "Texto para análisis de tiempo"
-  },
-  "customReport": "Reporte personalizado",
-  "@customReport": {
-    "description": "Texto para reporte personalizado"
-  },
-  "exportReport": "Exportar reporte",
-  "@exportReport": {
-    "description": "Texto para exportar reporte"
-  },
-  "scheduleReport": "Programar reporte",
-  "@scheduleReport": {
-    "description": "Texto para programar reporte"
-  },
-  "reportStatus": "Estado del reporte",
-  "@reportStatus": {
-    "description": "Texto para estado del reporte"
-  },
-  "reportFilters": "Filtros del reporte",
-  "@reportFilters": {
-    "description": "Texto para filtros del reporte"
-  },
-  "reportData": "Datos del reporte",
-  "@reportData": {
-    "description": "Texto para datos del reporte"
-  },
-  "reportHistory": "Historial de reportes",
-  "@reportHistory": {
-    "description": "Texto para historial de reportes"
-  },
-  "reportSchedules": "Reportes programados",
-  "@reportSchedules": {
-    "description": "Texto para reportes programados"
-  },
-  "noReports": "No hay reportes",
-  "@noReports": {
-    "description": "Texto para no hay reportes"
-  },
-  "reportGenerated": "Reporte generado exitosamente",
-  "@reportGenerated": {
-    "description": "Texto para reporte generado"
-  },
-  "errorGeneratingReport": "Error al generar reporte",
-  "@errorGeneratingReport": {
-    "description": "Texto para error al generar reporte"
-  },
-  "reportExported": "Reporte exportado exitosamente",
-  "@reportExported": {
-    "description": "Texto para reporte exportado"
-  },
-  "errorExportingReport": "Error al exportar reporte",
-  "@errorExportingReport": {
-    "description": "Texto para error al exportar reporte"
-  },
-  "reportScheduled": "Reporte programado exitosamente",
-  "@reportScheduled": {
-    "description": "Texto para reporte programado"
-  },
-  "errorSchedulingReport": "Error al programar reporte",
-  "@errorSchedulingReport": {
-    "description": "Texto para error al programar reporte"
-  },
-  
-  "taskExportsTitle": "Exportaciones de Tareas",
-  "@taskExportsTitle": {
-    "description": "Título de la sección exportaciones de tareas"
-  },
-  "taskExportsDescription": "Exporta tareas en diferentes formatos",
-  "@taskExportsDescription": {
-    "description": "Descripción de exportaciones de tareas"
-  },
-  "noExportsTitle": "No hay exportaciones",
-  "@noExportsTitle": {
-    "description": "Texto para no hay exportaciones"
-  },
-  "noExportsMessage": "No se encontraron exportaciones de tareas",
-  "@noExportsMessage": {
-    "description": "Mensaje para no hay exportaciones"
-  },
-  "errorLoadingExports": "Error al cargar exportaciones",
-  "@errorLoadingExports": {
-    "description": "Texto para error al cargar exportaciones"
-  },
   "createExport": "Crear Exportación",
-  "@createExport": {
-    "description": "Texto para crear exportación"
-  },
   "exportTitle": "Título de Exportación",
-  "@exportTitle": {
-    "description": "Etiqueta del título de exportación"
-  },
   "exportDescription": "Descripción de Exportación",
-  "@exportDescription": {
-    "description": "Etiqueta de descripción de exportación"
-  },
   "exportFormat": "Formato de Exportación",
-  "@exportFormat": {
-    "description": "Etiqueta de formato de exportación"
-  },
-  "exportFilters": "Filtros de Exportación",
-  "@exportFilters": {
-    "description": "Etiqueta de filtros de exportación"
-  },
-  "exportColumns": "Columnas de Exportación",
-  "@exportColumns": {
-    "description": "Etiqueta de columnas de exportación"
-  },
-  "allFormats": "Todos los formatos",
-  "@allFormats": {
-    "description": "Texto para todos los formatos"
-  },
-  "allStatuses": "Todos los estados",
-  "@allStatuses": {
-    "description": "Texto para todos los estados"
-  },
-  "selectAtLeastOneColumn": "Selecciona al menos una columna",
-  "@selectAtLeastOneColumn": {
-    "description": "Texto para seleccionar al menos una columna"
-  },
-  "exportDownloadStarted": "Descarga de exportación iniciada",
-  "@exportDownloadStarted": {
-    "description": "Texto para descarga iniciada"
-  },
-  "exportDeleted": "Exportación eliminada",
-  "@exportDeleted": {
-    "description": "Texto para exportación eliminada"
-  },
-  "exportCancelled": "Exportación cancelada",
-  "@exportCancelled": {
-    "description": "Texto para exportación cancelada"
-  },
-  "deleteExport": "Eliminar Exportación",
-  "@deleteExport": {
-    "description": "Texto para eliminar exportación"
-  },
-  "deleteExportConfirmation": "¿Estás seguro de que quieres eliminar esta exportación?",
-  "@deleteExportConfirmation": {
-    "description": "Confirmación para eliminar exportación"
-  },
-  "cancelExport": "Cancelar Exportación",
-  "@cancelExport": {
-    "description": "Texto para cancelar exportación"
-  },
-  "cancelExportConfirmation": "¿Estás seguro de que quieres cancelar esta exportación?",
-  "@cancelExportConfirmation": {
-    "description": "Confirmación para cancelar exportación"
-  },
-  "filterExports": "Filtrar Exportaciones",
-  "@filterExports": {
-    "description": "Texto para filtrar exportaciones"
-  },
-  "selectAll": "Seleccionar Todo",
-  "@selectAll": {
-    "description": "Texto para seleccionar todo"
-  },
-  "deselectAll": "Deseleccionar Todo",
-  "@deselectAll": {
-    "description": "Texto para deseleccionar todo"
-  },
-  
-  "progressReport": "Reporte de Progreso",
-  "@progressReport": {
-    "description": "Título del reporte de progreso"
-  },
-  "summary": "Resumen",
-  "@summary": {
-    "description": "Texto para resumen"
-  },
-  "totalTasks": "Total de Tareas",
-  "@totalTasks": {
-    "description": "Texto para total de tareas"
-  },
-  "completedTasks": "Tareas Completadas",
-  "@completedTasks": {
-    "description": "Texto para tareas completadas"
-  },
-  "inProgressTasks": "Tareas en Progreso",
-  "@inProgressTasks": {
-    "description": "Texto para tareas en progreso"
-  },
-  "overdueTasks": "Tareas Vencidas",
-  "@overdueTasks": {
-    "description": "Texto para tareas vencidas"
-  },
-  "totalMilestones": "Total de Milestones",
-  "@totalMilestones": {
-    "description": "Texto para total de milestones"
-  },
-  "completedMilestones": "Milestones Completados",
-  "@completedMilestones": {
-    "description": "Texto para milestones completados"
-  },
-  "taskProgress": "Progreso de Tareas",
-  "@taskProgress": {
-    "description": "Texto para progreso de tareas"
-  },
-  "milestoneProgress": "Progreso de Milestones",
-  "@milestoneProgress": {
-    "description": "Texto para progreso de milestones"
-  },
-  "taskStatus": "Estado de Tareas",
-  "@taskStatus": {
-    "description": "Texto para estado de tareas"
-  },
-  "taskPriority": "Prioridad de Tareas",
-  "@taskPriority": {
-    "description": "Texto para prioridad de tareas"
-  },
-  "milestoneStatus": "Estado de Milestones",
-  "@milestoneStatus": {
-    "description": "Texto para estado de milestones"
-  },
-  "recentTasks": "Tareas Recientes",
-  "@recentTasks": {
-    "description": "Texto para tareas recientes"
-  },
-  "recentMilestones": "Milestones Recientes",
-  "@recentMilestones": {
-    "description": "Texto para milestones recientes"
-  },
-  "recentActivity": "Actividad Reciente",
-  "@recentActivity": {
-    "description": "Texto para actividad reciente"
-  },
-  "noRecentActivity": "No hay actividad reciente",
-  "@noRecentActivity": {
-    "description": "Texto para no hay actividad reciente"
-  },
-  "performanceMetrics": "Métricas de Rendimiento",
-  "@performanceMetrics": {
-    "description": "Texto para métricas de rendimiento"
-  },
-  "taskCompletionRate": "Tasa de Completado de Tareas",
-  "@taskCompletionRate": {
-    "description": "Texto para tasa de completado de tareas"
-  },
-  "milestoneCompletionRate": "Tasa de Completado de Milestones",
-  "@milestoneCompletionRate": {
-    "description": "Texto para tasa de completado de milestones"
-  },
-  "averageTaskDuration": "Duración Promedio de Tareas",
-  "@averageTaskDuration": {
-    "description": "Texto para duración promedio de tareas"
-  },
-  "onTimeCompletionRate": "Tasa de Completado a Tiempo",
-  "@onTimeCompletionRate": {
-    "description": "Texto para tasa de completado a tiempo"
-  },
-  "noTasksAvailable": "No hay tareas disponibles",
-  "@noTasksAvailable": {
-    "description": "Texto para no hay tareas disponibles"
-  },
-  "noMilestonesAvailable": "No hay milestones disponibles",
-  "@noMilestonesAvailable": {
-    "description": "Texto para no hay milestones disponibles"
-  },
-  "filterReport": "Filtrar Reporte",
-  "@filterReport": {
-    "description": "Texto para filtrar reporte"
-  },
-  "allProjects": "Todos los proyectos",
-  "@allProjects": {
-    "description": "Texto para todos los proyectos"
-  },
-  "clearFilters": "Limpiar Filtros",
-  "@clearFilters": {
-    "description": "Texto para limpiar filtros"
-  },
+  "exportDate": "Fecha de Exportación",
+  "exportStatus": "Estado de Exportación",
+  "exportActions": "Acciones de Exportación",
+  "basicInformation": "Información Básica",
+  "metadata": "Metadatos",
+  "actions": "Acciones",
+  "changeStatus": "Cambiar Estado",
+  "deleteTask": "Eliminar Tarea",
+  "deleteTaskConfirmation": "¿Estás seguro de que quieres eliminar esta tarea?",
+  "deleteMilestone": "Eliminar Hito",
+  "deleteMilestoneConfirmation": "¿Estás seguro de que quieres eliminar este hito?",
+  "milestones": "Hitos",
+  "noMilestones": "Sin Hitos",
+  "noMilestonesMessage": "Aún no se han creado hitos.",
+  "tasks": "Tareas",
+  "noTasks": "Sin Tareas",
+  "noTasksMessage": "Aún no se han creado tareas.",
+  "listView": "Vista de Lista",
+  "kanbanView": "Vista Kanban",
+  "dashboard": "Panel Principal",
+  "settings": "Configuración",
+  "logout": "Cerrar Sesión",
+  "appTitle": "Gestión de Proyectos FCT",
+  "createdAt": "Creado El",
+  "updatedAt": "Actualizado El",
+  "reviewComments": "Comentarios de Revisión",
+  "unread": "No Leído",
+  "profile": "Perfil",
+  "users": "Usuarios",
+  "student": "Estudiante",
+  "tutor": "Tutor",
+  "admin": "Administrador",
+  "unassignUser": "Desasignar Usuario",
+  "assignUser": "Asignar Usuario",
+  "searchTasksHint": "Buscar tareas...",
+  "status": "Estado",
+  "all": "Todos",
+  "priority": "Prioridad",
+  "complexity": "Complejidad",
+  "selectDateRange": "Seleccionar Rango de Fechas",
+  "clear": "Limpiar",
   "apply": "Aplicar",
-  "@apply": {
-    "description": "Texto para aplicar"
-  },
-  "allTime": "Todo el tiempo",
-  "@allTime": {
-    "description": "Texto para todo el tiempo"
-  },
+  "project": "Proyecto",
+  "export": "Exportar",
+  "schedule": "Programar",
+  "delete": "Eliminar",
+  "pending": "Pendiente",
+  "generating": "Generando",
+  "completed": "Completado",
+  "failed": "Fallido",
+  "expired": "Expirado",
+  "progressReport": "Informe de Progreso",
+  "exportReport": "Informe de Exportación",
+  "summary": "Resumen",
+  "totalTasks": "Total de Tareas",
+  "completedTasks": "Tareas Completadas",
+  "inProgressTasks": "Tareas en Progreso",
+  "overdueTasks": "Tareas Vencidas",
+  "totalMilestones": "Total de Hitos",
+  "completedMilestones": "Hitos Completados",
+  "noTasksAvailable": "No hay tareas disponibles",
+  "taskProgress": "Progreso de Tarea",
+  "taskStatus": "Estado de Tarea",
+  "taskPriority": "Prioridad de Tarea",
+  "noMilestonesAvailable": "No hay hitos disponibles",
+  "milestoneProgress": "Progreso de Hito",
+  "milestoneStatus": "Estado de Hito",
+  "recentTasks": "Tareas Recientes",
+  "recentMilestones": "Hitos Recientes",
+  "noRecentActivity": "No hay actividad reciente",
+  "recentActivity": "Actividad Reciente",
+  "task": "Tarea",
+  "milestone": "Hito",
+  "performanceMetrics": "Métricas de Rendimiento",
+  "taskCompletionRate": "Tasa de Finalización de Tareas",
+  "milestoneCompletionRate": "Tasa de Finalización de Hitos",
+  "averageTaskDuration": "Duración Promedio de Tareas",
+  "onTimeCompletionRate": "Tasa de Finalización a Tiempo",
   "from": "Desde",
-  "@from": {
-    "description": "Texto para desde"
-  },
   "to": "Hasta",
-  "@to": {
-    "description": "Texto para hasta"
-  },
-  "errorLoadingData": "Error al cargar datos",
-  "@errorLoadingData": {
-    "description": "Texto para error al cargar datos"
-  },
-  "retry": "Reintentar",
-  "@retry": {
-    "description": "Texto para reintentar"
-  },
+  "allTime": "Todo el Tiempo",
+  "lowPriority": "Prioridad Baja",
+  "mediumPriority": "Prioridad Media",
+  "highPriority": "Prioridad Alta",
+  "criticalPriority": "Prioridad Crítica",
+  "notificationMarkedAsRead": "Notificación marcada como leída",
+  "deleteNotification": "Eliminar Notificación",
+  "deleteNotificationConfirmation": "¿Estás seguro de que quieres eliminar esta notificación?",
+  "notificationDeleted": "Notificación eliminada",
+  "allNotificationsMarkedAsRead": "Todas las notificaciones marcadas como leídas",
+  "evaluationsTitle": "Evaluaciones",
   "filter": "Filtrar",
-  "@filter": {
-    "description": "Texto para filtrar"
-  },
+  "createEvaluation": "Crear Evaluación",
+  "deleteEvaluationTitle": "Eliminar Evaluación",
+  "deleteEvaluationMessage": "¿Estás seguro de que quieres eliminar esta evaluación?",
+  "approveEvaluationTitle": "Aprobar Evaluación",
+  "approveEvaluationMessage": "¿Estás seguro de que quieres aprobar esta evaluación?",
+  "comments": "Comentarios",
+  "optionalComments": "Comentarios Opcionales",
+  "approve": "Aprobar",
+  "rejectEvaluationTitle": "Rechazar Evaluación",
+  "rejectEvaluationMessage": "¿Estás seguro de que quieres rechazar esta evaluación?",
+  "rejectionReason": "Motivo de Rechazo",
+  "rejectionReasonHint": "Por favor proporciona un motivo para el rechazo",
+  "reject": "Rechazar",
+  "allFormats": "Todos los Formatos",
+  "allRoles": "Todos los Roles",
+  "allStatuses": "Todos los Estados",
+  "allTypes": "Todos los Tipos",
+  "assignedUsers": "Usuarios Asignados",
+  "assignees": "Asignados",
+  "assignUsers": "Asignar Usuarios",
+  "availableUsers": "Usuarios Disponibles",
+  "cancelExport": "Cancelar Exportación",
+  "cancelExportConfirmation": "¿Estás seguro de que quieres cancelar esta exportación?",
+  "cancelled": "Cancelado",
+  "confirm": "Confirmar",
+  "dueDate": "Fecha de Vencimiento",
+  "edit": "Editar",
+  "errorLoadingExports": "Error al cargar exportaciones",
+  "errorLoadingNotifications": "Error al cargar notificaciones",
+  "estimatedHours": "Horas Estimadas",
+  "expectedDeliverables": "Entregables Esperados",
+  "exportCancelled": "Exportación cancelada",
+  "exportDeleted": "Exportación eliminada",
+  "exportDownloadStarted": "Descarga de exportación iniciada",
+  "filterByRole": "Filtrar por Rol",
+  "filterExports": "Filtrar Exportaciones",
+  "filterNotifications": "Filtrar Notificaciones",
+  "inProgress": "En Progreso",
+  "isFromAnteproject": "Es del Anteproyecto",
+  "markAllAsRead": "Marcar Todo como Leído",
+  "milestoneType": "Tipo de Hito",
+  "noExportsMessage": "No hay exportaciones disponibles",
+  "noExportsTitle": "Sin Exportaciones",
+  "noNotificationsMessage": "No hay notificaciones disponibles",
+  "noNotificationsTitle": "Sin Notificaciones",
+  "notificationType": "Tipo de Notificación",
+  "noUsersAssigned": "No hay usuarios asignados",
+  "noUsersAvailable": "No hay usuarios disponibles",
+  "plannedDate": "Fecha Planificada",
+  "completedDate": "Fecha de Finalización",
   "refresh": "Actualizar",
-  "@refresh": {
-    "description": "Texto para actualizar"
-  }
+  "retry": "Reintentar",
+  "searchUsers": "Buscar Usuarios",
+  "tags": "Etiquetas",
+  "taskExportsTitle": "Exportaciones de Tareas",
+  "taskNotificationsTitle": "Notificaciones de Tareas",
+  "unreadOnly": "Solo No Leídos"
 } 

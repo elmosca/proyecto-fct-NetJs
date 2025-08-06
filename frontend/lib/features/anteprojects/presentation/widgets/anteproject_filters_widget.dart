@@ -1,6 +1,5 @@
 import 'package:fct_frontend/features/anteprojects/domain/entities/anteproject.dart';
 import 'package:fct_frontend/features/anteprojects/presentation/providers/anteproject_providers.dart';
-import 'package:fct_frontend/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class AnteprojectFiltersWidget extends StatelessWidget {
@@ -28,7 +27,7 @@ class AnteprojectFiltersWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            AppLocalizations.of(context).filters,
+            'Filtros',
             style: Theme.of(context).textTheme.titleSmall?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -38,11 +37,11 @@ class AnteprojectFiltersWidget extends StatelessWidget {
             children: [
               Expanded(
                 child: TextField(
-                  decoration: InputDecoration(
-                    hintText: AppLocalizations.of(context).searchAnteprojects,
-                    prefixIcon: const Icon(Icons.search),
-                    border: const OutlineInputBorder(),
-                    contentPadding: const EdgeInsets.symmetric(
+                  decoration: const InputDecoration(
+                    hintText: 'Buscar anteproyectos...',
+                    prefixIcon: Icon(Icons.search),
+                    border: OutlineInputBorder(),
+                    contentPadding: EdgeInsets.symmetric(
                       horizontal: 12,
                       vertical: 8,
                     ),
@@ -69,19 +68,19 @@ class AnteprojectFiltersWidget extends StatelessWidget {
           border: Border.all(color: Theme.of(context).dividerColor),
           borderRadius: BorderRadius.circular(4),
         ),
-        child: Row(
+        child: const Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(AppLocalizations.of(context).status),
-            const SizedBox(width: 4),
-            const Icon(Icons.arrow_drop_down),
+            Text('Estado'),
+            SizedBox(width: 4),
+            Icon(Icons.arrow_drop_down),
           ],
         ),
       ),
       itemBuilder: (context) => [
-        PopupMenuItem(
+        const PopupMenuItem(
           value: null,
-          child: Text(AppLocalizations.of(context).allStatuses),
+          child: Text('Todos los estados'),
         ),
         ...AnteprojectStatus.values.map((status) => PopupMenuItem(
               value: status,
