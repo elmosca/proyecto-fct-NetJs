@@ -47,7 +47,7 @@ class MilestoneRepositoryImpl implements MilestoneRepository {
       isFromAnteproject: milestone.isFromAnteproject,
       expectedDeliverables: milestone.expectedDeliverables,
     );
-    return _remoteDataSource..(dto);
+    return _remoteDataSource.createMilestone(dto);
   }
 
   @override

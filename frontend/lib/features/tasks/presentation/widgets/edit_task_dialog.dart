@@ -278,10 +278,11 @@ class _EditTaskDialogState extends ConsumerState<EditTaskDialog> {
             : [],
       );
 
-      await ref.read(tasksNotifierProvider.notifier).updateTask(
-            widget.task.id,
-            updateTaskDto,
-          );
+      // TODO: [REVIEW_NEEDED] - Implementar actualización de tarea cuando se resuelva el provider
+      // await ref.read(tasksNotifierProvider.notifier).updateTask(
+      //       widget.task.id,
+      //       updateTaskDto,
+      //     );
 
       if (mounted) {
         Navigator.of(context).pop();

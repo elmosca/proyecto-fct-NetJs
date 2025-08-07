@@ -44,7 +44,7 @@ class TaskKanbanColumn extends StatelessWidget {
       child: Row(
         children: [
           Icon(
-            status.icon,
+            status.iconData,
             color: status.color,
             size: 20,
           ),
@@ -97,7 +97,7 @@ class TaskKanbanColumn extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(
-            status.icon,
+            status.iconData,
             size: 48,
             color: Colors.grey[400],
           ),

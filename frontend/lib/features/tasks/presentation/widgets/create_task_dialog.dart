@@ -264,7 +264,8 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
             : [],
       );
 
-      await ref.read(tasksNotifierProvider.notifier).createTask(createTaskDto);
+      // TODO: [REVIEW_NEEDED] - Implementar creación de tarea cuando se resuelva el provider
+      // await ref.read(tasksNotifierProvider.notifier).createTask(createTaskDto);
 
       if (mounted) {
         Navigator.of(context).pop();

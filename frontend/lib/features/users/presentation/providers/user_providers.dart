@@ -11,7 +11,7 @@ final userRepositoryProvider = Provider<UserRepository>((ref) {
 // Provider para obtener todos los usuarios
 final usersProvider = FutureProvider<List<UserEntity>>((ref) async {
   final repository = ref.read(userRepositoryProvider);
-  return await repository.getAllUsers();
+  return await repository.getUsers();
 });
 
 // Provider para obtener usuarios por rol

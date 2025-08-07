@@ -65,7 +65,7 @@ class TaskExportsNotifier extends StateNotifier<AsyncValue<List<TaskExport>>> {
 
   Future<void> createExport(CreateTaskExportDto dto) async {
     try {
-      final export = await _service..(dto);
+      final export = await _service.createExport(dto);
       if (state.hasValue) {
         final exports = state.value!;
         state = AsyncValue.data([export, ...exports]);

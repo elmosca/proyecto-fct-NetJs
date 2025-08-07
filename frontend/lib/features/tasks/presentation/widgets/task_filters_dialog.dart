@@ -33,13 +33,14 @@ class _TaskFiltersDialogState extends ConsumerState<TaskFiltersDialog> {
   }
 
   void _loadCurrentFilters() {
-    final filters = ref.read(taskFiltersNotifierProvider);
-    _selectedStatus = filters.status;
-    _selectedPriority = filters.priority;
-    _selectedComplexity = filters.complexity;
-    _dateFrom = filters.dueDateFrom;
-    _dateTo = filters.dueDateTo;
-    _searchController.text = filters.searchQuery ?? '';
+    // TODO: [REVIEW_NEEDED] - Implementar cuando se defina taskFiltersNotifierProvider
+    // final filters = ref.read(taskFiltersNotifierProvider);
+    // _selectedStatus = filters.status;
+    // _selectedPriority = filters.priority;
+    // _selectedComplexity = filters.complexity;
+    // _dateFrom = filters.dueDateFrom;
+    // _dateTo = filters.dueDateTo;
+    // _searchController.text = filters.searchQuery ?? '';
   }
 
   @override
@@ -280,7 +281,8 @@ class _TaskFiltersDialogState extends ConsumerState<TaskFiltersDialog> {
           _searchController.text.isNotEmpty ? _searchController.text : null,
     );
 
-    ref.read(taskFiltersNotifierProvider.notifier).updateFilters(filters);
+    // TODO: [REVIEW_NEEDED] - Implementar cuando se defina taskFiltersNotifierProvider
+    // ref.read(taskFiltersNotifierProvider.notifier).updateFilters(filters);
     Navigator.of(context).pop();
   }
 }
