@@ -1,5 +1,5 @@
 import 'package:fct_frontend/core/widgets/empty_state_widget.dart';
-import 'package:fct_frontend/features/tasks/domain/entities/task_entity.dart';
+import 'package:fct_frontend/features/tasks/domain/entities/task.dart';
 import 'package:fct_frontend/features/tasks/presentation/widgets/user_card.dart';
 import 'package:fct_frontend/features/users/domain/entities/user_entity.dart';
 import 'package:fct_frontend/features/users/presentation/providers/user_providers.dart';
@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AssignUsersDialog extends ConsumerStatefulWidget {
-  final TaskEntity task;
+  final Task task;
 
   const AssignUsersDialog({
     super.key,
@@ -324,7 +324,7 @@ class _AssignUsersDialogState extends ConsumerState<AssignUsersDialog> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
               content:
-                  Text(AppLocalizations.of(context).userAssignedSuccessfully)),
+                  Text(AppLocalizations.of(context)!.userAssignedSuccessfully)),
         );
       }
     } catch (e) {
@@ -332,7 +332,7 @@ class _AssignUsersDialogState extends ConsumerState<AssignUsersDialog> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
               content: Text(
-                  '${AppLocalizations.of(context).errorAssigningUser}: $e')),
+                  '${AppLocalizations.of(context)!.errorAssigningUser}: $e')),
         );
       }
     } finally {
@@ -357,7 +357,7 @@ class _AssignUsersDialogState extends ConsumerState<AssignUsersDialog> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
               content: Text(
-                  AppLocalizations.of(context).userUnassignedSuccessfully)),
+                  AppLocalizations.of(context)!.userUnassignedSuccessfully)),
         );
       }
     } catch (e) {
@@ -365,7 +365,7 @@ class _AssignUsersDialogState extends ConsumerState<AssignUsersDialog> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
               content: Text(
-                  '${AppLocalizations.of(context).errorUnassigningUser}: $e')),
+                  '${AppLocalizations.of(context)!.errorUnassigningUser}: $e')),
         );
       }
     } finally {

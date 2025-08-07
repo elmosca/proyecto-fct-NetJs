@@ -1,7 +1,7 @@
-import 'package:fct_frontend/features/tasks/domain/entities/task_entity.dart';
+import 'package:fct_frontend/features/tasks/domain/entities/task.dart';
 
-// Re-export TaskEntity para mantener compatibilidad
-export 'package:fct_frontend/features/tasks/domain/entities/task_entity.dart';
+// Re-export para compatibilidad
+export 'package:fct_frontend/features/tasks/domain/entities/task.dart';
 
 // Alias para compatibilidad con código existente
-typedef Task = TaskEntity;
+typedef TaskEntity = Task;

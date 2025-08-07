@@ -1,11 +1,10 @@
+import 'package:fct_frontend/features/tasks/domain/entities/task_export_dto.dart';
+import 'package:fct_frontend/features/tasks/domain/entities/task_export_entity.dart';
+import 'package:fct_frontend/features/tasks/domain/services/task_export_service.dart';
+import 'package:fct_frontend/features/tasks/domain/usecases/create_task_export_usecase.dart';
+import 'package:fct_frontend/features/tasks/domain/usecases/download_task_export_usecase.dart';
+import 'package:fct_frontend/features/tasks/domain/usecases/get_task_exports_usecase.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../domain/entities/task_export_dto.dart';
-import '../../domain/entities/task_export_entity.dart';
-import '../../domain/services/task_export_service.dart';
-import '../../domain/usecases/create_task_export_usecase.dart';
-import '../../domain/usecases/download_task_export_usecase.dart';
-import '../../domain/usecases/get_task_exports_usecase.dart';
 
 // Providers para use cases
 final createTaskExportUseCaseProvider =
@@ -66,7 +65,7 @@ class TaskExportsNotifier extends StateNotifier<AsyncValue<List<TaskExport>>> {
 
   Future<void> createExport(CreateTaskExportDto dto) async {
     try {
-      final export = await _service.createExport(dto);
+      final export = await _service..(dto);
       if (state.hasValue) {
         final exports = state.value!;
         state = AsyncValue.data([export, ...exports]);

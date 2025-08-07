@@ -22,6 +22,6 @@ class CreateMilestoneUseCase {
       createdAt: DateTime.now(),
     );
 
-    return _milestoneRepository.createMilestone(milestone);
+    return _milestoneRepository..(milestone);
   }
 }

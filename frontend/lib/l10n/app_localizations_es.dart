@@ -129,7 +129,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get plannedDate => 'Fecha Planificada';
 
   @override
-  String get completedDate => 'Fecha Completada';
+  String get completedDate => 'Fecha de Completado';
 
   @override
   String get createdAt => 'Creado En';
@@ -174,6 +174,21 @@ class AppLocalizationsEs extends AppLocalizations {
   String get title => 'Título';
 
   @override
+  String get titleRequired => 'El título es requerido';
+
+  @override
+  String get descriptionRequired => 'La descripción es requerida';
+
+  @override
+  String get milestoneNumber => 'Número de Hito';
+
+  @override
+  String get milestoneNumberRequired => 'El número de hito es requerido';
+
+  @override
+  String get plannedDateRequired => 'La fecha planificada es requerida';
+
+  @override
   String get milestones => 'Hitos';
 
   @override
@@ -208,4 +223,388 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get apply => 'Aplicar';
+
+  @override
+  String get taskDetails => 'Detalles de Tarea';
+
+  @override
+  String get priority => 'Prioridad';
+
+  @override
+  String get complexity => 'Complejidad';
+
+  @override
+  String get estimatedHours => 'Horas Estimadas';
+
+  @override
+  String get dueDate => 'Fecha de Vencimiento';
+
+  @override
+  String get tags => 'Etiquetas';
+
+  @override
+  String get assignees => 'Asignados';
+
+  @override
+  String get assignedUsers => 'Usuarios Asignados';
+
+  @override
+  String get assignUsers => 'Asignar Usuarios';
+
+  @override
+  String get noUsersAssigned => 'No hay usuarios asignados';
+
+  @override
+  String get deleteTask => 'Eliminar Tarea';
+
+  @override
+  String get deleteTaskConfirmation => '¿Estás seguro de que quieres eliminar esta tarea?';
+
+  @override
+  String get taskExportsTitle => 'Exportaciones de Tareas';
+
+  @override
+  String get noExportsTitle => 'Sin Exportaciones';
+
+  @override
+  String get noExportsMessage => 'No se encontraron exportaciones. Crea tu primera exportación para comenzar.';
+
+  @override
+  String get errorLoadingExports => 'Error al Cargar Exportaciones';
+
+  @override
+  String get exportDownloadStarted => 'Descarga de exportación iniciada';
+
+  @override
+  String get deleteExport => 'Eliminar Exportación';
+
+  @override
+  String get deleteExportConfirmation => '¿Estás seguro de que quieres eliminar esta exportación?';
+
+  @override
+  String get exportDeleted => 'Exportación eliminada exitosamente';
+
+  @override
+  String get cancelExport => 'Cancelar Exportación';
+
+  @override
+  String get cancelExportConfirmation => '¿Estás seguro de que quieres cancelar esta exportación?';
+
+  @override
+  String get confirm => 'Confirmar';
+
+  @override
+  String get exportCancelled => 'Exportación cancelada exitosamente';
+
+  @override
+  String get filterExports => 'Filtrar Exportaciones';
+
+  @override
+  String get allFormats => 'Todos los Formatos';
+
+  @override
+  String get exportStatus => 'Estado de Exportación';
+
+  @override
+  String get allStatuses => 'Todos los Estados';
+
+  @override
+  String get taskNotificationsTitle => 'Notificaciones de Tareas';
+
+  @override
+  String get noNotificationsTitle => 'Sin Notificaciones';
+
+  @override
+  String get noNotificationsMessage => 'No se encontraron notificaciones. ¡Estás al día!';
+
+  @override
+  String get errorLoadingNotifications => 'Error al Cargar Notificaciones';
+
+  @override
+  String get markAllAsRead => 'Marcar Todo como Leído';
+
+  @override
+  String get notificationMarkedAsRead => 'Notificación marcada como leída';
+
+  @override
+  String get deleteNotification => 'Eliminar Notificación';
+
+  @override
+  String get deleteNotificationConfirmation => '¿Estás seguro de que quieres eliminar esta notificación?';
+
+  @override
+  String get notificationDeleted => 'Notificación eliminada exitosamente';
+
+  @override
+  String get allNotificationsMarkedAsRead => 'Todas las notificaciones marcadas como leídas';
+
+  @override
+  String get filterNotifications => 'Filtrar Notificaciones';
+
+  @override
+  String get unreadOnly => 'Solo No Leídas';
+
+  @override
+  String get notificationType => 'Tipo de Notificación';
+
+  @override
+  String get allTypes => 'Todos los Tipos';
+
+  @override
+  String get taskReportsTitle => 'Reportes de Tareas';
+
+  @override
+  String get createReport => 'Crear Reporte';
+
+  @override
+  String get noReportsAvailable => 'No Hay Reportes Disponibles';
+
+  @override
+  String get createFirstReport => 'Crea tu primer reporte para comenzar';
+
+  @override
+  String get errorLoadingReports => 'Error al Cargar Reportes';
+
+  @override
+  String get deleteReport => 'Eliminar Reporte';
+
+  @override
+  String get deleteReportConfirmation => '¿Estás seguro de que quieres eliminar este reporte?';
+
+  @override
+  String get reportDeleted => 'Reporte eliminado exitosamente';
+
+  @override
+  String get reportExported => 'Reporte exportado exitosamente';
+
+  @override
+  String get errorExportingReport => 'Error al exportar reporte';
+
+  @override
+  String get featureNotImplemented => 'Esta funcionalidad aún no está implementada';
+
+  @override
+  String get tasks => 'Tareas';
+
+  @override
+  String get listView => 'Vista de Lista';
+
+  @override
+  String get kanbanView => 'Vista Kanban';
+
+  @override
+  String get filters => 'Filtros';
+
+  @override
+  String get createTask => 'Crear Tarea';
+
+  @override
+  String get noTasks => 'Sin Tareas';
+
+  @override
+  String get noTasksMessage => 'No se encontraron tareas. Crea tu primera tarea para comenzar.';
+
+  @override
+  String get submit => 'Enviar';
+
+  @override
+  String get searchUsers => 'Buscar Usuarios';
+
+  @override
+  String get filterByRole => 'Filtrar por Rol';
+
+  @override
+  String get allRoles => 'Todos los Roles';
+
+  @override
+  String get student => 'Estudiante';
+
+  @override
+  String get tutor => 'Tutor';
+
+  @override
+  String get admin => 'Administrador';
+
+  @override
+  String get availableUsers => 'Usuarios Disponibles';
+
+  @override
+  String get noUsersAvailable => 'No hay usuarios disponibles';
+
+  @override
+  String get userAssignedSuccessfully => 'Usuario asignado exitosamente';
+
+  @override
+  String get errorAssigningUser => 'Error al asignar usuario';
+
+  @override
+  String get userUnassignedSuccessfully => 'Usuario desasignado exitosamente';
+
+  @override
+  String get errorUnassigningUser => 'Error al desasignar usuario';
+
+  @override
+  String get exportReport => 'Exportar Reporte';
+
+  @override
+  String get schedule => 'Programar';
+
+  @override
+  String get generating => 'Generando';
+
+  @override
+  String get failed => 'Fallido';
+
+  @override
+  String get expired => 'Expirado';
+
+  @override
+  String get profile => 'Perfil';
+
+  @override
+  String get users => 'Usuarios';
+
+  @override
+  String get taskProgress => 'Progreso de Tareas';
+
+  @override
+  String get taskPriority => 'Prioridad de Tareas';
+
+  @override
+  String get noMilestonesAvailable => 'No hay hitos disponibles';
+
+  @override
+  String get milestoneProgress => 'Progreso de Hitos';
+
+  @override
+  String get milestoneStatus => 'Estado de Hitos';
+
+  @override
+  String get recentTasks => 'Tareas Recientes';
+
+  @override
+  String get recentMilestones => 'Hitos Recientes';
+
+  @override
+  String get type => 'Tipo';
+
+  @override
+  String get completedAt => 'Completado En';
+
+  @override
+  String get noRecentActivity => 'Sin actividad reciente';
+
+  @override
+  String get recentActivity => 'Actividad Reciente';
+
+  @override
+  String get task => 'Tarea';
+
+  @override
+  String get milestone => 'Hito';
+
+  @override
+  String get performanceMetrics => 'Métricas de Rendimiento';
+
+  @override
+  String get taskCompletionRate => 'Tasa de Completado de Tareas';
+
+  @override
+  String get milestoneCompletionRate => 'Tasa de Completado de Hitos';
+
+  @override
+  String get averageTaskDuration => 'Duración Promedio de Tareas';
+
+  @override
+  String get onTimeCompletionRate => 'Tasa de Completado a Tiempo';
+
+  @override
+  String get from => 'Desde';
+
+  @override
+  String get to => 'Hasta';
+
+  @override
+  String get allTime => 'Todo el Tiempo';
+
+  @override
+  String get pending => 'Pendiente';
+
+  @override
+  String get inProgress => 'En Progreso';
+
+  @override
+  String get completed => 'Completado';
+
+  @override
+  String get cancelled => 'Cancelado';
+
+  @override
+  String get lowPriority => 'Prioridad Baja';
+
+  @override
+  String get mediumPriority => 'Prioridad Media';
+
+  @override
+  String get highPriority => 'Prioridad Alta';
+
+  @override
+  String get criticalPriority => 'Prioridad Crítica';
+
+  @override
+  String get totalTasks => 'Total de Tareas';
+
+  @override
+  String get noTasksAvailable => 'No hay tareas disponibles';
+
+  @override
+  String get summary => 'Resumen';
+
+  @override
+  String get completedTasks => 'Tareas Completadas';
+
+  @override
+  String get inProgressTasks => 'Tareas en Progreso';
+
+  @override
+  String get overdueTasks => 'Tareas Vencidas';
+
+  @override
+  String get totalMilestones => 'Total de Hitos';
+
+  @override
+  String get completedMilestones => 'Hitos Completados';
+
+  @override
+  String get selectDateRange => 'Seleccionar Rango de Fechas';
+
+  @override
+  String get assignUserToTask => 'Asignar Usuario a Tarea';
+
+  @override
+  String get create => 'Crear';
+
+  @override
+  String get createMilestone => 'Crear Hito';
+
+  @override
+  String get editTask => 'Editar Tarea';
+
+  @override
+  String get searchTasksHint => 'Buscar tareas...';
+
+  @override
+  String get all => 'Todos';
+
+  @override
+  String get clear => 'Limpiar';
+
+  @override
+  String get export => 'Exportar';
+
+  @override
+  String get unassignUser => 'Desasignar Usuario';
+
+  @override
+  String get assignUser => 'Asignar Usuario';
 }

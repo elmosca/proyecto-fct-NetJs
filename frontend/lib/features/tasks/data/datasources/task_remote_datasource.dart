@@ -1,22 +1,22 @@
 import 'package:dio/dio.dart';
 import 'package:fct_frontend/features/tasks/domain/entities/task_dto.dart';
-import 'package:fct_frontend/features/tasks/domain/entities/task_entity.dart';
+import 'package:fct_frontend/features/tasks/domain/entities/task.dart';
 
 abstract class TaskRemoteDataSource {
-  Future<List<TaskEntity>> getTasks(TaskFiltersDto filters);
-  Future<TaskEntity> getTaskById(String taskId);
-  Future<TaskEntity> createTask(CreateTaskDto createTaskDto);
-  Future<TaskEntity> updateTask(String taskId, UpdateTaskDto updateTaskDto);
+  Future<List<Task>> getTasks(TaskFiltersDto filters);
+  Future<Task> getTaskById(String taskId);
+  Future<Task> createTask(CreateTaskDto createTaskDto);
+  Future<Task> updateTask(String taskId, UpdateTaskDto updateTaskDto);
   Future<void> deleteTask(String taskId);
-  Future<TaskEntity> assignUserToTask(
+  Future<Task> assignUserToTask(
       String taskId, AssignUserDto assignUserDto);
-  Future<TaskEntity> unassignUserFromTask(String taskId, String userId);
-  Future<TaskEntity> updateTaskStatus(String taskId, TaskStatus status);
-  Future<List<TaskEntity>> getTasksByProject(String projectId);
-  Future<List<TaskEntity>> getTasksByAssignee(String userId);
-  Future<List<TaskEntity>> getTasksByMilestone(String milestoneId);
-  Future<TaskEntity> updateTaskPosition(String taskId, int newPosition);
-  Future<TaskEntity> completeTask(String taskId);
+  Future<Task> unassignUserFromTask(String taskId, String userId);
+  Future<Task> updateTaskStatus(String taskId, TaskStatus status);
+  Future<List<Task>> getTasksByProject(String projectId);
+  Future<List<Task>> getTasksByAssignee(String userId);
+  Future<List<Task>> getTasksByMilestone(String milestoneId);
+  Future<Task> updateTaskPosition(String taskId, int newPosition);
+  Future<Task> completeTask(String taskId);
   Future<Map<String, dynamic>> getTaskStatistics(String? projectId);
   
   // Métodos para dependencias
@@ -32,44 +32,44 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
   TaskRemoteDataSourceImpl(this._dio);
 
   @override
-  Future<List<TaskEntity>> getTasks(TaskFiltersDto filters) async {
+  Future<List<Task>> getTasks(TaskFiltersDto filters) async {
     try {
       final response =
           await _dio.get('/tasks', queryParameters: filters.toJson());
       final List<dynamic> data = response.data['data'];
-      return data.map((json) => TaskEntity.fromJson(json)).toList();
+      return data.map((json) => Task.fromJson(json)).toList();
     } catch (e) {
       throw Exception('Error al obtener tareas: $e');
     }
   }
 
   @override
-  Future<TaskEntity> getTaskById(String taskId) async {
+  Future<Task> getTaskById(String taskId) async {
     try {
       final response = await _dio.get('/tasks/$taskId');
-      return TaskEntity.fromJson(response.data);
+      return Task.fromJson(response.data);
     } catch (e) {
       throw Exception('Error al obtener tarea: $e');
     }
   }
 
   @override
-  Future<TaskEntity> createTask(CreateTaskDto createTaskDto) async {
+  Future<Task> createTask(CreateTaskDto createTaskDto) async {
     try {
       final response = await _dio.post('/tasks', data: createTaskDto.toJson());
-      return TaskEntity.fromJson(response.data);
+      return Task.fromJson(response.data);
     } catch (e) {
       throw Exception('Error al crear tarea: $e');
     }
   }
 
   @override
-  Future<TaskEntity> updateTask(
+  Future<Task> updateTask(
       String taskId, UpdateTaskDto updateTaskDto) async {
     try {
       final response =
           await _dio.patch('/tasks/$taskId', data: updateTaskDto.toJson());
-      return TaskEntity.fromJson(response.data);
+      return Task.fromJson(response.data);
     } catch (e) {
       throw Exception('Error al actualizar tarea: $e');
     }
@@ -85,90 +85,90 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
   }
 
   @override
-  Future<TaskEntity> assignUserToTask(
+  Future<Task> assignUserToTask(
       String taskId, AssignUserDto assignUserDto) async {
     try {
       final response = await _dio.post('/tasks/$taskId/assign',
           data: assignUserDto.toJson());
-      return TaskEntity.fromJson(response.data);
+      return Task.fromJson(response.data);
     } catch (e) {
       throw Exception('Error al asignar usuario a tarea: $e');
     }
   }
 
   @override
-  Future<TaskEntity> unassignUserFromTask(String taskId, String userId) async {
+  Future<Task> unassignUserFromTask(String taskId, String userId) async {
     try {
       final response = await _dio.delete('/tasks/$taskId/assign/$userId');
-      return TaskEntity.fromJson(response.data);
+      return Task.fromJson(response.data);
     } catch (e) {
       throw Exception('Error al desasignar usuario de tarea: $e');
     }
   }
 
   @override
-  Future<TaskEntity> updateTaskStatus(String taskId, TaskStatus status) async {
+  Future<Task> updateTaskStatus(String taskId, TaskStatus status) async {
     try {
       final response = await _dio
           .patch('/tasks/$taskId/status', data: {'status': status.name});
-      return TaskEntity.fromJson(response.data);
+      return Task.fromJson(response.data);
     } catch (e) {
       throw Exception('Error al actualizar estado de tarea: $e');
     }
   }
 
   @override
-  Future<List<TaskEntity>> getTasksByProject(String projectId) async {
+  Future<List<Task>> getTasksByProject(String projectId) async {
     try {
       final response =
           await _dio.get('/tasks', queryParameters: {'projectId': projectId});
       final List<dynamic> data = response.data['data'];
-      return data.map((json) => TaskEntity.fromJson(json)).toList();
+      return data.map((json) => Task.fromJson(json)).toList();
     } catch (e) {
       throw Exception('Error al obtener tareas del proyecto: $e');
     }
   }
 
   @override
-  Future<List<TaskEntity>> getTasksByAssignee(String userId) async {
+  Future<List<Task>> getTasksByAssignee(String userId) async {
     try {
       final response =
           await _dio.get('/tasks', queryParameters: {'assigneeId': userId});
       final List<dynamic> data = response.data['data'];
-      return data.map((json) => TaskEntity.fromJson(json)).toList();
+      return data.map((json) => Task.fromJson(json)).toList();
     } catch (e) {
       throw Exception('Error al obtener tareas del usuario: $e');
     }
   }
 
   @override
-  Future<List<TaskEntity>> getTasksByMilestone(String milestoneId) async {
+  Future<List<Task>> getTasksByMilestone(String milestoneId) async {
     try {
       final response = await _dio
           .get('/tasks', queryParameters: {'milestoneId': milestoneId});
       final List<dynamic> data = response.data['data'];
-      return data.map((json) => TaskEntity.fromJson(json)).toList();
+      return data.map((json) => Task.fromJson(json)).toList();
     } catch (e) {
       throw Exception('Error al obtener tareas del milestone: $e');
     }
   }
 
   @override
-  Future<TaskEntity> updateTaskPosition(String taskId, int newPosition) async {
+  Future<Task> updateTaskPosition(String taskId, int newPosition) async {
     try {
       final response = await _dio
           .patch('/tasks/$taskId/position', data: {'position': newPosition});
-      return TaskEntity.fromJson(response.data);
+      return Task.fromJson(response.data);
     } catch (e) {
       throw Exception('Error al actualizar posición de tarea: $e');
     }
   }
 
   @override
-  Future<TaskEntity> completeTask(String taskId) async {
+  Future<Task> completeTask(String taskId) async {
     try {
       final response = await _dio.patch('/tasks/$taskId/complete');
-      return TaskEntity.fromJson(response.data);
+      return Task.fromJson(response.data);
     } catch (e) {
       throw Exception('Error al completar tarea: $e');
     }

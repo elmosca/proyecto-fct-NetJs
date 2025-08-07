@@ -1,4 +1,4 @@
-import 'package:fct_frontend/features/tasks/domain/entities/task_entity.dart';
+import 'package:fct_frontend/features/tasks/domain/entities/task.dart';
 import 'package:fct_frontend/features/tasks/domain/entities/task_notification_dto.dart';
 import 'package:fct_frontend/features/tasks/domain/entities/task_notification_entity.dart';
 import 'package:fct_frontend/features/tasks/domain/repositories/task_notification_repository.dart';
@@ -11,7 +11,7 @@ class TaskNotificationService {
 
   /// Notificar cuando se asigna una tarea a un usuario
   Future<void> notifyTaskAssigned(
-      TaskEntity task, String assignedUserId) async {
+      Task task, String assignedUserId) async {
     final dto = CreateTaskNotificationDto(
       title: 'Nueva tarea asignada',
       message: 'Se te ha asignado la tarea: ${task.title}',
@@ -31,7 +31,7 @@ class TaskNotificationService {
 
   /// Notificar cuando cambia el estado de una tarea
   Future<void> notifyTaskStatusChanged(
-    TaskEntity task,
+    Task task,
     String userId,
     String previousStatus,
   ) async {
@@ -55,7 +55,7 @@ class TaskNotificationService {
 
   /// Notificar cuando se acerca la fecha de vencimiento
   Future<void> notifyTaskDueDateReminder(
-    TaskEntity task,
+    Task task,
     String userId,
     int daysUntilDue,
   ) async {
@@ -77,7 +77,7 @@ class TaskNotificationService {
   }
 
   /// Notificar cuando una tarea está vencida
-  Future<void> notifyTaskOverdue(TaskEntity task, String userId) async {
+  Future<void> notifyTaskOverdue(Task task, String userId) async {
     final dto = CreateTaskNotificationDto(
       title: 'Tarea vencida',
       message: 'La tarea "${task.title}" está vencida',
@@ -96,7 +96,7 @@ class TaskNotificationService {
   }
 
   /// Notificar cuando se completa una tarea
-  Future<void> notifyTaskCompleted(TaskEntity task, String userId) async {
+  Future<void> notifyTaskCompleted(Task task, String userId) async {
     final dto = CreateTaskNotificationDto(
       title: 'Tarea completada',
       message: 'La tarea "${task.title}" ha sido completada',
@@ -115,8 +115,8 @@ class TaskNotificationService {
 
   /// Notificar cuando se completa una dependencia
   Future<void> notifyDependencyCompleted(
-    TaskEntity task,
-    TaskEntity dependencyTask,
+    Task task,
+    Task dependencyTask,
     String userId,
   ) async {
     final dto = CreateTaskNotificationDto(
@@ -139,7 +139,7 @@ class TaskNotificationService {
 
   /// Notificar cuando se agrega un comentario
   Future<void> notifyTaskCommentAdded(
-    TaskEntity task,
+    Task task,
     String userId,
     String commentAuthor,
   ) async {
@@ -161,7 +161,7 @@ class TaskNotificationService {
 
   /// Notificar cuando cambia la prioridad
   Future<void> notifyTaskPriorityChanged(
-    TaskEntity task,
+    Task task,
     String userId,
     String previousPriority,
   ) async {
@@ -185,7 +185,7 @@ class TaskNotificationService {
 
   /// Notificar cuando se alcanza un hito
   Future<void> notifyMilestoneReached(
-    TaskEntity task,
+    Task task,
     String userId,
     String milestoneName,
   ) async {
@@ -210,7 +210,7 @@ class TaskNotificationService {
 
   /// Programar notificación de recordatorio
   Future<void> scheduleDueDateReminder(
-    TaskEntity task,
+    Task task,
     String userId,
     DateTime reminderDate,
   ) async {

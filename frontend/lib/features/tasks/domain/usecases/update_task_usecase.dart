@@ -1,5 +1,5 @@
 import 'package:fct_frontend/features/tasks/domain/entities/task_dto.dart';
-import 'package:fct_frontend/features/tasks/domain/entities/task_entity.dart';
+import 'package:fct_frontend/features/tasks/domain/entities/task.dart';
 import 'package:fct_frontend/features/tasks/domain/repositories/task_repository.dart';
 
 class UpdateTaskUseCase {
@@ -7,7 +7,7 @@ class UpdateTaskUseCase {
 
   UpdateTaskUseCase(this._taskRepository);
 
-  Future<TaskEntity> execute(String taskId, UpdateTaskDto updateTaskDto) async {
+  Future<Task> execute(String taskId, UpdateTaskDto updateTaskDto) async {
     // Primero obtener la tarea existente
     final existingTask = await _taskRepository.getTaskById(taskId);
     if (existingTask == null) {
@@ -15,7 +15,7 @@ class UpdateTaskUseCase {
     }
     
     // Crear una nueva tarea con los datos actualizados
-    final updatedTask = TaskEntity(
+    final updatedTask = Task(
       id: taskId,
       projectId: existingTask.projectId,
       milestoneId: existingTask.milestoneId,

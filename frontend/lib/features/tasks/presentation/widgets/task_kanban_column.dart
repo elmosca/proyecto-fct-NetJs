@@ -1,12 +1,12 @@
-import 'package:fct_frontend/features/tasks/domain/entities/task_entity.dart';
+import 'package:fct_frontend/features/tasks/domain/entities/task.dart';
 import 'package:fct_frontend/features/tasks/presentation/widgets/task_card.dart';
 import 'package:flutter/material.dart';
 
 class TaskKanbanColumn extends StatelessWidget {
   final TaskStatus status;
-  final List<TaskEntity> tasks;
-  final Function(TaskEntity) onTaskTap;
-  final Function(TaskEntity, TaskStatus) onTaskMove;
+  final List<Task> tasks;
+  final Function(Task) onTaskTap;
+  final Function(Task, TaskStatus) onTaskMove;
 
   const TaskKanbanColumn({
     super.key,
@@ -122,7 +122,7 @@ class TaskKanbanColumn extends StatelessWidget {
         final task = tasks[index];
         return Padding(
           padding: const EdgeInsets.only(bottom: 8),
-          child: Draggable<TaskEntity>(
+          child: Draggable<Task>(
             data: task,
             feedback: Material(
               elevation: 8,
@@ -154,9 +154,9 @@ class TaskKanbanColumn extends StatelessWidget {
 }
 
 class TaskKanbanBoard extends StatelessWidget {
-  final List<TaskEntity> tasks;
-  final Function(TaskEntity) onTaskTap;
-  final Function(TaskEntity, TaskStatus) onTaskMove;
+  final List<Task> tasks;
+  final Function(Task) onTaskTap;
+  final Function(Task, TaskStatus) onTaskMove;
 
   const TaskKanbanBoard({
     super.key,
@@ -167,7 +167,7 @@ class TaskKanbanBoard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DragTarget<TaskEntity>(
+    return DragTarget<Task>(
       onWillAcceptWithDetails: (data) => data != null,
       onAcceptWithDetails: (task) {
         // El estado se maneja en el provider

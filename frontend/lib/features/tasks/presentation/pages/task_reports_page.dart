@@ -1,11 +1,11 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:fct_frontend/features/tasks/domain/entities/task_report_dto.dart';
+import 'package:fct_frontend/features/tasks/presentation/providers/task_report_providers.dart';
+import 'package:fct_frontend/features/tasks/presentation/widgets/create_report_dialog.dart';
+import 'package:fct_frontend/features/tasks/presentation/widgets/task_report_card.dart';
+import 'package:fct_frontend/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../../l10n/app_localizations.dart';
-import '../providers/task_report_providers.dart';
-import '../widgets/create_report_dialog.dart';
-import '../widgets/task_report_card.dart';
 
 @RoutePage()
 class TaskReportsPage extends ConsumerStatefulWidget {
@@ -18,7 +18,7 @@ class TaskReportsPage extends ConsumerStatefulWidget {
 class _TaskReportsPageState extends ConsumerState<TaskReportsPage> {
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context)!;
     final reportsAsync = ref.watch(taskReportsNotifierProvider);
 
     return Scaffold(
@@ -150,19 +150,19 @@ class _TaskReportsPageState extends ConsumerState<TaskReportsPage> {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(AppLocalizations.of(context).deleteReport),
-        content: Text(AppLocalizations.of(context).deleteReportConfirmation),
+        title: Text(AppLocalizations.of(context)!.deleteReport),
+        content: Text(AppLocalizations.of(context)!.deleteReportConfirmation),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: Text(AppLocalizations.of(context).cancel),
+            child: Text(AppLocalizations.of(context)!.cancel),
           ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(true),
             style: TextButton.styleFrom(
               foregroundColor: Theme.of(context).colorScheme.error,
             ),
-            child: Text(AppLocalizations.of(context).delete),
+            child: Text(AppLocalizations.of(context)!.delete),
           ),
         ],
       ),
@@ -173,7 +173,7 @@ class _TaskReportsPageState extends ConsumerState<TaskReportsPage> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(AppLocalizations.of(context).reportDeleted),
+            content: Text(AppLocalizations.of(context)!.reportDeleted),
           ),
         );
       }
@@ -192,7 +192,7 @@ class _TaskReportsPageState extends ConsumerState<TaskReportsPage> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(AppLocalizations.of(context).reportExported),
+            content: Text(AppLocalizations.of(context)!.reportExported),
           ),
         );
       }
@@ -200,7 +200,7 @@ class _TaskReportsPageState extends ConsumerState<TaskReportsPage> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(AppLocalizations.of(context).errorExportingReport),
+            content: Text(AppLocalizations.of(context)!.errorExportingReport),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -212,7 +212,7 @@ class _TaskReportsPageState extends ConsumerState<TaskReportsPage> {
     // TODO: Implementar diálogo de programación
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(AppLocalizations.of(context).featureNotImplemented),
+        content: Text(AppLocalizations.of(context)!.featureNotImplemented),
       ),
     );
   }

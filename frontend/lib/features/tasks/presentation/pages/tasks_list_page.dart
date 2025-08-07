@@ -1,11 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fct_frontend/core/widgets/empty_state_widget.dart';
+import 'package:fct_frontend/core/widgets/error_widget.dart';
+import 'package:fct_frontend/core/widgets/loading_widget.dart';
 import 'package:fct_frontend/features/tasks/domain/entities/task.dart';
 import 'package:fct_frontend/features/tasks/presentation/providers/task_providers.dart';
 import 'package:fct_frontend/features/tasks/presentation/widgets/task_card_widget.dart';
 import 'package:fct_frontend/features/tasks/presentation/widgets/task_filters_widget.dart';
-import 'package:fct_frontend/core/widgets/loading_widget.dart';
-import 'package:fct_frontend/core/widgets/empty_state_widget.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class TasksListPage extends ConsumerStatefulWidget {
   final String? projectId;
@@ -33,14 +34,18 @@ class _TasksListPageState extends ConsumerState<TasksListPage> {
       projectId: widget.projectId,
       anteprojectId: widget.anteprojectId,
       assignedUserId: _assignedUserId,
-      status: _selectedStatus != null ? TaskStatus.values.firstWhere(
-        (s) => s.name == _selectedStatus,
-        orElse: () => TaskStatus.todo,
-      ) : null,
-      priority: _selectedPriority != null ? TaskPriority.values.firstWhere(
-        (p) => p.name == _selectedPriority,
-        orElse: () => TaskPriority.medium,
-      ) : null,
+      status: _selectedStatus != null
+          ? TaskStatus.values.firstWhere(
+              (s) => s.name == _selectedStatus,
+              orElse: () => TaskStatus.pending,
+            )
+          : null,
+      priority: _selectedPriority != null
+          ? TaskPriority.values.firstWhere(
+              (p) => p.name == _selectedPriority,
+              orElse: () => TaskPriority.medium,
+            )
+          : null,
       searchQuery: _searchQuery,
     ));
 
@@ -57,20 +62,26 @@ class _TasksListPageState extends ConsumerState<TasksListPage> {
           IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: () {
-              ref.read(tasksNotifierProvider(
-                projectId: widget.projectId,
-                anteprojectId: widget.anteprojectId,
-                assignedUserId: _assignedUserId,
-                status: _selectedStatus != null ? TaskStatus.values.firstWhere(
-                  (s) => s.name == _selectedStatus,
-                  orElse: () => TaskStatus.todo,
-                ) : null,
-                priority: _selectedPriority != null ? TaskPriority.values.firstWhere(
-                  (p) => p.name == _selectedPriority,
-                  orElse: () => TaskPriority.medium,
-                ) : null,
-                searchQuery: _searchQuery,
-              ).notifier).refresh();
+              ref
+                  .read(tasksNotifierProvider(
+                    projectId: widget.projectId,
+                    anteprojectId: widget.anteprojectId,
+                    assignedUserId: _assignedUserId,
+                    status: _selectedStatus != null
+                        ? TaskStatus.values.firstWhere(
+                            (s) => s.name == _selectedStatus,
+                            orElse: () => TaskStatus.pending,
+                          )
+                        : null,
+                    priority: _selectedPriority != null
+                        ? TaskPriority.values.firstWhere(
+                            (p) => p.name == _selectedPriority,
+                            orElse: () => TaskPriority.medium,
+                          )
+                        : null,
+                    searchQuery: _searchQuery,
+                  ).notifier)
+                  .refresh();
             },
           ),
         ],
@@ -92,7 +103,7 @@ class _TasksListPageState extends ConsumerState<TasksListPage> {
               });
             },
           ),
-          
+
           // Lista de tareas
           Expanded(
             child: tasksAsync.when(
@@ -101,26 +112,33 @@ class _TasksListPageState extends ConsumerState<TasksListPage> {
                   return const EmptyStateWidget(
                     icon: Icons.task_alt,
                     title: 'No hay tareas',
-                    message: 'No se encontraron tareas con los filtros aplicados',
+                    message:
+                        'No se encontraron tareas con los filtros aplicados',
                   );
                 }
-                
+
                 return RefreshIndicator(
                   onRefresh: () async {
-                    ref.read(tasksNotifierProvider(
-                      projectId: widget.projectId,
-                      anteprojectId: widget.anteprojectId,
-                      assignedUserId: _assignedUserId,
-                      status: _selectedStatus != null ? TaskStatus.values.firstWhere(
-                        (s) => s.name == _selectedStatus,
-                        orElse: () => TaskStatus.todo,
-                      ) : null,
-                      priority: _selectedPriority != null ? TaskPriority.values.firstWhere(
-                        (p) => p.name == _selectedPriority,
-                        orElse: () => TaskPriority.medium,
-                      ) : null,
-                      searchQuery: _searchQuery,
-                    ).notifier).refresh();
+                    ref
+                        .read(tasksNotifierProvider(
+                          projectId: widget.projectId,
+                          anteprojectId: widget.anteprojectId,
+                          assignedUserId: _assignedUserId,
+                          status: _selectedStatus != null
+                              ? TaskStatus.values.firstWhere(
+                                  (s) => s.name == _selectedStatus,
+                                  orElse: () => TaskStatus.pending,
+                                )
+                              : null,
+                          priority: _selectedPriority != null
+                              ? TaskPriority.values.firstWhere(
+                                  (p) => p.name == _selectedPriority,
+                                  orElse: () => TaskPriority.medium,
+                                )
+                              : null,
+                          searchQuery: _searchQuery,
+                        ).notifier)
+                        .refresh();
                   },
                   child: ListView.builder(
                     padding: const EdgeInsets.all(16),
@@ -135,20 +153,26 @@ class _TasksListPageState extends ConsumerState<TasksListPage> {
                             // TODO: Navegar a detalle de tarea
                           },
                           onStatusChanged: (newStatus) {
-                            ref.read(tasksNotifierProvider(
-                              projectId: widget.projectId,
-                              anteprojectId: widget.anteprojectId,
-                              assignedUserId: _assignedUserId,
-                              status: _selectedStatus != null ? TaskStatus.values.firstWhere(
-                                (s) => s.name == _selectedStatus,
-                                orElse: () => TaskStatus.todo,
-                              ) : null,
-                              priority: _selectedPriority != null ? TaskPriority.values.firstWhere(
-                                (p) => p.name == _selectedPriority,
-                                orElse: () => TaskPriority.medium,
-                              ) : null,
-                              searchQuery: _searchQuery,
-                            ).notifier).updateTaskStatus(task.id, newStatus);
+                            ref
+                                .read(tasksNotifierProvider(
+                                  projectId: widget.projectId,
+                                  anteprojectId: widget.anteprojectId,
+                                  assignedUserId: _assignedUserId,
+                                  status: _selectedStatus != null
+                                      ? TaskStatus.values.firstWhere(
+                                          (s) => s.name == _selectedStatus,
+                                          orElse: () => TaskStatus.pending,
+                                        )
+                                      : null,
+                                  priority: _selectedPriority != null
+                                      ? TaskPriority.values.firstWhere(
+                                          (p) => p.name == _selectedPriority,
+                                          orElse: () => TaskPriority.medium,
+                                        )
+                                      : null,
+                                  searchQuery: _searchQuery,
+                                ).notifier)
+                                .updateTaskStatus(task.id, newStatus);
                           },
                         ),
                       );
@@ -157,23 +181,29 @@ class _TasksListPageState extends ConsumerState<TasksListPage> {
                 );
               },
               loading: () => const LoadingWidget(),
-              error: (error, stack) => ErrorWidget(
+              error: (error, stack) => ErrorDisplayWidget(
                 message: 'Error al cargar tareas: $error',
                 onRetry: () {
-                  ref.read(tasksNotifierProvider(
-                    projectId: widget.projectId,
-                    anteprojectId: widget.anteprojectId,
-                    assignedUserId: _assignedUserId,
-                    status: _selectedStatus != null ? TaskStatus.values.firstWhere(
-                      (s) => s.name == _selectedStatus,
-                      orElse: () => TaskStatus.todo,
-                    ) : null,
-                    priority: _selectedPriority != null ? TaskPriority.values.firstWhere(
-                      (p) => p.name == _selectedPriority,
-                      orElse: () => TaskPriority.medium,
-                    ) : null,
-                    searchQuery: _searchQuery,
-                  ).notifier).refresh();
+                  ref
+                      .read(tasksNotifierProvider(
+                        projectId: widget.projectId,
+                        anteprojectId: widget.anteprojectId,
+                        assignedUserId: _assignedUserId,
+                        status: _selectedStatus != null
+                            ? TaskStatus.values.firstWhere(
+                                (s) => s.name == _selectedStatus,
+                                orElse: () => TaskStatus.pending,
+                              )
+                            : null,
+                        priority: _selectedPriority != null
+                            ? TaskPriority.values.firstWhere(
+                                (p) => p.name == _selectedPriority,
+                                orElse: () => TaskPriority.medium,
+                              )
+                            : null,
+                        searchQuery: _searchQuery,
+                      ).notifier)
+                      .refresh();
                 },
               ),
             ),
@@ -188,4 +218,4 @@ class _TasksListPageState extends ConsumerState<TasksListPage> {
       ),
     );
   }
-} 
+}

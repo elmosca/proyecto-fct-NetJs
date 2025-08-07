@@ -1,12 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:fct_frontend/features/tasks/domain/entities/task_entity.dart';
+import 'package:fct_frontend/features/tasks/domain/entities/task.dart';
 import 'package:fct_frontend/l10n/app_localizations.dart';
+import 'package:flutter/material.dart';
 
 class TaskCard extends StatelessWidget {
-  final TaskEntity task;
+  final Task task;
   final VoidCallback? onTap;
   final VoidCallback? onEdit;
   final VoidCallback? onDelete;
+  final VoidCallback? onAssignUsers;
 
   const TaskCard({
     super.key,
@@ -14,15 +15,17 @@ class TaskCard extends StatelessWidget {
     this.onTap,
     this.onEdit,
     this.onDelete,
+    this.onAssignUsers,
   });
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Card(
-      elevation: 2,
+      margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(8),
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
@@ -34,59 +37,67 @@ class TaskCard extends StatelessWidget {
                     child: Text(
                       task.title,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
+                            fontWeight: FontWeight.bold,
+                          ),
                     ),
                   ),
-                  if (onEdit != null || onDelete != null)
-                    PopupMenuButton<String>(
-                      onSelected: (value) {
-                        switch (value) {
-                          case 'edit':
-                            onEdit?.call();
-                            break;
-                          case 'delete':
-                            onDelete?.call();
-                            break;
-                        }
-                      },
-                      itemBuilder: (context) => [
-                        if (onEdit != null)
-                          PopupMenuItem(
-                            value: 'edit',
-                            child: Row(
-                              children: [
-                                const Icon(Icons.edit, size: 16),
-                                const SizedBox(width: 8),
-                                Text(AppLocalizations.of(context).edit),
-                              ],
-                            ),
+                  PopupMenuButton<String>(
+                    onSelected: (value) {
+                      switch (value) {
+                        case 'edit':
+                          onEdit?.call();
+                          break;
+                        case 'delete':
+                          onDelete?.call();
+                          break;
+                        case 'assign':
+                          onAssignUsers?.call();
+                          break;
+                      }
+                    },
+                    itemBuilder: (context) => [
+                      if (onEdit != null)
+                        PopupMenuItem(
+                          value: 'edit',
+                          child: Row(
+                            children: [
+                              const Icon(Icons.edit, size: 16),
+                              const SizedBox(width: 8),
+                              Text(l10n.edit),
+                            ],
                           ),
-                        if (onDelete != null)
-                          PopupMenuItem(
-                            value: 'delete',
-                            child: Row(
-                              children: [
-                                const Icon(Icons.delete, size: 16, color: Colors.red),
-                                const SizedBox(width: 8),
-                                Text(
-                                  AppLocalizations.of(context).delete,
-                                  style: const TextStyle(color: Colors.red),
-                                ),
-                              ],
-                            ),
+                        ),
+                      if (onAssignUsers != null)
+                        PopupMenuItem(
+                          value: 'assign',
+                          child: Row(
+                            children: [
+                              const Icon(Icons.person_add, size: 16),
+                              const SizedBox(width: 8),
+                              Text(l10n.assignUsers),
+                            ],
                           ),
-                      ],
-                    ),
+                        ),
+                      if (onDelete != null)
+                        PopupMenuItem(
+                          value: 'delete',
+                          child: Row(
+                            children: [
+                              const Icon(Icons.delete, size: 16),
+                              const SizedBox(width: 8),
+                              Text(l10n.delete),
+                            ],
+                          ),
+                        ),
+                    ],
+                  ),
                 ],
               ),
               const SizedBox(height: 8),
               Text(
                 task.description,
                 style: Theme.of(context).textTheme.bodyMedium,
-                maxLines: 3,
+                maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
               const SizedBox(height: 12),
@@ -95,9 +106,6 @@ class TaskCard extends StatelessWidget {
                   _buildStatusChip(context),
                   const SizedBox(width: 8),
                   _buildPriorityChip(context),
-                  const Spacer(),
-                  if (task.dueDate != null)
-                    _buildDueDateChip(context),
                 ],
               ),
               if (task.assignees.isNotEmpty) ...[
@@ -107,22 +115,25 @@ class TaskCard extends StatelessWidget {
                     const Icon(Icons.person, size: 16),
                     const SizedBox(width: 4),
                     Text(
-                      '${task.assignees.length} ${AppLocalizations.of(context).assignees}',
+                      '${task.assignees.length} ${task.assignees.length == 1 ? 'asignado' : 'asignados'}',
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                   ],
                 ),
               ],
-              if (task.tags.isNotEmpty) ...[
+              if (task.dueDate != null) ...[
                 const SizedBox(height: 8),
-                Wrap(
-                  spacing: 4,
-                  runSpacing: 4,
-                  children: task.tags.take(3).map((tag) => Chip(
-                    label: Text(tag),
-                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    visualDensity: VisualDensity.compact,
-                  )).toList(),
+                Row(
+                  children: [
+                    const Icon(Icons.schedule, size: 16),
+                    const SizedBox(width: 4),
+                    Text(
+                      'Vence: ${_formatDate(task.dueDate!)}',
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: task.isOverdue ? Colors.red : null,
+                          ),
+                    ),
+                  ],
                 ),
               ],
             ],
@@ -136,14 +147,11 @@ class TaskCard extends StatelessWidget {
     return Chip(
       label: Text(
         task.status.displayName,
-        style: TextStyle(
-          color: task.status.color,
-          fontWeight: FontWeight.w500,
-        ),
+        style: const TextStyle(fontSize: 12),
       ),
-      backgroundColor: task.status.color.withOpacity(0.1),
-      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-      visualDensity: VisualDensity.compact,
+      backgroundColor: task.status.color.withOpacity(0.2),
+      labelStyle: TextStyle(color: task.status.color),
+      padding: const EdgeInsets.symmetric(horizontal: 8),
     );
   }
 
@@ -151,58 +159,15 @@ class TaskCard extends StatelessWidget {
     return Chip(
       label: Text(
         task.priority.displayName,
-        style: TextStyle(
-          color: task.priority.color,
-          fontWeight: FontWeight.w500,
-        ),
+        style: const TextStyle(fontSize: 12),
       ),
-      backgroundColor: task.priority.color.withOpacity(0.1),
-      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-      visualDensity: VisualDensity.compact,
+      backgroundColor: task.priority.color.withOpacity(0.2),
+      labelStyle: TextStyle(color: task.priority.color),
+      padding: const EdgeInsets.symmetric(horizontal: 8),
     );
   }
 
-  Widget _buildDueDateChip(BuildContext context) {
-    final now = DateTime.now();
-    final dueDate = task.dueDate!;
-    final isOverdue = dueDate.isBefore(now);
-    final isDueSoon = dueDate.difference(now).inDays <= 3;
-
-    Color chipColor;
-    if (isOverdue) {
-      chipColor = Colors.red;
-    } else if (isDueSoon) {
-      chipColor = Colors.orange;
-    } else {
-      chipColor = Colors.green;
-    }
-
-    return Chip(
-      label: Text(
-        _formatDueDate(dueDate),
-        style: TextStyle(
-          color: chipColor,
-          fontWeight: FontWeight.w500,
-        ),
-      ),
-      backgroundColor: chipColor.withOpacity(0.1),
-      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-      visualDensity: VisualDensity.compact,
-    );
+  String _formatDate(DateTime date) {
+    return '${date.day}/${date.month}/${date.year}';
   }
-
-  String _formatDueDate(DateTime dueDate) {
-    final now = DateTime.now();
-    final difference = dueDate.difference(now);
-
-    if (difference.inDays == 0) {
-      return 'Hoy';
-    } else if (difference.inDays == 1) {
-      return 'Mañana';
-    } else if (difference.inDays > 1) {
-      return '${difference.inDays} días';
-    } else {
-      return 'Vencida';
-    }
-  }
-} 
+}

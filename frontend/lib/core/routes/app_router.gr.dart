@@ -291,6 +291,42 @@ class MainLayoutRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [MilestonesPage]
+class MilestonesRoute extends PageRouteInfo<MilestonesRouteArgs> {
+  MilestonesRoute({Key? key, String? projectId, List<PageRouteInfo>? children})
+    : super(
+        MilestonesRoute.name,
+        args: MilestonesRouteArgs(key: key, projectId: projectId),
+        initialChildren: children,
+      );
+
+  static const String name = 'MilestonesRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<MilestonesRouteArgs>(
+        orElse: () => const MilestonesRouteArgs(),
+      );
+      return MilestonesPage(key: args.key, projectId: args.projectId);
+    },
+  );
+}
+
+class MilestonesRouteArgs {
+  const MilestonesRouteArgs({this.key, this.projectId});
+
+  final Key? key;
+
+  final String? projectId;
+
+  @override
+  String toString() {
+    return 'MilestonesRouteArgs{key: $key, projectId: $projectId}';
+  }
+}
+
+/// generated route for
 /// [ProfilePage]
 class ProfileRoute extends PageRouteInfo<void> {
   const ProfileRoute({List<PageRouteInfo>? children})
@@ -502,6 +538,22 @@ class SplashRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const SplashPage();
+    },
+  );
+}
+
+/// generated route for
+/// [TaskExportsPage]
+class TaskExportsRoute extends PageRouteInfo<void> {
+  const TaskExportsRoute({List<PageRouteInfo>? children})
+    : super(TaskExportsRoute.name, initialChildren: children);
+
+  static const String name = 'TaskExportsRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const TaskExportsPage();
     },
   );
 }

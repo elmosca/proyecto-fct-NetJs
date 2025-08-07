@@ -65,7 +65,7 @@ class _ProgressReportPageState extends ConsumerState<ProgressReportPage> {
   }
 
   // TODO: [REVIEW_NEEDED] - Implementar lógica real de providers
-  // Necesita: TaskEntity, MilestoneEntity, providers configurados
+  // Necesita: Task, MilestoneEntity, providers configurados
   Widget _buildBody(BuildContext context, AppLocalizations l10n) {
     // TEMPORAL: Placeholder mientras se resuelven dependencias
     return const Center(
@@ -215,7 +215,7 @@ class _ProgressReportPageState extends ConsumerState<ProgressReportPage> {
 
   // TODO: [REVIEW_NEEDED] - Implementar cuando providers estén listos
   // Métodos comentados que necesitan revisión:
-  // List<TaskEntity> _filterTasks(List<TaskEntity> tasks) { ... }
+  // List<Task> _filterTasks(List<Task> tasks) { ... }
   // List<MilestoneEntity> _filterMilestones(List<MilestoneEntity> milestones) { ... }
 
   // TEMPORAL: Placeholder para refresh

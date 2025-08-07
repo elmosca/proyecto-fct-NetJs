@@ -1,11 +1,11 @@
 import 'package:fct_frontend/features/tasks/domain/entities/milestone_entity.dart';
-import 'package:fct_frontend/features/tasks/domain/entities/task_entity.dart';
+import 'package:fct_frontend/features/tasks/domain/entities/task.dart';
 import 'package:fct_frontend/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ProgressReportWidget extends ConsumerWidget {
-  final List<TaskEntity> tasks;
+  final List<Task> tasks;
   final List<MilestoneEntity> milestones;
   final String? projectId;
   final DateTime? fromDate;
@@ -30,17 +30,17 @@ class ProgressReportWidget extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildHeader(context, l10n, theme),
+          _buildHeader(context, l10n!, theme),
           const SizedBox(height: 24),
-          _buildSummaryCards(context, l10n, theme),
+          _buildSummaryCards(context, l10n!, theme),
           const SizedBox(height: 24),
-          _buildTaskProgressSection(context, l10n, theme),
+          _buildTaskProgressSection(context, l10n!, theme),
           const SizedBox(height: 24),
-          _buildMilestoneProgressSection(context, l10n, theme),
+          _buildMilestoneProgressSection(context, l10n!, theme),
           const SizedBox(height: 24),
-          _buildTimelineSection(context, l10n, theme),
+          _buildTimelineSection(context, l10n!, theme),
           const SizedBox(height: 24),
-          _buildPerformanceMetrics(context, l10n, theme),
+          _buildPerformanceMetrics(context, l10n!, theme),
         ],
       ),
     );
@@ -452,7 +452,7 @@ class ProgressReportWidget extends ConsumerWidget {
     );
   }
 
-  Widget _buildTaskItem(BuildContext context, TaskEntity task,
+  Widget _buildTaskItem(BuildContext context, Task task,
       AppLocalizations l10n, ThemeData theme) {
     return ListTile(
       leading: CircleAvatar(
@@ -526,7 +526,7 @@ class ProgressReportWidget extends ConsumerWidget {
         ),
       ),
       subtitle: Text(
-        '${_getMilestoneStatusText(milestone.status, l10n)} • ${milestone.type.displayName}',
+        '${_getMilestoneStatusText(milestone.status, l10n)} • ${milestone.milestoneType.displayName}',
         style: theme.textTheme.bodySmall,
       ),
       trailing: milestone.plannedDate != null
@@ -558,10 +558,10 @@ class ProgressReportWidget extends ConsumerWidget {
     }
 
     // Agregar milestones completados
-    for (final milestone in milestones.where((m) => m.completedAt != null)) {
+    for (final milestone in milestones.where((m) => m.completedDate != null)) {
       allItems.add(_TimelineItem(
         title: milestone.title,
-        date: milestone.completedAt!,
+        date: milestone.completedDate!,
         type: _TimelineItemType.milestone,
         status: milestone.status,
       ));
@@ -815,6 +815,8 @@ class ProgressReportWidget extends ConsumerWidget {
         return l10n.pending;
       case TaskStatus.inProgress:
         return l10n.inProgress;
+      case TaskStatus.underReview:
+        return 'En Revisión';
       case TaskStatus.completed:
         return l10n.completed;
       case TaskStatus.cancelled:
@@ -842,6 +844,8 @@ class ProgressReportWidget extends ConsumerWidget {
         return l10n.pending;
       case MilestoneStatus.inProgress:
         return l10n.inProgress;
+      case MilestoneStatus.delayed:
+        return 'Retrasado';
       case MilestoneStatus.completed:
         return l10n.completed;
       case MilestoneStatus.cancelled:
@@ -855,6 +859,8 @@ class ProgressReportWidget extends ConsumerWidget {
         return Colors.grey;
       case TaskStatus.inProgress:
         return Colors.orange;
+      case TaskStatus.underReview:
+        return Colors.blue;
       case TaskStatus.completed:
         return Colors.green;
       case TaskStatus.cancelled:
@@ -868,6 +874,8 @@ class ProgressReportWidget extends ConsumerWidget {
         return Colors.grey;
       case MilestoneStatus.inProgress:
         return Colors.orange;
+      case MilestoneStatus.delayed:
+        return Colors.red;
       case MilestoneStatus.completed:
         return Colors.green;
       case MilestoneStatus.cancelled:
@@ -881,6 +889,8 @@ class ProgressReportWidget extends ConsumerWidget {
         return Icons.schedule;
       case TaskStatus.inProgress:
         return Icons.play_circle_outline;
+      case TaskStatus.underReview:
+        return Icons.rate_review;
       case TaskStatus.completed:
         return Icons.check_circle;
       case TaskStatus.cancelled:
@@ -894,6 +904,8 @@ class ProgressReportWidget extends ConsumerWidget {
         return Icons.flag_outlined;
       case MilestoneStatus.inProgress:
         return Icons.flag;
+      case MilestoneStatus.delayed:
+        return Icons.warning;
       case MilestoneStatus.completed:
         return Icons.flag_circle;
       case MilestoneStatus.cancelled:
@@ -940,7 +952,7 @@ class ProgressReportWidget extends ConsumerWidget {
     // TODO: Implementar exportación del reporte
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(AppLocalizations.of(context).exportReport),
+        content: Text(AppLocalizations.of(context)!.exportReport),
       ),
     );
   }

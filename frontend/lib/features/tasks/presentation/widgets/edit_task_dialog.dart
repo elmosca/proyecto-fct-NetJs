@@ -1,13 +1,13 @@
 import 'package:fct_frontend/core/widgets/app_text_field.dart';
 import 'package:fct_frontend/features/tasks/domain/entities/task_dto.dart';
-import 'package:fct_frontend/features/tasks/domain/entities/task_entity.dart';
+import 'package:fct_frontend/features/tasks/domain/entities/task.dart';
 import 'package:fct_frontend/features/tasks/presentation/providers/task_providers.dart';
 import 'package:fct_frontend/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class EditTaskDialog extends ConsumerStatefulWidget {
-  final TaskEntity task;
+  final Task task;
 
   const EditTaskDialog({
     super.key,
@@ -221,6 +221,8 @@ class _EditTaskDialogState extends ConsumerState<EditTaskDialog> {
         return 'Media';
       case TaskPriority.high:
         return 'Alta';
+      case TaskPriority.critical:
+        return 'Crítica';
     }
   }
 

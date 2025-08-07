@@ -225,7 +225,7 @@ class _CreateMilestoneDialogState extends ConsumerState<CreateMilestoneDialog> {
     if (_selectedPlannedDate == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-            content: Text(AppLocalizations.of(context).plannedDateRequired)),
+            content: Text(AppLocalizations.of(context)!.plannedDateRequired)),
       );
       return;
     }

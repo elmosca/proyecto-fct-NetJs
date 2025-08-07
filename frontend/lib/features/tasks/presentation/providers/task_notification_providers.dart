@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../domain/entities/task_entity.dart';
+import '../../domain/entities/task.dart';
 import '../../domain/entities/task_notification_dto.dart';
 import '../../domain/entities/task_notification_entity.dart';
 import '../../domain/services/task_notification_service.dart';
@@ -83,50 +83,50 @@ class TaskNotificationsNotifier
   }
 
   Future<void> notifyTaskAssigned(
-      TaskEntity task, String assignedUserId) async {
+      Task task, String assignedUserId) async {
     await _service.notifyTaskAssigned(task, assignedUserId);
   }
 
   Future<void> notifyTaskStatusChanged(
-      TaskEntity task, String userId, String previousStatus) async {
+      Task task, String userId, String previousStatus) async {
     await _service.notifyTaskStatusChanged(task, userId, previousStatus);
   }
 
   Future<void> notifyTaskDueDateReminder(
-      TaskEntity task, String userId, int daysUntilDue) async {
+      Task task, String userId, int daysUntilDue) async {
     await _service.notifyTaskDueDateReminder(task, userId, daysUntilDue);
   }
 
-  Future<void> notifyTaskOverdue(TaskEntity task, String userId) async {
+  Future<void> notifyTaskOverdue(Task task, String userId) async {
     await _service.notifyTaskOverdue(task, userId);
   }
 
-  Future<void> notifyTaskCompleted(TaskEntity task, String userId) async {
+  Future<void> notifyTaskCompleted(Task task, String userId) async {
     await _service.notifyTaskCompleted(task, userId);
   }
 
   Future<void> notifyDependencyCompleted(
-      TaskEntity task, TaskEntity dependencyTask, String userId) async {
+      Task task, Task dependencyTask, String userId) async {
     await _service.notifyDependencyCompleted(task, dependencyTask, userId);
   }
 
   Future<void> notifyCommentAdded(
-      TaskEntity task, String userId, String commentAuthor) async {
+      Task task, String userId, String commentAuthor) async {
     await _service.notifyTaskCommentAdded(task, userId, commentAuthor);
   }
 
   Future<void> notifyPriorityChanged(
-      TaskEntity task, String userId, String previousPriority) async {
+      Task task, String userId, String previousPriority) async {
     await _service.notifyTaskPriorityChanged(task, userId, previousPriority);
   }
 
   Future<void> notifyMilestoneReached(
-      TaskEntity task, String userId, String milestoneName) async {
+      Task task, String userId, String milestoneName) async {
     await _service.notifyMilestoneReached(task, userId, milestoneName);
   }
 
   Future<void> scheduleDueDateReminder(
-      TaskEntity task, String userId, DateTime reminderDate) async {
+      Task task, String userId, DateTime reminderDate) async {
     await _service.scheduleDueDateReminder(task, userId, reminderDate);
   }
 }

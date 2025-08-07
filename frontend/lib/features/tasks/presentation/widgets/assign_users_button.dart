@@ -1,10 +1,10 @@
-import 'package:fct_frontend/features/tasks/domain/entities/task_entity.dart';
+import 'package:fct_frontend/features/tasks/domain/entities/task.dart';
 import 'package:fct_frontend/features/tasks/presentation/widgets/assign_users_dialog.dart';
 import 'package:fct_frontend/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class AssignUsersButton extends StatelessWidget {
-  final TaskEntity task;
+  final Task task;
   final int assignedCount;
   final VoidCallback? onPressed;
 

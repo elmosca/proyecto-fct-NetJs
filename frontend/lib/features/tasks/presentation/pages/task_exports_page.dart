@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:fct_frontend/core/widgets/empty_state_widget.dart';
 import 'package:fct_frontend/core/widgets/loading_widget.dart';
 import 'package:fct_frontend/features/tasks/domain/entities/task_export_dto.dart';

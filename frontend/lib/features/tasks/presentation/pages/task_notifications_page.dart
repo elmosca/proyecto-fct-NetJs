@@ -218,7 +218,7 @@ class _TaskNotificationsPageState extends ConsumerState<TaskNotificationsPage> {
     if (notifications == null || notifications.isEmpty) return;
 
     final unreadNotifications = notifications
-        .where((n) => n.status == TaskNotificationStatus.unread)
+        .where((n) => n.status != TaskNotificationStatus.read)
         .map((n) => n.id)
         .toList();
 

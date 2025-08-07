@@ -1,6 +1,6 @@
 import 'package:fct_frontend/features/tasks/data/datasources/task_remote_data_source.dart';
 import 'package:fct_frontend/features/tasks/domain/entities/task_dto.dart';
-import 'package:fct_frontend/features/tasks/domain/entities/task_entity.dart';
+import 'package:fct_frontend/features/tasks/domain/entities/task.dart';
 import 'package:fct_frontend/features/tasks/domain/repositories/task_repository.dart';
 
 class TaskRepositoryImpl implements TaskRepository {
@@ -9,7 +9,7 @@ class TaskRepositoryImpl implements TaskRepository {
   TaskRepositoryImpl(this._remoteDataSource);
 
   @override
-  Future<List<TaskEntity>> getTasks({
+  Future<List<Task>> getTasks({
     String? projectId,
     String? anteprojectId,
     String? assignedUserId,
@@ -32,17 +32,17 @@ class TaskRepositoryImpl implements TaskRepository {
   }
 
   @override
-  Future<TaskEntity?> getTaskById(String id) {
+  Future<Task?> getTaskById(String id) {
     return _remoteDataSource.getTaskById(id);
   }
 
   @override
-  Future<TaskEntity> createTask(TaskEntity task) {
+  Future<Task> createTask(Task task) {
     return _remoteDataSource.createTask(task);
   }
 
   @override
-  Future<TaskEntity> updateTask(TaskEntity task) {
+  Future<Task> updateTask(Task task) {
     return _remoteDataSource.updateTask(task);
   }
 
@@ -52,17 +52,17 @@ class TaskRepositoryImpl implements TaskRepository {
   }
 
   @override
-  Future<TaskEntity> updateTaskStatus(String id, TaskStatus status) {
+  Future<Task> updateTaskStatus(String id, TaskStatus status) {
     return _remoteDataSource.updateTaskStatus(id, status);
   }
 
   @override
-  Future<TaskEntity> assignTask(String taskId, String userId) {
+  Future<Task> assignTask(String taskId, String userId) {
     return _remoteDataSource.assignTask(taskId, userId);
   }
 
   @override
-  Future<Map<TaskStatus, List<TaskEntity>>> getTasksByStatus({
+  Future<Map<TaskStatus, List<Task>>> getTasksByStatus({
     String? projectId,
     String? anteprojectId,
   }) {
@@ -73,7 +73,7 @@ class TaskRepositoryImpl implements TaskRepository {
   }
 
   @override
-  Future<List<TaskEntity>> getUpcomingTasks({
+  Future<List<Task>> getUpcomingTasks({
     int days = 7,
     String? userId,
   }) {
@@ -81,7 +81,7 @@ class TaskRepositoryImpl implements TaskRepository {
   }
 
   @override
-  Future<List<TaskEntity>> getOverdueTasks({
+  Future<List<Task>> getOverdueTasks({
     String? userId,
   }) {
     return _remoteDataSource.getOverdueTasks(userId: userId);
@@ -101,7 +101,7 @@ class TaskRepositoryImpl implements TaskRepository {
   }
 
   @override
-  Future<List<TaskEntity>> searchTasks(
+  Future<List<Task>> searchTasks(
     String query, {
     String? projectId,
     String? anteprojectId,
@@ -116,12 +116,12 @@ class TaskRepositoryImpl implements TaskRepository {
   }
 
   @override
-  Future<List<TaskEntity>> getDependentTasks(String taskId) {
+  Future<List<Task>> getDependentTasks(String taskId) {
     return _remoteDataSource.getDependentTasks(taskId);
   }
 
   @override
-  Future<TaskEntity> completeTask(String id, {String? notes}) {
+  Future<Task> completeTask(String id, {String? notes}) {
     return _remoteDataSource.completeTask(id, notes: notes);
   }
 

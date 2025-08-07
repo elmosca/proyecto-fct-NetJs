@@ -186,13 +186,13 @@ class TaskCardWidget extends StatelessWidget {
 
   Color _getStatusColor(TaskStatus status) {
     switch (status) {
-      case TaskStatus.todo:
+      case TaskStatus.pending:
         return Colors.grey;
       case TaskStatus.inProgress:
         return Colors.blue;
-      case TaskStatus.review:
+      case TaskStatus.underReview:
         return Colors.orange;
-      case TaskStatus.done:
+      case TaskStatus.completed:
         return Colors.green;
       case TaskStatus.cancelled:
         return Colors.red;
@@ -207,7 +207,7 @@ class TaskCardWidget extends StatelessWidget {
         return Colors.orange;
       case TaskPriority.high:
         return Colors.red;
-      case TaskPriority.urgent:
+      case TaskPriority.critical:
         return Colors.purple;
     }
   }

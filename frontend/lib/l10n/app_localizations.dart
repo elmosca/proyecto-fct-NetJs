@@ -66,7 +66,7 @@ abstract class AppLocalizations {
 
   final String localeName;
 
-  static AppLocalizations? of(BuildContext context) {
+  static AppLocalizations of(BuildContext context) {
     return Localizations.of<AppLocalizations>(context, AppLocalizations);
   }
 
@@ -425,6 +425,36 @@ abstract class AppLocalizations {
   /// **'Title'**
   String get title;
 
+  /// No description provided for @titleRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Title is required'**
+  String get titleRequired;
+
+  /// No description provided for @descriptionRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Description is required'**
+  String get descriptionRequired;
+
+  /// No description provided for @milestoneNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Milestone Number'**
+  String get milestoneNumber;
+
+  /// No description provided for @milestoneNumberRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Milestone number is required'**
+  String get milestoneNumberRequired;
+
+  /// No description provided for @plannedDateRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Planned date is required'**
+  String get plannedDateRequired;
+
   /// No description provided for @milestones.
   ///
   /// In en, this message translates to:
@@ -496,6 +526,774 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Apply'**
   String get apply;
+
+  /// No description provided for @taskDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Task Details'**
+  String get taskDetails;
+
+  /// No description provided for @priority.
+  ///
+  /// In en, this message translates to:
+  /// **'Priority'**
+  String get priority;
+
+  /// No description provided for @complexity.
+  ///
+  /// In en, this message translates to:
+  /// **'Complexity'**
+  String get complexity;
+
+  /// No description provided for @estimatedHours.
+  ///
+  /// In en, this message translates to:
+  /// **'Estimated Hours'**
+  String get estimatedHours;
+
+  /// No description provided for @dueDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Due Date'**
+  String get dueDate;
+
+  /// No description provided for @tags.
+  ///
+  /// In en, this message translates to:
+  /// **'Tags'**
+  String get tags;
+
+  /// No description provided for @assignees.
+  ///
+  /// In en, this message translates to:
+  /// **'Assignees'**
+  String get assignees;
+
+  /// No description provided for @assignedUsers.
+  ///
+  /// In en, this message translates to:
+  /// **'Assigned Users'**
+  String get assignedUsers;
+
+  /// No description provided for @assignUsers.
+  ///
+  /// In en, this message translates to:
+  /// **'Assign Users'**
+  String get assignUsers;
+
+  /// No description provided for @noUsersAssigned.
+  ///
+  /// In en, this message translates to:
+  /// **'No users assigned'**
+  String get noUsersAssigned;
+
+  /// No description provided for @deleteTask.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Task'**
+  String get deleteTask;
+
+  /// No description provided for @deleteTaskConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this task?'**
+  String get deleteTaskConfirmation;
+
+  /// No description provided for @taskExportsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Task Exports'**
+  String get taskExportsTitle;
+
+  /// No description provided for @noExportsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No Exports'**
+  String get noExportsTitle;
+
+  /// No description provided for @noExportsMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'No exports found. Create your first export to get started.'**
+  String get noExportsMessage;
+
+  /// No description provided for @errorLoadingExports.
+  ///
+  /// In en, this message translates to:
+  /// **'Error Loading Exports'**
+  String get errorLoadingExports;
+
+  /// No description provided for @exportDownloadStarted.
+  ///
+  /// In en, this message translates to:
+  /// **'Export download started'**
+  String get exportDownloadStarted;
+
+  /// No description provided for @deleteExport.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Export'**
+  String get deleteExport;
+
+  /// No description provided for @deleteExportConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this export?'**
+  String get deleteExportConfirmation;
+
+  /// No description provided for @exportDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Export deleted successfully'**
+  String get exportDeleted;
+
+  /// No description provided for @cancelExport.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel Export'**
+  String get cancelExport;
+
+  /// No description provided for @cancelExportConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to cancel this export?'**
+  String get cancelExportConfirmation;
+
+  /// No description provided for @confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get confirm;
+
+  /// No description provided for @exportCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Export cancelled successfully'**
+  String get exportCancelled;
+
+  /// No description provided for @filterExports.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter Exports'**
+  String get filterExports;
+
+  /// No description provided for @allFormats.
+  ///
+  /// In en, this message translates to:
+  /// **'All Formats'**
+  String get allFormats;
+
+  /// No description provided for @exportStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Export Status'**
+  String get exportStatus;
+
+  /// No description provided for @allStatuses.
+  ///
+  /// In en, this message translates to:
+  /// **'All Statuses'**
+  String get allStatuses;
+
+  /// No description provided for @taskNotificationsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Task Notifications'**
+  String get taskNotificationsTitle;
+
+  /// No description provided for @noNotificationsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No Notifications'**
+  String get noNotificationsTitle;
+
+  /// No description provided for @noNotificationsMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'No notifications found. You\'re all caught up!'**
+  String get noNotificationsMessage;
+
+  /// No description provided for @errorLoadingNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Error Loading Notifications'**
+  String get errorLoadingNotifications;
+
+  /// No description provided for @markAllAsRead.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark All as Read'**
+  String get markAllAsRead;
+
+  /// No description provided for @notificationMarkedAsRead.
+  ///
+  /// In en, this message translates to:
+  /// **'Notification marked as read'**
+  String get notificationMarkedAsRead;
+
+  /// No description provided for @deleteNotification.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Notification'**
+  String get deleteNotification;
+
+  /// No description provided for @deleteNotificationConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this notification?'**
+  String get deleteNotificationConfirmation;
+
+  /// No description provided for @notificationDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Notification deleted successfully'**
+  String get notificationDeleted;
+
+  /// No description provided for @allNotificationsMarkedAsRead.
+  ///
+  /// In en, this message translates to:
+  /// **'All notifications marked as read'**
+  String get allNotificationsMarkedAsRead;
+
+  /// No description provided for @filterNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter Notifications'**
+  String get filterNotifications;
+
+  /// No description provided for @unreadOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Unread Only'**
+  String get unreadOnly;
+
+  /// No description provided for @notificationType.
+  ///
+  /// In en, this message translates to:
+  /// **'Notification Type'**
+  String get notificationType;
+
+  /// No description provided for @allTypes.
+  ///
+  /// In en, this message translates to:
+  /// **'All Types'**
+  String get allTypes;
+
+  /// No description provided for @taskReportsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Task Reports'**
+  String get taskReportsTitle;
+
+  /// No description provided for @createReport.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Report'**
+  String get createReport;
+
+  /// No description provided for @noReportsAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No Reports Available'**
+  String get noReportsAvailable;
+
+  /// No description provided for @createFirstReport.
+  ///
+  /// In en, this message translates to:
+  /// **'Create your first report to get started'**
+  String get createFirstReport;
+
+  /// No description provided for @errorLoadingReports.
+  ///
+  /// In en, this message translates to:
+  /// **'Error Loading Reports'**
+  String get errorLoadingReports;
+
+  /// No description provided for @deleteReport.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Report'**
+  String get deleteReport;
+
+  /// No description provided for @deleteReportConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this report?'**
+  String get deleteReportConfirmation;
+
+  /// No description provided for @reportDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Report deleted successfully'**
+  String get reportDeleted;
+
+  /// No description provided for @reportExported.
+  ///
+  /// In en, this message translates to:
+  /// **'Report exported successfully'**
+  String get reportExported;
+
+  /// No description provided for @errorExportingReport.
+  ///
+  /// In en, this message translates to:
+  /// **'Error exporting report'**
+  String get errorExportingReport;
+
+  /// No description provided for @featureNotImplemented.
+  ///
+  /// In en, this message translates to:
+  /// **'This feature is not yet implemented'**
+  String get featureNotImplemented;
+
+  /// No description provided for @tasks.
+  ///
+  /// In en, this message translates to:
+  /// **'Tasks'**
+  String get tasks;
+
+  /// No description provided for @listView.
+  ///
+  /// In en, this message translates to:
+  /// **'List View'**
+  String get listView;
+
+  /// No description provided for @kanbanView.
+  ///
+  /// In en, this message translates to:
+  /// **'Kanban View'**
+  String get kanbanView;
+
+  /// No description provided for @filters.
+  ///
+  /// In en, this message translates to:
+  /// **'Filters'**
+  String get filters;
+
+  /// No description provided for @createTask.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Task'**
+  String get createTask;
+
+  /// No description provided for @noTasks.
+  ///
+  /// In en, this message translates to:
+  /// **'No Tasks'**
+  String get noTasks;
+
+  /// No description provided for @noTasksMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'No tasks found. Create your first task to get started.'**
+  String get noTasksMessage;
+
+  /// No description provided for @submit.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit'**
+  String get submit;
+
+  /// No description provided for @searchUsers.
+  ///
+  /// In en, this message translates to:
+  /// **'Search Users'**
+  String get searchUsers;
+
+  /// No description provided for @filterByRole.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter by Role'**
+  String get filterByRole;
+
+  /// No description provided for @allRoles.
+  ///
+  /// In en, this message translates to:
+  /// **'All Roles'**
+  String get allRoles;
+
+  /// No description provided for @student.
+  ///
+  /// In en, this message translates to:
+  /// **'Student'**
+  String get student;
+
+  /// No description provided for @tutor.
+  ///
+  /// In en, this message translates to:
+  /// **'Tutor'**
+  String get tutor;
+
+  /// No description provided for @admin.
+  ///
+  /// In en, this message translates to:
+  /// **'Admin'**
+  String get admin;
+
+  /// No description provided for @availableUsers.
+  ///
+  /// In en, this message translates to:
+  /// **'Available Users'**
+  String get availableUsers;
+
+  /// No description provided for @noUsersAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No users available'**
+  String get noUsersAvailable;
+
+  /// No description provided for @userAssignedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'User assigned successfully'**
+  String get userAssignedSuccessfully;
+
+  /// No description provided for @errorAssigningUser.
+  ///
+  /// In en, this message translates to:
+  /// **'Error assigning user'**
+  String get errorAssigningUser;
+
+  /// No description provided for @userUnassignedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'User unassigned successfully'**
+  String get userUnassignedSuccessfully;
+
+  /// No description provided for @errorUnassigningUser.
+  ///
+  /// In en, this message translates to:
+  /// **'Error unassigning user'**
+  String get errorUnassigningUser;
+
+  /// No description provided for @exportReport.
+  ///
+  /// In en, this message translates to:
+  /// **'Export Report'**
+  String get exportReport;
+
+  /// No description provided for @schedule.
+  ///
+  /// In en, this message translates to:
+  /// **'Schedule'**
+  String get schedule;
+
+  /// No description provided for @generating.
+  ///
+  /// In en, this message translates to:
+  /// **'Generating'**
+  String get generating;
+
+  /// No description provided for @failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed'**
+  String get failed;
+
+  /// No description provided for @expired.
+  ///
+  /// In en, this message translates to:
+  /// **'Expired'**
+  String get expired;
+
+  /// No description provided for @profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get profile;
+
+  /// No description provided for @users.
+  ///
+  /// In en, this message translates to:
+  /// **'Users'**
+  String get users;
+
+  /// No description provided for @taskProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Task Progress'**
+  String get taskProgress;
+
+  /// No description provided for @taskPriority.
+  ///
+  /// In en, this message translates to:
+  /// **'Task Priority'**
+  String get taskPriority;
+
+  /// No description provided for @noMilestonesAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No milestones available'**
+  String get noMilestonesAvailable;
+
+  /// No description provided for @milestoneProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Milestone Progress'**
+  String get milestoneProgress;
+
+  /// No description provided for @milestoneStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Milestone Status'**
+  String get milestoneStatus;
+
+  /// No description provided for @recentTasks.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent Tasks'**
+  String get recentTasks;
+
+  /// No description provided for @recentMilestones.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent Milestones'**
+  String get recentMilestones;
+
+  /// No description provided for @type.
+  ///
+  /// In en, this message translates to:
+  /// **'Type'**
+  String get type;
+
+  /// No description provided for @completedAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed At'**
+  String get completedAt;
+
+  /// No description provided for @noRecentActivity.
+  ///
+  /// In en, this message translates to:
+  /// **'No recent activity'**
+  String get noRecentActivity;
+
+  /// No description provided for @recentActivity.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent Activity'**
+  String get recentActivity;
+
+  /// No description provided for @task.
+  ///
+  /// In en, this message translates to:
+  /// **'Task'**
+  String get task;
+
+  /// No description provided for @milestone.
+  ///
+  /// In en, this message translates to:
+  /// **'Milestone'**
+  String get milestone;
+
+  /// No description provided for @performanceMetrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Performance Metrics'**
+  String get performanceMetrics;
+
+  /// No description provided for @taskCompletionRate.
+  ///
+  /// In en, this message translates to:
+  /// **'Task Completion Rate'**
+  String get taskCompletionRate;
+
+  /// No description provided for @milestoneCompletionRate.
+  ///
+  /// In en, this message translates to:
+  /// **'Milestone Completion Rate'**
+  String get milestoneCompletionRate;
+
+  /// No description provided for @averageTaskDuration.
+  ///
+  /// In en, this message translates to:
+  /// **'Average Task Duration'**
+  String get averageTaskDuration;
+
+  /// No description provided for @onTimeCompletionRate.
+  ///
+  /// In en, this message translates to:
+  /// **'On-Time Completion Rate'**
+  String get onTimeCompletionRate;
+
+  /// No description provided for @from.
+  ///
+  /// In en, this message translates to:
+  /// **'From'**
+  String get from;
+
+  /// No description provided for @to.
+  ///
+  /// In en, this message translates to:
+  /// **'To'**
+  String get to;
+
+  /// No description provided for @allTime.
+  ///
+  /// In en, this message translates to:
+  /// **'All Time'**
+  String get allTime;
+
+  /// No description provided for @pending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get pending;
+
+  /// No description provided for @inProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'In Progress'**
+  String get inProgress;
+
+  /// No description provided for @completed.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get completed;
+
+  /// No description provided for @cancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get cancelled;
+
+  /// No description provided for @lowPriority.
+  ///
+  /// In en, this message translates to:
+  /// **'Low Priority'**
+  String get lowPriority;
+
+  /// No description provided for @mediumPriority.
+  ///
+  /// In en, this message translates to:
+  /// **'Medium Priority'**
+  String get mediumPriority;
+
+  /// No description provided for @highPriority.
+  ///
+  /// In en, this message translates to:
+  /// **'High Priority'**
+  String get highPriority;
+
+  /// No description provided for @criticalPriority.
+  ///
+  /// In en, this message translates to:
+  /// **'Critical Priority'**
+  String get criticalPriority;
+
+  /// No description provided for @totalTasks.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Tasks'**
+  String get totalTasks;
+
+  /// No description provided for @noTasksAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No tasks available'**
+  String get noTasksAvailable;
+
+  /// No description provided for @summary.
+  ///
+  /// In en, this message translates to:
+  /// **'Summary'**
+  String get summary;
+
+  /// No description provided for @completedTasks.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed Tasks'**
+  String get completedTasks;
+
+  /// No description provided for @inProgressTasks.
+  ///
+  /// In en, this message translates to:
+  /// **'In Progress Tasks'**
+  String get inProgressTasks;
+
+  /// No description provided for @overdueTasks.
+  ///
+  /// In en, this message translates to:
+  /// **'Overdue Tasks'**
+  String get overdueTasks;
+
+  /// No description provided for @totalMilestones.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Milestones'**
+  String get totalMilestones;
+
+  /// No description provided for @completedMilestones.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed Milestones'**
+  String get completedMilestones;
+
+  /// No description provided for @selectDateRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Date Range'**
+  String get selectDateRange;
+
+  /// No description provided for @assignUserToTask.
+  ///
+  /// In en, this message translates to:
+  /// **'Assign User to Task'**
+  String get assignUserToTask;
+
+  /// No description provided for @create.
+  ///
+  /// In en, this message translates to:
+  /// **'Create'**
+  String get create;
+
+  /// No description provided for @createMilestone.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Milestone'**
+  String get createMilestone;
+
+  /// No description provided for @editTask.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Task'**
+  String get editTask;
+
+  /// No description provided for @searchTasksHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search tasks...'**
+  String get searchTasksHint;
+
+  /// No description provided for @all.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get all;
+
+  /// No description provided for @clear.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get clear;
+
+  /// No description provided for @export.
+  ///
+  /// In en, this message translates to:
+  /// **'Export'**
+  String get export;
+
+  /// No description provided for @unassignUser.
+  ///
+  /// In en, this message translates to:
+  /// **'Unassign User'**
+  String get unassignUser;
+
+  /// No description provided for @assignUser.
+  ///
+  /// In en, this message translates to:
+  /// **'Assign User'**
+  String get assignUser;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

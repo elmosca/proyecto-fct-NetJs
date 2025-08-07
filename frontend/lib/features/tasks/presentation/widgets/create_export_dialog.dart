@@ -346,7 +346,7 @@ class _CreateExportDialogState extends ConsumerState<CreateExportDialog> {
     if (_selectedColumns.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(AppLocalizations.of(context).selectAtLeastOneColumn),
+          content: Text(AppLocalizations.of(context)!.selectAtLeastOneColumn),
           backgroundColor: Colors.red,
         ),
       );

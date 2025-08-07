@@ -1,9 +1,9 @@
+import 'package:fct_frontend/features/tasks/domain/entities/task.dart';
 import 'package:fct_frontend/features/tasks/domain/entities/task_dto.dart';
-import 'package:fct_frontend/features/tasks/domain/entities/task_entity.dart';
 
 abstract class TaskRepository {
   /// Obtener todas las tareas con filtros opcionales
-  Future<List<TaskEntity>> getTasks({
+  Future<List<Task>> getTasks({
     String? projectId,
     String? anteprojectId,
     String? assignedUserId,
@@ -15,37 +15,37 @@ abstract class TaskRepository {
   });
 
   /// Obtener una tarea por ID
-  Future<TaskEntity?> getTaskById(String id);
+  Future<Task?> getTaskById(String id);
 
   /// Crear una nueva tarea
-  Future<TaskEntity> createTask(TaskEntity task);
+  Future<Task> createTask(Task task);
 
   /// Actualizar una tarea existente
-  Future<TaskEntity> updateTask(TaskEntity task);
+  Future<Task> updateTask(Task task);
 
   /// Eliminar una tarea
   Future<void> deleteTask(String id);
 
   /// Cambiar el estado de una tarea
-  Future<TaskEntity> updateTaskStatus(String id, TaskStatus status);
+  Future<Task> updateTaskStatus(String id, TaskStatus status);
 
   /// Asignar una tarea a un usuario
-  Future<TaskEntity> assignTask(String taskId, String userId);
+  Future<Task> assignTask(String taskId, String userId);
 
   /// Obtener tareas por estado (para vista Kanban)
-  Future<Map<TaskStatus, List<TaskEntity>>> getTasksByStatus({
+  Future<Map<TaskStatus, List<Task>>> getTasksByStatus({
     String? projectId,
     String? anteprojectId,
   });
 
   /// Obtener tareas próximas a vencer
-  Future<List<TaskEntity>> getUpcomingTasks({
+  Future<List<Task>> getUpcomingTasks({
     int days = 7,
     String? userId,
   });
 
   /// Obtener tareas vencidas
-  Future<List<TaskEntity>> getOverdueTasks({
+  Future<List<Task>> getOverdueTasks({
     String? userId,
   });
 
@@ -57,7 +57,7 @@ abstract class TaskRepository {
   });
 
   /// Buscar tareas por texto
-  Future<List<TaskEntity>> searchTasks(
+  Future<List<Task>> searchTasks(
     String query, {
     String? projectId,
     String? anteprojectId,
@@ -65,10 +65,10 @@ abstract class TaskRepository {
   });
 
   /// Obtener tareas dependientes
-  Future<List<TaskEntity>> getDependentTasks(String taskId);
+  Future<List<Task>> getDependentTasks(String taskId);
 
   /// Marcar tarea como completada
-  Future<TaskEntity> completeTask(String id, {String? notes});
+  Future<Task> completeTask(String id, {String? notes});
 
   /// Obtener historial de cambios de una tarea
   Future<List<Map<String, dynamic>>> getTaskHistory(String taskId);
