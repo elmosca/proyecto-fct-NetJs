@@ -5,7 +5,7 @@
 set -e  # Salir si hay algún error
 
 SERVICE=${1:-"all"}
-PROJECT_PATH="/opt/proyecto-fct-NetJs"
+PROJECT_PATH="/home/jualas/proyectos/proyecto-fct-NetJs"
 
 echo "🚀 Iniciando redespliegue de servicios..."
 echo "📁 Proyecto: $PROJECT_PATH"
