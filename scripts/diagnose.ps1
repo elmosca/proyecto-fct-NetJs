@@ -7,7 +7,7 @@ Write-Host "=====================================" -ForegroundColor Cyan
 Write-Host ""
 
 # Configuración
-$WSL_PATH = "/opt/proyecto-fct-NetJs"
+$WSL_PATH = "/home/jualas/proyectos/proyecto-fct-NetJs"
 $WINDOWS_PATH = "C:\dev\proyecto-fct-NetJs"
 
 # Función para verificar WSL

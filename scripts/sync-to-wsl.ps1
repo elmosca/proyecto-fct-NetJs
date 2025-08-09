@@ -8,7 +8,7 @@ param(
   [string]$Service = "all"
 )
 
-$WSL_PATH = "/opt/proyecto-fct-NetJs"
+$WSL_PATH = "/home/jualas/proyectos/proyecto-fct-NetJs"
 $WINDOWS_PATH = "C:\dev\proyecto-fct-NetJs"
 
 Write-Host "🔄 Sincronizando cambios a WSL..." -ForegroundColor Cyan
