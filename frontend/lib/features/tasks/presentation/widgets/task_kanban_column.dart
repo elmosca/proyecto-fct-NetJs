@@ -127,7 +127,7 @@ class TaskKanbanColumn extends StatelessWidget {
             feedback: Material(
               elevation: 8,
               borderRadius: BorderRadius.circular(8),
-              child: Container(
+              child: SizedBox(
                 width: 280,
                 child: TaskCard(
                   task: task,

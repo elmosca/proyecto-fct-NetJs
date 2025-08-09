@@ -22,10 +22,10 @@
   - [x] NUNCA objetos globalmente accesibles
   - [x] Abstract classes para facilitar testing
 
-- [x] **3. Navegación con go_router** (RECOMMEND)
-  - [x] Migración desde auto_route a go_router
-  - [x] Rutas nombradas y tipadas
-  - [x] Deep linking y guards de autenticación
+- [x] **3. Navegación con auto_route** (DECISIÓN DEL PROYECTO)
+  - [x] Estandarización en `auto_route` (se descarta migración a `go_router` por coste/impacto)
+  - [x] Rutas tipadas, deep linking y guards de autenticación
+  - [x] Integrado con `MaterialApp.router`
 
 - [x] **4. Convenciones de Nombres Estándar** (RECOMMEND)
   - [x] Nomenclatura según componente arquitectónico
@@ -53,8 +53,8 @@
   - [x] Configurar Riverpod para estado global
   - [x] Crear abstract classes para todas las dependencias
 
-- [x] **0.3** Migrar a go_router (RECOMMEND)
-  - [x] Reemplazar auto_route con go_router
+- [x] **0.3** Navegación (DECISIÓN DEL PROYECTO)
+  - [x] Estandarizar en `auto_route`
   - [x] Configurar rutas nombradas y tipadas
   - [x] Implementar guards de autenticación
 
@@ -309,7 +309,7 @@
 ### **Verificación de Recomendaciones Oficiales**
 - [x] **R.1** Verificar separación de concernidos en todas las features ✅
 - [x] **R.2** Validar inyección de dependencias en código existente ✅
-- [x] **R.3** Confirmar migración completa a go_router ✅
+- [x] **R.3** Confirmar estandarización en auto_route ✅
 - [x] **R.4** Revisar convenciones de nombres en todo el proyecto ✅
 - [x] **R.5** Validar implementación de repositories abstractos ✅
 
@@ -384,7 +384,7 @@
 #### **Consistencia Verificada**:
 - [x] **Nomenclatura**: PascalCase, camelCase, underscore_case, UPPER_SNAKE_CASE
 - [x] **Estructura de carpetas**: ui/core/ en lugar de /widgets/
-- [x] **Dependencias**: go_router, Riverpod, getIt, freezed
+- [x] **Dependencias**: auto_route, Riverpod, getIt, freezed
 - [x] **Patrones**: Clean Architecture, MVVM, SOLID principles
 - [x] **Testing**: Arrange-Act-Assert, Given-When-Then
 - [x] **Documentación**: Comentarios en castellano, código en inglés

@@ -1,7 +1,6 @@
 import 'package:fct_frontend/core/widgets/app_text_field.dart';
-import 'package:fct_frontend/features/tasks/domain/entities/task_dto.dart';
 import 'package:fct_frontend/features/tasks/domain/entities/task.dart';
-import 'package:fct_frontend/features/tasks/presentation/providers/task_providers.dart';
+import 'package:fct_frontend/features/tasks/domain/entities/task_dto.dart';
 import 'package:fct_frontend/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -270,7 +269,7 @@ class _CreateTaskDialogState extends ConsumerState<CreateTaskDialog> {
       if (mounted) {
         Navigator.of(context).pop();
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Tarea creada exitosamente')),
+          const SnackBar(content: Text('Tarea creada exitosamente')),
         );
       }
     } catch (e) {

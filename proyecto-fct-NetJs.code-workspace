@@ -1,7 +1,119 @@
 {
-    "folders": [
-        {
-            "path": "."
-        }
+  "folders": [
+    {
+      "name": "Proyecto FCT NetJS",
+      "path": "."
+    }
+  ],
+  "settings": {
+    "terminal.integrated.defaultProfile.windows": "PowerShell",
+    "terminal.integrated.profiles.windows": {
+      "PowerShell": {
+        "source": "PowerShell",
+        "args": ["-NoProfile", "-ExecutionPolicy", "Bypass"]
+      }
+    },
+    "files.exclude": {
+      "**/node_modules": true,
+      "**/dist": true,
+      "**/.dart_tool": true,
+      "**/build": true
+    },
+    "search.exclude": {
+      "**/node_modules": true,
+      "**/dist": true,
+      "**/.dart_tool": true,
+      "**/build": true
+    },
+    "typescript.preferences.includePackageJsonAutoImports": "on",
+    "typescript.suggest.autoImports": true,
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll": true,
+      "source.organizeImports": true
+    }
+  },
+  "extensions": {
+    "recommendations": [
+      "ms-vscode.vscode-typescript-next",
+      "bradlc.vscode-tailwindcss",
+      "dart-code.dart-code",
+      "dart-code.flutter",
+      "ms-vscode.powershell",
+      "ms-vscode.vscode-json"
     ]
+  },
+  "tasks": {
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "Diagnóstico del Proyecto",
+        "type": "shell",
+        "command": "powershell",
+        "args": ["-File", "./scripts/diagnose.ps1"],
+        "group": "build",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "Desplegar Backend",
+        "type": "shell",
+        "command": "powershell",
+        "args": ["-File", "./scripts/cursor-agent-helper.ps1", "deploy-backend"],
+        "group": "build",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "Ver Health Backend",
+        "type": "shell",
+        "command": "powershell",
+        "args": ["-File", "./scripts/cursor-agent-helper.ps1", "health-backend"],
+        "group": "test",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "Ver Logs Backend",
+        "type": "shell",
+        "command": "powershell",
+        "args": ["-File", "./scripts/cursor-agent-helper.ps1", "logs-backend"],
+        "group": "test",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+        },
+        "problemMatcher": []
+      }
+    ]
+  },
+  "launch": {
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Diagnóstico Rápido",
+        "type": "node",
+        "request": "launch",
+        "program": "${workspaceFolder}/scripts/diagnose.ps1",
+        "console": "integratedTerminal"
+      }
+    ]
+  }
 }

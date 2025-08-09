@@ -26,11 +26,11 @@ class SplashPage extends ConsumerWidget {
             },
             unauthenticated: () {
               // Usuario no autenticado, navegar al login
-              context.router.replaceNamed('/');
+              context.router.replaceNamed('/login');
             },
             error: (message) {
               // Error, navegar al login
-              context.router.replaceNamed('/');
+              context.router.replaceNamed('/login');
             },
           );
         },
@@ -39,25 +39,25 @@ class SplashPage extends ConsumerWidget {
         },
         error: (error, stackTrace) {
           // Error, navegar al login
-          context.router.replaceNamed('/');
+          context.router.replaceNamed('/login');
         },
       );
     });
 
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
-      body: Center(
+      body: const Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // Logo o icono de la aplicación
-            const Icon(
+            Icon(
               Icons.school,
               size: 100,
               color: Colors.white,
             ),
-            const SizedBox(height: 24),
-            const Text(
+            SizedBox(height: 24),
+            Text(
               'Sistema FCT',
               style: TextStyle(
                 fontSize: 32,
@@ -65,16 +65,16 @@ class SplashPage extends ConsumerWidget {
                 color: Colors.white,
               ),
             ),
-            const SizedBox(height: 16),
-            const Text(
+            SizedBox(height: 16),
+            Text(
               'Cargando...',
               style: TextStyle(
                 fontSize: 16,
                 color: Colors.white70,
               ),
             ),
-            const SizedBox(height: 32),
-            const CircularProgressIndicator(
+            SizedBox(height: 32),
+            CircularProgressIndicator(
               valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
             ),
           ],

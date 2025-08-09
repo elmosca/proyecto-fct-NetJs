@@ -55,7 +55,7 @@ void main() {
       );
 
       expect(find.text('Reintentar'), findsOneWidget);
-      expect(find.byType(ElevatedButton), findsOneWidget);
+      expect(find.byIcon(Icons.refresh), findsOneWidget);
 
       await tester.tap(find.text('Reintentar'));
       expect(retryCalled, true);
@@ -75,7 +75,7 @@ void main() {
 
       expect(find.text(message), findsOneWidget);
       expect(find.text('Reintentar'), findsNothing);
-      expect(find.byType(ElevatedButton), findsNothing);
+      expect(find.byIcon(Icons.refresh), findsNothing);
     });
   });
 }

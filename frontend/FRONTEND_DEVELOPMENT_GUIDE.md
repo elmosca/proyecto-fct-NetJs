@@ -20,10 +20,10 @@ Este proyecto implementa las **5 recomendaciones "Strongly recommend"** del equi
 - **NUNCA objetos globalmente accesibles**: Evitar singletons globales
 - **Abstract classes para facilitar testing**: Interfaces para todas las dependencias
 
-#### **3. Navegación con go_router** (RECOMMEND)
-- **go_router como solución oficial**: Migración desde auto_route
-- **Rutas nombradas y tipadas**: Navegación type-safe
-- **Deep linking y guards de autenticación**: Navegación robusta
+#### **3. Navegación con auto_route** (DECISIÓN DEL PROYECTO)
+- **auto_route como solución estandarizada**: Se adopta por la base ya implementada y menor coste de cambio
+- **Rutas tipadas y deep linking**: Navegación robusta con guards
+- **MaterialApp.router**: Configuración declarativa del router
 
 #### **4. Convenciones de Nombres Estándar** (RECOMMEND)
 - **Nomenclatura según componente arquitectónico**: HomeViewModel, UserRepository
@@ -131,28 +131,14 @@ class UserService {
 }
 ```
 
-#### **3. Navegación con go_router** (RECOMMEND)
+#### **3. Navegación con auto_route** (DECISIÓN DEL PROYECTO)
 ```dart
-// ✅ CORRECTO - go_router oficial
-final router = GoRouter(
-  routes: [
-    GoRoute(
-      path: '/users/:id',
-      name: 'user-details',
-      builder: (context, state) {
-        final userId = state.pathParameters['id']!;
-        return UserDetailsScreen(userId: userId);
-      },
-    ),
-  ],
-);
+final appRouter = AppRouter();
 
-// Uso en widgets
-ElevatedButton(
-  onPressed: () => context.goNamed('user-details', 
-    pathParameters: {'id': '123'}),
-  child: Text('Ver Usuario'),
-)
+return MaterialApp.router(
+  routerConfig: appRouter.config(),
+  // demás propiedades
+);
 ```
 
 #### **4. Convenciones de Nombres Estándar** (RECOMMEND)
@@ -211,60 +197,14 @@ class UserRepositoryImpl implements UserRepository {
 
 ## 🔧 Stack Tecnológico
 
-### Dependencias Principales (Siguiendo Recomendaciones Oficiales)
+### Dependencias Principales (Actualizadas)
 ```yaml
 dependencies:
-  flutter:
-    sdk: flutter
-  
-  # Estado y gestión de datos (RECOMENDACIÓN OFICIAL)
-  flutter_riverpod: ^2.4.9
-  riverpod_annotation: ^2.3.3
-  
-  # Navegación (RECOMENDACIÓN OFICIAL)
-  go_router: ^13.2.0
-  # auto_route: ^7.8.4  # Alternativa, pero go_router es la recomendación oficial
-  
-  # Inyección de dependencias (STRONGLY RECOMMEND)
-  get_it: ^7.6.4
-  
-  # Generación de código
-  freezed_annotation: ^2.4.1
-  json_annotation: ^4.8.1
-  
-  # HTTP y networking
-  dio: ^5.4.0
-  connectivity_plus: ^5.0.2
-  
-  # Almacenamiento local
-  shared_preferences: ^2.2.2
-  hive: ^2.2.3
-  hive_flutter: ^1.1.0
-  
-  # Internacionalización
-  flutter_localizations:
-    sdk: flutter
-  
-  # Utilidades
-  intl: ^0.18.1
-  logger: ^2.0.2+1
-  url_launcher: ^6.2.2
-  image_picker: ^1.0.4
-  file_picker: ^6.1.1
+  auto_route: ^9.2.0
+  # go_router: eliminado (no usado)
 
 dev_dependencies:
-  # Generación de código (Siguiendo Recomendaciones Oficiales)
-  build_runner: ^2.4.7
-  freezed: ^2.4.6
-  json_serializable: ^6.7.1
-  riverpod_generator: ^2.3.9
-  # auto_route_generator: ^7.3.2  # Alternativa
-  go_router_generator: ^9.0.0  # Generador oficial para go_router
-  
-  # Testing
-  flutter_test:
-    sdk: flutter
-  mockito: ^5.4.4
+  auto_route_generator: ^9.0.0
   build_runner: ^2.4.7
 ```
 
@@ -1234,35 +1174,15 @@ class AuthNotifier extends _$AuthNotifier {
 class AppRouter extends _$AppRouter {
   @override
   List<AutoRoute> get routes => [
+        AutoRoute(path: '/', page: SplashRoute.page, initial: true),
+        AutoRoute(path: '/login', page: LoginRoute.page),
         AutoRoute(
-          path: '/',
-          page: SplashRoute.page,
-          initial: true,
-        ),
-        AutoRoute(
-          path: '/login',
-          page: LoginRoute.page,
-        ),
-        AutoRoute(
-          path: '/register',
-          page: RegisterRoute.page,
-        ),
-        AutoRoute(
-          path: '/dashboard',
-          page: DashboardRoute.page,
+          path: '/app',
+          page: MainLayoutRoute.page,
+          guards: [AuthGuard()],
           children: [
-            AutoRoute(
-              path: 'projects',
-              page: ProjectsRoute.page,
-            ),
-            AutoRoute(
-              path: 'users',
-              page: UsersRoute.page,
-            ),
-            AutoRoute(
-              path: 'profile',
-              page: ProfileRoute.page,
-            ),
+            AutoRoute(path: 'dashboard', page: DashboardRoute.page),
+            AutoRoute(path: 'projects', page: ProjectsRoute.page),
           ],
         ),
       ];
@@ -1272,18 +1192,13 @@ class AppRouter extends _$AppRouter {
 ### 2. Guardias de Ruta
 ```dart
 class AuthGuard extends AutoRouteGuard {
-  final AuthRepository _authRepository;
-  
-  AuthGuard(this._authRepository);
-  
   @override
-  Future<bool> canNavigate(NavigationResolver resolver, StackRouter router) async {
-    try {
-      final user = await _authRepository.getCurrentUser();
-      return user != null;
-    } catch (e) {
-      router.push(const LoginRoute());
-      return false;
+  void onNavigation(NavigationResolver resolver, StackRouter router) {
+    final isLogged = getIt<TokenManager>().hasValidToken;
+    if (isLogged) {
+      resolver.next();
+    } else {
+      router.replace(const LoginRoute());
     }
   }
 }

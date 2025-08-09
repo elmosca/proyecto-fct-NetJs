@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class LoadingWidget extends StatelessWidget {
   const LoadingWidget({
     super.key,
-    this.message = 'Cargando...',
+    this.message = '',
     this.size = LoadingSize.medium,
     this.color,
   });
@@ -52,7 +52,7 @@ class LoadingSize {
 
   static const LoadingSize small = LoadingSize._(24, 2);
   static const LoadingSize medium = LoadingSize._(32, 3);
-  static const LoadingSize large = LoadingSize._(48, 4);
+  static const LoadingSize large = LoadingSize._(60, 4);
   static const LoadingSize extraLarge = LoadingSize._(64, 5);
 }
 
