@@ -44,14 +44,14 @@ redeploy_service() {
         return 1
     fi
     
-    echo "🛑 Deteniendo servicios..."
-    docker compose down --remove-orphans
+      echo "🛑 Deteniendo servicios..."
+  docker-compose down --remove-orphans
     
-    echo "🔨 Construyendo imagen..."
-    docker compose build --no-cache
+      echo "🔨 Construyendo imagen..."
+  docker-compose build --no-cache
     
-    echo "🚀 Iniciando servicios..."
-    docker compose up -d
+      echo "🚀 Iniciando servicios..."
+  docker-compose up -d
     
     echo "⏳ Esperando que los servicios estén listos..."
     sleep 10
