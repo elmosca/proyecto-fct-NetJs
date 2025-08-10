@@ -5,7 +5,7 @@ services:
     image: nginx:alpine
     container_name: frontend_web
     ports:
-      - "8080:80"
+      - "8082:80"
     volumes:
       - ./build/web:/usr/share/nginx/html
     restart: unless-stopped
