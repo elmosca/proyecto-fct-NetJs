@@ -26,8 +26,9 @@ function Show-Help {
   Write-Host ""
   Write-Host "🚀 DESPLIEGUE:" -ForegroundColor Yellow
   Write-Host "  deploy-backend    - Sincronizar y desplegar backend"
-  Write-Host "  deploy-frontend   - Sincronizar y desplegar frontend"
-  Write-Host "  deploy-all        - Sincronizar y desplegar todo"
+  Write-Host "  deploy-frontend   - Compilar frontend en Windows"
+  Write-Host "  serve-frontend    - Servir frontend en modo desarrollo"
+  Write-Host "  deploy-all        - Sincronizar backend y compilar frontend"
   Write-Host ""
   Write-Host "📊 MONITOREO:" -ForegroundColor Yellow
   Write-Host "  logs-backend      - Ver logs del backend"
@@ -124,13 +125,35 @@ switch ($Command.ToLower()) {
   }
     
   "deploy-frontend" {
-    Write-Host "🚀 Desplegando frontend..." -ForegroundColor Cyan
-    & "$PSScriptRoot\quick-deploy.ps1" "frontend"
+    Write-Host "🚀 Desplegando frontend en Windows..." -ForegroundColor Cyan
+    Set-Location "$WINDOWS_PATH\frontend"
+    Write-Host "🔨 Compilando frontend..." -ForegroundColor Green
+    flutter build web
+    if ($LASTEXITCODE -eq 0) {
+      Write-Host "✅ Frontend compilado correctamente" -ForegroundColor Green
+      Write-Host "🌐 Accede a: http://localhost:8082" -ForegroundColor Cyan
+    }
+    else {
+      Write-Host "❌ Error compilando frontend" -ForegroundColor Red
+      exit 1
+    }
   }
     
   "deploy-all" {
     Write-Host "🚀 Desplegando todos los servicios..." -ForegroundColor Cyan
-    & "$PSScriptRoot\quick-deploy.ps1" "all"
+    Write-Host "📦 Paso 1: Desplegando backend..." -ForegroundColor Green
+    & "$PSScriptRoot\quick-deploy.ps1" "backend"
+    Write-Host ""
+    Write-Host "📱 Paso 2: Compilando frontend..." -ForegroundColor Green
+    Set-Location "$WINDOWS_PATH\frontend"
+    flutter build web
+    if ($LASTEXITCODE -eq 0) {
+      Write-Host "✅ Frontend compilado correctamente" -ForegroundColor Green
+      Write-Host "🌐 Accede a: http://localhost:8082" -ForegroundColor Cyan
+    }
+    else {
+      Write-Host "❌ Error compilando frontend" -ForegroundColor Red
+    }
   }
     
   # ===== MONITOREO =====
@@ -180,6 +203,14 @@ switch ($Command.ToLower()) {
   "restart-frontend" {
     Write-Host "🔄 Reiniciando frontend..." -ForegroundColor Green
     Invoke-WSLCommand "cd $WSL_PATH/frontend && docker compose restart"
+  }
+    
+  "serve-frontend" {
+    Write-Host "🌐 Sirviendo frontend en Windows..." -ForegroundColor Green
+    Set-Location "$WINDOWS_PATH\frontend"
+    Write-Host "🚀 Iniciando servidor de desarrollo..." -ForegroundColor Cyan
+    Write-Host "📱 Accede a: http://localhost:8082" -ForegroundColor White
+    flutter run -d web-server --web-port 8082
   }
     
   # ===== AYUDA =====

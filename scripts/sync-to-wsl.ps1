@@ -42,9 +42,9 @@ if ($Service -eq "all" -or $Service -eq "backend") {
 }
 
 if ($Service -eq "all" -or $Service -eq "frontend") {
-  Write-Host "📱 Sincronizando frontend..." -ForegroundColor Green
+  Write-Host "📱 Sincronizando frontend (sin build - se ejecuta en Windows)..." -ForegroundColor Green
   try {
-    wsl rsync -av --delete "$WINDOWS_PATH/frontend/" "$WSL_PATH/frontend/" --exclude build --exclude .dart_tool --exclude .env 2>$null
+    wsl rsync -av --delete "$WINDOWS_PATH/frontend/" "$WSL_PATH/frontend/" --exclude build --exclude .dart_tool --exclude .env --exclude node_modules 2>$null
     if ($LASTEXITCODE -eq 0) {
       Write-Host "✅ Frontend sincronizado correctamente" -ForegroundColor Green
     }
