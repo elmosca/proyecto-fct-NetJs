@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  frontend:
+    image: nginx:alpine
+    container_name: frontend_web
+    ports:
+      - "8080:80"
+    volumes:
+      - ./build/web:/usr/share/nginx/html
+    restart: unless-stopped
+    networks:
+      - frontend-network
+
+networks:
+  frontend-network:
+    driver: bridge
