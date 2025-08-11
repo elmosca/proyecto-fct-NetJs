@@ -1,9 +1,10 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { ArgumentsHost, HttpStatus } from '@nestjs/common';
-import { GlobalExceptionFilter } from './global-exception.filter';
-import { AppLoggerService } from '../services/logger.service';
-import { BusinessException, BusinessErrorCode } from '../exceptions/business.exception';
+import { ArgumentsHost, HttpException, HttpStatus } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { Test, TestingModule } from '@nestjs/testing';
+import { QueryFailedError } from 'typeorm';
+import { BusinessErrorCode, BusinessException } from '../exceptions/business.exception';
+import { AppLoggerService } from '../services/logger.service';
+import { GlobalExceptionFilter } from './global-exception.filter';
 
 describe('GlobalExceptionFilter', () => {
   let filter: GlobalExceptionFilter;
@@ -101,6 +102,9 @@ describe('GlobalExceptionFilter', () => {
         message: 'Validation failed',
       };
 
+      // Hacer que el error sea reconocido como HttpException
+      Object.setPrototypeOf(validationError, HttpException.prototype);
+
       filter.catch(validationError as any, mockArgumentsHost);
 
       expect(mockResponse.status).toHaveBeenCalledWith(HttpStatus.BAD_REQUEST);
@@ -120,6 +124,9 @@ describe('GlobalExceptionFilter', () => {
         getResponse: () => 'Access forbidden',
         message: 'Forbidden',
       };
+
+      // Hacer que el error sea reconocido como HttpException
+      Object.setPrototypeOf(httpError, HttpException.prototype);
 
       filter.catch(httpError as any, mockArgumentsHost);
 
@@ -142,6 +149,9 @@ describe('GlobalExceptionFilter', () => {
         parameters: ['test@example.com'],
       };
 
+      // Hacer que el error sea reconocido como QueryFailedError
+      Object.setPrototypeOf(dbError, QueryFailedError.prototype);
+
       filter.catch(dbError as any, mockArgumentsHost);
 
       expect(mockResponse.status).toHaveBeenCalledWith(HttpStatus.BAD_REQUEST);
@@ -160,6 +170,9 @@ describe('GlobalExceptionFilter', () => {
         query: 'DELETE FROM projects...',
         parameters: [1],
       };
+
+      // Hacer que el error sea reconocido como QueryFailedError
+      Object.setPrototypeOf(dbError, QueryFailedError.prototype);
 
       filter.catch(dbError as any, mockArgumentsHost);
 

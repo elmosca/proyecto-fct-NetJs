@@ -1,13 +1,13 @@
+import { ForbiddenException, NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { ProjectsService } from './projects.service';
-import { Project, ProjectStatusEnum } from './entities/project.entity';
-import { User, UserStatus } from '../users/entities/user.entity';
 import { RoleEnum } from '../roles/roles.enum';
-import { ForbiddenException, NotFoundException } from '@nestjs/common';
+import { User, UserStatus } from '../users/entities/user.entity';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
+import { Project, ProjectStatusEnum } from './entities/project.entity';
+import { ProjectsService } from './projects.service';
 
 // Mock data
 const mockAdminUser: User = {
@@ -336,11 +336,17 @@ describe('ProjectsService', () => {
     });
 
     it('should allow admin to add a student', async () => {
-      mockProjectRepository.findOne.mockResolvedValue(mockProject);
+      // Create a project without the student to add
+      const projectWithoutStudent = {
+        ...mockProject,
+        students: [], // Empty students array
+      };
+      
+      mockProjectRepository.findOne.mockResolvedValue(projectWithoutStudent);
       mockUserRepository.findOne.mockResolvedValue(newStudent);
       mockProjectRepository.save.mockResolvedValue({
-        ...mockProject,
-        students: [...mockProject.students, newStudent],
+        ...projectWithoutStudent,
+        students: [newStudent],
       });
 
       const result = await service.addStudent(

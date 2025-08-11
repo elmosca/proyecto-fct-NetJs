@@ -1,18 +1,17 @@
 import {
-  ExceptionFilter,
-  Catch,
-  ArgumentsHost,
-  HttpException,
-  HttpStatus,
-  Logger,
+    ArgumentsHost,
+    Catch,
+    ExceptionFilter,
+    HttpException,
+    HttpStatus,
+    Logger,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
-import { QueryFailedError, EntityNotFoundError } from 'typeorm';
-import { ValidationError } from 'class-validator';
-import { BusinessException } from '../exceptions/business.exception';
-import { ErrorResponseDto, ValidationErrorDto } from '../dto/error-response.dto';
-import { AppLoggerService } from '../services/logger.service';
+import { EntityNotFoundError, QueryFailedError } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
+import { ErrorResponseDto, ValidationErrorDto } from '../dto/error-response.dto';
+import { BusinessException } from '../exceptions/business.exception';
+import { AppLoggerService } from '../services/logger.service';
 
 @Catch()
 export class GlobalExceptionFilter implements ExceptionFilter {
@@ -269,7 +268,10 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     }
 
     // Log específico para errores de autenticación
-    if (errorResponse.error.includes('AUTH') || errorResponse.error.includes('UNAUTHORIZED')) {
+    if (errorResponse.error.includes('AUTH') || 
+        errorResponse.error.includes('UNAUTHORIZED') || 
+        errorResponse.error.includes('INVALID_CREDENTIALS') ||
+        errorResponse.error.includes('TOKEN_EXPIRED')) {
       this.appLogger.logAuthentication(
         'failed_login',
         userId,

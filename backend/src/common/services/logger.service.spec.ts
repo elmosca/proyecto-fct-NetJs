@@ -1,8 +1,7 @@
-import { Test, TestingModule } from '@nestjs/testing';
 import { ConfigService } from '@nestjs/config';
-import { AppLoggerService, LogEventType } from './logger.service';
+import { Test, TestingModule } from '@nestjs/testing';
 import * as fs from 'fs';
-import * as path from 'path';
+import { AppLoggerService } from './logger.service';
 
 // Mock fs module
 jest.mock('fs');
@@ -219,11 +218,11 @@ describe('AppLoggerService', () => {
       });
     });
 
-    it('should create log directory if it does not exist', () => {
+    it('should create log directory if it does not exist', async () => {
       mockFs.existsSync.mockReturnValue(false);
       
       // Create a new service instance to trigger directory creation
-      Test.createTestingModule({
+      await Test.createTestingModule({
         providers: [
           AppLoggerService,
           {
