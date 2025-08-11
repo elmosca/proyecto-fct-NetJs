@@ -1,19 +1,20 @@
+import { ForbiddenException, NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { AnteprojectsService } from './anteprojects.service';
-import {
-  Anteproject,
-  AnteprojectTypeEnum,
-  AnteprojectStatusEnum,
-} from './entities/anteproject.entity';
-import { User, UserStatus } from '../users/entities/user.entity';
+import { FilesService } from '../files/files.service';
 import { RoleEnum } from '../roles/roles.enum';
-import { ForbiddenException, NotFoundException } from '@nestjs/common';
+import { User, UserStatus } from '../users/entities/user.entity';
+import { AnteprojectsService } from './anteprojects.service';
 import { CreateAnteprojectDto } from './dto';
-import { UpdateAnteprojectDto } from './dto/update-anteproject.dto';
 import { RejectAnteprojectDto } from './dto/reject-anteproject.dto';
 import { ScheduleDefenseDto } from './dto/schedule-defense.dto';
+import { UpdateAnteprojectDto } from './dto/update-anteproject.dto';
+import {
+    Anteproject,
+    AnteprojectStatusEnum,
+    AnteprojectTypeEnum,
+} from './entities/anteproject.entity';
 
 // Mocks
 const mockAdminUser: User = {
@@ -56,10 +57,21 @@ describe('AnteprojectsService', () => {
 
   const mockAnteprojectRepository = {
     save: jest.fn(),
-    create: jest.fn(),
+    create: jest.fn().mockReturnValue({
+      id: 1,
+      title: 'Test',
+      tutor: mockTutorUser,
+      students: [mockStudentUser],
+      status: AnteprojectStatusEnum.DRAFT,
+    }),
     find: jest.fn(),
     findOne: jest.fn(),
-    createQueryBuilder: jest.fn(),
+    createQueryBuilder: jest.fn().mockReturnValue({
+      leftJoinAndSelect: jest.fn().mockReturnThis(),
+      where: jest.fn().mockReturnThis(),
+      innerJoin: jest.fn().mockReturnThis(),
+      getMany: jest.fn().mockResolvedValue([]),
+    }),
     softDelete: jest.fn(),
   };
   const mockUserRepository = { findOne: jest.fn(), find: jest.fn() };
@@ -81,6 +93,12 @@ describe('AnteprojectsService', () => {
           useValue: mockAnteprojectRepository,
         },
         { provide: getRepositoryToken(User), useValue: mockUserRepository },
+        {
+          provide: FilesService,
+          useValue: {
+            createFileRecord: jest.fn(),
+          },
+        },
       ],
     }).compile();
 
@@ -137,25 +155,38 @@ describe('AnteprojectsService', () => {
 
   describe('findAll', () => {
     it('should return all anteprojects for an admin', async () => {
-      mockAnteprojectRepository.find.mockResolvedValue([mockAnteproject]);
+      const queryBuilder = {
+        leftJoinAndSelect: jest.fn().mockReturnThis(),
+        getMany: jest.fn().mockResolvedValue([mockAnteproject]),
+      };
+      mockAnteprojectRepository.createQueryBuilder.mockReturnValue(
+        queryBuilder as any,
+      );
       await service.findAll(mockAdminUser);
-      expect(anteprojectRepository.find).toHaveBeenCalledWith({
-        relations: ['tutor', 'students'],
-      });
+      expect(anteprojectRepository.createQueryBuilder).toHaveBeenCalledWith(
+        'anteproject',
+      );
     });
 
     it('should return only supervised anteprojects for a tutor', async () => {
-      mockAnteprojectRepository.find.mockResolvedValue([mockAnteproject]);
+      const queryBuilder = {
+        leftJoinAndSelect: jest.fn().mockReturnThis(),
+        where: jest.fn().mockReturnThis(),
+        getMany: jest.fn().mockResolvedValue([mockAnteproject]),
+      };
+      mockAnteprojectRepository.createQueryBuilder.mockReturnValue(
+        queryBuilder as any,
+      );
       await service.findAll(mockTutorUser);
-      expect(anteprojectRepository.find).toHaveBeenCalledWith({
-        where: { tutorId: mockTutorUser.id },
-        relations: ['tutor', 'students'],
-      });
+      expect(anteprojectRepository.createQueryBuilder).toHaveBeenCalledWith(
+        'anteproject',
+      );
     });
 
     it('should return only own anteprojects for a student', async () => {
       const queryBuilder = {
         leftJoinAndSelect: jest.fn().mockReturnThis(),
+        innerJoin: jest.fn().mockReturnThis(),
         where: jest.fn().mockReturnThis(),
         getMany: jest.fn().mockResolvedValue([mockAnteproject]),
       };

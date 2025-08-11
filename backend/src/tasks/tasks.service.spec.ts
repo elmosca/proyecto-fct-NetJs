@@ -1,23 +1,24 @@
+import { ForbiddenException, NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { TasksService } from './tasks.service';
+import { NotificationsService } from '../notifications/notifications.service';
 import {
-  Task,
-  TaskStatusEnum,
-  TaskPriorityEnum,
-  TaskComplexityEnum,
-} from './entities/task.entity';
-import {
-  Project,
-  ProjectStatusEnum,
+    Project,
+    ProjectStatusEnum,
 } from '../projects/entities/project.entity';
-import { User, UserStatus } from '../users/entities/user.entity';
 import { RoleEnum } from '../roles/roles.enum';
-import { ForbiddenException, NotFoundException } from '@nestjs/common';
+import { User, UserStatus } from '../users/entities/user.entity';
+import { MoveTaskDto } from './dto';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
-import { MoveTaskDto } from './dto';
+import {
+    Task,
+    TaskComplexityEnum,
+    TaskPriorityEnum,
+    TaskStatusEnum,
+} from './entities/task.entity';
+import { TasksService } from './tasks.service';
 
 // Mocks
 const mockAdminUser: User = {
@@ -116,6 +117,14 @@ describe('TasksService', () => {
           useValue: mockProjectRepository,
         },
         { provide: getRepositoryToken(User), useValue: mockUserRepository },
+        {
+          provide: NotificationsService,
+          useValue: {
+            createNotification: jest.fn(),
+            sendNotification: jest.fn(),
+            createAndEmitNotification: jest.fn(),
+          },
+        },
       ],
     }).compile();
 
