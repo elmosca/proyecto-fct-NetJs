@@ -1,6 +1,7 @@
+import 'package:fct_frontend/core/di/injection_container.dart';
+import 'package:fct_frontend/core/services/storage_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fct_frontend/core/services/storage_service.dart';
 
 const String _localeKey = 'app_locale';
 
@@ -35,5 +36,6 @@ final localeProvider = StateNotifierProvider<LocaleNotifier, Locale>((ref) {
   return LocaleNotifier(storageService);
 });
 
-final storageServiceProvider =
-    Provider<StorageService>((ref) => StorageService());
+final storageServiceProvider = Provider<StorageService>((ref) {
+  return getIt<StorageService>();
+});

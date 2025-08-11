@@ -1,15 +1,19 @@
 import {
-  Controller,
-  Post,
-  Body,
-  UnauthorizedException,
-  HttpCode,
-  HttpStatus,
+    Body,
+    Controller,
+    Get,
+    HttpCode,
+    HttpStatus,
+    Post,
+    Request,
+    UnauthorizedException,
+    UseGuards,
 } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { UsersService } from '../users/users.service';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { AuthThrottle } from '../common/decorators/throttle.decorator';
+import { UsersService } from '../users/users.service';
+import { AuthService } from './auth.service';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -57,5 +61,11 @@ export class AuthController {
     }
 
     return this.authService.login(user);
+  }
+
+  @Get('me')
+  @UseGuards(JwtAuthGuard)
+  async getProfile(@Request() req) {
+    return req.user;
   }
 }

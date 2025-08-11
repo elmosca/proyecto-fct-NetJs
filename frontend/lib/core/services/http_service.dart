@@ -18,7 +18,7 @@ class HttpService {
   void _setupInterceptors() {
     // Add auth interceptor (handles JWT tokens automatically)
     _dio.interceptors.add(AuthInterceptor(_tokenManager));
-    
+
     // Add error interceptor
     _dio.interceptors.add(ErrorInterceptor());
 
@@ -27,12 +27,17 @@ class HttpService {
       InterceptorsWrapper(
         onRequest: (options, handler) {
           Logger.info('🌐 HTTP Request: ${options.method} ${options.path}');
+          Logger.info('🌐 Request data: ${options.data}');
           handler.next(options);
         },
         onResponse: (response, handler) {
-          Logger.success(
-              '✅ HTTP Response: ${response.statusCode} ${response.requestOptions.path}');
+          Logger.success('✅ HTTP Response: ${response.statusCode} ${response.requestOptions.path}');
+          Logger.info('🌐 Response data: ${response.data}');
           handler.next(response);
+        },
+        onError: (error, handler) {
+          Logger.error('❌ HTTP Error: ${error.response?.statusCode} ${error.requestOptions.path}');
+          handler.next(error);
         },
       ),
     );

@@ -1,16 +1,29 @@
+import 'package:dio/dio.dart';
+import 'package:fct_frontend/core/di/injection_container.dart';
+import 'package:fct_frontend/core/services/auth_service.dart';
+import 'package:fct_frontend/core/services/storage_service.dart';
 import 'package:fct_frontend/core/services/token_manager.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 part 'core_providers.g.dart';
 
+// Providers simplificados que usan GetIt
 @Riverpod(keepAlive: true)
-SharedPreferences sharedPreferences(SharedPreferencesRef ref) {
-  throw UnimplementedError('SharedPreferences debe ser inicializado en main()');
+Dio dio(DioRef ref) {
+  return getIt<Dio>();
+}
+
+@Riverpod(keepAlive: true)
+AuthService authService(AuthServiceRef ref) {
+  return getIt<AuthService>();
+}
+
+@Riverpod(keepAlive: true)
+StorageService storageService(StorageServiceRef ref) {
+  return getIt<StorageService>();
 }
 
 @Riverpod(keepAlive: true)
 TokenManager tokenManager(TokenManagerRef ref) {
-  final prefs = ref.watch(sharedPreferencesProvider);
-  return TokenManager(prefs);
-} 
+  return getIt<TokenManager>();
+}

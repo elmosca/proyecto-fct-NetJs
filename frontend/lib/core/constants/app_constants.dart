@@ -1,8 +1,14 @@
+import 'package:fct_frontend/core/config/app_config.dart';
+
 class AppConstants {
-  // API Configuration
-  static const String baseUrl = 'http://localhost:3000';
-  static const String apiVersion = '/api/v1';
-  static const String wsUrl = 'ws://localhost:3000';
+  // API Configuration - Ahora usa AppConfig
+  static String get baseUrl => AppConfig.current.apiBaseUrl;
+  static String get apiVersion => AppConfig.current.apiVersion;
+  static String get wsUrl => AppConfig.current.wsBaseUrl;
+  
+  // URL completa para la API
+  static String get fullApiUrl => AppConfig.current.fullApiUrl;
+  static String get fullWsUrl => AppConfig.current.fullWsUrl;
 
   // App Configuration
   static const String appName = 'FCT - Gestión de Proyectos';
@@ -12,6 +18,7 @@ class AppConstants {
   static const String tokenKey = 'auth_token';
   static const String userKey = 'user_data';
   static const String themeKey = 'theme_mode';
+  static const String environmentKey = 'environment_config';
 
   // Timeouts
   static const Duration connectionTimeout = Duration(seconds: 30);
@@ -33,4 +40,15 @@ class AppConstants {
     'application/msword',
     'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
   ];
+
+  // Método para obtener información de configuración
+  static String get configurationInfo => AppConfig.environmentInfo;
+  
+  // Método para cambiar entorno dinámicamente
+  static void setEnvironment(String environment) {
+    AppConfig.setEnvironment(environment);
+  }
+  
+  // Listar entornos disponibles
+  static List<String> get availableEnvironments => AppConfig.availableEnvironments;
 }

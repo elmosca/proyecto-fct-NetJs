@@ -1,17 +1,22 @@
 import 'package:fct_frontend/core/services/http_service.dart';
 import 'package:fct_frontend/core/services/storage_service.dart';
+import 'package:fct_frontend/core/services/token_manager.dart';
 import 'package:fct_frontend/core/utils/logger.dart';
+import 'package:fct_frontend/core/utils/debug_logger.dart';
 import 'package:fct_frontend/shared/models/user.dart';
 
 class AuthService {
   AuthService({
     required HttpService httpService,
     required StorageService storageService,
+    required TokenManager tokenManager,
   })  : _httpService = httpService,
-        _storageService = storageService;
+        _storageService = storageService,
+        _tokenManager = tokenManager;
 
   final HttpService _httpService;
   final StorageService _storageService;
+  final TokenManager _tokenManager;
 
   User? _currentUser;
   bool _isAuthenticated = false;
@@ -35,11 +40,13 @@ class AuthService {
   /// Cargar información del usuario actual
   Future<void> _loadCurrentUser() async {
     try {
-      final response = await _httpService.get('/auth/me');
-      if (response.statusCode == 200) {
-        _currentUser = User.fromJson(response.data);
+      // Por ahora, no cargamos el usuario desde el backend
+      // ya que el endpoint /me no está disponible
+      // En su lugar, usamos el token almacenado para verificar autenticación
+      final token = await _storageService.getToken();
+      if (token != null) {
         _isAuthenticated = true;
-        Logger.success('👤 User loaded: ${_currentUser?.email}');
+        Logger.success('👤 User authenticated via token');
       }
     } catch (e) {
       Logger.error('Error loading current user: $e');
@@ -62,11 +69,12 @@ class AuthService {
 
       if (response.statusCode == 200) {
         final data = response.data;
-        final token = data['token'] as String;
+        final token = data['access_token'] as String;
         final userData = data['user'] as Map<String, dynamic>;
 
-        // Guardar token
+        // Guardar token en ambos servicios para consistencia
         await _storageService.saveToken(token);
+        await _tokenManager.saveTokens(token);
 
         // Crear usuario
         _currentUser = User.fromJson(userData);
@@ -94,7 +102,8 @@ class AuthService {
 
       if (response.statusCode == 200) {
         final data = response.data;
-        final token = data['token'] as String;
+        final token = data['access_token']
+            as String; // Cambiado de 'token' a 'access_token'
         final userData = data['user'] as Map<String, dynamic>;
 
         // Guardar token
@@ -136,7 +145,8 @@ class AuthService {
 
       if (response.statusCode == 201) {
         final data = response.data;
-        final token = data['token'] as String;
+        final token = data['access_token']
+            as String; // Cambiado de 'token' a 'access_token'
         final userData = data['user'] as Map<String, dynamic>;
 
         // Guardar token

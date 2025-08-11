@@ -22,14 +22,14 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 final GetIt getIt = GetIt.instance;
 
 Future<void> initializeDependencies() async {
-  // Core Services
-  getIt.registerLazySingleton<StorageService>(
-    () => StorageService(),
-  );
-
-  // SharedPreferences
+  // SharedPreferences - Inicializar primero
   final prefs = await SharedPreferences.getInstance();
   getIt.registerLazySingleton<SharedPreferences>(() => prefs);
+
+  // Core Services - Después de SharedPreferences
+  getIt.registerLazySingleton<StorageService>(
+    () => StorageService(getIt<SharedPreferences>()),
+  );
 
   getIt.registerLazySingleton<TokenManager>(
     () => TokenManager(getIt<SharedPreferences>()),
@@ -53,6 +53,7 @@ Future<void> initializeDependencies() async {
     () => AuthService(
       httpService: getIt<HttpService>(),
       storageService: getIt<StorageService>(),
+      tokenManager: getIt<TokenManager>(),
     ),
   );
 
@@ -98,7 +99,7 @@ Future<void> initializeDependencies() async {
 
   // Auth Repositories
   getIt.registerLazySingleton<AuthRepository>(
-    () => AuthRepositoryImpl(getIt<TokenManager>()),
+    () => AuthRepositoryImpl(getIt<AuthService>(), getIt<TokenManager>()),
   );
 
   // Users Repositories

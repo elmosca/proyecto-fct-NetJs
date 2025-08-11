@@ -1,5 +1,5 @@
 #!/usr/bin/env pwsh
-# Helper para el agente de Cursor - Maneja comandos entre Windows y WSL
+# Helper para el agente de Cursor - Maneja comandos en Windows local con Docker Desktop
 # Uso: .\scripts\cursor-agent-helper.ps1 [comando] [parámetros]
 
 param(
@@ -11,8 +11,7 @@ param(
 )
 
 # Configuración
-$WSL_PATH = "/home/jualas/proyectos/proyecto-fct-NetJs"
-$WINDOWS_PATH = "C:\dev\proyecto-fct-NetJs"
+$PROJECT_PATH = "C:\dev\proyecto-fct-NetJs"
 
 # Función para mostrar ayuda
 function Show-Help {
@@ -24,206 +23,254 @@ function Show-Help {
   Write-Host "  test-backend      - Ejecutar tests del backend"
   Write-Host "  test-frontend     - Ejecutar tests del frontend"
   Write-Host ""
-  Write-Host "🚀 DESPLIEGUE:" -ForegroundColor Yellow
-  Write-Host "  deploy-backend    - Sincronizar y desplegar backend"
-  Write-Host "  deploy-frontend   - Compilar frontend en Windows"
-  Write-Host "  serve-frontend    - Servir frontend en modo desarrollo"
-  Write-Host "  deploy-all        - Sincronizar backend y compilar frontend"
+  Write-Host "🚀 DESPLIEGUE:" -ForegroundColor Green
+  Write-Host "  deploy-backend    - Desplegar backend con Docker"
+  Write-Host "  deploy-frontend   - Desplegar frontend con Docker"
+  Write-Host "  deploy-all        - Desplegar backend y frontend"
   Write-Host ""
-  Write-Host "📊 MONITOREO:" -ForegroundColor Yellow
+  Write-Host "📊 MONITOREO:" -ForegroundColor Blue
+  Write-Host "  status            - Estado de todos los servicios"
   Write-Host "  logs-backend      - Ver logs del backend"
   Write-Host "  logs-frontend     - Ver logs del frontend"
-  Write-Host "  health-backend    - Verificar health del backend"
-  Write-Host "  status            - Estado de todos los servicios"
+  Write-Host "  health-backend    - Health check del backend"
   Write-Host ""
-  Write-Host "🔧 UTILIDADES:" -ForegroundColor Yellow
-  Write-Host "  sync-backend      - Solo sincronizar backend"
-  Write-Host "  sync-frontend     - Solo sincronizar frontend"
-  Write-Host "  restart-backend   - Reiniciar solo backend"
-  Write-Host "  restart-frontend  - Reiniciar solo frontend"
+  Write-Host "🔄 GESTIÓN:" -ForegroundColor Magenta
+  Write-Host "  restart-backend   - Reiniciar backend"
+  Write-Host "  restart-frontend  - Reiniciar frontend"
+  Write-Host "  stop-all          - Detener todos los servicios"
+  Write-Host "  clean-all         - Limpiar contenedores y volúmenes"
   Write-Host ""
-  Write-Host "💡 Ejemplos:" -ForegroundColor Gray
-  Write-Host "  .\scripts\cursor-agent-helper.ps1 deploy-backend"
-  Write-Host "  .\scripts\cursor-agent-helper.ps1 logs-backend"
-  Write-Host "  .\scripts\cursor-agent-helper.ps1 health-backend"
+  Write-Host "❓ AYUDA:" -ForegroundColor White
+  Write-Host "  help              - Mostrar esta ayuda"
 }
 
-# Función para ejecutar comandos en WSL
-function Invoke-WSLCommand {
-  param([string]$Command)
-  Write-Host "🔧 Ejecutando en WSL: $Command" -ForegroundColor Gray
-  wsl -e bash -c $Command
-  return $LASTEXITCODE
-}
-
-# Función para verificar si WSL está disponible
-function Test-WSL {
+# Función para verificar Docker
+function Test-Docker {
   try {
-    $null = wsl echo "test" 2>$null
+    docker --version | Out-Null
     return $true
   }
   catch {
+    Write-Host "❌ Docker no está disponible. Asegúrate de que Docker Desktop esté ejecutándose." -ForegroundColor Red
     return $false
   }
 }
 
-# Verificar WSL
-if (-not (Test-WSL)) {
-  Write-Host "❌ Error: WSL no está disponible" -ForegroundColor Red
-  Write-Host "💡 Asegúrate de que WSL esté instalado y funcionando" -ForegroundColor Yellow
-  exit 1
+# Función para compilar backend
+function Build-Backend {
+  Write-Host "🔨 Compilando backend..." -ForegroundColor Yellow
+  Set-Location "$PROJECT_PATH\backend"
+  
+  try {
+    npm install
+    npm run build
+    Write-Host "✅ Backend compilado correctamente" -ForegroundColor Green
+  }
+  catch {
+    Write-Host "❌ Error compilando backend: $_" -ForegroundColor Red
+  }
+  finally {
+    Set-Location $PROJECT_PATH
+  }
 }
 
-# Procesar comandos
-switch ($Command.ToLower()) {
-  # ===== DESARROLLO =====
-  "build-backend" {
-    Write-Host "🔨 Compilando backend en Windows..." -ForegroundColor Green
-    Set-Location "$WINDOWS_PATH\backend"
-    npm ci
-    npm run build
-    if ($LASTEXITCODE -eq 0) {
-      Write-Host "✅ Backend compilado correctamente" -ForegroundColor Green
-    }
-    else {
-      Write-Host "❌ Error compilando backend" -ForegroundColor Red
-      exit 1
-    }
-  }
-    
-  "build-frontend" {
-    Write-Host "🔨 Compilando frontend en Windows..." -ForegroundColor Green
-    Set-Location "$WINDOWS_PATH\frontend"
-    flutter clean
+# Función para compilar frontend
+function Build-Frontend {
+  Write-Host "🔨 Compilando frontend..." -ForegroundColor Yellow
+  Set-Location "$PROJECT_PATH\frontend"
+  
+  try {
     flutter pub get
     flutter build web
-    if ($LASTEXITCODE -eq 0) {
-      Write-Host "✅ Frontend compilado correctamente" -ForegroundColor Green
-    }
-    else {
-      Write-Host "❌ Error compilando frontend" -ForegroundColor Red
-      exit 1
-    }
+    Write-Host "✅ Frontend compilado correctamente" -ForegroundColor Green
   }
-    
-  "test-backend" {
-    Write-Host "🧪 Ejecutando tests del backend..." -ForegroundColor Green
-    Set-Location "$WINDOWS_PATH\backend"
+  catch {
+    Write-Host "❌ Error compilando frontend: $_" -ForegroundColor Red
+  }
+  finally {
+    Set-Location $PROJECT_PATH
+  }
+}
+
+# Función para desplegar backend
+function Deploy-Backend {
+  if (-not (Test-Docker)) { return }
+  
+  Write-Host "🚀 Desplegando backend..." -ForegroundColor Green
+  Set-Location "$PROJECT_PATH\backend"
+  
+  try {
+    docker compose down
+    docker compose up -d --build
+    Write-Host "✅ Backend desplegado correctamente" -ForegroundColor Green
+  }
+  catch {
+    Write-Host "❌ Error desplegando backend: $_" -ForegroundColor Red
+  }
+  finally {
+    Set-Location $PROJECT_PATH
+  }
+}
+
+# Función para desplegar frontend
+function Deploy-Frontend {
+  if (-not (Test-Docker)) { return }
+  
+  Write-Host "🚀 Desplegando frontend..." -ForegroundColor Green
+  Set-Location "$PROJECT_PATH\frontend"
+  
+  try {
+    docker compose down
+    docker compose up -d --build
+    Write-Host "✅ Frontend desplegado correctamente" -ForegroundColor Green
+  }
+  catch {
+    Write-Host "❌ Error desplegando frontend: $_" -ForegroundColor Red
+  }
+  finally {
+    Set-Location $PROJECT_PATH
+  }
+}
+
+# Función para ver estado
+function Get-Status {
+  if (-not (Test-Docker)) { return }
+  
+  Write-Host "📊 Estado de los servicios:" -ForegroundColor Cyan
+  docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
+}
+
+# Función para ver logs del backend
+function Get-BackendLogs {
+  if (-not (Test-Docker)) { return }
+  
+  Write-Host "📋 Logs del backend:" -ForegroundColor Cyan
+  Set-Location "$PROJECT_PATH\backend"
+  docker compose logs -f
+}
+
+# Función para ver logs del frontend
+function Get-FrontendLogs {
+  if (-not (Test-Docker)) { return }
+  
+  Write-Host "📋 Logs del frontend:" -ForegroundColor Cyan
+  Set-Location "$PROJECT_PATH\frontend"
+  docker compose logs -f
+}
+
+# Función para health check del backend
+function Test-BackendHealth {
+  Write-Host "🏥 Verificando health del backend..." -ForegroundColor Cyan
+  try {
+    $response = Invoke-RestMethod -Uri "http://localhost:3000/api/health" -Method GET -TimeoutSec 10
+    Write-Host "✅ Backend saludable: $($response | ConvertTo-Json)" -ForegroundColor Green
+  }
+  catch {
+    Write-Host "❌ Backend no responde: $_" -ForegroundColor Red
+  }
+}
+
+# Función para reiniciar backend
+function Restart-Backend {
+  if (-not (Test-Docker)) { return }
+  
+  Write-Host "🔄 Reiniciando backend..." -ForegroundColor Yellow
+  Set-Location "$PROJECT_PATH\backend"
+  docker compose restart
+  Set-Location $PROJECT_PATH
+}
+
+# Función para reiniciar frontend
+function Restart-Frontend {
+  if (-not (Test-Docker)) { return }
+  
+  Write-Host "🔄 Reiniciando frontend..." -ForegroundColor Yellow
+  Set-Location "$PROJECT_PATH\frontend"
+  docker compose restart
+  Set-Location $PROJECT_PATH
+}
+
+# Función para detener todos los servicios
+function Stop-AllServices {
+  if (-not (Test-Docker)) { return }
+  
+  Write-Host "🛑 Deteniendo todos los servicios..." -ForegroundColor Yellow
+  Set-Location "$PROJECT_PATH\backend"
+  docker compose down
+  Set-Location "$PROJECT_PATH\frontend"
+  docker compose down
+  Set-Location $PROJECT_PATH
+  Write-Host "✅ Todos los servicios detenidos" -ForegroundColor Green
+}
+
+# Función para limpiar todo
+function Clear-All {
+  if (-not (Test-Docker)) { return }
+  
+  Write-Host "🧹 Limpiando contenedores y volúmenes..." -ForegroundColor Yellow
+  docker system prune -f
+  docker volume prune -f
+  Write-Host "✅ Limpieza completada" -ForegroundColor Green
+}
+
+# Función para ejecutar tests del backend
+function Test-Backend {
+  Write-Host "🧪 Ejecutando tests del backend..." -ForegroundColor Yellow
+  Set-Location "$PROJECT_PATH\backend"
+  
+  try {
     npm test
+    Write-Host "✅ Tests del backend completados" -ForegroundColor Green
   }
-    
-  "test-frontend" {
-    Write-Host "🧪 Ejecutando tests del frontend..." -ForegroundColor Green
-    Set-Location "$WINDOWS_PATH\frontend"
+  catch {
+    Write-Host "❌ Error en tests del backend: $_" -ForegroundColor Red
+  }
+  finally {
+    Set-Location $PROJECT_PATH
+  }
+}
+
+# Función para ejecutar tests del frontend
+function Test-Frontend {
+  Write-Host "🧪 Ejecutando tests del frontend..." -ForegroundColor Yellow
+  Set-Location "$PROJECT_PATH\frontend"
+  
+  try {
     flutter test
+    Write-Host "✅ Tests del frontend completados" -ForegroundColor Green
   }
-    
-  # ===== DESPLIEGUE =====
-  "deploy-backend" {
-    Write-Host "🚀 Desplegando backend..." -ForegroundColor Cyan
-    & "$PSScriptRoot\quick-deploy.ps1" "backend"
+  catch {
+    Write-Host "❌ Error en tests del frontend: $_" -ForegroundColor Red
   }
-    
-  "deploy-frontend" {
-    Write-Host "🚀 Desplegando frontend en Windows..." -ForegroundColor Cyan
-    Set-Location "$WINDOWS_PATH\frontend"
-    Write-Host "🔨 Compilando frontend..." -ForegroundColor Green
-    flutter build web
-    if ($LASTEXITCODE -eq 0) {
-      Write-Host "✅ Frontend compilado correctamente" -ForegroundColor Green
-      Write-Host "🌐 Accede a: http://localhost:8082" -ForegroundColor Cyan
-    }
-    else {
-      Write-Host "❌ Error compilando frontend" -ForegroundColor Red
-      exit 1
-    }
+  finally {
+    Set-Location $PROJECT_PATH
   }
-    
-  "deploy-all" {
-    Write-Host "🚀 Desplegando todos los servicios..." -ForegroundColor Cyan
-    Write-Host "📦 Paso 1: Desplegando backend..." -ForegroundColor Green
-    & "$PSScriptRoot\quick-deploy.ps1" "backend"
-    Write-Host ""
-    Write-Host "📱 Paso 2: Compilando frontend..." -ForegroundColor Green
-    Set-Location "$WINDOWS_PATH\frontend"
-    flutter build web
-    if ($LASTEXITCODE -eq 0) {
-      Write-Host "✅ Frontend compilado correctamente" -ForegroundColor Green
-      Write-Host "🌐 Accede a: http://localhost:8082" -ForegroundColor Cyan
-    }
-    else {
-      Write-Host "❌ Error compilando frontend" -ForegroundColor Red
-    }
+}
+
+# Switch principal
+switch ($Command.ToLower()) {
+  "build-backend" { Build-Backend }
+  "build-frontend" { Build-Frontend }
+  "deploy-backend" { Deploy-Backend }
+  "deploy-frontend" { Deploy-Frontend }
+  "deploy-all" { 
+    Deploy-Backend
+    Start-Sleep -Seconds 5
+    Deploy-Frontend
   }
-    
-  # ===== MONITOREO =====
-  "logs-backend" {
-    Write-Host "📋 Mostrando logs del backend..." -ForegroundColor Green
-    Invoke-WSLCommand "docker compose -f $WSL_PATH/backend/docker-compose.yml logs -f api"
-  }
-    
-  "logs-frontend" {
-    Write-Host "📋 Mostrando logs del frontend..." -ForegroundColor Green
-    Invoke-WSLCommand "docker compose -f $WSL_PATH/frontend/docker-compose.yml logs -f"
-  }
-    
-  "health-backend" {
-    Write-Host "🏥 Verificando health del backend..." -ForegroundColor Green
-    try {
-      $response = Invoke-RestMethod -Uri "http://localhost:3000/api/health" -Method Get -TimeoutSec 5
-      Write-Host "✅ Backend saludable: $($response | ConvertTo-Json)" -ForegroundColor Green
-    }
-    catch {
-      Write-Host "❌ Backend no responde: $($_.Exception.Message)" -ForegroundColor Red
-      exit 1
-    }
-  }
-    
-  "status" {
-    Write-Host "📊 Estado de servicios..." -ForegroundColor Green
-    Invoke-WSLCommand "docker ps --format 'table {{.Names}}\t{{.Status}}\t{{.Ports}}'"
-  }
-    
-  # ===== UTILIDADES =====
-  "sync-backend" {
-    Write-Host "📤 Sincronizando backend..." -ForegroundColor Green
-    & "$PSScriptRoot\sync-to-wsl.ps1" "backend"
-  }
-    
-  "sync-frontend" {
-    Write-Host "📤 Sincronizando frontend..." -ForegroundColor Green
-    & "$PSScriptRoot\sync-to-wsl.ps1" "frontend"
-  }
-    
-  "restart-backend" {
-    Write-Host "🔄 Reiniciando backend..." -ForegroundColor Green
-    Invoke-WSLCommand "cd $WSL_PATH/backend && docker compose restart"
-  }
-    
-  "restart-frontend" {
-    Write-Host "🔄 Reiniciando frontend..." -ForegroundColor Green
-    Invoke-WSLCommand "cd $WSL_PATH/frontend && docker compose restart"
-  }
-    
-  "serve-frontend" {
-    Write-Host "🌐 Sirviendo frontend en Windows..." -ForegroundColor Green
-    Set-Location "$WINDOWS_PATH\frontend"
-    Write-Host "🚀 Iniciando servidor de desarrollo..." -ForegroundColor Cyan
-    Write-Host "📱 Accede a: http://localhost:8082" -ForegroundColor White
-    flutter run -d web-server --web-port 8082
-  }
-    
-  # ===== AYUDA =====
+  "status" { Get-Status }
+  "logs-backend" { Get-BackendLogs }
+  "logs-frontend" { Get-FrontendLogs }
+  "health-backend" { Test-BackendHealth }
+  "restart-backend" { Restart-Backend }
+  "restart-frontend" { Restart-Frontend }
+  "stop-all" { Stop-AllServices }
+  "clean-all" { Clear-All }
+  "test-backend" { Test-Backend }
+  "test-frontend" { Test-Frontend }
   "help" { Show-Help }
-  "?" { Show-Help }
-  "-h" { Show-Help }
-  "--help" { Show-Help }
-    
-  # ===== COMANDO NO RECONOCIDO =====
   default {
-    Write-Host "❌ Comando no reconocido: $Command" -ForegroundColor Red
-    Write-Host ""
-    Show-Help
-    exit 1
+    Write-Host "❌ Comando '$Command' no reconocido" -ForegroundColor Red
+    Write-Host "Usa 'help' para ver comandos disponibles" -ForegroundColor Yellow
   }
 }

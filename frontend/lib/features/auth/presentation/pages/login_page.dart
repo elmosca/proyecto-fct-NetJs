@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:fct_frontend/core/widgets/widgets.dart';
+import 'package:fct_frontend/core/utils/debug_logger.dart';
 import 'package:fct_frontend/features/auth/presentation/providers/auth_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -77,6 +78,9 @@ class LoginPage extends ConsumerWidget {
                   isLoading: authState.isLoading,
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
+                      DebugLogger.logAuth('🖱️ Botón de login presionado');
+                      DebugLogger.logAuth('📝 Email: ${_emailController.text}');
+                      DebugLogger.logAuth('📝 Password: ${_passwordController.text}');
                       ref.read(authNotifierProvider.notifier).login(
                             _emailController.text,
                             _passwordController.text,
@@ -112,6 +116,30 @@ class LoginPage extends ConsumerWidget {
                   },
                   child:
                       const Text('🧪 Test Dashboard (debe activar AuthGuard)'),
+                ),
+                const SizedBox(height: 16),
+                // Debug info
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: Colors.grey[200],
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        '🔍 DEBUG INFO:',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 4),
+                      Text('Estado: ${authState.toString()}'),
+                      const SizedBox(height: 4),
+                      Text('Loading: ${authState.isLoading}'),
+                      const SizedBox(height: 4),
+                      Text('Error: ${authState.error?.toString() ?? "Ninguno"}'),
+                    ],
+                  ),
                 ),
               ],
             ),

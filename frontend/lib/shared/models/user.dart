@@ -11,11 +11,11 @@ class User {
   });
 
   factory User.fromJson(Map<String, dynamic> json) => User(
-        id: json['id'] as String,
-        email: json['email'] as String,
-        firstName: json['firstName'] as String,
-        lastName: json['lastName'] as String,
-        role: json['role'] as String,
+        id: json['id']?.toString() ?? 'unknown', // Manejar null
+        email: json['email'] as String? ?? '', // Manejar null
+        firstName: json['firstName'] as String? ?? '', // Manejar null
+        lastName: json['lastName'] as String? ?? '', // Manejar null
+        role: json['role'] as String? ?? 'user', // Manejar null
         avatar: json['avatar'] as String?,
         createdAt: json['createdAt'] != null
             ? DateTime.parse(json['createdAt'] as String)

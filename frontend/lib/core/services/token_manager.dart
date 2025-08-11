@@ -26,6 +26,11 @@ class TokenManager {
   /// Obtiene el token de autenticación
   String? get token => _prefs.getString(_tokenKey);
 
+  /// Obtiene el token de autenticación (método async para compatibilidad)
+  Future<String?> getToken() async {
+    return _prefs.getString(_tokenKey);
+  }
+
   /// Obtiene el refresh token
   String? get refreshToken => _prefs.getString(_refreshTokenKey);
 

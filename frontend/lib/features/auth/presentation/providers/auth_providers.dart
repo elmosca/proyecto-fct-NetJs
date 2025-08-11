@@ -3,15 +3,15 @@ import 'package:fct_frontend/features/auth/data/repositories/auth_repository_imp
 import 'package:fct_frontend/features/auth/domain/repositories/auth_repository.dart';
 import 'package:fct_frontend/features/auth/domain/usecases/usecases.dart';
 import 'package:fct_frontend/features/auth/presentation/providers/auth_state.dart';
-import 'package:fct_frontend/shared/models/user.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'auth_providers.g.dart';
 
 @Riverpod(keepAlive: true)
 AuthRepository authRepository(AuthRepositoryRef ref) {
+  final authService = ref.watch(authServiceProvider);
   final tokenManager = ref.watch(tokenManagerProvider);
-  return AuthRepositoryImpl(tokenManager);
+  return AuthRepositoryImpl(authService, tokenManager);
 }
 
 @riverpod
@@ -46,47 +46,32 @@ class AuthNotifier extends _$AuthNotifier {
   /// Verifica el estado de autenticación al iniciar la app
   Future<AuthState> _checkAuthStatus() async {
     try {
-      final tokenManager = ref.read(tokenManagerProvider);
-
-      // Verificar si hay un token válido almacenado
-      if (tokenManager.hasValidToken) {
-        // TODO: Validar token con el backend
-        // Por ahora asumimos que el token es válido
-        // En producción, aquí haríamos una llamada al backend para verificar
-
-        // Simular usuario autenticado
-        final user = User(
-          id: tokenManager.userId ?? 'unknown',
-          email: 'user@example.com', // TODO: Obtener del token o backend
-          firstName: 'Usuario',
-          lastName: 'Autenticado',
-          role: 'student',
-        );
-
-        return AuthState.authenticated(user);
-      } else {
-        return const AuthState.unauthenticated();
-      }
+      // Por ahora, siempre retornamos no autenticado al inicio
+      // para evitar problemas con la inicialización de dependencias
+      return const AuthState.unauthenticated();
     } catch (e) {
-      // Si hay error, limpiar tokens y marcar como no autenticado
-      final tokenManager = ref.read(tokenManagerProvider);
-      await tokenManager.clearAll();
       return const AuthState.unauthenticated();
     }
   }
 
   Future<void> login(String email, String password) async {
     state = const AsyncValue.loading();
-    final loginUseCase = ref.read(loginUseCaseProvider);
-    final result = await loginUseCase(email, password);
-    result.when(
-      success: (user, token) {
-        state = AsyncValue.data(AuthState.authenticated(user));
-      },
-      failure: (message) {
-        state = AsyncValue.error(message, StackTrace.current);
-      },
-    );
+
+    try {
+      final loginUseCase = ref.read(loginUseCaseProvider);
+      final result = await loginUseCase(email, password);
+
+      result.when(
+        success: (user, token) {
+          state = AsyncValue.data(AuthState.authenticated(user));
+        },
+        failure: (message) {
+          state = AsyncValue.error(message, StackTrace.current);
+        },
+      );
+    } catch (e) {
+      state = AsyncValue.error(e.toString(), StackTrace.current);
+    }
   }
 
   Future<void> register(

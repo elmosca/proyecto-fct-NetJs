@@ -40,7 +40,6 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          sharedPreferencesProvider.overrideWithValue(prefs),
           tokenManagerProvider.overrideWithValue(tokenManager),
         ],
         child: MaterialApp.router(
