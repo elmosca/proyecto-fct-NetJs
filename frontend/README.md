@@ -7,10 +7,19 @@ Frontend multiplataforma del Sistema de Gestión de Proyectos FCT desarrollado c
 Sistema completo de gestión de proyectos para Formación en Centros de Trabajo (FCT) que incluye:
 - Gestión de usuarios y roles
 - Gestión de proyectos y anteproyectos
-- Sistema de tareas y milestones
+- Sistema de tareas y milestones (Kanban con drag & drop)
 - Evaluaciones y calificaciones
+- Gestión de archivos (en desarrollo)
 - Notificaciones en tiempo real
 - Soporte bilingüe (Castellano/Inglés)
+
+### **Estado Actual del Proyecto**
+- **Progreso**: 60.3% (70/116 tareas completadas)
+- **Fase Actual**: Fase 10 - Gestión de Archivos (en desarrollo)
+- **Backend Tests**: ✅ 154/154 pasando (100%)
+- **Frontend Tests**: ✅ 2/2 básicos pasando
+- **Recomendaciones Flutter**: ✅ 5/5 implementadas
+- **Última actualización**: 2025-01-09
 
 ## 🏗️ Arquitectura
 
@@ -98,6 +107,54 @@ flutter run
 
 ### Comandos Útiles
 ```bash
+# Desarrollo
+flutter run                    # Ejecutar en modo desarrollo
+flutter run -d chrome         # Ejecutar en web
+flutter run -d windows        # Ejecutar en Windows
+
+# Generación de código
+flutter packages pub run build_runner build    # Generar código
+flutter packages pub run build_runner watch    # Generar código en modo watch
+
+# Testing
+flutter test                  # Ejecutar tests
+flutter test --coverage       # Tests con cobertura
+
+# Build
+flutter build web            # Build para web
+flutter build apk            # Build para Android
+flutter build ios            # Build para iOS
+
+# Análisis
+flutter analyze              # Análisis estático
+flutter doctor               # Verificar instalación
+```
+
+## 📊 Estado de Desarrollo
+
+### **Funcionalidades Completadas**
+- ✅ **Autenticación**: Login, registro, gestión de tokens JWT
+- ✅ **Dashboard**: Panel principal con navegación
+- ✅ **Gestión de Usuarios**: CRUD completo con roles y permisos
+- ✅ **Gestión de Proyectos**: CRUD completo con filtros y búsqueda
+- ✅ **Anteproyectos**: Sistema completo con evaluaciones
+- ✅ **Sistema de Tareas**: Kanban con drag & drop, prioridades
+- ✅ **Evaluaciones**: Sistema completo con criterios y cálculos
+- ✅ **Internacionalización**: Soporte completo bilingüe
+- ✅ **Arquitectura**: Clean Architecture implementada
+
+### **En Desarrollo**
+- 🔄 **Gestión de Archivos**: Subida y tipos de archivo implementados
+- 🔄 **Preview de Archivos**: En desarrollo
+- 🔄 **Versionado de Archivos**: Pendiente
+- 🔄 **Búsqueda de Archivos**: Pendiente
+
+### **Pendientes**
+- 📋 **Notificaciones**: Sistema completo de notificaciones
+- 📋 **Reportes y Analytics**: Dashboard de métricas
+- 📋 **Testing Avanzado**: Tests de integración y widgets
+- 📋 **Optimización**: Performance y PWA
+- 📋 **Deploy**: CI/CD y documentación final
 # Generar código automáticamente
 flutter packages pub run build_runner watch
 
