@@ -3,27 +3,52 @@
         // Extensiones esenciales para Dart/Flutter
         "dart-code.dart-code",
         "dart-code.flutter",
+        
         // Extensiones útiles para desarrollo
         "ms-vscode.vscode-json",
-        "bradlc.vscode-tailwindcss",
         "usernamehw.errorlens",
         "streetsidesoftware.code-spell-checker",
         "ms-vscode.hexeditor",
+        "esbenp.prettier-vscode",
+        
         // Git y control de versiones
         "mhutchie.git-graph",
         "eamodio.gitlens",
+        
         // Testing y depuración
         "hbenl.vscode-test-explorer",
-        // Productividad
-        "formulahendry.auto-rename-tag",
         "ms-vscode.vscode-typescript-next",
-        "esbenp.prettier-vscode",
+        
+        // Productividad y desarrollo
+        "formulahendry.auto-rename-tag",
+        "bradlc.vscode-tailwindcss",
+        
         // Backend (NestJS/Node.js)
         "ms-vscode.vscode-typescript-next",
-        "bradlc.vscode-tailwindcss"
+        
+        // Extensiones adicionales para nuevas funcionalidades
+        "ms-vscode.vscode-eslint",
+        "ms-vscode.vscode-prettier",
+        "ms-vscode.vscode-git",
+        "ms-vscode.vscode-github",
+        "ms-vscode.vscode-markdown",
+        "ms-vscode.vscode-yaml",
+        
+        // Extensiones para multiplataforma
+        "ms-vscode.vscode-css",
+        "ms-vscode.vscode-html",
+        
+        // Extensiones para performance y debugging
+        "ms-vscode.vscode-chrome-debug",
+        "ms-vscode.vscode-node-debug2",
+        
+        // Extensiones para documentación
+        "ms-vscode.vscode-json",
+        "ms-vscode.vscode-xml"
     ],
     "unwantedRecommendations": [
         "ms-vscode.vscode-typescript",
-        "hookyqr.beautify"
+        "hookyqr.beautify",
+        "ms-vscode.vscode-java"
     ]
 }

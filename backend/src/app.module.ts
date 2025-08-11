@@ -1,20 +1,22 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { CommonModule } from './common/common.module';
-import { UsersModule } from './users/users.module';
-import { AuthModule } from './auth/auth.module';
-import { ProjectsModule } from './projects/projects.module';
-import { TasksModule } from './tasks/tasks.module';
-import { CommentsModule } from './comments/comments.module';
-import { RolesModule } from './roles/roles.module';
-import { AnteprojectsModule } from './anteprojects/anteprojects.module';
-import { MilestonesModule } from './milestones/milestones.module';
-import { FilesModule } from './files/files.module';
-import { NotificationsModule } from './notifications/notifications.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { ActivityLogModule } from './activity-log/activity-log.module';
+import { AnteprojectsModule } from './anteprojects/anteprojects.module';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { AuthModule } from './auth/auth.module';
+import { CommentsModule } from './comments/comments.module';
+import { CommonModule } from './common/common.module';
 import { EvaluationsModule } from './evaluations/evaluations.module';
+import { FilesModule } from './files/files.module';
+import { MilestonesModule } from './milestones/milestones.module';
+import { NotificationsModule } from './notifications/notifications.module';
+import { ProjectsModule } from './projects/projects.module';
+import { RolesModule } from './roles/roles.module';
 import { SystemSettingsModule } from './system-settings/system-settings.module';
+import { TasksModule } from './tasks/tasks.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -51,5 +53,7 @@ import { SystemSettingsModule } from './system-settings/system-settings.module';
     EvaluationsModule,
     SystemSettingsModule,
   ],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}

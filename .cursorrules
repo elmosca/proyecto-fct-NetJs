@@ -1,0 +1,213 @@
+# Reglas para el Agente de Cursor - Proyecto FCT NetJS
+# Entorno Híbrido: Windows (Desarrollo) + WSL (Servicios Docker)
+
+## 🎯 CONTEXTO DEL PROYECTO
+
+Este es un proyecto de microservicios con:
+- **Backend**: NestJS + PostgreSQL (corre en WSL con Docker)
+- **Frontend**: Flutter Web (corre en WSL con Docker)
+- **Desarrollo**: Windows con Cursor IDE
+- **Servicios**: WSL con Docker/Portainer
+
+## 🏗️ ARQUITECTURA
+
+```
+Windows (Cursor IDE)          WSL (Servicios Docker)
+├── /c/dev/proyecto-fct-NetJs/  ├── /opt/proyecto-fct-NetJs/
+│   ├── backend/                 │   ├── backend/ (Stack Docker)
+│   ├── frontend/                │   ├── frontend/ (Stack Docker)
+│   └── scripts/                 │   └── proxy/ (Proxy reverso)
+│                                │
+GitHub                         Portainer
+└── Repositorio único          └── Gestión de stacks
+```
+
+## 📋 REGLAS OBLIGATORIAS PARA EL AGENTE
+
+### 1. COMANDOS DE TERMINAL
+**SIEMPRE** usa estos comandos para operaciones del proyecto:
+
+```powershell
+# Para desarrollo y compilación (Windows)
+.\scripts\cursor-agent-helper.ps1 build-backend
+.\scripts\cursor-agent-helper.ps1 build-frontend
+.\scripts\cursor-agent-helper.ps1 test-backend
+.\scripts\cursor-agent-helper.ps1 test-frontend
+
+# Para despliegue (sincroniza + despliega)
+.\scripts\cursor-agent-helper.ps1 deploy-backend
+.\scripts\cursor-agent-helper.ps1 deploy-frontend
+.\scripts\cursor-agent-helper.ps1 deploy-all
+
+# Para monitoreo
+.\scripts\cursor-agent-helper.ps1 logs-backend
+.\scripts\cursor-agent-helper.ps1 health-backend
+.\scripts\cursor-agent-helper.ps1 status
+```
+
+### 2. FLUJO DE TRABAJO OBLIGATORIO
+
+Cuando hagas cambios en el código:
+
+1. **Editar** en Windows (Cursor detecta errores correctamente)
+2. **Compilar** en Windows para verificar
+3. **Commit y Push** al repositorio
+4. **Desplegar** usando el helper script
+5. **Verificar** health check
+
+```powershell
+# Ejemplo de flujo completo
+git add .
+git commit -m "feat: nueva funcionalidad"
+git push origin main
+.\scripts\cursor-agent-helper.ps1 deploy-backend
+.\scripts\cursor-agent-helper.ps1 health-backend
+```
+
+### 3. SINCRONIZACIÓN TRIPLE
+
+Mantener sincronizados:
+- **Windows** (desarrollo)
+- **WSL** (servicios)
+- **GitHub** (repositorio)
+
+```powershell
+# Después de cambios importantes
+git add .
+git commit -m "descripción del cambio"
+git push origin main
+.\scripts\cursor-agent-helper.ps1 deploy-backend
+```
+
+### 4. COMANDOS PROHIBIDOS
+
+**NUNCA** uses estos comandos directamente:
+- ❌ `docker compose` (no disponible en Windows)
+- ❌ `npm run start:prod` (usa el helper)
+- ❌ `flutter run` (usa el helper)
+- ❌ Comandos directos de WSL sin el helper
+
+### 5. VERIFICACIÓN DE CAMBIOS
+
+Después de cualquier cambio:
+1. Verifica que compile en Windows
+2. Despliega usando el helper
+3. Verifica health check
+4. Revisa logs si hay problemas
+
+```powershell
+.\scripts\cursor-agent-helper.ps1 build-backend
+.\scripts\cursor-agent-helper.ps1 deploy-backend
+.\scripts\cursor-agent-helper.ps1 health-backend
+```
+
+### 6. DIAGNÓSTICO RÁPIDO
+
+Si hay problemas, ejecuta el diagnóstico:
+```powershell
+.\scripts\diagnose.ps1
+```
+
+Este comando verificará:
+- Estado de WSL y Docker
+- Servicios corriendo
+- Health del backend
+- Archivos críticos
+- Registro de AppController
+- Sincronización entre Windows y WSL
+
+## 🔧 COMANDOS ESPECÍFICOS POR SERVICIO
+
+### Backend (NestJS)
+```powershell
+# Desarrollo
+.\scripts\cursor-agent-helper.ps1 build-backend
+.\scripts\cursor-agent-helper.ps1 test-backend
+
+# Despliegue
+.\scripts\cursor-agent-helper.ps1 deploy-backend
+.\scripts\cursor-agent-helper.ps1 logs-backend
+.\scripts\cursor-agent-helper.ps1 health-backend
+```
+
+### Frontend (Flutter)
+```powershell
+# Desarrollo
+.\scripts\cursor-agent-helper.ps1 build-frontend
+.\scripts\cursor-agent-helper.ps1 test-frontend
+
+# Despliegue
+.\scripts\cursor-agent-helper.ps1 deploy-frontend
+.\scripts\cursor-agent-helper.ps1 logs-frontend
+```
+
+## 📊 MONITOREO Y DEBUGGING
+
+### Verificar Estado
+```powershell
+.\scripts\cursor-agent-helper.ps1 status
+.\scripts\cursor-agent-helper.ps1 health-backend
+```
+
+### Ver Logs
+```powershell
+.\scripts\cursor-agent-helper.ps1 logs-backend
+.\scripts\cursor-agent-helper.ps1 logs-frontend
+```
+
+### Reiniciar Servicios
+```powershell
+.\scripts\cursor-agent-helper.ps1 restart-backend
+.\scripts\cursor-agent-helper.ps1 restart-frontend
+```
+
+## 🚨 SOLUCIÓN DE PROBLEMAS
+
+### Error 404 en /api/health
+```powershell
+# Verificar que AppController esté registrado en AppModule
+# Luego desplegar
+.\scripts\cursor-agent-helper.ps1 deploy-backend
+.\scripts\cursor-agent-helper.ps1 health-backend
+```
+
+### Contenedor "unhealthy"
+```powershell
+# Ver logs y reiniciar
+.\scripts\cursor-agent-helper.ps1 logs-backend
+.\scripts\cursor-agent-helper.ps1 restart-backend
+.\scripts\cursor-agent-helper.ps1 health-backend
+```
+
+### Problemas de sincronización
+```powershell
+# Forzar sincronización
+.\scripts\cursor-agent-helper.ps1 sync-backend
+.\scripts\cursor-agent-helper.ps1 deploy-backend
+```
+
+## 📝 BUENAS PRÁCTICAS
+
+### ✅ HACER
+- Usar SIEMPRE los scripts helper
+- Hacer commits frecuentes
+- Verificar health checks después del despliegue
+- Mantener sincronizado el repositorio
+- Documentar cambios importantes
+
+### ❌ NO HACER
+- Usar comandos Docker directamente desde Windows
+- Ignorar errores de compilación
+- Olvidar hacer push al repositorio
+- No verificar health checks
+- Editar directamente en WSL
+
+## 🎯 RESUMEN PARA EL AGENTE
+
+1. **Desarrollo**: Windows con Cursor
+2. **Compilación**: Windows con helper scripts
+3. **Despliegue**: WSL con helper scripts
+4. **Monitoreo**: Helper scripts
+5. **Sincronización**: Git + helper scripts
+
+**Recuerda**: Siempre usa `.\scripts\cursor-agent-helper.ps1 [comando]` para cualquier operación del proyecto.
