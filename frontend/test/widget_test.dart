@@ -1,6 +1,4 @@
-import 'package:fct_frontend/main.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -9,7 +7,7 @@ void main() {
         (WidgetTester tester) async {
       // Test simple sin inicializar dependencias complejas
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: Center(
               child: Text('FCT App Test'),
@@ -25,7 +23,7 @@ void main() {
         (WidgetTester tester) async {
       // Test simple verificando el título
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           title: 'FCT - Gestión de Proyectos',
           home: Scaffold(
             body: Center(

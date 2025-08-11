@@ -330,10 +330,22 @@ flutter analyze lib/core/i18n/
    flutter run
    ```
 
-## Documentación
+## 📚 Documentación
 
-- [Documentación Técnica del Backend](./backend/docs/TECHNICAL_DOCUMENTATION.md)
-- [Estado del Proyecto](./backend/docs/PROJECT_STATUS.md)
+### **Documentación Principal**
+- [Guía de Contribución](CONTRIBUTING.md) - Cómo contribuir al proyecto
+- [Política de Seguridad](SECURITY.md) - Reportar vulnerabilidades
+
+### **Documentación Técnica**
+- [Backend README](./backend/README.md) - Documentación específica del backend
+- [Frontend README](./frontend/README.md) - Documentación específica del frontend
+- [Scripts README](./scripts/README.md) - Documentación de scripts de automatización
+
+### **Documentación Especializada**
+- [Configuración Google OAuth](./backend/docs/GOOGLE_OAUTH_SETUP.md)
+- [Modelo de Datos](./backend/docs/Modelo_Datos.md)
+- [Rate Limiting](./backend/docs/rate-limiting.md)
+- [Autenticación](./backend/docs/autenticacion.md)
 
 ## Scripts Disponibles
 
@@ -474,13 +486,15 @@ git commit -m "fix(api): corregir error en la paginación de usuarios"
 
 ## 📊 Estado del Proyecto
 
-- ✅ Backend API con autenticación
-- ✅ Frontend Flutter con navegación
+- ✅ Backend API con autenticación (154 tests pasando - 100%)
+- ✅ Frontend Flutter con navegación (tests básicos pasando)
 - ✅ CI/CD Pipeline configurado
 - ✅ **Internacionalización completa (Castellano/Inglés)**
-- 🔄 Integración con base de datos
-- 🔄 Testing automatizado
-- 📋 Documentación en progreso
+- ✅ Integración con base de datos PostgreSQL
+- ✅ Testing automatizado del backend
+- ✅ Documentación organizada y limpia
+- 🔄 Testing avanzado del frontend
+- 🔄 Funcionalidades adicionales en desarrollo
 
 ## 📧 Contacto
 
